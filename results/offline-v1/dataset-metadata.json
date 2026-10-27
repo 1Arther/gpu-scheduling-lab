@@ -1,0 +1,63 @@
+{
+  "data_kind": "synthetic_training_data",
+  "hardware_catalog_sha256": "1152468659481237e64a27a1cefad7d3d95564d7ef65fadc24f7d78ac7e3ce57",
+  "reference_contract_sha256": "0d09f59a37306eb2a995d5cb0ac11c90068bd46362ee62650436e75bf35a4adf",
+  "contract_id": "fp32-reference-v1",
+  "seed": 20261016,
+  "episodes_per_profile": 300,
+  "steps": 16,
+  "duplicates_removed": 6177,
+  "samples": 9123,
+  "sampling": "uniform synthetic packing regimes, not a production workload distribution",
+  "label_counts": {
+    "balanced": 6238,
+    "unavailable": 2067,
+    "training_preferred": 420,
+    "inference_preferred": 398
+  },
+  "split_audit": {
+    "passed": true,
+    "overlaps": {
+      "train__validation__sample_id_overlap": 0,
+      "train__test__sample_id_overlap": 0,
+      "validation__test__sample_id_overlap": 0,
+      "train__validation__episode_id_overlap": 0,
+      "train__test__episode_id_overlap": 0,
+      "validation__test__episode_id_overlap": 0,
+      "train__validation__feature_sha256_overlap": 0,
+      "train__test__feature_sha256_overlap": 0,
+      "validation__test__feature_sha256_overlap": 0
+    },
+    "sizes": {
+      "train": 5399,
+      "validation": 1799,
+      "test": 1925
+    },
+    "episodes": {
+      "train": 540,
+      "validation": 180,
+      "test": 180
+    },
+    "class_counts": {
+      "train": {
+        "balanced": 3647,
+        "unavailable": 1253,
+        "training_preferred": 254,
+        "inference_preferred": 245
+      },
+      "validation": {
+        "balanced": 1230,
+        "inference_preferred": 71,
+        "unavailable": 414,
+        "training_preferred": 84
+      },
+      "test": {
+        "balanced": 1361,
+        "unavailable": 400,
+        "training_preferred": 82,
+        "inference_preferred": 82
+      }
+    },
+    "scope": "unseen synthetic states of the same three hardware profiles; not unseen-chip generalization"
+  }
+}

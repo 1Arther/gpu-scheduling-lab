@@ -1,0 +1,520 @@
+{
+  "schema": "hrrn-queue-mvp/v1",
+  "data_kind": "synthetic_only_not_GPU_performance",
+  "devices": [
+    {
+      "gpu_id": "stage2-a/gpu-0",
+      "node": "stage2-a",
+      "profile_id": "rtx4090",
+      "max_instances": 10
+    },
+    {
+      "gpu_id": "stage2-a/gpu-1",
+      "node": "stage2-a",
+      "profile_id": "rtx4090",
+      "max_instances": 10
+    },
+    {
+      "gpu_id": "stage2-b/gpu-0",
+      "node": "stage2-b",
+      "profile_id": "l40",
+      "max_instances": 10
+    },
+    {
+      "gpu_id": "stage2-b/gpu-1",
+      "node": "stage2-b",
+      "profile_id": "l40",
+      "max_instances": 10
+    }
+  ],
+  "jobs": [
+    {
+      "job_id": "phase2-000",
+      "arrival_at": 15.2944,
+      "ready_at": 15.3468,
+      "task_type": "inference",
+      "estimated_service": 1.3792,
+      "request": {
+        "memory_mib": 3433,
+        "compute_units": 20,
+        "instances": 3
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 3.5393,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-001",
+      "arrival_at": 7.4147,
+      "ready_at": 7.5178,
+      "task_type": "inference",
+      "estimated_service": 2.8144,
+      "request": {
+        "memory_mib": 14877,
+        "compute_units": 65,
+        "instances": 3
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 6.5819,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-002",
+      "arrival_at": 7.4418,
+      "ready_at": 7.5258,
+      "task_type": "training",
+      "estimated_service": 2.5856,
+      "request": {
+        "memory_mib": 8010,
+        "compute_units": 35,
+        "instances": 1
+      },
+      "gpu_count": 2,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 3.2037,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-003",
+      "arrival_at": 0.5814,
+      "ready_at": 0.7573,
+      "task_type": "training",
+      "estimated_service": 2.0586,
+      "request": {
+        "memory_mib": 3433,
+        "compute_units": 15,
+        "instances": 3
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 3.7725,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-004",
+      "arrival_at": 7.685,
+      "ready_at": 7.8823,
+      "task_type": "training",
+      "estimated_service": 6.5695,
+      "request": {
+        "memory_mib": 14877,
+        "compute_units": 65,
+        "instances": 5
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 4.432,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-005",
+      "arrival_at": 0.6564,
+      "ready_at": 0.8386,
+      "task_type": "inference",
+      "estimated_service": 3.5087,
+      "request": {
+        "memory_mib": 8583,
+        "compute_units": 38,
+        "instances": 3
+      },
+      "gpu_count": 2,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 3.1178,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-006",
+      "arrival_at": 0.6278,
+      "ready_at": 0.6353,
+      "task_type": "inference",
+      "estimated_service": 4.2502,
+      "request": {
+        "memory_mib": 8010,
+        "compute_units": 26,
+        "instances": 3
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 4.8005,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-007",
+      "arrival_at": 7.2416,
+      "ready_at": 7.29,
+      "task_type": "inference",
+      "estimated_service": 14.4535,
+      "request": {
+        "memory_mib": 18310,
+        "compute_units": 80,
+        "instances": 2
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 7.2251,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-008",
+      "arrival_at": 0.0,
+      "ready_at": 0.1932,
+      "task_type": "training",
+      "estimated_service": 16.7925,
+      "request": {
+        "memory_mib": 8010,
+        "compute_units": 35,
+        "instances": 1
+      },
+      "gpu_count": 2,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 4.2943,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-009",
+      "arrival_at": 7.7937,
+      "ready_at": 7.9496,
+      "task_type": "inference",
+      "estimated_service": 2.2403,
+      "request": {
+        "memory_mib": 14877,
+        "compute_units": 65,
+        "instances": 2
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 4.6298,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-010",
+      "arrival_at": 15.0972,
+      "ready_at": 15.2607,
+      "task_type": "inference",
+      "estimated_service": 1.3361,
+      "request": {
+        "memory_mib": 8583,
+        "compute_units": 38,
+        "instances": 1
+      },
+      "gpu_count": 2,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 3.6324,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-011",
+      "arrival_at": 8.0513,
+      "ready_at": 8.0595,
+      "task_type": "inference",
+      "estimated_service": 6.3422,
+      "request": {
+        "memory_mib": 4577,
+        "compute_units": 15,
+        "instances": 2
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 2.2531,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-012",
+      "arrival_at": 15.2651,
+      "ready_at": 15.3988,
+      "task_type": "training",
+      "estimated_service": 2.979,
+      "request": {
+        "memory_mib": 8583,
+        "compute_units": 38,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 4.0206,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-013",
+      "arrival_at": 0.2361,
+      "ready_at": 0.2559,
+      "task_type": "inference",
+      "estimated_service": 4.9416,
+      "request": {
+        "memory_mib": 6008,
+        "compute_units": 35,
+        "instances": 3
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 4.3769,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-014",
+      "arrival_at": 7.1636,
+      "ready_at": 7.3493,
+      "task_type": "inference",
+      "estimated_service": 2.9112,
+      "request": {
+        "memory_mib": 11444,
+        "compute_units": 50,
+        "instances": 2
+      },
+      "gpu_count": 2,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 5.7695,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-015",
+      "arrival_at": 0.9435,
+      "ready_at": 1.0355,
+      "task_type": "training",
+      "estimated_service": 3.2515,
+      "request": {
+        "memory_mib": 8583,
+        "compute_units": 38,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 5.0397,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-016",
+      "arrival_at": 0.4653,
+      "ready_at": 0.6405,
+      "task_type": "inference",
+      "estimated_service": 9.322,
+      "request": {
+        "memory_mib": 8583,
+        "compute_units": 38,
+        "instances": 1
+      },
+      "gpu_count": 2,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 4.1647,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-017",
+      "arrival_at": 7.9031,
+      "ready_at": 8.0156,
+      "task_type": "inference",
+      "estimated_service": 5.2292,
+      "request": {
+        "memory_mib": 18310,
+        "compute_units": 80,
+        "instances": 2
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 9.3787,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-018",
+      "arrival_at": 7.7749,
+      "ready_at": 7.8391,
+      "task_type": "inference",
+      "estimated_service": 5.9658,
+      "request": {
+        "memory_mib": 14877,
+        "compute_units": 65,
+        "instances": 3
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 5.4068,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-019",
+      "arrival_at": 8.1127,
+      "ready_at": 8.1759,
+      "task_type": "training",
+      "estimated_service": 2.3742,
+      "request": {
+        "memory_mib": 13732,
+        "compute_units": 60,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 6.5418,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-020",
+      "arrival_at": 8.0235,
+      "ready_at": 8.0973,
+      "task_type": "inference",
+      "estimated_service": 6.2694,
+      "request": {
+        "memory_mib": 8583,
+        "compute_units": 50,
+        "instances": 2
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 3.5257,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-021",
+      "arrival_at": 0.0955,
+      "ready_at": 0.2471,
+      "task_type": "inference",
+      "estimated_service": 4.3955,
+      "request": {
+        "memory_mib": 14877,
+        "compute_units": 49,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 6.5196,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-022",
+      "arrival_at": 0.2736,
+      "ready_at": 0.3939,
+      "task_type": "inference",
+      "estimated_service": 2.4401,
+      "request": {
+        "memory_mib": 3433,
+        "compute_units": 20,
+        "instances": 3
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 3.9513,
+      "cancel_at": null
+    },
+    {
+      "job_id": "phase2-023",
+      "arrival_at": 7.9066,
+      "ready_at": 7.9515,
+      "task_type": "inference",
+      "estimated_service": 1.54,
+      "request": {
+        "memory_mib": 8010,
+        "compute_units": 35,
+        "instances": 2
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_noisy_estimate",
+      "actual_service": 3.0573,
+      "cancel_at": null
+    }
+  ],
+  "availability": [],
+  "config": {
+    "tau": 0.1,
+    "protection_absolute_wait": 12.0,
+    "protection_kappa": 8.0,
+    "evaluation_long_wait": 8.0,
+    "observation_end": 24.2677
+  }
+}

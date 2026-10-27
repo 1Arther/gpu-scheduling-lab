@@ -1,0 +1,59 @@
+{
+  "evidence_kind": "real Kubernetes API + real frozen RF + native Volcano + kubelet AllocateResponse; sleep only",
+  "gpu_uuid": "GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd",
+  "actual_labels": [
+    "balanced",
+    "training_preferred",
+    "unavailable",
+    "inference_preferred",
+    "balanced"
+  ],
+  "expected_dynamic_transition_verified": true,
+  "pod_allocations": 8,
+  "three_way_uuid_matches": 8,
+  "quota_deltas_correct": 8,
+  "observed_over_allocations": 0,
+  "released_pod_uids": 8,
+  "own_pods_remaining": 0,
+  "original_scheduler_restored": true,
+  "quota_restored": true,
+  "model_config_binary_unchanged": true,
+  "restore_confirmation": {
+    "utc": "2026-10-20T07:31:49.536738+00:00",
+    "original_replicas": 1,
+    "original_available": 1,
+    "original_spec_equal": true,
+    "original_config_equal": true,
+    "original_config_rv": "21788675",
+    "quota_restored": true,
+    "rf_replicas": 0,
+    "rf_deployment_spec_equal": true,
+    "dqn_service_spec_equal": true,
+    "model_and_binary_hashes_equal": true,
+    "hashes_after": {
+      "model_bundle": {
+        "dataset-summary.json": "d0c8fb4ddaa270aeaea28256eddfb75e97b967e3e48cc215d59448450eb09d0f",
+        "manifest.json": "aa9fd474284d6a3f1ab7825e795eb5dae01ffbd4f95456b16add19bc45f505ab",
+        "model-metadata.json": "e14a11c18dc47defebdd0ab69fe4c0e9141c157ed688498301a669866b182c32",
+        "random_forest.joblib": "ee35cfabe30fffc28ff0be09d3738587d4f9bffbe26386e2a9fae5c5b9e80748",
+        "reference-contract.json": "5627b01f5b517d15ba77fabb6dc1f8e9a050adc01bd902b270b4dfe850b096b5",
+        "scoring-policy.json": "c05a0144bcfb1f8a8d58da25ae450e3d4569c003b199da5419edd53ac5e46d78",
+        "source-records.json": "eae6c4d0bcde171036ba28021c82730da63ffd8f24f93e3399939f9682e1cf0e"
+      },
+      "original_executable": "9f2e1ae3359ce234fd048bc48aab082add99a686631808908b5ae518bdebf4f4",
+      "dqn_source": {
+        "pkg/scheduler/api/devices/nvidia/vgpu/dqn_client.go": "01353f95bdeb9749ea9c0964a13183cf5ffedcbaeacdde9f531b960e097b0ed7"
+      }
+    },
+    "own_pods_remaining": 0,
+    "node_lock": null,
+    "cleanup_errors": []
+  },
+  "physical_performance_tested": false,
+  "training_inference_speedup_claimed": false,
+  "UUID_selection_benefit_claimed": false,
+  "placement_control": "three full-core logical blockers create one native-hard-fit target",
+  "accounting_scope": "direct per-allocation object snapshots plus separately reconstructed API state; not global transaction journal",
+  "original_stopped_utc": "2026-10-20T07:29:08.520172+00:00",
+  "restored_utc": "2026-10-20T07:31:49.532095+00:00"
+}

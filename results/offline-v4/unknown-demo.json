@@ -1,0 +1,1333 @@
+[
+  {
+    "device_id": "rtx_a6000",
+    "hardware": {
+      "device_id": "rtx_a6000",
+      "model_group": "rtx_a6000",
+      "vendor": "NVIDIA",
+      "model": "RTX A6000 48GB PCIe",
+      "architecture": "Ampere",
+      "device_type": "GPU",
+      "hardware_scope": "single_PCIe_board",
+      "software_backend": "CUDA",
+      "native_quota_semantics": "unverified_backend_specific; NOT assumed equivalent across vendors",
+      "supported_precisions_evidence": [
+        "FP32"
+      ],
+      "capability_observations_not_comparable": {
+        "tensor_sparsity_enabled_tflops": 309.7
+      },
+      "specifications": {
+        "memory_capacity_mib": {
+          "value": 45776,
+          "unit": "MiB",
+          "raw_value": 48,
+          "raw_unit": "GB nominal",
+          "original_display": "48 GB nominal",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/content/dam/en-zz/Solutions/products/workstations/nvidia-rtx-a6000-datasheet.pdf",
+          "source_id": "nv_a6000_v4",
+          "locator": "May22 datasheet p1 Specifications, p2 footnote8: Tensor309.7 uses sparsity; not dense FP16",
+          "scope": "single_PCIe_board",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "capacity/bandwidth/configured board power",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": "floor(nominal GB * 1e9 / 2**20); conservative OFFLINE assumption, not measured allocatable MiB",
+          "derived_from_public_spec": true
+        },
+        "memory_bandwidth_gbps": {
+          "value": 768,
+          "unit": "GB/s (decimal bytes/s, NOT Gbit/s)",
+          "raw_value": 768,
+          "raw_unit": "GB/s (decimal bytes/s, NOT Gbit/s)",
+          "original_display": "768 GB/s (decimal bytes/s, NOT Gbit/s)",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/content/dam/en-zz/Solutions/products/workstations/nvidia-rtx-a6000-datasheet.pdf",
+          "source_id": "nv_a6000_v4",
+          "locator": "May22 datasheet p1 Specifications, p2 footnote8: Tensor309.7 uses sparsity; not dense FP16",
+          "scope": "single_PCIe_board",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "capacity/bandwidth/configured board power",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "fp32_tflops": {
+          "value": 38.7,
+          "unit": "TFLOPS",
+          "raw_value": 38.7,
+          "raw_unit": "TFLOPS",
+          "original_display": "38.7 TFLOPS",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/content/dam/en-zz/Solutions/products/workstations/nvidia-rtx-a6000-datasheet.pdf",
+          "source_id": "nv_a6000_v4",
+          "locator": "May22 datasheet p1 Specifications, p2 footnote8: Tensor309.7 uses sparsity; not dense FP16",
+          "scope": "single_PCIe_board",
+          "sparsity": "dense",
+          "compute_basis": "IEEE FP32 non-Tensor/vector peak; no TF32/FP32 matrix substitution",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "fp16_dense_tflops": {
+          "value": null,
+          "unit": "TFLOPS",
+          "raw_value": null,
+          "raw_unit": "TFLOPS",
+          "original_display": null,
+          "data_kind": "unknown",
+          "source_url": "https://www.nvidia.com/content/dam/en-zz/Solutions/products/workstations/nvidia-rtx-a6000-datasheet.pdf",
+          "source_id": "nv_a6000_v4",
+          "locator": "May22 datasheet p1 Specifications, p2 footnote8: Tensor309.7 uses sparsity; not dense FP16",
+          "scope": "single_PCIe_board",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "vendor dense figure; accumulator/engine not fully aligned",
+          "model_comparable": false,
+          "model_mask_reason": "missing",
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "bf16_dense_tflops": {
+          "value": null,
+          "unit": "TFLOPS",
+          "raw_value": null,
+          "raw_unit": "TFLOPS",
+          "original_display": null,
+          "data_kind": "unknown",
+          "source_url": "https://www.nvidia.com/content/dam/en-zz/Solutions/products/workstations/nvidia-rtx-a6000-datasheet.pdf",
+          "source_id": "nv_a6000_v4",
+          "locator": "May22 datasheet p1 Specifications, p2 footnote8: Tensor309.7 uses sparsity; not dense FP16",
+          "scope": "single_PCIe_board",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "vendor dense figure; accumulator/engine not fully aligned",
+          "model_comparable": false,
+          "model_mask_reason": "missing",
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "int8_dense_tops": {
+          "value": null,
+          "unit": "TOPS",
+          "raw_value": null,
+          "raw_unit": "TOPS",
+          "original_display": null,
+          "data_kind": "unknown",
+          "source_url": "https://www.nvidia.com/content/dam/en-zz/Solutions/products/workstations/nvidia-rtx-a6000-datasheet.pdf",
+          "source_id": "nv_a6000_v4",
+          "locator": "May22 datasheet p1 Specifications, p2 footnote8: Tensor309.7 uses sparsity; not dense FP16",
+          "scope": "single_PCIe_board",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "vendor dense figure; accumulator/engine not fully aligned",
+          "model_comparable": false,
+          "model_mask_reason": "missing",
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "max_board_power_w": {
+          "value": 300,
+          "unit": "W",
+          "raw_value": 300,
+          "raw_unit": "W",
+          "original_display": "300 W",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/content/dam/en-zz/Solutions/products/workstations/nvidia-rtx-a6000-datasheet.pdf",
+          "source_id": "nv_a6000_v4",
+          "locator": "May22 datasheet p1 Specifications, p2 footnote8: Tensor309.7 uses sparsity; not dense FP16",
+          "scope": "single_PCIe_board",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "capacity/bandwidth/configured board power",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": null,
+          "derived_from_public_spec": false
+        }
+      },
+      "note": "Not RTX6000 Ada; sparse Tensor number does not identify a dense precision-specific value.",
+      "performance_label_source": "unknown"
+    },
+    "state": {
+      "free_memory_mib": 45776,
+      "free_compute_quota": 100,
+      "allocated_vgpu_count": 0,
+      "running_training_count": 0,
+      "running_inference_count": 0,
+      "quota_semantics": "physical_unpartitioned",
+      "instance_limit": 10,
+      "data_kind": "synthetic_initial_resources_not_live_measurement"
+    },
+    "prediction": {
+      "device_id": "rtx_a6000",
+      "model": "RTX A6000 48GB PCIe",
+      "underlying_supervision": "synthetic",
+      "label_source": "model_prediction_not_ground_truth",
+      "known_model": false,
+      "hard_constraints": {
+        "training": true,
+        "inference": true
+      },
+      "raw_rf": {
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "training_vote_fraction": 1.0,
+        "inference_vote_fraction": 1.0,
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+        "vote_fraction_is_reliability": false
+      },
+      "class_probabilities": {
+        "training_preferred": 0.0,
+        "inference_preferred": 0.0,
+        "balanced": 1.0,
+        "unavailable": 0.0
+      },
+      "vote_fraction_is_reliability": false,
+      "empirical_performance_verified": false,
+      "missing_or_masked_features": [
+        "fp16_dense_tflops",
+        "bf16_dense_tflops",
+        "int8_dense_tops"
+      ],
+      "fallback": {
+        "label_source": "synthetic",
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "details": {
+          "training": {
+            "adapted": true,
+            "theoretical_latency_s": 0.18456995201181248,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.007398200757575756,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          }
+        },
+        "conservative_factor": 0.8,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "reasons": [
+        "resource constraints and related binary validation cells passed; no real performance assurance"
+      ],
+      "outside_training_ranges": {},
+      "evidence_mode": "related_architecture_validation",
+      "related_validation_models": [
+        {
+          "device_id": "rtx3090",
+          "architecture": "Ampere",
+          "log2_distance": 1.0
+        }
+      ],
+      "target_validation_evidence": {
+        "training": {
+          "basis": "related_architecture_validation",
+          "predicted_sign": true,
+          "validation_sign_support": 149,
+          "validation_sign_correct": 149,
+          "validation_sign_precision": 1.0,
+          "validation_sign_episodes": 42,
+          "supported": true,
+          "not_a_calibrated_confidence_interval": true
+        },
+        "inference": {
+          "basis": "related_architecture_validation",
+          "predicted_sign": true,
+          "validation_sign_support": 353,
+          "validation_sign_correct": 353,
+          "validation_sign_precision": 1.0,
+          "validation_sign_episodes": 59,
+          "supported": true,
+          "not_a_calibrated_confidence_interval": true
+        }
+      },
+      "training": true,
+      "inference": true,
+      "label": "balanced",
+      "label_zh": "训推一体型",
+      "reliability": "provisional_synthetic_validation_only"
+    },
+    "performance_ground_truth": "unknown",
+    "not_used_in_real_performance_accuracy": true,
+    "model_protocol": "B_multi_architecture"
+  },
+  {
+    "device_id": "rtx6000_ada",
+    "hardware": {
+      "device_id": "rtx6000_ada",
+      "model_group": "rtx6000_ada",
+      "vendor": "NVIDIA",
+      "model": "RTX 6000 Ada 48GB PCIe",
+      "architecture": "Ada Lovelace",
+      "device_type": "GPU",
+      "hardware_scope": "single_PCIe_board",
+      "software_backend": "CUDA",
+      "native_quota_semantics": "unverified_backend_specific; NOT assumed equivalent across vendors",
+      "supported_precisions_evidence": [
+        "FP32"
+      ],
+      "capability_observations_not_comparable": {
+        "fp8_tensor_sparse_tflops": 1457
+      },
+      "specifications": {
+        "memory_capacity_mib": {
+          "value": 45776,
+          "unit": "MiB",
+          "raw_value": 48,
+          "raw_unit": "GB nominal",
+          "original_display": "48 GB nominal",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/content/dam/en-zz/Solutions/design-visualization/rtx-6000/proviz-print-rtx6000-datasheet-web-2504660.pdf",
+          "source_id": "nv_6000ada_v4",
+          "locator": "Feb23 datasheet p2 Technical Specifications; Tensor1457 is sparse FP8, not dense FP16/BF16/INT8",
+          "scope": "single_PCIe_board",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "capacity/bandwidth/configured board power",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": "floor(nominal GB * 1e9 / 2**20); conservative OFFLINE assumption, not measured allocatable MiB",
+          "derived_from_public_spec": true
+        },
+        "memory_bandwidth_gbps": {
+          "value": 960,
+          "unit": "GB/s (decimal bytes/s, NOT Gbit/s)",
+          "raw_value": 960,
+          "raw_unit": "GB/s (decimal bytes/s, NOT Gbit/s)",
+          "original_display": "960 GB/s (decimal bytes/s, NOT Gbit/s)",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/content/dam/en-zz/Solutions/design-visualization/rtx-6000/proviz-print-rtx6000-datasheet-web-2504660.pdf",
+          "source_id": "nv_6000ada_v4",
+          "locator": "Feb23 datasheet p2 Technical Specifications; Tensor1457 is sparse FP8, not dense FP16/BF16/INT8",
+          "scope": "single_PCIe_board",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "capacity/bandwidth/configured board power",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "fp32_tflops": {
+          "value": 91.1,
+          "unit": "TFLOPS",
+          "raw_value": 91.1,
+          "raw_unit": "TFLOPS",
+          "original_display": "91.1 TFLOPS",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/content/dam/en-zz/Solutions/design-visualization/rtx-6000/proviz-print-rtx6000-datasheet-web-2504660.pdf",
+          "source_id": "nv_6000ada_v4",
+          "locator": "Feb23 datasheet p2 Technical Specifications; Tensor1457 is sparse FP8, not dense FP16/BF16/INT8",
+          "scope": "single_PCIe_board",
+          "sparsity": "dense",
+          "compute_basis": "IEEE FP32 non-Tensor/vector peak; no TF32/FP32 matrix substitution",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "fp16_dense_tflops": {
+          "value": null,
+          "unit": "TFLOPS",
+          "raw_value": null,
+          "raw_unit": "TFLOPS",
+          "original_display": null,
+          "data_kind": "unknown",
+          "source_url": "https://www.nvidia.com/content/dam/en-zz/Solutions/design-visualization/rtx-6000/proviz-print-rtx6000-datasheet-web-2504660.pdf",
+          "source_id": "nv_6000ada_v4",
+          "locator": "Feb23 datasheet p2 Technical Specifications; Tensor1457 is sparse FP8, not dense FP16/BF16/INT8",
+          "scope": "single_PCIe_board",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "vendor dense figure; accumulator/engine not fully aligned",
+          "model_comparable": false,
+          "model_mask_reason": "missing",
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "bf16_dense_tflops": {
+          "value": null,
+          "unit": "TFLOPS",
+          "raw_value": null,
+          "raw_unit": "TFLOPS",
+          "original_display": null,
+          "data_kind": "unknown",
+          "source_url": "https://www.nvidia.com/content/dam/en-zz/Solutions/design-visualization/rtx-6000/proviz-print-rtx6000-datasheet-web-2504660.pdf",
+          "source_id": "nv_6000ada_v4",
+          "locator": "Feb23 datasheet p2 Technical Specifications; Tensor1457 is sparse FP8, not dense FP16/BF16/INT8",
+          "scope": "single_PCIe_board",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "vendor dense figure; accumulator/engine not fully aligned",
+          "model_comparable": false,
+          "model_mask_reason": "missing",
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "int8_dense_tops": {
+          "value": null,
+          "unit": "TOPS",
+          "raw_value": null,
+          "raw_unit": "TOPS",
+          "original_display": null,
+          "data_kind": "unknown",
+          "source_url": "https://www.nvidia.com/content/dam/en-zz/Solutions/design-visualization/rtx-6000/proviz-print-rtx6000-datasheet-web-2504660.pdf",
+          "source_id": "nv_6000ada_v4",
+          "locator": "Feb23 datasheet p2 Technical Specifications; Tensor1457 is sparse FP8, not dense FP16/BF16/INT8",
+          "scope": "single_PCIe_board",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "vendor dense figure; accumulator/engine not fully aligned",
+          "model_comparable": false,
+          "model_mask_reason": "missing",
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "max_board_power_w": {
+          "value": 300,
+          "unit": "W",
+          "raw_value": 300,
+          "raw_unit": "W",
+          "original_display": "300 W",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/content/dam/en-zz/Solutions/design-visualization/rtx-6000/proviz-print-rtx6000-datasheet-web-2504660.pdf",
+          "source_id": "nv_6000ada_v4",
+          "locator": "Feb23 datasheet p2 Technical Specifications; Tensor1457 is sparse FP8, not dense FP16/BF16/INT8",
+          "scope": "single_PCIe_board",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "capacity/bandwidth/configured board power",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": null,
+          "derived_from_public_spec": false
+        }
+      },
+      "note": "Sparse FP8 is not FP16/BF16/INT8. No unverified division or precision substitution.",
+      "performance_label_source": "unknown"
+    },
+    "state": {
+      "free_memory_mib": 45776,
+      "free_compute_quota": 100,
+      "allocated_vgpu_count": 0,
+      "running_training_count": 0,
+      "running_inference_count": 0,
+      "quota_semantics": "physical_unpartitioned",
+      "instance_limit": 10,
+      "data_kind": "synthetic_initial_resources_not_live_measurement"
+    },
+    "prediction": {
+      "device_id": "rtx6000_ada",
+      "model": "RTX 6000 Ada 48GB PCIe",
+      "underlying_supervision": "synthetic",
+      "label_source": "model_prediction_not_ground_truth",
+      "known_model": false,
+      "hard_constraints": {
+        "training": true,
+        "inference": true
+      },
+      "raw_rf": {
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "training_vote_fraction": 1.0,
+        "inference_vote_fraction": 1.0,
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+        "vote_fraction_is_reliability": false
+      },
+      "class_probabilities": {
+        "training_preferred": 0.0,
+        "inference_preferred": 0.0,
+        "balanced": 1.0,
+        "unavailable": 0.0
+      },
+      "vote_fraction_is_reliability": false,
+      "empirical_performance_verified": false,
+      "missing_or_masked_features": [
+        "fp16_dense_tflops",
+        "bf16_dense_tflops",
+        "int8_dense_tops"
+      ],
+      "fallback": {
+        "label_source": "synthetic",
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "details": {
+          "training": {
+            "adapted": true,
+            "theoretical_latency_s": 0.07840677434530345,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.005918560606060606,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          }
+        },
+        "conservative_factor": 0.8,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "reasons": [
+        "resource constraints and related binary validation cells passed; no real performance assurance"
+      ],
+      "outside_training_ranges": {},
+      "evidence_mode": "related_architecture_validation",
+      "related_validation_models": [
+        {
+          "device_id": "l40",
+          "architecture": "Ada Lovelace",
+          "log2_distance": 0.15200309344505006
+        }
+      ],
+      "target_validation_evidence": {
+        "training": {
+          "basis": "related_architecture_validation",
+          "predicted_sign": true,
+          "validation_sign_support": 330,
+          "validation_sign_correct": 330,
+          "validation_sign_precision": 1.0,
+          "validation_sign_episodes": 60,
+          "supported": true,
+          "not_a_calibrated_confidence_interval": true
+        },
+        "inference": {
+          "basis": "related_architecture_validation",
+          "predicted_sign": true,
+          "validation_sign_support": 295,
+          "validation_sign_correct": 295,
+          "validation_sign_precision": 1.0,
+          "validation_sign_episodes": 58,
+          "supported": true,
+          "not_a_calibrated_confidence_interval": true
+        }
+      },
+      "training": true,
+      "inference": true,
+      "label": "balanced",
+      "label_zh": "训推一体型",
+      "reliability": "provisional_synthetic_validation_only"
+    },
+    "performance_ground_truth": "unknown",
+    "not_used_in_real_performance_accuracy": true,
+    "model_protocol": "B_multi_architecture"
+  },
+  {
+    "device_id": "rtx5080",
+    "hardware": {
+      "device_id": "rtx5080",
+      "model_group": "rtx5080",
+      "vendor": "NVIDIA",
+      "model": "GeForce RTX 5080 16GB reference",
+      "architecture": "Blackwell",
+      "device_type": "GPU",
+      "hardware_scope": "single_reference_board",
+      "software_backend": "CUDA",
+      "native_quota_semantics": "unverified_backend_specific; NOT assumed equivalent across vendors",
+      "supported_precisions_evidence": [
+        "FP32",
+        "FP16",
+        "BF16",
+        "INT8"
+      ],
+      "capability_observations_not_comparable": {},
+      "specifications": {
+        "memory_capacity_mib": {
+          "value": 15258,
+          "unit": "MiB",
+          "raw_value": 16,
+          "raw_unit": "GB nominal",
+          "original_display": "16 GB nominal",
+          "data_kind": "public_spec",
+          "source_url": "https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf",
+          "source_id": "nv_5080_v4",
+          "locator": "Appendix B, Table4, printed pp49-51; RTX5080 column; FP16/BF16 Tensor FP32 accumulate dense112.6; INT8 dense450.2",
+          "scope": "single_reference_board",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "capacity/bandwidth/configured board power",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": "floor(nominal GB * 1e9 / 2**20); conservative OFFLINE assumption, not measured allocatable MiB",
+          "derived_from_public_spec": true
+        },
+        "memory_bandwidth_gbps": {
+          "value": 960,
+          "unit": "GB/s (decimal bytes/s, NOT Gbit/s)",
+          "raw_value": 960,
+          "raw_unit": "GB/s (decimal bytes/s, NOT Gbit/s)",
+          "original_display": "960 GB/s (decimal bytes/s, NOT Gbit/s)",
+          "data_kind": "public_spec",
+          "source_url": "https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf",
+          "source_id": "nv_5080_v4",
+          "locator": "Appendix B, Table4, printed pp49-51; RTX5080 column; FP16/BF16 Tensor FP32 accumulate dense112.6; INT8 dense450.2",
+          "scope": "single_reference_board",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "capacity/bandwidth/configured board power",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "fp32_tflops": {
+          "value": 56.3,
+          "unit": "TFLOPS",
+          "raw_value": 56.3,
+          "raw_unit": "TFLOPS",
+          "original_display": "56.3 TFLOPS",
+          "data_kind": "public_spec",
+          "source_url": "https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf",
+          "source_id": "nv_5080_v4",
+          "locator": "Appendix B, Table4, printed pp49-51; RTX5080 column; FP16/BF16 Tensor FP32 accumulate dense112.6; INT8 dense450.2",
+          "scope": "single_reference_board",
+          "sparsity": "dense",
+          "compute_basis": "IEEE FP32 non-Tensor/vector peak; no TF32/FP32 matrix substitution",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "fp16_dense_tflops": {
+          "value": 112.6,
+          "unit": "TFLOPS",
+          "raw_value": 112.6,
+          "raw_unit": "TFLOPS",
+          "original_display": "112.6 TFLOPS",
+          "data_kind": "public_spec",
+          "source_url": "https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf",
+          "source_id": "nv_5080_v4",
+          "locator": "Appendix B, Table4, printed pp49-51; RTX5080 column; FP16/BF16 Tensor FP32 accumulate dense112.6; INT8 dense450.2",
+          "scope": "single_reference_board",
+          "sparsity": "dense",
+          "compute_basis": "FP16/BF16 Tensor FP32 accumulate, dense first number; INT8 accumulation not explicitly aligned",
+          "model_comparable": false,
+          "model_mask_reason": "unaligned precision/engine/accumulator scope",
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "bf16_dense_tflops": {
+          "value": 112.6,
+          "unit": "TFLOPS",
+          "raw_value": 112.6,
+          "raw_unit": "TFLOPS",
+          "original_display": "112.6 TFLOPS",
+          "data_kind": "public_spec",
+          "source_url": "https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf",
+          "source_id": "nv_5080_v4",
+          "locator": "Appendix B, Table4, printed pp49-51; RTX5080 column; FP16/BF16 Tensor FP32 accumulate dense112.6; INT8 dense450.2",
+          "scope": "single_reference_board",
+          "sparsity": "dense",
+          "compute_basis": "FP16/BF16 Tensor FP32 accumulate, dense first number; INT8 accumulation not explicitly aligned",
+          "model_comparable": false,
+          "model_mask_reason": "unaligned precision/engine/accumulator scope",
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "int8_dense_tops": {
+          "value": 450.2,
+          "unit": "TOPS",
+          "raw_value": 450.2,
+          "raw_unit": "TOPS",
+          "original_display": "450.2 TOPS",
+          "data_kind": "public_spec",
+          "source_url": "https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf",
+          "source_id": "nv_5080_v4",
+          "locator": "Appendix B, Table4, printed pp49-51; RTX5080 column; FP16/BF16 Tensor FP32 accumulate dense112.6; INT8 dense450.2",
+          "scope": "single_reference_board",
+          "sparsity": "dense",
+          "compute_basis": "FP16/BF16 Tensor FP32 accumulate, dense first number; INT8 accumulation not explicitly aligned",
+          "model_comparable": false,
+          "model_mask_reason": "unaligned precision/engine/accumulator scope",
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "max_board_power_w": {
+          "value": 360,
+          "unit": "W",
+          "raw_value": 360,
+          "raw_unit": "W",
+          "original_display": "360 W",
+          "data_kind": "public_spec",
+          "source_url": "https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf",
+          "source_id": "nv_5080_v4",
+          "locator": "Appendix B, Table4, printed pp49-51; RTX5080 column; FP16/BF16 Tensor FP32 accumulate dense112.6; INT8 dense450.2",
+          "scope": "single_reference_board",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "capacity/bandwidth/configured board power",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": null,
+          "derived_from_public_spec": false
+        }
+      },
+      "note": null,
+      "performance_label_source": "unknown"
+    },
+    "state": {
+      "free_memory_mib": 15258,
+      "free_compute_quota": 100,
+      "allocated_vgpu_count": 0,
+      "running_training_count": 0,
+      "running_inference_count": 0,
+      "quota_semantics": "physical_unpartitioned",
+      "instance_limit": 10,
+      "data_kind": "synthetic_initial_resources_not_live_measurement"
+    },
+    "prediction": {
+      "device_id": "rtx5080",
+      "model": "GeForce RTX 5080 16GB reference",
+      "underlying_supervision": "synthetic",
+      "label_source": "model_prediction_not_ground_truth",
+      "known_model": false,
+      "hard_constraints": {
+        "training": true,
+        "inference": true
+      },
+      "raw_rf": {
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "training_vote_fraction": 1.0,
+        "inference_vote_fraction": 1.0,
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+        "vote_fraction_is_reliability": false
+      },
+      "class_probabilities": {
+        "training_preferred": 0.0,
+        "inference_preferred": 0.0,
+        "balanced": 1.0,
+        "unavailable": 0.0
+      },
+      "vote_fraction_is_reliability": false,
+      "empirical_performance_verified": false,
+      "missing_or_masked_features": [
+        "fp16_dense_tflops",
+        "bf16_dense_tflops",
+        "int8_dense_tops"
+      ],
+      "fallback": {
+        "label_source": "synthetic",
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "details": {
+          "training": {
+            "adapted": true,
+            "theoretical_latency_s": 0.1268713524486171,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.005918560606060606,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          }
+        },
+        "conservative_factor": 0.8,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "reasons": [
+        "outside_training_static_core_range",
+        "insufficient_related_validation_for_training_sign_1",
+        "insufficient_related_validation_for_inference_sign_1"
+      ],
+      "outside_training_ranges": {
+        "memory_capacity_mib": {
+          "value": 15258,
+          "train_min": 22888,
+          "train_max": 76293
+        }
+      },
+      "evidence_mode": "no_related_validation_evidence",
+      "related_validation_models": [],
+      "target_validation_evidence": {
+        "training": {
+          "basis": "no_related_validation_evidence",
+          "predicted_sign": true,
+          "validation_sign_support": 0,
+          "validation_sign_correct": 0,
+          "validation_sign_precision": null,
+          "validation_sign_episodes": 0,
+          "supported": false,
+          "not_a_calibrated_confidence_interval": true
+        },
+        "inference": {
+          "basis": "no_related_validation_evidence",
+          "predicted_sign": true,
+          "validation_sign_support": 0,
+          "validation_sign_correct": 0,
+          "validation_sign_precision": null,
+          "validation_sign_episodes": 0,
+          "supported": false,
+          "not_a_calibrated_confidence_interval": true
+        }
+      },
+      "training": null,
+      "inference": null,
+      "label": "pending_verification",
+      "label_zh": "信息不足、待验证",
+      "reliability": "pending_related_validation_or_coverage"
+    },
+    "performance_ground_truth": "unknown",
+    "not_used_in_real_performance_accuracy": true,
+    "model_protocol": "B_multi_architecture"
+  },
+  {
+    "device_id": "a10",
+    "hardware": {
+      "device_id": "a10",
+      "model_group": "a10",
+      "vendor": "NVIDIA",
+      "model": "A10",
+      "architecture": "Ampere",
+      "device_type": "GPU",
+      "hardware_scope": "single_accelerator",
+      "software_backend": "CUDA",
+      "native_quota_semantics": "unverified_backend_specific; NOT assumed equivalent across vendors",
+      "supported_precisions_evidence": [
+        "FP32",
+        "FP16",
+        "BF16",
+        "INT8"
+      ],
+      "capability_observations_not_comparable": {},
+      "specifications": {
+        "memory_capacity_mib": {
+          "value": 22888,
+          "unit": "MiB",
+          "raw_value": 24,
+          "raw_unit": "GB nominal",
+          "original_display": "24 GB nominal",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/en-us/data-center/products/a10-gpu/",
+          "source_id": "nv_a10",
+          "locator": "A10 Technical Specifications, non-starred dense values",
+          "scope": "single_accelerator",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "capacity/bandwidth/configured board power",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": "floor(nominal GB * 1e9 / 2**20); conservative OFFLINE assumption, not measured allocatable MiB",
+          "derived_from_public_spec": true
+        },
+        "memory_bandwidth_gbps": {
+          "value": 600,
+          "unit": "GB/s (decimal bytes/s, NOT Gbit/s)",
+          "raw_value": 600,
+          "raw_unit": "GB/s (decimal bytes/s, NOT Gbit/s)",
+          "original_display": "600 GB/s (decimal bytes/s, NOT Gbit/s)",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/en-us/data-center/products/a10-gpu/",
+          "source_id": "nv_a10",
+          "locator": "A10 Technical Specifications, non-starred dense values",
+          "scope": "single_accelerator",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "capacity/bandwidth/configured board power",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "fp32_tflops": {
+          "value": 31.2,
+          "unit": "TFLOPS",
+          "raw_value": 31.2,
+          "raw_unit": "TFLOPS",
+          "original_display": "31.2 TFLOPS",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/en-us/data-center/products/a10-gpu/",
+          "source_id": "nv_a10",
+          "locator": "A10 Technical Specifications, non-starred dense values",
+          "scope": "single_accelerator",
+          "sparsity": "dense",
+          "compute_basis": "IEEE FP32 non-Tensor/vector peak; no TF32/FP32 matrix substitution",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "fp16_dense_tflops": {
+          "value": 125,
+          "unit": "TFLOPS",
+          "raw_value": 125,
+          "raw_unit": "TFLOPS",
+          "original_display": "125 TFLOPS",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/en-us/data-center/products/a10-gpu/",
+          "source_id": "nv_a10",
+          "locator": "A10 Technical Specifications, non-starred dense values",
+          "scope": "single_accelerator",
+          "sparsity": "dense",
+          "compute_basis": "vendor dense figure; accumulator/engine not fully aligned",
+          "model_comparable": false,
+          "model_mask_reason": "unaligned precision/engine/accumulator scope",
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "bf16_dense_tflops": {
+          "value": 125,
+          "unit": "TFLOPS",
+          "raw_value": 125,
+          "raw_unit": "TFLOPS",
+          "original_display": "125 TFLOPS",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/en-us/data-center/products/a10-gpu/",
+          "source_id": "nv_a10",
+          "locator": "A10 Technical Specifications, non-starred dense values",
+          "scope": "single_accelerator",
+          "sparsity": "dense",
+          "compute_basis": "vendor dense figure; accumulator/engine not fully aligned",
+          "model_comparable": false,
+          "model_mask_reason": "unaligned precision/engine/accumulator scope",
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "int8_dense_tops": {
+          "value": 250,
+          "unit": "TOPS",
+          "raw_value": 250,
+          "raw_unit": "TOPS",
+          "original_display": "250 TOPS",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/en-us/data-center/products/a10-gpu/",
+          "source_id": "nv_a10",
+          "locator": "A10 Technical Specifications, non-starred dense values",
+          "scope": "single_accelerator",
+          "sparsity": "dense",
+          "compute_basis": "vendor dense figure; accumulator/engine not fully aligned",
+          "model_comparable": false,
+          "model_mask_reason": "unaligned precision/engine/accumulator scope",
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "max_board_power_w": {
+          "value": 150,
+          "unit": "W",
+          "raw_value": 150,
+          "raw_unit": "W",
+          "original_display": "150 W",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/en-us/data-center/products/a10-gpu/",
+          "source_id": "nv_a10",
+          "locator": "A10 Technical Specifications, non-starred dense values",
+          "scope": "single_accelerator",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "capacity/bandwidth/configured board power",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": null,
+          "derived_from_public_spec": false
+        }
+      },
+      "note": null,
+      "performance_label_source": "unknown"
+    },
+    "state": {
+      "free_memory_mib": 22888,
+      "free_compute_quota": 100,
+      "allocated_vgpu_count": 0,
+      "running_training_count": 0,
+      "running_inference_count": 0,
+      "quota_semantics": "physical_unpartitioned",
+      "instance_limit": 10,
+      "data_kind": "synthetic_initial_resources_not_live_measurement"
+    },
+    "prediction": {
+      "device_id": "a10",
+      "model": "A10",
+      "underlying_supervision": "synthetic",
+      "label_source": "model_prediction_not_ground_truth",
+      "known_model": true,
+      "hard_constraints": {
+        "training": true,
+        "inference": true
+      },
+      "raw_rf": {
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "training_vote_fraction": 1.0,
+        "inference_vote_fraction": 1.0,
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+        "vote_fraction_is_reliability": false
+      },
+      "class_probabilities": {
+        "training_preferred": 0.0,
+        "inference_preferred": 0.0,
+        "balanced": 1.0,
+        "unavailable": 0.0
+      },
+      "vote_fraction_is_reliability": false,
+      "empirical_performance_verified": false,
+      "missing_or_masked_features": [
+        "fp16_dense_tflops",
+        "bf16_dense_tflops",
+        "int8_dense_tops"
+      ],
+      "fallback": {
+        "label_source": "synthetic",
+        "training": false,
+        "inference": true,
+        "label": "inference_preferred",
+        "details": {
+          "training": {
+            "adapted": false,
+            "theoretical_latency_s": 0.22893772893772893,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 0.8736
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.00946969696969697,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          }
+        },
+        "conservative_factor": 0.8,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "reasons": [
+        "resource constraints and related binary validation cells passed; no real performance assurance"
+      ],
+      "outside_training_ranges": {},
+      "evidence_mode": "related_architecture_validation",
+      "related_validation_models": [
+        {
+          "device_id": "rtx3090",
+          "architecture": "Ampere",
+          "log2_distance": 0.6415460290875236
+        }
+      ],
+      "target_validation_evidence": {
+        "training": {
+          "basis": "related_architecture_validation",
+          "predicted_sign": true,
+          "validation_sign_support": 149,
+          "validation_sign_correct": 149,
+          "validation_sign_precision": 1.0,
+          "validation_sign_episodes": 42,
+          "supported": true,
+          "not_a_calibrated_confidence_interval": true
+        },
+        "inference": {
+          "basis": "related_architecture_validation",
+          "predicted_sign": true,
+          "validation_sign_support": 353,
+          "validation_sign_correct": 353,
+          "validation_sign_precision": 1.0,
+          "validation_sign_episodes": 59,
+          "supported": true,
+          "not_a_calibrated_confidence_interval": true
+        }
+      },
+      "training": true,
+      "inference": true,
+      "label": "balanced",
+      "label_zh": "训推一体型",
+      "reliability": "provisional_synthetic_validation_only"
+    },
+    "performance_ground_truth": "unknown",
+    "not_used_in_real_performance_accuracy": true,
+    "model_protocol": "B_multi_architecture"
+  },
+  {
+    "device_id": "h200_sxm",
+    "hardware": {
+      "device_id": "h200_sxm",
+      "model_group": "h200",
+      "vendor": "NVIDIA",
+      "model": "H200 SXM",
+      "architecture": "Hopper",
+      "device_type": "GPU",
+      "hardware_scope": "single_accelerator",
+      "software_backend": "CUDA",
+      "native_quota_semantics": "unverified_backend_specific; NOT assumed equivalent across vendors",
+      "supported_precisions_evidence": [
+        "FP32",
+        "FP16",
+        "BF16",
+        "INT8"
+      ],
+      "capability_observations_not_comparable": {
+        "fp16_sparse_tflops": 1979,
+        "bf16_sparse_tflops": 1979,
+        "int8_sparse_tops": 3958
+      },
+      "specifications": {
+        "memory_capacity_mib": {
+          "value": 134468,
+          "unit": "MiB",
+          "raw_value": 141,
+          "raw_unit": "GB nominal",
+          "original_display": "141 GB nominal",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/en-us/data-center/h200/",
+          "source_id": "nv_h200",
+          "locator": "H200 SXM column only; 4.8TB/s; sparse Tensor peaks not used as dense",
+          "scope": "single_accelerator",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "capacity/bandwidth/configured board power",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": "floor(nominal GB * 1e9 / 2**20); conservative OFFLINE assumption, not measured allocatable MiB",
+          "derived_from_public_spec": true
+        },
+        "memory_bandwidth_gbps": {
+          "value": 4800,
+          "unit": "GB/s (decimal bytes/s, NOT Gbit/s)",
+          "raw_value": 4.8,
+          "raw_unit": "TB/s",
+          "original_display": "4.8 TB/s",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/en-us/data-center/h200/",
+          "source_id": "nv_h200",
+          "locator": "H200 SXM column only; 4.8TB/s; sparse Tensor peaks not used as dense",
+          "scope": "single_accelerator",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "capacity/bandwidth/configured board power",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": "TB/s * 1000 -> GB/s (decimal bytes/s, NOT Gbit/s) (decimal)",
+          "derived_from_public_spec": true
+        },
+        "fp32_tflops": {
+          "value": 67,
+          "unit": "TFLOPS",
+          "raw_value": 67,
+          "raw_unit": "TFLOPS",
+          "original_display": "67 TFLOPS",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/en-us/data-center/h200/",
+          "source_id": "nv_h200",
+          "locator": "H200 SXM column only; 4.8TB/s; sparse Tensor peaks not used as dense",
+          "scope": "single_accelerator",
+          "sparsity": "dense",
+          "compute_basis": "IEEE FP32 non-Tensor/vector peak; no TF32/FP32 matrix substitution",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "fp16_dense_tflops": {
+          "value": null,
+          "unit": "TFLOPS",
+          "raw_value": null,
+          "raw_unit": "TFLOPS",
+          "original_display": null,
+          "data_kind": "unknown",
+          "source_url": "https://www.nvidia.com/en-us/data-center/h200/",
+          "source_id": "nv_h200",
+          "locator": "H200 SXM column only; 4.8TB/s; sparse Tensor peaks not used as dense",
+          "scope": "single_accelerator",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "vendor dense figure; accumulator/engine not fully aligned",
+          "model_comparable": false,
+          "model_mask_reason": "missing",
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "bf16_dense_tflops": {
+          "value": null,
+          "unit": "TFLOPS",
+          "raw_value": null,
+          "raw_unit": "TFLOPS",
+          "original_display": null,
+          "data_kind": "unknown",
+          "source_url": "https://www.nvidia.com/en-us/data-center/h200/",
+          "source_id": "nv_h200",
+          "locator": "H200 SXM column only; 4.8TB/s; sparse Tensor peaks not used as dense",
+          "scope": "single_accelerator",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "vendor dense figure; accumulator/engine not fully aligned",
+          "model_comparable": false,
+          "model_mask_reason": "missing",
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "int8_dense_tops": {
+          "value": null,
+          "unit": "TOPS",
+          "raw_value": null,
+          "raw_unit": "TOPS",
+          "original_display": null,
+          "data_kind": "unknown",
+          "source_url": "https://www.nvidia.com/en-us/data-center/h200/",
+          "source_id": "nv_h200",
+          "locator": "H200 SXM column only; 4.8TB/s; sparse Tensor peaks not used as dense",
+          "scope": "single_accelerator",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "vendor dense figure; accumulator/engine not fully aligned",
+          "model_comparable": false,
+          "model_mask_reason": "missing",
+          "conversion": null,
+          "derived_from_public_spec": false
+        },
+        "max_board_power_w": {
+          "value": 700,
+          "unit": "W",
+          "raw_value": 700,
+          "raw_unit": "W",
+          "original_display": "700 W",
+          "data_kind": "public_spec",
+          "source_url": "https://www.nvidia.com/en-us/data-center/h200/",
+          "source_id": "nv_h200",
+          "locator": "H200 SXM column only; 4.8TB/s; sparse Tensor peaks not used as dense",
+          "scope": "single_accelerator",
+          "sparsity": "not_applicable_or_unknown",
+          "compute_basis": "capacity/bandwidth/configured board power",
+          "model_comparable": true,
+          "model_mask_reason": null,
+          "conversion": null,
+          "derived_from_public_spec": false
+        }
+      },
+      "note": null,
+      "performance_label_source": "unknown"
+    },
+    "state": {
+      "free_memory_mib": 134468,
+      "free_compute_quota": 100,
+      "allocated_vgpu_count": 0,
+      "running_training_count": 0,
+      "running_inference_count": 0,
+      "quota_semantics": "physical_unpartitioned",
+      "instance_limit": 10,
+      "data_kind": "synthetic_initial_resources_not_live_measurement"
+    },
+    "prediction": {
+      "device_id": "h200_sxm",
+      "model": "H200 SXM",
+      "underlying_supervision": "synthetic",
+      "label_source": "model_prediction_not_ground_truth",
+      "known_model": false,
+      "hard_constraints": {
+        "training": true,
+        "inference": true
+      },
+      "raw_rf": {
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "training_vote_fraction": 1.0,
+        "inference_vote_fraction": 1.0,
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+        "vote_fraction_is_reliability": false
+      },
+      "class_probabilities": {
+        "training_preferred": 0.0,
+        "inference_preferred": 0.0,
+        "balanced": 1.0,
+        "unavailable": 0.0
+      },
+      "vote_fraction_is_reliability": false,
+      "empirical_performance_verified": false,
+      "missing_or_masked_features": [
+        "fp16_dense_tflops",
+        "bf16_dense_tflops",
+        "int8_dense_tops"
+      ],
+      "fallback": {
+        "label_source": "synthetic",
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "details": {
+          "training": {
+            "adapted": true,
+            "theoretical_latency_s": 0.10660980810234541,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.003198294243070362,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          }
+        },
+        "conservative_factor": 0.8,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "reasons": [
+        "outside_training_static_core_range",
+        "insufficient_related_validation_for_training_sign_1",
+        "insufficient_related_validation_for_inference_sign_1"
+      ],
+      "outside_training_ranges": {
+        "memory_capacity_mib": {
+          "value": 134468,
+          "train_min": 22888,
+          "train_max": 76293
+        },
+        "memory_bandwidth_gbps": {
+          "value": 4800,
+          "train_min": 300,
+          "train_max": 3350
+        }
+      },
+      "evidence_mode": "no_related_validation_evidence",
+      "related_validation_models": [],
+      "target_validation_evidence": {
+        "training": {
+          "basis": "no_related_validation_evidence",
+          "predicted_sign": true,
+          "validation_sign_support": 0,
+          "validation_sign_correct": 0,
+          "validation_sign_precision": null,
+          "validation_sign_episodes": 0,
+          "supported": false,
+          "not_a_calibrated_confidence_interval": true
+        },
+        "inference": {
+          "basis": "no_related_validation_evidence",
+          "predicted_sign": true,
+          "validation_sign_support": 0,
+          "validation_sign_correct": 0,
+          "validation_sign_precision": null,
+          "validation_sign_episodes": 0,
+          "supported": false,
+          "not_a_calibrated_confidence_interval": true
+        }
+      },
+      "training": null,
+      "inference": null,
+      "label": "pending_verification",
+      "label_zh": "信息不足、待验证",
+      "reliability": "pending_related_validation_or_coverage"
+    },
+    "performance_ground_truth": "unknown",
+    "not_used_in_real_performance_accuracy": true,
+    "model_protocol": "B_multi_architecture"
+  }
+]

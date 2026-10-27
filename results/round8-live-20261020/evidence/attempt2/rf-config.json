@@ -1,0 +1,17 @@
+{
+  "apiVersion": "v1",
+  "data": {
+    "volcano-scheduler.conf": "actions: enqueue, allocate\ntiers:\n- plugins:\n  - name: priority\n  - name: gang\n    enablePreemptable: false\n  - name: conformance\n- plugins:\n  - name: deviceshare\n    arguments:\n      deviceshare.VGPUEnable: true\n      deviceshare.GPUSharingEnable: false\n      deviceshare.GPUNumberEnable: false\n      deviceshare.NodeLockEnable: true\n      deviceshare.SchedulePolicy: binpack\n      deviceshare.ScheduleWeight: 1\n      deviceshare.GPUSelectPolicy: rf-job\n      deviceshare.RFEnable: true\n      deviceshare.RFPredictionEnabled: true\n      deviceshare.RFEndpoint: http://127.0.0.1:18081/v1/rank\n      deviceshare.RFModelVersion: rf-v4-known-states-ee35cfabe30f\n      deviceshare.RFTimeoutMS: 500\n      deviceshare.KnownGeometriesCMName: rf-v7-device-config\n      deviceshare.KnownGeometriesCMNamespace: gpu-rf-system\n  - name: predicates\n"
+  },
+  "kind": "ConfigMap",
+  "metadata": {
+    "creationTimestamp": "2026-10-19T11:39:15Z",
+    "labels": {
+      "gpu-lab/experiment": "round7-rf"
+    },
+    "name": "rf-v7-config-on",
+    "namespace": "gpu-rf-system",
+    "resourceVersion": "48018418",
+    "uid": "4c359bbf-4256-465e-bc9c-9d794e675512"
+  }
+}

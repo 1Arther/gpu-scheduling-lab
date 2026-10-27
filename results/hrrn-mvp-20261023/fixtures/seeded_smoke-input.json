@@ -1,0 +1,400 @@
+{
+  "schema": "hrrn-queue-mvp/v1",
+  "data_kind": "synthetic_only_not_GPU_performance",
+  "devices": [
+    {
+      "gpu_id": "a/gpu-0",
+      "node": "a",
+      "profile_id": "rtx4090",
+      "max_instances": 10
+    },
+    {
+      "gpu_id": "a/gpu-1",
+      "node": "a",
+      "profile_id": "rtx4090",
+      "max_instances": 10
+    },
+    {
+      "gpu_id": "b/gpu-0",
+      "node": "b",
+      "profile_id": "l40",
+      "max_instances": 10
+    },
+    {
+      "gpu_id": "b/gpu-1",
+      "node": "b",
+      "profile_id": "l40",
+      "max_instances": 10
+    }
+  ],
+  "jobs": [
+    {
+      "job_id": "seeded-000",
+      "arrival_at": 1.5177,
+      "ready_at": 1.8292000000000002,
+      "task_type": "inference",
+      "estimated_service": 0.5,
+      "request": {
+        "memory_mib": 11031,
+        "compute_units": 32,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 0.4154,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-001",
+      "arrival_at": 2.3907,
+      "ready_at": 2.4724,
+      "task_type": "inference",
+      "estimated_service": 4.0,
+      "request": {
+        "memory_mib": 7963,
+        "compute_units": 28,
+        "instances": 3
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 0.321,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-002",
+      "arrival_at": 2.4195,
+      "ready_at": 2.4772000000000003,
+      "task_type": "inference",
+      "estimated_service": 4.0,
+      "request": {
+        "memory_mib": 12057,
+        "compute_units": 34,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 0.9975,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-003",
+      "arrival_at": 3.4475,
+      "ready_at": 3.5517,
+      "task_type": "training",
+      "estimated_service": 4.0,
+      "request": {
+        "memory_mib": 8412,
+        "compute_units": 55,
+        "instances": 2
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 2.2028,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-004",
+      "arrival_at": 5.6443,
+      "ready_at": 5.744800000000001,
+      "task_type": "training",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 13465,
+        "compute_units": 19,
+        "instances": 3
+      },
+      "gpu_count": 2,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 2.2847,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-005",
+      "arrival_at": 1.8086,
+      "ready_at": 2.091,
+      "task_type": "training",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 2639,
+        "compute_units": 27,
+        "instances": 3
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 0.7432,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-006",
+      "arrival_at": 5.6059,
+      "ready_at": 5.932,
+      "task_type": "training",
+      "estimated_service": 4.0,
+      "request": {
+        "memory_mib": 7463,
+        "compute_units": 48,
+        "instances": 3
+      },
+      "gpu_count": 2,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 0.3131,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-007",
+      "arrival_at": 3.3013,
+      "ready_at": 3.3049999999999997,
+      "task_type": "training",
+      "estimated_service": 4.0,
+      "request": {
+        "memory_mib": 6147,
+        "compute_units": 51,
+        "instances": 3
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 1.1165,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-008",
+      "arrival_at": 5.9089,
+      "ready_at": 6.1954,
+      "task_type": "inference",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 2977,
+        "compute_units": 38,
+        "instances": 2
+      },
+      "gpu_count": 2,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 1.2563,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-009",
+      "arrival_at": 3.5258,
+      "ready_at": 3.9052,
+      "task_type": "training",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 12818,
+        "compute_units": 30,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 1.3924,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-010",
+      "arrival_at": 3.2766,
+      "ready_at": 3.46,
+      "task_type": "inference",
+      "estimated_service": 4.0,
+      "request": {
+        "memory_mib": 13609,
+        "compute_units": 22,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 1.0277,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-011",
+      "arrival_at": 1.472,
+      "ready_at": 1.7008999999999999,
+      "task_type": "inference",
+      "estimated_service": 0.5,
+      "request": {
+        "memory_mib": 12899,
+        "compute_units": 60,
+        "instances": 2
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 1.4937,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-012",
+      "arrival_at": 3.3259,
+      "ready_at": 3.4141,
+      "task_type": "training",
+      "estimated_service": 4.0,
+      "request": {
+        "memory_mib": 4952,
+        "compute_units": 33,
+        "instances": 2
+      },
+      "gpu_count": 2,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 1.9741,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-013",
+      "arrival_at": 0.1999,
+      "ready_at": 0.3936,
+      "task_type": "training",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 4140,
+        "compute_units": 51,
+        "instances": 3
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 1.1212,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-014",
+      "arrival_at": 3.3859,
+      "ready_at": 3.6991,
+      "task_type": "training",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 11547,
+        "compute_units": 25,
+        "instances": 3
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 2.5867,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-015",
+      "arrival_at": 5.6515,
+      "ready_at": 5.7982000000000005,
+      "task_type": "training",
+      "estimated_service": 0.5,
+      "request": {
+        "memory_mib": 3525,
+        "compute_units": 30,
+        "instances": 3
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 2.7489,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-016",
+      "arrival_at": 2.0954,
+      "ready_at": 2.4213,
+      "task_type": "training",
+      "estimated_service": 0.5,
+      "request": {
+        "memory_mib": 12125,
+        "compute_units": 55,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 2.2711,
+      "cancel_at": null
+    },
+    {
+      "job_id": "seeded-017",
+      "arrival_at": 1.5785,
+      "ready_at": 1.6506,
+      "task_type": "training",
+      "estimated_service": 4.0,
+      "request": {
+        "memory_mib": 8676,
+        "compute_units": 33,
+        "instances": 1
+      },
+      "gpu_count": 2,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 0.6632,
+      "cancel_at": null
+    }
+  ],
+  "availability": [],
+  "config": {
+    "tau": 0.1,
+    "protection_absolute_wait": 0.5,
+    "protection_kappa": 2.0,
+    "evaluation_long_wait": 4.0,
+    "observation_end": 12.0
+  }
+}

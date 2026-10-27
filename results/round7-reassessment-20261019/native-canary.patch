@@ -1,0 +1,648 @@
+commit 1a5caec7cb44b7a939f6413057596af3cd1ec19a
+Author:     GPU Lab <gpu-lab@local.invalid>
+AuthorDate: Mon Oct 19 17:10:46 2026 +0800
+Commit:     GPU Lab <gpu-lab@local.invalid>
+CommitDate: Mon Oct 19 17:10:46 2026 +0800
+
+    Prepare opt-in RF canary sharing native ledger with legacy policy
+
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/device_info.go b/pkg/scheduler/api/devices/nvidia/vgpu/device_info.go
+index 89340bd..a993e67 100644
+--- a/pkg/scheduler/api/devices/nvidia/vgpu/device_info.go
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/device_info.go
+@@ -139,7 +139,7 @@ func NewGPUDevices(name string, node *v1.Node) *GPUDevices {
+ }
+ 
+ func (gs *GPUDevices) ScoreNode(pod *v1.Pod, schedulePolicy string) float64 {
+-	if RFActive() {
++	if RFForPod(pod) {
+ 		plan, err := rfPlanFor(gs, pod)
+ 		if err != nil {
+ 			return 0
+@@ -233,6 +233,12 @@ func (gs *GPUDevices) SubResource(pod *v1.Pod) {
+ 		rfLedgerMu.Lock()
+ 		defer rfLedgerMu.Unlock()
+ 	}
++	if gs != nil && RFForPod(pod) {
++		before := rfGPUs(gs)
++		gs.subResource(pod)
++		klog.InfoS("rf-job logical release", "pod", pod.Namespace+"/"+pod.Name, "podUID", pod.UID, "node", gs.Name, "logicalBefore", before, "logicalAfter", rfGPUs(gs))
++		return
++	}
+ 	gs.subResource(pod)
+ }
+ 
+@@ -282,7 +288,7 @@ func (gs *GPUDevices) FilterNode(pod *v1.Pod, schedulePolicy string) (int, strin
+ 			klog.ErrorS(err, "Failed to fitler node to vgpu task", "pod", pod.Name)
+ 			return devices.Unschedulable, "hami-vgpuDeviceSharing error", err
+ 		}
+-		if !RFActive() {
++		if !RFForPod(pod) {
+ 			gs.Score = score
+ 		}
+ 		klog.V(4).Infoln("hami-vgpu DeviceSharing successfully filters pods")
+@@ -291,9 +297,12 @@ func (gs *GPUDevices) FilterNode(pod *v1.Pod, schedulePolicy string) (int, strin
+ }
+ 
+ func (gs *GPUDevices) Allocate(kubeClient kubernetes.Interface, pod *v1.Pod) error {
+-	if RFActive() {
++	if RFForPod(pod) {
+ 		return gs.allocateRF(kubeClient, pod)
+ 	}
++	if RFActive() {
++		return gs.allocateLegacyShared(kubeClient, pod)
++	}
+ 	if VGPUEnable {
+ 		klog.V(4).Infoln("hami-vgpu DeviceSharing:Into AllocateToPod", pod.Name)
+ 		fit, device, _, err := checkNodeGPUSharingPredicateAndScore(pod, gs, false, "")
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/rf_canary.go b/pkg/scheduler/api/devices/nvidia/vgpu/rf_canary.go
+new file mode 100644
+index 0000000..94dc774
+--- /dev/null
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/rf_canary.go
+@@ -0,0 +1,45 @@
++package vgpu
++
++import (
++	"fmt"
++	"time"
++
++	v1 "k8s.io/api/core/v1"
++	"k8s.io/client-go/kubernetes"
++)
++
++// Keep the configured legacy device order and native feasibility rules. The
++// canary changes the commit synchronization, not the DQN policy or its service.
++// This mutex coordinates ONLY this process; it is not cross-scheduler isolation.
++func (gs *GPUDevices) allocateLegacyShared(client kubernetes.Interface, pod *v1.Pod) error {
++	if !checkVGPUResourcesInPod(pod) {
++		return nil
++	}
++	if gs.Mode != vGPUControllerHAMICore {
++		return fmt.Errorf("mixed-policy MVP requires hami-core; do not enable on MIG nodes")
++	}
++	rfLedgerMu.RLock()
++	present := rfAlreadyAllocated(gs, pod)
++	snap := rfClone(gs)
++	rfLedgerMu.RUnlock()
++	if present {
++		return fmt.Errorf("legacy Pod already accounted; refusing duplicate Allocate")
++	}
++	token := rfSnapshotToken(snap)
++	// Existing DQN RPCs run outside the ledger lock; Python is not called here.
++	fit, devices, score, err := checkNodeGPUSharingNative(pod, snap, false, "")
++	if err != nil {
++		return err
++	}
++	if !fit {
++		return fmt.Errorf("legacy native policy cannot fit Pod")
++	}
++	plan := &rfPlan{Created: time.Now(), SnapshotToken: token, Devices: devices, Score: score}
++	plan.RequestID = rfHash(struct{ Token, UID, Policy string }{token, string(pod.UID), GPUSelectPolicy})
++	rfLedgerMu.Lock()
++	defer rfLedgerMu.Unlock()
++	if rfSnapshotToken(gs) != token || rfAlreadyAllocated(gs, pod) {
++		return fmt.Errorf("legacy stale plan; retry scheduling")
++	}
++	return gs.commitNativePlan(client, pod, plan, devices, "legacy-"+normalizeGPUSelectPolicy(GPUSelectPolicy))
++}
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/rf_canary_test.go b/pkg/scheduler/api/devices/nvidia/vgpu/rf_canary_test.go
+new file mode 100644
+index 0000000..35740b3
+--- /dev/null
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/rf_canary_test.go
+@@ -0,0 +1,213 @@
++package vgpu
++
++import (
++	"context"
++	"net"
++	"os"
++	"sync"
++	"sync/atomic"
++	"testing"
++
++	"google.golang.org/grpc"
++	v1 "k8s.io/api/core/v1"
++	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
++	"k8s.io/apimachinery/pkg/runtime"
++	"k8s.io/client-go/kubernetes/fake"
++
++	dqngrpc "volcano.sh/volcano/pkg/scheduler/api/devices/nvidia/vgpu/dqngrpc"
++)
++
++func canaryTestConfig(t *testing.T) {
++	rfTestConfig(t)
++	old, ns, policy := RFCanaryEnabled, RFCanaryNamespace, GPUSelectPolicy
++	RFCanaryEnabled, RFCanaryNamespace, GPUSelectPolicy = true, "gpu-rf-tests", BinpackPolicy
++	t.Cleanup(func() { RFCanaryEnabled, RFCanaryNamespace, GPUSelectPolicy = old, ns, policy })
++}
++
++func canaryPod(name, kind string) *v1.Pod {
++	p := rfTestPod(name, kind, 4096, 20)
++	p.Namespace = "gpu-rf-tests"
++	p.Labels["gpu-lab/experiment"] = "round7-rf"
++	return p
++}
++
++func TestRFCanaryGateAndDisable(t *testing.T) {
++	canaryTestConfig(t)
++	p := canaryPod("test", "training")
++	if !RFForPod(p) || !RFActive() {
++		t.Fatal("canary not selected")
++	}
++	bad := p.DeepCopy()
++	bad.Labels[RFWorkloadLabel] = ""
++	if !RFForPod(bad) {
++		t.Fatal("invalid label bypassed validation via legacy route")
++	}
++	if _, err := rfPodRequest(bad); err == nil {
++		t.Fatal("empty workload label must be rejected")
++	}
++	for _, alter := range []func(*v1.Pod){
++		func(p *v1.Pod) { p.Namespace = "default" },
++		func(p *v1.Pod) { delete(p.Labels, "gpu-lab/experiment") },
++		func(p *v1.Pod) { delete(p.Labels, RFWorkloadLabel) },
++	} {
++		q := p.DeepCopy()
++		alter(q)
++		if RFForPod(q) {
++			t.Fatal("unrelated Pod routed to RF")
++		}
++	}
++	RFCanaryEnabled = false
++	if RFForPod(p) || RFActive() {
++		t.Fatal("default legacy policy changed")
++	}
++}
++
++type canaryDQN struct {
++	dqngrpc.UnimplementedDQNSchedulerServer
++	calls atomic.Int32
++}
++
++func (s *canaryDQN) ScheduleJob(_ context.Context, r *dqngrpc.ScheduleJobRequest) (*dqngrpc.ScheduleJobResponse, error) {
++	s.calls.Add(1)
++	if !rfLedgerMu.TryLock() {
++		panic("DQN RPC holds shared ledger lock")
++	}
++	rfLedgerMu.Unlock()
++	allocations := []*dqngrpc.PodAllocation{}
++	for _, p := range r.Pods {
++		allocations = append(allocations, &dqngrpc.PodAllocation{PodNamespace: p.PodNamespace, PodName: p.PodName, Success: true, SelectedIndexes: []int32{1}})
++	}
++	return &dqngrpc.ScheduleJobResponse{Allocations: allocations}, nil
++}
++
++func TestRFCanaryDQNAndRFShareNativeLedger(t *testing.T) {
++	canaryTestConfig(t)
++	GPUSelectPolicy = DQNJobPolicy
++	dqn := &canaryDQN{}
++	l, err := net.Listen("tcp", "127.0.0.1:0")
++	if err != nil {
++		t.Fatal(err)
++	}
++	server := grpc.NewServer()
++	dqngrpc.RegisterDQNSchedulerServer(server, dqn)
++	go server.Serve(l)
++	endpoint, kube := DQNGRPCEndpoint, dqnKubeClient
++	resetDQNClient()
++	DQNGRPCEndpoint = l.Addr().String()
++	p := canaryPod("experiment", "training")
++	q := rfTestPod("business", "inference", 4096, 20) // no canary namespace/label
++	client := fake.NewSimpleClientset(p.DeepCopy(), q.DeepCopy())
++	dqnKubeClient = client
++	dqnJobCacheMu.Lock()
++	dqnJobCache = map[string]dqnJobCacheEntry{}
++	dqnJobCacheMu.Unlock()
++	t.Cleanup(func() { resetDQNClient(); server.Stop(); l.Close(); DQNGRPCEndpoint, dqnKubeClient = endpoint, kube })
++	gs := rfTestNode("shared", "NVIDIA-GeForce RTX 4090", 2, 24564)
++	calls := rfMockServer(t, rfMockResponse)
++	for _, item := range []*v1.Pod{q, p} {
++		if _, _, err := gs.FilterNode(item, "binpack"); err != nil {
++			t.Fatal(err)
++		}
++		_ = gs.ScoreNode(item, "binpack")
++		if err := gs.Allocate(client, item); err != nil {
++			t.Fatal(err)
++		}
++	}
++	if dqn.calls.Load() != 1 || calls.Load() != 1 {
++		t.Fatalf("wrong dispatch DQN=%d RF=%d", dqn.calls.Load(), calls.Load())
++	}
++	if gs.Device[1].UsedMem != 4096 || gs.Device[0].UsedMem != 4096 {
++		t.Fatal("legacy/RF UUID or shared accounting changed")
++	}
++	for _, item := range []*v1.Pod{q, p} {
++		saved, e := client.CoreV1().Pods(item.Namespace).Get(context.Background(), item.Name, metav1.GetOptions{})
++		if e != nil {
++			t.Fatal(e)
++		}
++		gs.AddResource(saved) // native informer replay must not reserve twice
++		if gs.Device[0].UsedNum != 1 || gs.Device[1].UsedNum != 1 {
++			t.Fatal("duplicate informer accounting")
++		}
++		_ = saved
++	}
++	for _, item := range []*v1.Pod{q, p} {
++		gs.SubResource(item)
++	}
++	rfAssertEmpty(t, gs)
++}
++
++func TestRFCanaryConcurrentPoliciesCannotOverallocate(t *testing.T) {
++	canaryTestConfig(t)
++	rfMockServer(t, rfMockResponse)
++	gs := rfTestNode("one-slot", "NVIDIA-L40", 1, 4096)
++	ps := []*v1.Pod{canaryPod("rf", "training"), rfTestPod("legacy", "", 4096, 20)}
++	objects := []runtime.Object{ps[0].DeepCopy(), ps[1].DeepCopy()}
++	client := fake.NewSimpleClientset(objects...)
++	var wg sync.WaitGroup
++	var succeeded atomic.Int32
++	for _, p := range ps {
++		wg.Add(1)
++		go func(p *v1.Pod) {
++			defer wg.Done()
++			if gs.Allocate(client, p) == nil {
++				succeeded.Add(1)
++			}
++		}(p)
++	}
++	wg.Wait()
++	if succeeded.Load() != 1 || gs.Device[0].UsedMem != 4096 || gs.Device[0].UsedNum != 1 {
++		t.Fatal("shared policies overallocated")
++	}
++	for _, p := range ps {
++		if rfAlreadyAllocated(gs, p) {
++			gs.SubResource(p)
++		}
++	}
++	rfAssertEmpty(t, gs)
++}
++
++func TestRFCanaryLiveFrozenModel(t *testing.T) {
++	endpoint := os.Getenv("RF_LIVE_ENDPOINT")
++	if endpoint == "" {
++		t.Skip("requires isolated Python service")
++	}
++	canaryTestConfig(t)
++	RFEndpoint = endpoint
++	gs := rfTestNode("live-canary", "NVIDIA-GeForce RTX 4090", 2, 24564)
++	p := canaryPod("live-a", "training")
++	q := canaryPod("live-b", "inference")
++	client := fake.NewSimpleClientset(p.DeepCopy(), q.DeepCopy())
++	initial := rfSnapshotToken(gs)
++	for _, item := range []*v1.Pod{p, q} {
++		plan, err := rfPlanFor(gs, item)
++		if err != nil || plan.Fallback != "" {
++			t.Fatalf("no real RF advice: %+v %v", plan, err)
++		}
++		if _, _, err = gs.FilterNode(item, "binpack"); err != nil {
++			t.Fatal(err)
++		}
++		_ = gs.ScoreNode(item, "binpack")
++		if err = gs.Allocate(client, item); err != nil {
++			t.Fatal(err)
++		}
++		saved, err := client.CoreV1().Pods(item.Namespace).Get(context.Background(), item.Name, metav1.GetOptions{})
++		if err != nil {
++			t.Fatal(err)
++		}
++		if saved.Annotations[AssignedIDsAnnotations] != encodePodDevices(plan.Devices) {
++			t.Fatal("RF/final Allocate UUID mismatch")
++		}
++		if rfSnapshotToken(gs) == initial {
++			t.Fatal("logical state not updated")
++		}
++	}
++	gs.SubResource(p)
++	gs.SubResource(q)
++	rfAssertEmpty(t, gs)
++	if rfSnapshotToken(gs) != initial {
++		t.Fatal("state not restored")
++	}
++	if _, err := rfPlanFor(gs, canaryPod("after-release", "training")); err != nil {
++		t.Fatal(err)
++	}
++}
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/rf_job.go b/pkg/scheduler/api/devices/nvidia/vgpu/rf_job.go
+index 8ac72ce..20d51d9 100644
+--- a/pkg/scheduler/api/devices/nvidia/vgpu/rf_job.go
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/rf_job.go
+@@ -51,6 +51,8 @@ func rfHardware(model string) map[string]interface{} {
+ 
+ var (
+ 	RFEnabled           = false
++	RFCanaryEnabled     = false // opt-in mixed-policy mode, never enables a second scheduler
++	RFCanaryNamespace   = "gpu-rf-tests"
+ 	RFEndpoint          = "http://127.0.0.1:18081/v1/rank"
+ 	RFModelVersion      = "rf-v4-known-states-ee35cfabe30f"
+ 	RFTimeoutMS         = 500
+@@ -61,7 +63,23 @@ var (
+ 	rfHTTP              = &http.Client{Transport: &http.Transport{Proxy: nil}, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return fmt.Errorf("RF redirects disabled") }}
+ )
+ 
+-func RFActive() bool { return VGPUEnable && RFEnabled && GPUSelectPolicy == RFJobPolicy }
++// RFActive guards shared bookkeeping, including non-RF Pods in canary mode.
++// RFForPod is the separate per-Pod policy gate; never mutate global policy in a request.
++func RFActive() bool {
++	return VGPUEnable && RFEnabled && (GPUSelectPolicy == RFJobPolicy || RFCanaryEnabled)
++}
++
++func RFForPod(pod *v1.Pod) bool {
++	if !RFActive() || pod == nil {
++		return false
++	}
++	if GPUSelectPolicy == RFJobPolicy {
++		return true // preserve round-six missing-label deterministic fallback
++	}
++	_, hasWorkload := pod.Labels[RFWorkloadLabel]
++	return RFCanaryEnabled && RFCanaryNamespace != "" && pod.Namespace == RFCanaryNamespace &&
++		pod.Labels["gpu-lab/experiment"] == "round7-rf" && hasWorkload
++}
+ 
+ type rfGPU struct {
+ 	UUID             string                 `json:"uuid"`
+@@ -669,6 +687,13 @@ func (gs *GPUDevices) allocateRF(client kubernetes.Interface, pod *v1.Pod) error
+ 	if err != nil {
+ 		return err
+ 	}
++	return gs.commitNativePlan(client, pod, plan, devices, RFJobPolicy)
++}
++
++// Caller holds rfLedgerMu and has checked its plan against the current ledger.
++// Both canary policies commit through the same AddPod/annotation/rollback path.
++func (gs *GPUDevices) commitNativePlan(client kubernetes.Interface, pod *v1.Pod, plan *rfPlan, devices []ContainerDevices, route string) error {
++	var err error
+ 	if NodeLockEnable {
+ 		nodelock.UseClient(client)
+ 		if err = nodelock.LockNode(gs.Name, DeviceName); err != nil {
+@@ -677,6 +702,7 @@ func (gs *GPUDevices) allocateRF(client kubernetes.Interface, pod *v1.Pod) error
+ 	}
+ 	annotations := map[string]string{AssignedNodeAnnotations: gs.Name, AssignedTimeAnnotations: fmt.Sprint(time.Now().Unix()), AssignedIDsAnnotations: encodePodDevices(devices),
+ 		AssignedIDsToAllocateAnnotations: encodePodDevices(devices), DeviceBindPhase: "allocating", BindTimeAnnotations: fmt.Sprint(time.Now().Unix())}
++	before := rfGPUs(gs)
+ 	gs.addResource(annotations, pod)
+ 	if err = patchPodAnnotations(client, pod, annotations); err != nil {
+ 		copy := pod.DeepCopy()
+@@ -693,6 +719,6 @@ func (gs *GPUDevices) allocateRF(client kubernetes.Interface, pod *v1.Pod) error
+ 	for key, value := range annotations {
+ 		pod.Annotations[key] = value
+ 	}
+-	klog.InfoS("rf-job UUID allocation", "pod", pod.Namespace+"/"+pod.Name, "node", gs.Name, "requestID", plan.RequestID, "devices", annotations[AssignedIDsAnnotations], "score", plan.Score, "fallback", plan.Fallback)
++	klog.InfoS("rf-job UUID allocation", "route", route, "pod", pod.Namespace+"/"+pod.Name, "podUID", pod.UID, "node", gs.Name, "requestID", plan.RequestID, "devices", annotations[AssignedIDsAnnotations], "score", plan.Score, "fallback", plan.Fallback, "logicalBefore", before, "logicalAfter", rfGPUs(gs))
+ 	return nil
+ }
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/rf_window_policy_test.go b/pkg/scheduler/api/devices/nvidia/vgpu/rf_window_policy_test.go
+new file mode 100644
+index 0000000..fb2d60d
+--- /dev/null
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/rf_window_policy_test.go
+@@ -0,0 +1,72 @@
++package vgpu
++
++// Offline CEL validation only. Does not install a policy or contact API Server.
++import (
++	"encoding/json"
++	"os"
++	"testing"
++
++	"github.com/google/cel-go/cel"
++)
++
++func TestRFLogicalWindowPolicyCEL(t *testing.T) {
++	path := os.Getenv("RF_WINDOW_CASES")
++	if path == "" {
++		t.Skip("set RF_WINDOW_CASES to generated policy-cases.json")
++	}
++	var fixtures struct {
++		Variables  []struct{ Name, Expression string }
++		Expression string
++		Cases      []struct {
++			Name    string
++			Pod     map[string]interface{}
++			Allowed bool
++		}
++	}
++	data, err := os.ReadFile(path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	if err = json.Unmarshal(data, &fixtures); err != nil {
++		t.Fatal(err)
++	}
++	env, err := cel.NewEnv(cel.Variable("object", cel.DynType), cel.Variable("variables", cel.MapType(cel.StringType, cel.DynType)))
++	if err != nil {
++		t.Fatal(err)
++	}
++	compile := func(expr string) cel.Program {
++		ast, issues := env.Compile(expr)
++		if issues.Err() != nil {
++			t.Fatal(issues.Err())
++		}
++		program, e := env.Program(ast)
++		if e != nil {
++			t.Fatal(e)
++		}
++		return program
++	}
++	variables := make([]cel.Program, len(fixtures.Variables))
++	for i, v := range fixtures.Variables {
++		variables[i] = compile(v.Expression)
++	}
++	validation := compile(fixtures.Expression)
++	for _, c := range fixtures.Cases {
++		t.Run(c.Name, func(t *testing.T) {
++			values := map[string]interface{}{}
++			for i, v := range fixtures.Variables {
++				value, _, e := variables[i].Eval(map[string]interface{}{"object": c.Pod, "variables": values})
++				if e != nil {
++					t.Fatal(e)
++				}
++				values[v.Name] = value
++			}
++			value, _, e := validation.Eval(map[string]interface{}{"object": c.Pod, "variables": values})
++			if e != nil {
++				t.Fatal(e)
++			}
++			if value.Value() != c.Allowed {
++				t.Fatalf("allowed=%v expected=%v", value.Value(), c.Allowed)
++			}
++		})
++	}
++}
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/utils.go b/pkg/scheduler/api/devices/nvidia/vgpu/utils.go
+index aba2c9e..674b5aa 100644
+--- a/pkg/scheduler/api/devices/nvidia/vgpu/utils.go
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/utils.go
+@@ -769,6 +769,24 @@ func orderedGPUIndexes(gs *GPUDevices, pod *v1.Pod, req ContainerDeviceRequest)
+ // - float64: 该次分配得到的调度分数
+ // - error: 不可调度原因
+ func checkNodeGPUSharingPredicateAndScore(pod *v1.Pod, gssnap *GPUDevices, replicate bool, schedulePolicy string) (bool, []ContainerDevices, float64, error) {
++	if RFForPod(pod) && checkVGPUResourcesInPod(pod) {
++		plan, err := rfPlanFor(gssnap, pod)
++		if err != nil {
++			return false, nil, 0, err
++		}
++		return true, plan.Devices, plan.Score, nil
++	}
++	if RFActive() {
++		rfLedgerMu.RLock()
++		gssnap = rfClone(gssnap)
++		rfLedgerMu.RUnlock()
++	}
++	return checkNodeGPUSharingNative(pod, gssnap, replicate, schedulePolicy)
++}
++
++// Original policy path, including dqn-job ordering. All RPCs operate on a
++// detached snapshot in mixed-policy mode, outside the ledger write lock.
++func checkNodeGPUSharingNative(pod *v1.Pod, gssnap *GPUDevices, replicate bool, schedulePolicy string) (bool, []ContainerDevices, float64, error) {
+ 	score := float64(0)
+ 
+ 	if !checkVGPUResourcesInPod(pod) {
+@@ -780,14 +798,6 @@ func checkNodeGPUSharingPredicateAndScore(pod *v1.Pod, gssnap *GPUDevices, repli
+ 		return false, []ContainerDevices{}, 0, fmt.Errorf("pod required sharing mode %s is not the same as the node mode %s", podSharingMode, gssnap.Mode)
+ 	}
+ 
+-	if RFActive() {
+-		plan, err := rfPlanFor(gssnap, pod)
+-		if err != nil {
+-			return false, nil, 0, err
+-		}
+-		return true, plan.Devices, plan.Score, nil
+-	}
+-
+ 	ctrReq := resourcereqs(pod)
+ 	if len(ctrReq) == 0 {
+ 		return true, []ContainerDevices{}, 0, nil
+diff --git a/pkg/scheduler/plugins/deviceshare/deviceshare.go b/pkg/scheduler/plugins/deviceshare/deviceshare.go
+index 0478c21..9b75b6d 100644
+--- a/pkg/scheduler/plugins/deviceshare/deviceshare.go
++++ b/pkg/scheduler/plugins/deviceshare/deviceshare.go
+@@ -46,13 +46,16 @@ const (
+ 	SchedulePolicyArgument = "deviceshare.SchedulePolicy"
+ 	ScheduleWeight         = "deviceshare.ScheduleWeight"
+ 	//节点内GPU选择策略
+-	GPUSelectPolicyArgument = "deviceshare.GPUSelectPolicy"
+-	DQNGRPCEndpointArgument = "deviceshare.DQNGRPCEndpoint"
+-	RFEnableArgument        = "deviceshare.RFEnable"
+-	RFEndpointArgument      = "deviceshare.RFEndpoint"
+-	RFModelVersionArgument  = "deviceshare.RFModelVersion"
+-	RFTimeoutArgument       = "deviceshare.RFTimeoutMS"
+-	RFPredictionArgument    = "deviceshare.RFPredictionEnabled"
++	GPUSelectPolicyArgument   = "deviceshare.GPUSelectPolicy"
++	DQNGRPCEndpointArgument   = "deviceshare.DQNGRPCEndpoint"
++	RFEnableArgument          = "deviceshare.RFEnable"
++	RFEndpointArgument        = "deviceshare.RFEndpoint"
++	RFModelVersionArgument    = "deviceshare.RFModelVersion"
++	RFTimeoutArgument         = "deviceshare.RFTimeoutMS"
++	RFPredictionArgument      = "deviceshare.RFPredictionEnabled"
++	RFCanaryArgument          = "deviceshare.RFCanaryEnable"
++	RFCanaryNamespaceArgument = "deviceshare.RFCanaryNamespace"
++	RFCanaryWeightArgument    = "deviceshare.RFCanaryScheduleWeight"
+ 
+ 	KnownGeometriesCMName      = "deviceshare.KnownGeometriesCMName"
+ 	KnownGeometriesCMNamespace = "deviceshare.KnownGeometriesCMNamespace"
+@@ -63,11 +66,12 @@ type deviceSharePlugin struct {
+ 	pluginArguments framework.Arguments
+ 	schedulePolicy  string
+ 	scheduleWeight  int
++	canaryWeight    int
+ }
+ 
+ // New return priority plugin
+ func New(arguments framework.Arguments) framework.Plugin {
+-	dsp := &deviceSharePlugin{pluginArguments: arguments, schedulePolicy: "", scheduleWeight: 0}
++	dsp := &deviceSharePlugin{pluginArguments: arguments, schedulePolicy: "", scheduleWeight: 0, canaryWeight: 1}
+ 	enablePredicate(dsp)
+ 	return dsp
+ }
+@@ -96,13 +100,18 @@ func enablePredicate(dsp *deviceSharePlugin) {
+ 	klog.Infof("deviceshare GPUSelectPolicy=%s", vgpu.GPUSelectPolicy)
+ 	vgpu.RFEnabled = false
+ 	args.GetBool(&vgpu.RFEnabled, RFEnableArgument)
++	vgpu.RFCanaryEnabled = false
++	vgpu.RFCanaryNamespace = "gpu-rf-tests"
++	args.GetBool(&vgpu.RFCanaryEnabled, RFCanaryArgument)
++	args.GetString(&vgpu.RFCanaryNamespace, RFCanaryNamespaceArgument)
++	args.GetInt(&dsp.canaryWeight, RFCanaryWeightArgument)
+ 	args.GetString(&vgpu.RFEndpoint, RFEndpointArgument)
+ 	args.GetString(&vgpu.RFModelVersion, RFModelVersionArgument)
+ 	args.GetInt(&vgpu.RFTimeoutMS, RFTimeoutArgument)
+ 	vgpu.RFPredictionEnabled = true // same frozen weights; optional single-term ablation
+ 	args.GetBool(&vgpu.RFPredictionEnabled, RFPredictionArgument)
+ 	if vgpu.RFActive() {
+-		if _, explicit := args[ScheduleWeight]; !explicit {
++		if _, explicit := args[ScheduleWeight]; !explicit && vgpu.GPUSelectPolicy == vgpu.RFJobPolicy {
+ 			dsp.scheduleWeight = 1
+ 		}
+ 		klog.Infof("deviceshare rf-job enabled endpoint=%s model=%s timeoutMs=%d", vgpu.RFEndpoint, vgpu.RFModelVersion, vgpu.RFTimeoutMS)
+@@ -136,6 +145,13 @@ func createStatus(code int, reason string) *api.Status {
+ 	return &status
+ }
+ 
++func (dp *deviceSharePlugin) weightForPod(pod *v1.Pod) int {
++	if vgpu.RFCanaryEnabled && vgpu.GPUSelectPolicy != vgpu.RFJobPolicy && vgpu.RFForPod(pod) {
++		return dp.canaryWeight
++	}
++	return dp.scheduleWeight
++}
++
+ func getDeviceScore(ctx context.Context, pod *v1.Pod, node *api.NodeInfo, schedulePolicy string) (int64, *k8sframework.Status) {
+ 	s := float64(0)
+ 	for _, devices := range node.Others {
+@@ -192,7 +208,8 @@ func (dp *deviceSharePlugin) OnSessionOpen(ssn *framework.Session) {
+ 	ssn.AddNodeOrderFn(dp.Name(), func(task *api.TaskInfo, node *api.NodeInfo) (float64, error) {
+ 		// DeviceScore
+ 		nodeScore := float64(0)
+-		if dp.scheduleWeight > 0 {
++		weight := dp.weightForPod(task.Pod)
++		if weight > 0 {
+ 			score, status := getDeviceScore(context.TODO(), task.Pod, node, dp.schedulePolicy)
+ 			if !status.IsSuccess() {
+ 				klog.Warningf("Node: %s, Calculate Device Score Failed because of Error: %v", node.Name, status.AsError())
+@@ -200,8 +217,8 @@ func (dp *deviceSharePlugin) OnSessionOpen(ssn *framework.Session) {
+ 			}
+ 
+ 			// TODO: we should use a seperate plugin for devices, and seperate them from predicates and nodeOrder plugin.
+-			nodeScore = float64(score) * float64(dp.scheduleWeight)
+-			klog.V(5).Infof("Node: %s, task<%s/%s> Device Score weight %d, score: %f", node.Name, task.Namespace, task.Name, dp.scheduleWeight, nodeScore)
++			nodeScore = float64(score) * float64(weight)
++			klog.V(5).Infof("Node: %s, task<%s/%s> Device Score weight %d, score: %f", node.Name, task.Namespace, task.Name, weight, nodeScore)
+ 		}
+ 		return nodeScore, nil
+ 	})
+diff --git a/pkg/scheduler/plugins/deviceshare/rf_round7_test.go b/pkg/scheduler/plugins/deviceshare/rf_round7_test.go
+index c1f1c9f..5e9e7c5 100644
+--- a/pkg/scheduler/plugins/deviceshare/rf_round7_test.go
++++ b/pkg/scheduler/plugins/deviceshare/rf_round7_test.go
+@@ -1,6 +1,8 @@
+ package deviceshare
+ 
+ import (
++	v1 "k8s.io/api/core/v1"
++	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+ 	"testing"
+ 
+ 	"volcano.sh/volcano/pkg/scheduler/api/devices/nvidia/vgpu"
+@@ -22,3 +24,20 @@ func TestRFPredictionArgumentDefaultAndOverride(t *testing.T) {
+ 		t.Fatal("default changed")
+ 	}
+ }
++
++func TestRFCanaryConfigKeepsLegacyWeightAndPolicy(t *testing.T) {
++	oldRF, oldCanary, oldVGPU, oldPolicy, oldNS := vgpu.RFEnabled, vgpu.RFCanaryEnabled, vgpu.VGPUEnable, vgpu.GPUSelectPolicy, vgpu.RFCanaryNamespace
++	t.Cleanup(func() {
++		vgpu.RFEnabled, vgpu.RFCanaryEnabled, vgpu.VGPUEnable, vgpu.GPUSelectPolicy, vgpu.RFCanaryNamespace = oldRF, oldCanary, oldVGPU, oldPolicy, oldNS
++	})
++	dp := New(framework.Arguments{VGPUEnable: false, RFEnableArgument: true, RFCanaryArgument: true, GPUSelectPolicyArgument: vgpu.DQNJobPolicy}).(*deviceSharePlugin)
++	vgpu.VGPUEnable = true // avoid cluster config initialization; policy logic only
++	p := &v1.Pod{ObjectMeta: metav1.ObjectMeta{Namespace: "gpu-rf-tests", Labels: map[string]string{"gpu-lab/experiment": "round7-rf", vgpu.RFWorkloadLabel: "training"}}}
++	if !vgpu.RFForPod(p) || vgpu.GPUSelectPolicy != vgpu.DQNJobPolicy || dp.weightForPod(p) != 1 {
++		t.Fatal("canary not isolated from configured legacy policy")
++	}
++	p.Namespace = "default"
++	if vgpu.RFForPod(p) || dp.weightForPod(p) != 0 {
++		t.Fatal("legacy weight changed")
++	}
++}

@@ -1,0 +1,9 @@
+# Arguments fragment for a NEW isolated test scheduler; never applied online.
+# OFF by default in Go. RFEnable=true AND GPUSelectPolicy=rf-job are required.
+deviceshare.VGPUEnable: true
+deviceshare.GPUSelectPolicy: rf-job
+deviceshare.RFEnable: true
+deviceshare.RFEndpoint: http://127.0.0.1:18081/v1/rank
+deviceshare.RFModelVersion: rf-v4-known-states-ee35cfabe30f
+deviceshare.RFTimeoutMS: 500
+deviceshare.ScheduleWeight: 1

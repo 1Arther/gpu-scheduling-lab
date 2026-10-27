@@ -1,0 +1,71 @@
+{
+  "generated_utc": "2026-10-19T11:55:00.475382+00:00",
+  "data_source": "real Kubernetes API + native Volcano + actual Device Plugin AllocateResponse; sleep only",
+  "pods_submitted": 6,
+  "pods_running": 6,
+  "legal_allocation_success_rate": 1.0,
+  "rf_native_plugin_consistency": {
+    "matched": 5,
+    "eligible": 5,
+    "rate": 1.0,
+    "learned_term_enabled": 4,
+    "learned_term_disabled": 1,
+    "service_failure_excluded": 1
+  },
+  "native_plugin_consistency": {
+    "matched": 6,
+    "total": 6,
+    "rate": 1.0
+  },
+  "native_quota_delta_correct": {
+    "correct": 6,
+    "total": 6
+  },
+  "observed_over_allocations": 0,
+  "release_uid_count": 6,
+  "release_evidence": "6 deleted Pod UIDs with matching native SubResource deltas; clone/cache view repetitions not counted as separate releases; subsequent live RF inputs establish resumed state",
+  "same_process_dynamic_release_verified": true,
+  "final_direct_gauges_zero": {
+    "gauge_count": 12,
+    "source": "last RF scheduler metrics after fallback Pod deletion",
+    "interpretation": "supporting evidence; metric resets during cache/view construction are not a global-cache dump"
+  },
+  "classification_labels_seen": [
+    "balanced"
+  ],
+  "rf_on_off_uuid_changed": false,
+  "independent_rf_selection_benefit_demonstrated": false,
+  "fault_fallback": {
+    "tested": 1,
+    "successful": 1,
+    "reason": "Post \"http://127.0.0.1:1/v1/rank\": dial tcp 127.0.0.1:1: connect: connection refused",
+    "real_rf_advice_available": false
+  },
+  "peak_observed_logical_memory_reservation_rate": 0.08337404331542095,
+  "peak_observed_logical_compute_reservation_rate": 0.1,
+  "reference_fragmentation_max": 0.0,
+  "original_scheduler_restored": {
+    "utc": "2026-10-19T11:42:39.718978+00:00",
+    "replicas": 1,
+    "available": 1,
+    "original_spec_equal": true,
+    "original_config_data_equal": true,
+    "original_config_uid": "ad4a40e0-afdf-4180-885f-0c90744ff32d",
+    "config_resource_version": "21788675",
+    "rf_pods_remaining": 0,
+    "errors": []
+  },
+  "models_retrained": false,
+  "cuda_workloads_executed": false,
+  "harness_state_preserved": {
+    "experiment_success": false,
+    "error": "RuntimeError('Native fallback not recorded')",
+    "explanation": "Raw harness stopped on a wrong boolean expectation for a string fallback field; all six real allocations verified independently from saved evidence. No raw success flag overwritten."
+  },
+  "not_tested": [
+    "real GPU throughput, training/inference runtime, CUDA correctness",
+    "heterogeneous 5090/L40 choice in real Kubernetes",
+    "independent production DQN/native Binpack comparison"
+  ],
+  "release_observability_limit": "SubResource logs include cloned scheduling views, not a unique global-cache commit journal; API reconstruction, next live allocation snapshots and final metrics are reported separately."
+}

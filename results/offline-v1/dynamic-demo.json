@@ -1,0 +1,627 @@
+{
+  "data_kind": "synthetic_dynamic_demo",
+  "profile_id": "l40",
+  "events": [
+    {
+      "event": "initial",
+      "state": {
+        "data_kind": "synthetic_resource_state",
+        "gpu_id": "synthetic-l40-demo-0",
+        "profile_id": "l40",
+        "revision": 0,
+        "capacity_memory_mib": 45776,
+        "remaining_memory_mib": 45776,
+        "remaining_compute_units": 100,
+        "allocated_instances": 0,
+        "remaining_instances": 10,
+        "existing_task_types": {
+          "training": 0,
+          "inference": 0
+        },
+        "allocations": []
+      },
+      "prediction": {
+        "label": "balanced",
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "prediction_kind": "RandomForest_prediction_of_synthetic_reference_class",
+        "note": "Vote probabilities are not calibrated performance guarantees"
+      },
+      "reference_assessment": {
+        "label": "balanced",
+        "label_kind": "synthetic_analytical_reference",
+        "reference_details": {
+          "training": {
+            "hard_resources_ok": true,
+            "required_compute_units_for_reference_slo": 32,
+            "latency_budget_compute_units": 100,
+            "analytical_latency_s": 0.06314127861089187,
+            "analytical_throughput_per_s": 15.837499999999999,
+            "meets_reference": true
+          },
+          "inference": {
+            "hard_resources_ok": true,
+            "required_compute_units_for_reference_slo": 53,
+            "latency_budget_compute_units": 100,
+            "analytical_latency_s": 0.00526094276094276,
+            "analytical_throughput_per_s": 190.08,
+            "meets_reference": true
+          }
+        }
+      }
+    },
+    {
+      "event": "allocate:compute-heavy",
+      "state": {
+        "data_kind": "synthetic_resource_state",
+        "gpu_id": "synthetic-l40-demo-0",
+        "profile_id": "l40",
+        "revision": 1,
+        "capacity_memory_mib": 45776,
+        "remaining_memory_mib": 44776,
+        "remaining_compute_units": 40,
+        "allocated_instances": 1,
+        "remaining_instances": 9,
+        "existing_task_types": {
+          "training": 1,
+          "inference": 0
+        },
+        "allocations": [
+          {
+            "allocation_id": "compute-heavy",
+            "task_type": "training",
+            "request": {
+              "memory_mib": 1000,
+              "compute_units": 60,
+              "instances": 1
+            }
+          }
+        ]
+      },
+      "prediction": {
+        "label": "training_preferred",
+        "class_probabilities": {
+          "training_preferred": 1.0,
+          "inference_preferred": 0.0,
+          "balanced": 0.0,
+          "unavailable": 0.0
+        },
+        "prediction_kind": "RandomForest_prediction_of_synthetic_reference_class",
+        "note": "Vote probabilities are not calibrated performance guarantees"
+      },
+      "reference_assessment": {
+        "label": "training_preferred",
+        "label_kind": "synthetic_analytical_reference",
+        "reference_details": {
+          "training": {
+            "hard_resources_ok": true,
+            "required_compute_units_for_reference_slo": 32,
+            "latency_budget_compute_units": 40,
+            "analytical_latency_s": 0.15785319652722968,
+            "analytical_throughput_per_s": 6.335,
+            "meets_reference": true
+          },
+          "inference": {
+            "hard_resources_ok": false,
+            "required_compute_units_for_reference_slo": 53,
+            "latency_budget_compute_units": 40,
+            "analytical_latency_s": 0.0131523569023569,
+            "analytical_throughput_per_s": 76.03200000000001,
+            "meets_reference": false
+          }
+        }
+      }
+    },
+    {
+      "event": "allocate:memory-heavy",
+      "state": {
+        "data_kind": "synthetic_resource_state",
+        "gpu_id": "synthetic-l40-demo-0",
+        "profile_id": "l40",
+        "revision": 2,
+        "capacity_memory_mib": 45776,
+        "remaining_memory_mib": 6000,
+        "remaining_compute_units": 35,
+        "allocated_instances": 2,
+        "remaining_instances": 8,
+        "existing_task_types": {
+          "training": 1,
+          "inference": 1
+        },
+        "allocations": [
+          {
+            "allocation_id": "compute-heavy",
+            "task_type": "training",
+            "request": {
+              "memory_mib": 1000,
+              "compute_units": 60,
+              "instances": 1
+            }
+          },
+          {
+            "allocation_id": "memory-heavy",
+            "task_type": "inference",
+            "request": {
+              "memory_mib": 38776,
+              "compute_units": 5,
+              "instances": 1
+            }
+          }
+        ]
+      },
+      "prediction": {
+        "label": "unavailable",
+        "class_probabilities": {
+          "training_preferred": 0.04389559729911965,
+          "inference_preferred": 0.15828023694829868,
+          "balanced": 0.005056288537603222,
+          "unavailable": 0.7927678772149785
+        },
+        "prediction_kind": "RandomForest_prediction_of_synthetic_reference_class",
+        "note": "Vote probabilities are not calibrated performance guarantees"
+      },
+      "reference_assessment": {
+        "label": "unavailable",
+        "label_kind": "synthetic_analytical_reference",
+        "reference_details": {
+          "training": {
+            "hard_resources_ok": false,
+            "required_compute_units_for_reference_slo": 32,
+            "latency_budget_compute_units": 35,
+            "analytical_latency_s": 0.1804036531739768,
+            "analytical_throughput_per_s": 5.543124999999999,
+            "meets_reference": false
+          },
+          "inference": {
+            "hard_resources_ok": false,
+            "required_compute_units_for_reference_slo": 53,
+            "latency_budget_compute_units": 35,
+            "analytical_latency_s": 0.015031265031265032,
+            "analytical_throughput_per_s": 66.52799999999999,
+            "meets_reference": false
+          }
+        }
+      }
+    },
+    {
+      "event": "release:compute-heavy",
+      "state": {
+        "data_kind": "synthetic_resource_state",
+        "gpu_id": "synthetic-l40-demo-0",
+        "profile_id": "l40",
+        "revision": 3,
+        "capacity_memory_mib": 45776,
+        "remaining_memory_mib": 7000,
+        "remaining_compute_units": 95,
+        "allocated_instances": 1,
+        "remaining_instances": 9,
+        "existing_task_types": {
+          "training": 0,
+          "inference": 1
+        },
+        "allocations": [
+          {
+            "allocation_id": "memory-heavy",
+            "task_type": "inference",
+            "request": {
+              "memory_mib": 38776,
+              "compute_units": 5,
+              "instances": 1
+            }
+          }
+        ]
+      },
+      "prediction": {
+        "label": "inference_preferred",
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.9451963729417,
+          "balanced": 0.05416666666666667,
+          "unavailable": 0.0006369603916332888
+        },
+        "prediction_kind": "RandomForest_prediction_of_synthetic_reference_class",
+        "note": "Vote probabilities are not calibrated performance guarantees"
+      },
+      "reference_assessment": {
+        "label": "inference_preferred",
+        "label_kind": "synthetic_analytical_reference",
+        "reference_details": {
+          "training": {
+            "hard_resources_ok": false,
+            "required_compute_units_for_reference_slo": 32,
+            "latency_budget_compute_units": 95,
+            "analytical_latency_s": 0.06646450380093882,
+            "analytical_throughput_per_s": 15.045624999999998,
+            "meets_reference": false
+          },
+          "inference": {
+            "hard_resources_ok": true,
+            "required_compute_units_for_reference_slo": 53,
+            "latency_budget_compute_units": 95,
+            "analytical_latency_s": 0.005537834485202907,
+            "analytical_throughput_per_s": 180.576,
+            "meets_reference": true
+          }
+        }
+      }
+    },
+    {
+      "event": "release:memory-heavy",
+      "state": {
+        "data_kind": "synthetic_resource_state",
+        "gpu_id": "synthetic-l40-demo-0",
+        "profile_id": "l40",
+        "revision": 4,
+        "capacity_memory_mib": 45776,
+        "remaining_memory_mib": 45776,
+        "remaining_compute_units": 100,
+        "allocated_instances": 0,
+        "remaining_instances": 10,
+        "existing_task_types": {
+          "training": 0,
+          "inference": 0
+        },
+        "allocations": []
+      },
+      "prediction": {
+        "label": "balanced",
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "prediction_kind": "RandomForest_prediction_of_synthetic_reference_class",
+        "note": "Vote probabilities are not calibrated performance guarantees"
+      },
+      "reference_assessment": {
+        "label": "balanced",
+        "label_kind": "synthetic_analytical_reference",
+        "reference_details": {
+          "training": {
+            "hard_resources_ok": true,
+            "required_compute_units_for_reference_slo": 32,
+            "latency_budget_compute_units": 100,
+            "analytical_latency_s": 0.06314127861089187,
+            "analytical_throughput_per_s": 15.837499999999999,
+            "meets_reference": true
+          },
+          "inference": {
+            "hard_resources_ok": true,
+            "required_compute_units_for_reference_slo": 53,
+            "latency_budget_compute_units": 100,
+            "analytical_latency_s": 0.00526094276094276,
+            "analytical_throughput_per_s": 190.08,
+            "meets_reference": true
+          }
+        }
+      }
+    }
+  ],
+  "initial_offline_fleet": [
+    {
+      "state": {
+        "data_kind": "synthetic_resource_state",
+        "gpu_id": "offline-4090-node/gpu-0",
+        "profile_id": "rtx4090",
+        "revision": 0,
+        "capacity_memory_mib": 22888,
+        "remaining_memory_mib": 22888,
+        "remaining_compute_units": 100,
+        "allocated_instances": 0,
+        "remaining_instances": 10,
+        "existing_task_types": {
+          "training": 0,
+          "inference": 0
+        },
+        "allocations": []
+      },
+      "prediction": {
+        "label": "balanced",
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "prediction_kind": "RandomForest_prediction_of_synthetic_reference_class",
+        "note": "Vote probabilities are not calibrated performance guarantees"
+      }
+    },
+    {
+      "state": {
+        "data_kind": "synthetic_resource_state",
+        "gpu_id": "offline-4090-node/gpu-1",
+        "profile_id": "rtx4090",
+        "revision": 0,
+        "capacity_memory_mib": 22888,
+        "remaining_memory_mib": 22888,
+        "remaining_compute_units": 100,
+        "allocated_instances": 0,
+        "remaining_instances": 10,
+        "existing_task_types": {
+          "training": 0,
+          "inference": 0
+        },
+        "allocations": []
+      },
+      "prediction": {
+        "label": "balanced",
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "prediction_kind": "RandomForest_prediction_of_synthetic_reference_class",
+        "note": "Vote probabilities are not calibrated performance guarantees"
+      }
+    },
+    {
+      "state": {
+        "data_kind": "synthetic_resource_state",
+        "gpu_id": "offline-4090-node/gpu-2",
+        "profile_id": "rtx4090",
+        "revision": 0,
+        "capacity_memory_mib": 22888,
+        "remaining_memory_mib": 22888,
+        "remaining_compute_units": 100,
+        "allocated_instances": 0,
+        "remaining_instances": 10,
+        "existing_task_types": {
+          "training": 0,
+          "inference": 0
+        },
+        "allocations": []
+      },
+      "prediction": {
+        "label": "balanced",
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "prediction_kind": "RandomForest_prediction_of_synthetic_reference_class",
+        "note": "Vote probabilities are not calibrated performance guarantees"
+      }
+    },
+    {
+      "state": {
+        "data_kind": "synthetic_resource_state",
+        "gpu_id": "offline-4090-node/gpu-3",
+        "profile_id": "rtx4090",
+        "revision": 0,
+        "capacity_memory_mib": 22888,
+        "remaining_memory_mib": 22888,
+        "remaining_compute_units": 100,
+        "allocated_instances": 0,
+        "remaining_instances": 10,
+        "existing_task_types": {
+          "training": 0,
+          "inference": 0
+        },
+        "allocations": []
+      },
+      "prediction": {
+        "label": "balanced",
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "prediction_kind": "RandomForest_prediction_of_synthetic_reference_class",
+        "note": "Vote probabilities are not calibrated performance guarantees"
+      }
+    },
+    {
+      "state": {
+        "data_kind": "synthetic_resource_state",
+        "gpu_id": "offline-5090-node/gpu-0",
+        "profile_id": "rtx5090",
+        "revision": 0,
+        "capacity_memory_mib": 30517,
+        "remaining_memory_mib": 30517,
+        "remaining_compute_units": 100,
+        "allocated_instances": 0,
+        "remaining_instances": 10,
+        "existing_task_types": {
+          "training": 0,
+          "inference": 0
+        },
+        "allocations": []
+      },
+      "prediction": {
+        "label": "balanced",
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "prediction_kind": "RandomForest_prediction_of_synthetic_reference_class",
+        "note": "Vote probabilities are not calibrated performance guarantees"
+      }
+    },
+    {
+      "state": {
+        "data_kind": "synthetic_resource_state",
+        "gpu_id": "offline-5090-node/gpu-1",
+        "profile_id": "rtx5090",
+        "revision": 0,
+        "capacity_memory_mib": 30517,
+        "remaining_memory_mib": 30517,
+        "remaining_compute_units": 100,
+        "allocated_instances": 0,
+        "remaining_instances": 10,
+        "existing_task_types": {
+          "training": 0,
+          "inference": 0
+        },
+        "allocations": []
+      },
+      "prediction": {
+        "label": "balanced",
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "prediction_kind": "RandomForest_prediction_of_synthetic_reference_class",
+        "note": "Vote probabilities are not calibrated performance guarantees"
+      }
+    },
+    {
+      "state": {
+        "data_kind": "synthetic_resource_state",
+        "gpu_id": "offline-5090-node/gpu-2",
+        "profile_id": "rtx5090",
+        "revision": 0,
+        "capacity_memory_mib": 30517,
+        "remaining_memory_mib": 30517,
+        "remaining_compute_units": 100,
+        "allocated_instances": 0,
+        "remaining_instances": 10,
+        "existing_task_types": {
+          "training": 0,
+          "inference": 0
+        },
+        "allocations": []
+      },
+      "prediction": {
+        "label": "balanced",
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "prediction_kind": "RandomForest_prediction_of_synthetic_reference_class",
+        "note": "Vote probabilities are not calibrated performance guarantees"
+      }
+    },
+    {
+      "state": {
+        "data_kind": "synthetic_resource_state",
+        "gpu_id": "offline-5090-node/gpu-3",
+        "profile_id": "rtx5090",
+        "revision": 0,
+        "capacity_memory_mib": 30517,
+        "remaining_memory_mib": 30517,
+        "remaining_compute_units": 100,
+        "allocated_instances": 0,
+        "remaining_instances": 10,
+        "existing_task_types": {
+          "training": 0,
+          "inference": 0
+        },
+        "allocations": []
+      },
+      "prediction": {
+        "label": "balanced",
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "prediction_kind": "RandomForest_prediction_of_synthetic_reference_class",
+        "note": "Vote probabilities are not calibrated performance guarantees"
+      }
+    },
+    {
+      "state": {
+        "data_kind": "synthetic_resource_state",
+        "gpu_id": "offline-l40-node/gpu-0",
+        "profile_id": "l40",
+        "revision": 0,
+        "capacity_memory_mib": 45776,
+        "remaining_memory_mib": 45776,
+        "remaining_compute_units": 100,
+        "allocated_instances": 0,
+        "remaining_instances": 10,
+        "existing_task_types": {
+          "training": 0,
+          "inference": 0
+        },
+        "allocations": []
+      },
+      "prediction": {
+        "label": "balanced",
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "prediction_kind": "RandomForest_prediction_of_synthetic_reference_class",
+        "note": "Vote probabilities are not calibrated performance guarantees"
+      }
+    },
+    {
+      "state": {
+        "data_kind": "synthetic_resource_state",
+        "gpu_id": "offline-l40-node/gpu-1",
+        "profile_id": "l40",
+        "revision": 0,
+        "capacity_memory_mib": 45776,
+        "remaining_memory_mib": 45776,
+        "remaining_compute_units": 100,
+        "allocated_instances": 0,
+        "remaining_instances": 10,
+        "existing_task_types": {
+          "training": 0,
+          "inference": 0
+        },
+        "allocations": []
+      },
+      "prediction": {
+        "label": "balanced",
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "prediction_kind": "RandomForest_prediction_of_synthetic_reference_class",
+        "note": "Vote probabilities are not calibrated performance guarantees"
+      }
+    },
+    {
+      "state": {
+        "data_kind": "synthetic_resource_state",
+        "gpu_id": "offline-l40-node/gpu-2",
+        "profile_id": "l40",
+        "revision": 0,
+        "capacity_memory_mib": 45776,
+        "remaining_memory_mib": 45776,
+        "remaining_compute_units": 100,
+        "allocated_instances": 0,
+        "remaining_instances": 10,
+        "existing_task_types": {
+          "training": 0,
+          "inference": 0
+        },
+        "allocations": []
+      },
+      "prediction": {
+        "label": "balanced",
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "prediction_kind": "RandomForest_prediction_of_synthetic_reference_class",
+        "note": "Vote probabilities are not calibrated performance guarantees"
+      }
+    }
+  ],
+  "note": "Reservations chosen to illustrate all four reference classes, not a sampled production trace"
+}

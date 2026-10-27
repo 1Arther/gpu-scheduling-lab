@@ -1,0 +1,120 @@
+{
+  "model_type": "multi-output RandomForestClassifier",
+  "seed": 20261016,
+  "feature_names": [
+    "memory_capacity_mib",
+    "memory_bandwidth_gbps",
+    "fp32_tflops",
+    "fp16_dense_tflops",
+    "bf16_dense_tflops",
+    "int8_dense_tops",
+    "max_board_power_w",
+    "free_memory_mib",
+    "free_compute_quota",
+    "allocated_vgpu_count",
+    "running_training_count",
+    "running_inference_count",
+    "free_memory_ratio",
+    "free_compute_quota_ratio"
+  ],
+  "identity_features_excluded": [
+    "device_id",
+    "model",
+    "vendor",
+    "architecture",
+    "software_backend"
+  ],
+  "train_device_ids": [
+    "a10",
+    "a100_sxm80",
+    "a30",
+    "h100_sxm",
+    "h200_sxm",
+    "l4",
+    "l40",
+    "l40s",
+    "mi100",
+    "mi210",
+    "mi250x",
+    "mi300x",
+    "mtt_s4000",
+    "rtx3090",
+    "rtx4090",
+    "rtx5090"
+  ],
+  "train_model_groups": [
+    "a10",
+    "a100",
+    "a30",
+    "h100",
+    "h200",
+    "l4",
+    "l40",
+    "l40s",
+    "mi100",
+    "mi210",
+    "mi250x",
+    "mi300x",
+    "mtt_s4000",
+    "rtx3090",
+    "rtx4090",
+    "rtx5090"
+  ],
+  "train_backends": [
+    "CUDA",
+    "MUSA",
+    "ROCm"
+  ],
+  "numeric_coverage": {
+    "memory_capacity_mib": [
+      22888,
+      183105
+    ],
+    "memory_bandwidth_gbps": [
+      300,
+      5300
+    ],
+    "fp32_tflops": [
+      10.3,
+      163.4
+    ],
+    "fp16_dense_tflops": [
+      71.2,
+      209.5
+    ],
+    "bf16_dense_tflops": [
+      71.2,
+      209.5
+    ],
+    "int8_dense_tops": null,
+    "max_board_power_w": [
+      72,
+      750
+    ]
+  },
+  "selection": [
+    {
+      "min_samples_leaf": 2,
+      "validation_accuracy": 0.9868421052631579,
+      "validation_macro_f1": 0.9685957629476045
+    },
+    {
+      "min_samples_leaf": 5,
+      "validation_accuracy": 0.9838056680161943,
+      "validation_macro_f1": 0.9486661144516211
+    }
+  ],
+  "chosen_candidate": 0,
+  "selected_validation_macro_f1": 0.9685957629476045,
+  "hyperparameters": {
+    "n_estimators": 180,
+    "min_samples_leaf": 2,
+    "max_features": 0.85
+  },
+  "fit_samples": 2907,
+  "imputer_fit_scope": "training rows ONLY; optional null -> train median + missing indicator; all-null -> 0 + indicator",
+  "supervision": "synthetic theoretical FP32 reference contracts ONLY",
+  "test_used_for_selection": false,
+  "missing_required_behavior": "abstain before imputation",
+  "coverage_policy": "any observed static range violation or unseen backend -> abstain; architecture name ignored"
+}

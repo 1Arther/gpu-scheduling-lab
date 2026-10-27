@@ -1,0 +1,23 @@
+--- before-v6/gpu_lab/runtime/pods.py
++++ current/gpu_lab/runtime/pods.py
+@@ -33,7 +33,8 @@
+     compute_quota: int
+ 
+     def memory_for(self, gpu):
+-        return self.memory_mib or max(1,int(gpu["hardware"]["memory_capacity_mib"]*self.memory_percent//100))
++        capacity = gpu.get("logical_memory_capacity_mib",gpu["hardware"]["memory_capacity_mib"])
++        return self.memory_mib or max(1,int(capacity*self.memory_percent//100))
+ 
+ 
+ @dataclass(frozen=True)
+--- before-v6/gpu_lab/runtime/service.py
++++ current/gpu_lab/runtime/service.py
+@@ -148,7 +148,7 @@
+         if reasons:
+             return row
+         d,h = g["dynamic"],g["hardware"]
+-        post_mem = (d["free_memory_mib"]-resolved["memory_mib"])/h["memory_capacity_mib"]
++        post_mem = (d["free_memory_mib"]-resolved["memory_mib"])/g.get("logical_memory_capacity_mib",h["memory_capacity_mib"])
+         post_compute = (d["free_compute_quota"]-request.compute_quota)/100
+         residual = .5*post_mem+.4*post_compute+.1*(g.get("max_instances",10)-d["allocated_vgpu_count"]-1)/g.get("max_instances",10)
+         packing,balance = 1-residual,1-abs(post_mem-post_compute)

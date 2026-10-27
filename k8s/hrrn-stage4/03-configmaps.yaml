@@ -1,0 +1,126 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hrrn-s4-a-native-rf
+  namespace: hrrn-lab-system
+data:
+  volcano-scheduler.conf: "actions: enqueue, allocate, backfill\ntiers:\n- plugins:\n\
+    \  - name: priority\n  - name: gang\n    enablePreemptable: false\n  - name: conformance\n\
+    - plugins:\n  - name: overcommit\n  - name: drf\n    enablePreemptable: false\n\
+    \  - name: predicates\n    arguments:\n      predicate.CacheEnable: false\n  -\
+    \ name: proportion\n  - name: nodeorder\n  - name: binpack\n  - name: deviceshare\n\
+    \    arguments:\n      deviceshare.VGPUEnable: true\n      deviceshare.GPUSharingEnable:\
+    \ false\n      deviceshare.GPUNumberEnable: false\n      deviceshare.NodeLockEnable:\
+    \ true\n      deviceshare.SchedulePolicy: binpack\n      deviceshare.ScheduleWeight:\
+    \ 1\n      deviceshare.GPUSelectPolicy: rf-job\n      deviceshare.RFEnable: true\n\
+    \      deviceshare.RFPredictionEnabled: true\n      deviceshare.RFEndpoint: http://127.0.0.1:18081/v1/rank\n\
+    \      deviceshare.RFModelVersion: rf-v4-known-states-ee35cfabe30f\n      deviceshare.RFTimeoutMS:\
+    \ 1000\n      deviceshare.KnownGeometriesCMName: hrrn-s4-device-config\n     \
+    \ deviceshare.KnownGeometriesCMNamespace: hrrn-lab-system\n  - name: hrrn\n  \
+    \  enableJobOrder: true\n    enableJobReady: true\n    arguments:\n      enabled:\
+    \ false\n      complete-job: false\n      tau-seconds: 1.0\n      default-duration-seconds:\
+    \ 60.0\n"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hrrn-s4-b-hrrn-rf
+  namespace: hrrn-lab-system
+data:
+  volcano-scheduler.conf: "actions: enqueue, allocate, backfill\ntiers:\n- plugins:\n\
+    \  - name: priority\n  - name: gang\n    enablePreemptable: false\n  - name: conformance\n\
+    - plugins:\n  - name: overcommit\n  - name: drf\n    enablePreemptable: false\n\
+    \  - name: predicates\n    arguments:\n      predicate.CacheEnable: false\n  -\
+    \ name: proportion\n  - name: nodeorder\n  - name: binpack\n  - name: deviceshare\n\
+    \    arguments:\n      deviceshare.VGPUEnable: true\n      deviceshare.GPUSharingEnable:\
+    \ false\n      deviceshare.GPUNumberEnable: false\n      deviceshare.NodeLockEnable:\
+    \ true\n      deviceshare.SchedulePolicy: binpack\n      deviceshare.ScheduleWeight:\
+    \ 1\n      deviceshare.GPUSelectPolicy: rf-job\n      deviceshare.RFEnable: true\n\
+    \      deviceshare.RFPredictionEnabled: true\n      deviceshare.RFEndpoint: http://127.0.0.1:18081/v1/rank\n\
+    \      deviceshare.RFModelVersion: rf-v4-known-states-ee35cfabe30f\n      deviceshare.RFTimeoutMS:\
+    \ 1000\n      deviceshare.KnownGeometriesCMName: hrrn-s4-device-config\n     \
+    \ deviceshare.KnownGeometriesCMNamespace: hrrn-lab-system\n  - name: hrrn\n  \
+    \  enableJobOrder: true\n    enableJobReady: true\n    arguments:\n      enabled:\
+    \ true\n      complete-job: false\n      tau-seconds: 1.0\n      default-duration-seconds:\
+    \ 60.0\n"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hrrn-s4-c-hrrn-complete-rf
+  namespace: hrrn-lab-system
+data:
+  volcano-scheduler.conf: "actions: enqueue, allocate, backfill\ntiers:\n- plugins:\n\
+    \  - name: priority\n  - name: gang\n    enablePreemptable: false\n  - name: conformance\n\
+    - plugins:\n  - name: overcommit\n  - name: drf\n    enablePreemptable: false\n\
+    \  - name: predicates\n    arguments:\n      predicate.CacheEnable: false\n  -\
+    \ name: proportion\n  - name: nodeorder\n  - name: binpack\n  - name: deviceshare\n\
+    \    arguments:\n      deviceshare.VGPUEnable: true\n      deviceshare.GPUSharingEnable:\
+    \ false\n      deviceshare.GPUNumberEnable: false\n      deviceshare.NodeLockEnable:\
+    \ true\n      deviceshare.SchedulePolicy: binpack\n      deviceshare.ScheduleWeight:\
+    \ 1\n      deviceshare.GPUSelectPolicy: rf-job\n      deviceshare.RFEnable: true\n\
+    \      deviceshare.RFPredictionEnabled: true\n      deviceshare.RFEndpoint: http://127.0.0.1:18081/v1/rank\n\
+    \      deviceshare.RFModelVersion: rf-v4-known-states-ee35cfabe30f\n      deviceshare.RFTimeoutMS:\
+    \ 1000\n      deviceshare.KnownGeometriesCMName: hrrn-s4-device-config\n     \
+    \ deviceshare.KnownGeometriesCMNamespace: hrrn-lab-system\n  - name: hrrn\n  \
+    \  enableJobOrder: true\n    enableJobReady: true\n    arguments:\n      enabled:\
+    \ true\n      complete-job: true\n      tau-seconds: 1.0\n      default-duration-seconds:\
+    \ 60.0\n"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hrrn-s4-d-native-binpack
+  namespace: hrrn-lab-system
+data:
+  volcano-scheduler.conf: "actions: enqueue, allocate, backfill\ntiers:\n- plugins:\n\
+    \  - name: priority\n  - name: gang\n    enablePreemptable: false\n  - name: conformance\n\
+    - plugins:\n  - name: overcommit\n  - name: drf\n    enablePreemptable: false\n\
+    \  - name: predicates\n    arguments:\n      predicate.CacheEnable: false\n  -\
+    \ name: proportion\n  - name: nodeorder\n  - name: binpack\n  - name: deviceshare\n\
+    \    arguments:\n      deviceshare.VGPUEnable: true\n      deviceshare.GPUSharingEnable:\
+    \ false\n      deviceshare.GPUNumberEnable: false\n      deviceshare.NodeLockEnable:\
+    \ true\n      deviceshare.SchedulePolicy: binpack\n      deviceshare.ScheduleWeight:\
+    \ 1\n      deviceshare.GPUSelectPolicy: binpack\n      deviceshare.RFEnable: false\n\
+    \      deviceshare.RFPredictionEnabled: true\n      deviceshare.RFEndpoint: http://127.0.0.1:18081/v1/rank\n\
+    \      deviceshare.RFModelVersion: rf-v4-known-states-ee35cfabe30f\n      deviceshare.RFTimeoutMS:\
+    \ 1000\n      deviceshare.KnownGeometriesCMName: hrrn-s4-device-config\n     \
+    \ deviceshare.KnownGeometriesCMNamespace: hrrn-lab-system\n  - name: hrrn\n  \
+    \  enableJobOrder: true\n    enableJobReady: true\n    arguments:\n      enabled:\
+    \ false\n      complete-job: false\n      tau-seconds: 1.0\n      default-duration-seconds:\
+    \ 60.0\n"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hrrn-s4-e-native-spread
+  namespace: hrrn-lab-system
+data:
+  volcano-scheduler.conf: "actions: enqueue, allocate, backfill\ntiers:\n- plugins:\n\
+    \  - name: priority\n  - name: gang\n    enablePreemptable: false\n  - name: conformance\n\
+    - plugins:\n  - name: overcommit\n  - name: drf\n    enablePreemptable: false\n\
+    \  - name: predicates\n    arguments:\n      predicate.CacheEnable: false\n  -\
+    \ name: proportion\n  - name: nodeorder\n  - name: binpack\n  - name: deviceshare\n\
+    \    arguments:\n      deviceshare.VGPUEnable: true\n      deviceshare.GPUSharingEnable:\
+    \ false\n      deviceshare.GPUNumberEnable: false\n      deviceshare.NodeLockEnable:\
+    \ true\n      deviceshare.SchedulePolicy: binpack\n      deviceshare.ScheduleWeight:\
+    \ 1\n      deviceshare.GPUSelectPolicy: spread\n      deviceshare.RFEnable: false\n\
+    \      deviceshare.RFPredictionEnabled: true\n      deviceshare.RFEndpoint: http://127.0.0.1:18081/v1/rank\n\
+    \      deviceshare.RFModelVersion: rf-v4-known-states-ee35cfabe30f\n      deviceshare.RFTimeoutMS:\
+    \ 1000\n      deviceshare.KnownGeometriesCMName: hrrn-s4-device-config\n     \
+    \ deviceshare.KnownGeometriesCMNamespace: hrrn-lab-system\n  - name: hrrn\n  \
+    \  enableJobOrder: true\n    enableJobReady: true\n    arguments:\n      enabled:\
+    \ false\n      complete-job: false\n      tau-seconds: 1.0\n      default-duration-seconds:\
+    \ 60.0\n"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hrrn-s4-device-config
+  namespace: hrrn-lab-system
+data:
+  device-config.yaml: "nvidia:\n  resourceCountName: volcano.sh/vgpu-number\n  resourceMemoryName:\
+    \ volcano.sh/vgpu-memory\n  resourceCoreName: volcano.sh/vgpu-cores\n  resourceMemoryPercentageName:\
+    \ volcano.sh/vgpu-memory-percentage\n  defaultGPUNum: 1\n  defaultMemory: 0\n\
+    \  defaultCores: 0\n  deviceSplitCount: 10\n  deviceMemoryScaling: 1\n  deviceCoreScaling:\
+    \ 1\n  disableCoreLimit: false\n"

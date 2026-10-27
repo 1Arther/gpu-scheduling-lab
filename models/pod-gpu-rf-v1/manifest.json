@@ -1,0 +1,109 @@
+{
+  "bundle_schema": "pod-gpu-bundle/v1",
+  "model_version": "rf-v4-known-states-ee35cfabe30f",
+  "selected_protocol": "known_states",
+  "selection_basis": "fitted coverage of 4090/5090/L40, numerical ranges and related validation evidence; not highest test score",
+  "candidate_coverage": {
+    "known_states": {
+      "rtx4090": {
+        "in_fitted_device_ids": true,
+        "inside_static_core_ranges": true,
+        "initial_label": "balanced",
+        "initial_reliability": "provisional_synthetic_validation_only",
+        "related_validation_models": [
+          "l40",
+          "l40s",
+          "rtx4090"
+        ]
+      },
+      "rtx5090": {
+        "in_fitted_device_ids": true,
+        "inside_static_core_ranges": true,
+        "initial_label": "balanced",
+        "initial_reliability": "provisional_synthetic_validation_only",
+        "related_validation_models": [
+          "rtx5090"
+        ]
+      },
+      "l40": {
+        "in_fitted_device_ids": true,
+        "inside_static_core_ranges": true,
+        "initial_label": "balanced",
+        "initial_reliability": "provisional_synthetic_validation_only",
+        "related_validation_models": [
+          "l40",
+          "l40s",
+          "rtx4090"
+        ]
+      }
+    },
+    "B_multi_architecture": {
+      "rtx4090": {
+        "in_fitted_device_ids": true,
+        "inside_static_core_ranges": true,
+        "initial_label": "balanced",
+        "initial_reliability": "provisional_synthetic_validation_only",
+        "related_validation_models": [
+          "l40"
+        ]
+      },
+      "rtx5090": {
+        "in_fitted_device_ids": true,
+        "inside_static_core_ranges": true,
+        "initial_label": "pending_verification",
+        "initial_reliability": "pending_related_validation_or_coverage",
+        "related_validation_models": []
+      },
+      "l40": {
+        "in_fitted_device_ids": false,
+        "inside_static_core_ranges": true,
+        "initial_label": "balanced",
+        "initial_reliability": "provisional_synthetic_validation_only",
+        "related_validation_models": [
+          "l40"
+        ]
+      }
+    }
+  },
+  "feature_order": [
+    "memory_capacity_mib",
+    "memory_bandwidth_gbps",
+    "fp32_tflops",
+    "fp16_dense_tflops",
+    "bf16_dense_tflops",
+    "int8_dense_tops",
+    "max_board_power_w",
+    "free_memory_mib",
+    "free_compute_quota",
+    "allocated_vgpu_count",
+    "running_training_count",
+    "running_inference_count",
+    "free_memory_ratio",
+    "free_compute_quota_ratio",
+    "effective_fp32_tflops"
+  ],
+  "training_parameters": {
+    "n_estimators": 120,
+    "min_samples_leaf": 2,
+    "max_features": 0.85
+  },
+  "dataset_version": {
+    "round": 4,
+    "seed": 20261017,
+    "dataset_summary_sha256": "d0c8fb4ddaa270aeaea28256eddfb75e97b967e3e48cc215d59448450eb09d0f",
+    "source_records_sha256": "eae6c4d0bcde171036ba28021c82730da63ffd8f24f93e3399939f9682e1cf0e"
+  },
+  "label_contract_id": "cross-gpu-fp32-synthetic-v3",
+  "label_source": "synthetic",
+  "real_performance_guarantee": false,
+  "quota_mapping": "HAMi UsedCore/100 accounting can map to synthetic quota feature; linear performance scaling remains hypothetical",
+  "running_count_semantics": "RF training/inference counts are typed vGPU instances. API also tracks distinct Pod counts separately.",
+  "artifact_sha256": {
+    "random_forest.joblib": "ee35cfabe30fffc28ff0be09d3738587d4f9bffbe26386e2a9fae5c5b9e80748",
+    "source-records.json": "eae6c4d0bcde171036ba28021c82730da63ffd8f24f93e3399939f9682e1cf0e",
+    "model-metadata.json": "e14a11c18dc47defebdd0ab69fe4c0e9141c157ed688498301a669866b182c32",
+    "reference-contract.json": "5627b01f5b517d15ba77fabb6dc1f8e9a050adc01bd902b270b4dfe850b096b5",
+    "scoring-policy.json": "c05a0144bcfb1f8a8d58da25ae450e3d4569c003b199da5419edd53ac5e46d78",
+    "dataset-summary.json": "d0c8fb4ddaa270aeaea28256eddfb75e97b967e3e48cc215d59448450eb09d0f"
+  }
+}

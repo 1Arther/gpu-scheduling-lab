@@ -1,0 +1,2766 @@
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/device_info.go b/pkg/scheduler/api/devices/nvidia/vgpu/device_info.go
+index 7f6d902..a993e67 100644
+--- a/pkg/scheduler/api/devices/nvidia/vgpu/device_info.go
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/device_info.go
+@@ -32,8 +32,11 @@ import (
+ )
+ 
+ type GPUUsage struct {
+-	UsedMem  uint
+-	UsedCore uint
++	UsedMem                 uint
++	UsedCore                uint
++	RFWorkloadType          string
++	RFInstances             uint
++	RFUnrestrictedInstances uint
+ }
+ 
+ // GPUDevice include gpu id, memory and the pods that are sharing it.
+@@ -136,6 +139,16 @@ func NewGPUDevices(name string, node *v1.Node) *GPUDevices {
+ }
+ 
+ func (gs *GPUDevices) ScoreNode(pod *v1.Pod, schedulePolicy string) float64 {
++	if RFForPod(pod) {
++		plan, err := rfPlanFor(gs, pod)
++		if err != nil {
++			return 0
++		}
++		if pod.Labels[RFWorkloadLabel] == "" {
++			return rfOriginalScore(gs, plan, schedulePolicy)
++		}
++		return plan.Score
++	}
+ 	/* TODO: we need a base score to be campatable with preemption, it means a node without evicting a task has
+ 	   a higher score than those needs to evict a task */
+ 
+@@ -162,7 +175,7 @@ func (gs *GPUDevices) AddQueueResource(pod *v1.Pod) map[string]float64 {
+ 	for _, val := range podDev {
+ 		for _, deviceused := range val {
+ 			for _, gsdevice := range gs.Device {
+-				if strings.Contains(deviceused.UUID, gsdevice.UUID) {
++				if (RFActive() && deviceused.UUID == gsdevice.UUID) || (!RFActive() && strings.Contains(deviceused.UUID, gsdevice.UUID)) {
+ 					res[getConfig().ResourceMemoryName] += float64(deviceused.Usedmem * 1000)
+ 					res[getConfig().ResourceCoreName] += float64(deviceused.Usedcores * 1000)
+ 				}
+@@ -175,9 +188,16 @@ func (gs *GPUDevices) AddQueueResource(pod *v1.Pod) map[string]float64 {
+ 
+ // AddResource adds the pod to GPU pool if it is assigned
+ func (gs *GPUDevices) AddResource(pod *v1.Pod) {
++	if RFActive() {
++		rfLedgerMu.Lock()
++		defer rfLedgerMu.Unlock()
++	}
+ 	if gs == nil {
+ 		return
+ 	}
++	if RFActive() && rfAlreadyAllocated(gs, pod) {
++		return
++	} // informer replay is not a second reservation
+ 
+ 	gs.addResource(pod.Annotations, pod)
+ }
+@@ -192,9 +212,10 @@ func (gs *GPUDevices) addResource(annotations map[string]string, pod *v1.Pod) {
+ 	for _, val := range podDev {
+ 		for _, deviceused := range val {
+ 			for index, gsdevice := range gs.Device {
+-				if strings.Contains(deviceused.UUID, gsdevice.UUID) {
++				if (RFActive() && deviceused.UUID == gsdevice.UUID) || (!RFActive() && strings.Contains(deviceused.UUID, gsdevice.UUID)) {
+ 					err := gs.Sharing.AddPod(gsdevice, deviceused.Usedmem, deviceused.Usedcores, string(pod.UID), deviceused.UUID)
+ 					if err == nil {
++						rfRecordPod(gsdevice, pod, deviceused.Usedcores, 1)
+ 						gs.AddPodMetrics(index, string(pod.UID), pod.Name)
+ 					} else {
+ 						klog.ErrorS(err, "add resource failed")
+@@ -208,6 +229,20 @@ func (gs *GPUDevices) addResource(annotations map[string]string, pod *v1.Pod) {
+ 
+ // SubResource frees the gpu hold by the pod
+ func (gs *GPUDevices) SubResource(pod *v1.Pod) {
++	if RFActive() {
++		rfLedgerMu.Lock()
++		defer rfLedgerMu.Unlock()
++	}
++	if gs != nil && RFForPod(pod) {
++		before := rfGPUs(gs)
++		gs.subResource(pod)
++		klog.InfoS("rf-job logical release", "pod", pod.Namespace+"/"+pod.Name, "podUID", pod.UID, "node", gs.Name, "logicalBefore", before, "logicalAfter", rfGPUs(gs))
++		return
++	}
++	gs.subResource(pod)
++}
++
++func (gs *GPUDevices) subResource(pod *v1.Pod) {
+ 	if gs == nil {
+ 		return
+ 	}
+@@ -219,11 +254,12 @@ func (gs *GPUDevices) SubResource(pod *v1.Pod) {
+ 	for _, val := range podDev {
+ 		for _, deviceused := range val {
+ 			for index, gsdevice := range gs.Device {
+-				if strings.Contains(deviceused.UUID, gsdevice.UUID) {
++				if (RFActive() && deviceused.UUID == gsdevice.UUID) || (!RFActive() && strings.Contains(deviceused.UUID, gsdevice.UUID)) {
+ 					err := gs.Sharing.SubPod(gsdevice, uint(deviceused.Usedmem), uint(deviceused.Usedcores), string(pod.UID), deviceused.UUID)
+ 					if err != nil {
+ 						klog.ErrorS(err, "sub resource failed")
+ 					} else {
++						rfRecordPod(gsdevice, pod, deviceused.Usedcores, -1)
+ 						gs.SubPodMetrics(index, string(pod.UID), pod.Name)
+ 					}
+ 					break
+@@ -252,13 +288,21 @@ func (gs *GPUDevices) FilterNode(pod *v1.Pod, schedulePolicy string) (int, strin
+ 			klog.ErrorS(err, "Failed to fitler node to vgpu task", "pod", pod.Name)
+ 			return devices.Unschedulable, "hami-vgpuDeviceSharing error", err
+ 		}
+-		gs.Score = score
++		if !RFForPod(pod) {
++			gs.Score = score
++		}
+ 		klog.V(4).Infoln("hami-vgpu DeviceSharing successfully filters pods")
+ 	}
+ 	return devices.Success, "", nil
+ }
+ 
+ func (gs *GPUDevices) Allocate(kubeClient kubernetes.Interface, pod *v1.Pod) error {
++	if RFForPod(pod) {
++		return gs.allocateRF(kubeClient, pod)
++	}
++	if RFActive() {
++		return gs.allocateLegacyShared(kubeClient, pod)
++	}
+ 	if VGPUEnable {
+ 		klog.V(4).Infoln("hami-vgpu DeviceSharing:Into AllocateToPod", pod.Name)
+ 		fit, device, _, err := checkNodeGPUSharingPredicateAndScore(pod, gs, false, "")
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/rf_ablation_test.go b/pkg/scheduler/api/devices/nvidia/vgpu/rf_ablation_test.go
+new file mode 100644
+index 0000000..18b3d5e
+--- /dev/null
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/rf_ablation_test.go
+@@ -0,0 +1,491 @@
++// Paired causal mechanism checks, using production Filter/Score/Allocate.
++package vgpu
++
++import (
++	"context"
++	"crypto/sha256"
++	"encoding/json"
++	"fmt"
++	"math"
++	"os"
++	"path/filepath"
++	"reflect"
++	"runtime"
++	"sort"
++	"testing"
++
++	v1 "k8s.io/api/core/v1"
++	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
++	"k8s.io/client-go/kubernetes/fake"
++)
++
++type ablState struct {
++	ID      string `json:"id"`
++	Free    *uint  `json:"free_memory_mib"`
++	Compute uint   `json:"free_compute_quota"`
++}
++type ablNode struct {
++	Name     string     `json:"name"`
++	Model    string     `json:"model"`
++	Capacity uint       `json:"capacity_mib"`
++	States   []ablState `json:"states"`
++}
++type ablCase struct {
++	ID      string    `json:"id"`
++	Family  string    `json:"family"`
++	Task    string    `json:"task"`
++	Memory  int64     `json:"memory_mib"`
++	Compute int64     `json:"compute_quota"`
++	Nodes   []ablNode `json:"nodes"`
++}
++type ablScore struct {
++	Score         float64 `json:"score"`
++	Packing       float64 `json:"packing_residual"`
++	Feasible      bool    `json:"feasible"`
++	Basis         string  `json:"ranking_basis"`
++	Decomposition struct {
++		RF           float64 `json:"applied_rf_contribution"`
++		Potential    float64 `json:"potential_rf_contribution"`
++		Heuristic    float64 `json:"heuristic_contribution"`
++		Conservative float64 `json:"conservative_fallback_contribution"`
++	} `json:"score_decomposition"`
++}
++type ablDiagnostic struct {
++	UUID           string                 `json:"gpu_uuid"`
++	Classification map[string]interface{} `json:"classification"`
++	Scores         map[string]ablScore    `json:"request_specific_scores"`
++}
++type ablCandidate struct {
++	UUID               string                 `json:"gpu_uuid"`
++	Node               string                 `json:"node"`
++	Model              string                 `json:"model"`
++	Classification     map[string]interface{} `json:"classification"`
++	RF                 float64                `json:"rf_contribution"`
++	PotentialRF        float64                `json:"potential_rf_contribution"`
++	Heuristic          float64                `json:"heuristic_contribution"`
++	Conservative       float64                `json:"conservative_fallback_contribution"`
++	Score              float64                `json:"final_score"`
++	NodeScore          float64                `json:"node_score"`
++	Rounded            float64                `json:"rounded_node_score"`
++	Packing            float64                `json:"packing_residual"`
++	DeviceRank         int                    `json:"device_rank"`
++	NodeRank           int                    `json:"node_rank"`
++	GlobalRank         int                    `json:"global_rank"`
++	FinalUUID          string                 `json:"final_allocate_uuid"`
++	Feasible           bool                   `json:"native_hard_fit"`
++	ClassificationUsed bool                   `json:"classification_used_by_strategy"`
++}
++type ablTrial struct {
++	Case         string         `json:"case_id"`
++	Family       string         `json:"family"`
++	Task         string         `json:"task"`
++	Strategy     string         `json:"strategy"`
++	PodHash      string         `json:"pod_hash"`
++	SnapshotHash string         `json:"snapshot_hash"`
++	RestoredHash string         `json:"restored_hash"`
++	UUID         string         `json:"allocate_uuid"`
++	Node         string         `json:"allocate_node"`
++	Recommended  string         `json:"recommended_uuid"`
++	Candidates   []ablCandidate `json:"candidates"`
++	Before       []rfGPU        `json:"before"`
++	After        []rfGPU        `json:"after"`
++}
++
++func ablSnapshots(nodes []*GPUDevices) []rfGPU {
++	out := []rfGPU{}
++	for _, n := range nodes {
++		out = append(out, rfGPUs(n)...)
++	}
++	sort.Slice(out, func(i, j int) bool { return out[i].UUID < out[j].UUID })
++	return out
++}
++func ablClone(nodes []*GPUDevices) []*GPUDevices {
++	result := []*GPUDevices{}
++	for _, n := range nodes {
++		result = append(result, rfClone(n))
++	}
++	return result
++}
++
++func ablSeed(c ablCase) []*GPUDevices {
++	RFEnabled, GPUSelectPolicy, RFPredictionEnabled = true, RFJobPolicy, true
++	nodes := []*GPUDevices{}
++	for _, spec := range c.Nodes {
++		n := rfTestNode(spec.Name, spec.Model, len(spec.States), spec.Capacity)
++		for i, s := range spec.States {
++			if s.Free == nil {
++				continue
++			}
++			g := n.Device[i]
++			p := rfTestPod(fmt.Sprintf("seed-%s-%02d", spec.Name, i), "training", int64(g.Memory-*s.Free), int64(100-s.Compute))
++			p.Annotations = map[string]string{AssignedIDsAnnotations: encodePodDevices([]ContainerDevices{{{UUID: g.UUID, Type: NvidiaGPUDevice, Usedmem: g.Memory - *s.Free, Usedcores: 100 - s.Compute}}})}
++			n.AddResource(p)
++		}
++		nodes = append(nodes, n)
++	}
++	return nodes
++}
++
++func ablMode(mode string) {
++	RFEnabled = true
++	GPUSelectPolicy = RFJobPolicy
++	RFPredictionEnabled = mode != "rf_off"
++	if mode == "binpack" {
++		RFEnabled = false
++		GPUSelectPolicy = BinpackPolicy
++	}
++}
++
++func ablTrialRun(t *testing.T, c ablCase, seed []*GPUDevices, p *v1.Pod, mode string, prior map[string]map[string]interface{}) ablTrial {
++	t.Helper()
++	nodes := ablClone(seed)
++	ablMode(mode)
++	result := ablTrial{Case: c.ID, Family: c.Family, Task: c.Task, Strategy: mode, PodHash: rfHash(p), Before: ablSnapshots(nodes)}
++	result.SnapshotHash = rfHash(result.Before)
++	type nodePlan struct {
++		Node       *GPUDevices
++		Score      float64
++		UUID       string
++		Candidates []ablCandidate
++	}
++	plans := []nodePlan{}
++	for _, n := range nodes {
++		req := rfContainerRequests(p)[p.Spec.Containers[0].Name]
++		for _, g := range n.Device {
++			if !rfFits(p, g, req) {
++				t.Fatalf("primary ablation must not use filtering: %s %s", c.ID, g.UUID)
++			}
++		}
++		if _, _, e := n.FilterNode(p, "binpack"); e != nil {
++			t.Fatal(e)
++		}
++		score := n.ScoreNode(p, "binpack")
++		np := nodePlan{Node: n, Score: score}
++		if mode != "binpack" {
++			plan, e := rfPlanFor(n, p)
++			if e != nil || plan.Fallback != "" {
++				t.Fatalf("RF communication/plan failed: %v %+v", e, plan)
++			}
++			np.UUID = plan.Devices[0][0].UUID
++			ds := []ablDiagnostic{}
++			if e = json.Unmarshal(plan.Diagnostics, &ds); e != nil {
++				t.Fatal(e)
++			}
++			for _, d := range ds {
++				s := d.Scores[c.Task]
++				np.Candidates = append(np.Candidates, ablCandidate{UUID: d.UUID, Node: n.Name, Model: n.Device[0].Type, Classification: d.Classification, RF: 100 * s.Decomposition.RF, PotentialRF: 100 * s.Decomposition.Potential, Heuristic: 100 * s.Decomposition.Heuristic, Conservative: 100 * s.Decomposition.Conservative, Score: 100 * s.Score, Packing: s.Packing, NodeScore: score, Rounded: math.Floor(score + .5), Feasible: s.Feasible, ClassificationUsed: true})
++			}
++			sort.Slice(np.Candidates, func(i, j int) bool {
++				a, b := np.Candidates[i], np.Candidates[j]
++				if a.Score != b.Score {
++					return a.Score > b.Score
++				}
++				if a.Packing != b.Packing {
++					return a.Packing < b.Packing
++				}
++				return a.UUID < b.UUID
++			})
++		} else {
++			fit, dev, _, e := checkNodeGPUSharingPredicateAndScore(p, n, true, "binpack")
++			if e != nil || !fit {
++				t.Fatal(e)
++			}
++			np.UUID = dev[0][0].UUID
++			for _, i := range orderedGPUIndexes(n, p, req) {
++				g := n.Device[i]
++				copy := *g
++				_, _ = n.Sharing.TryAddPod(&copy, req.Memreq, req.Coresreq)
++				s := GPUScore("binpack", &copy)
++				np.Candidates = append(np.Candidates, ablCandidate{UUID: g.UUID, Node: n.Name, Model: g.Type, Classification: prior[g.UUID], Heuristic: s, Score: s, NodeScore: score, Rounded: math.Floor(score + .5), Feasible: true})
++			}
++		}
++		if len(np.Candidates) != len(n.Device) || np.Candidates[0].UUID != np.UUID {
++			t.Fatal("reported rank differs from native selected UUID")
++		}
++		for i := range np.Candidates {
++			np.Candidates[i].DeviceRank = i + 1
++		}
++		plans = append(plans, np)
++	}
++	sort.Slice(plans, func(i, j int) bool {
++		a, b := plans[i], plans[j]
++		sa, sb := math.Floor(a.Score+.5), math.Floor(b.Score+.5)
++		if sa != sb {
++			return sa > sb
++		}
++		return a.Node.Name < b.Node.Name
++	})
++	chosen := plans[0]
++	client := fake.NewSimpleClientset(p.DeepCopy())
++	if e := chosen.Node.Allocate(client, p); e != nil {
++		t.Fatal(e)
++	}
++	saved, e := client.CoreV1().Pods(p.Namespace).Get(context.Background(), p.Name, metav1.GetOptions{})
++	if e != nil {
++		t.Fatal(e)
++	}
++	actual := decodePodDevices(saved.Annotations[AssignedIDsToAllocateAnnotations])[0][0].UUID
++	if actual != chosen.UUID {
++		t.Fatal("native Allocate UUID differs from scored GPU")
++	}
++	result.UUID, result.Node, result.Recommended = actual, chosen.Node.Name, chosen.UUID
++	result.After = ablSnapshots(nodes)
++	for i, g := range result.After {
++		before := result.Before[i]
++		delta := uint(0)
++		if g.UUID == actual {
++			delta = 1
++		}
++		if g.AllocatedMemory != before.AllocatedMemory+delta*uint(c.Memory) || g.AllocatedCompute != before.AllocatedCompute+delta*uint(c.Compute) || g.AllocatedCount != before.AllocatedCount+delta {
++			t.Fatal("native ledger delta wrong")
++		}
++		if g.AllocatedMemory > g.RegisteredMemory || g.AllocatedCompute > 100 || g.AllocatedCount > g.MaxInstances {
++			t.Fatal("native overcommit")
++		}
++	}
++	rank := 0
++	for nodeRank, np := range plans {
++		for _, candidate := range np.Candidates {
++			rank++
++			candidate.NodeRank = nodeRank + 1
++			candidate.GlobalRank = rank
++			candidate.FinalUUID = actual
++			result.Candidates = append(result.Candidates, candidate)
++		}
++	}
++	chosen.Node.SubResource(saved)
++	result.RestoredHash = rfHash(ablSnapshots(nodes))
++	if result.RestoredHash != result.SnapshotHash {
++		t.Fatal("native release did not restore exact snapshot")
++	}
++	return result
++}
++
++func TestRFLinuxExecutionPlatform(t *testing.T) {
++	if os.Getenv("RF_REQUIRE_LINUX") == "" {
++		t.Skip("Linux requirement checked by dedicated runner")
++	}
++	if runtime.GOOS != "linux" {
++		t.Fatalf("actual Linux execution required, got %s", runtime.GOOS)
++	}
++	t.Logf("ACTUAL_RUNTIME=%s/%s go=%s", runtime.GOOS, runtime.GOARCH, runtime.Version())
++}
++
++func TestRFLivePredictionTermAblation(t *testing.T) {
++	path := os.Getenv("RF_ABLATION_PLAN")
++	if path == "" {
++		t.Skip("set frozen RF_ABLATION_PLAN")
++	}
++	rfTestConfig(t)
++	RFEndpoint = os.Getenv("RF_LIVE_ENDPOINT")
++	RFTimeoutMS = 10000
++	bytes, e := os.ReadFile(path)
++	if e != nil {
++		t.Fatal(e)
++	}
++	var plan struct {
++		Cases []ablCase `json:"cases"`
++	}
++	if e = json.Unmarshal(bytes, &plan); e != nil {
++		t.Fatal(e)
++	}
++	trials := []ablTrial{}
++	for _, c := range plan.Cases {
++		t.Run(c.ID, func(t *testing.T) {
++			seed := ablSeed(c)
++			p := rfTestPod("paired-"+c.ID, c.Task, c.Memory, c.Compute)
++			on := ablTrialRun(t, c, seed, p.DeepCopy(), "rf_on", nil)
++			prior := map[string]map[string]interface{}{}
++			byUUID := map[string]ablCandidate{}
++			for _, r := range on.Candidates {
++				prior[r.UUID] = r.Classification
++				byUUID[r.UUID] = r
++			}
++			off := ablTrialRun(t, c, seed, p.DeepCopy(), "rf_off", nil)
++			if on.PodHash != off.PodHash || on.SnapshotHash != off.SnapshotHash {
++				t.Fatal("paired inputs differ")
++			}
++			for _, b := range off.Candidates {
++				a := byUUID[b.UUID]
++				if !reflect.DeepEqual(a.Classification, b.Classification) || !a.Feasible || !b.Feasible {
++					t.Fatal("predictions or admission changed under switch")
++				}
++				if math.Abs(a.Heuristic-b.Heuristic) > 1e-9 || math.Abs(a.Conservative-b.Conservative) > 1e-9 || b.RF != 0 || math.Abs((a.Score-b.Score)-a.RF) > 1e-9 {
++					t.Fatal("ablation altered something beyond RF term")
++				}
++			}
++			base := ablTrialRun(t, c, seed, p.DeepCopy(), "binpack", prior)
++			if base.SnapshotHash != on.SnapshotHash || base.PodHash != on.PodHash {
++				t.Fatal("binpack used different input")
++			}
++			trials = append(trials, on, off, base)
++		})
++	}
++	if dir := os.Getenv("RF_ABLATION_OUTPUT"); dir != "" {
++		if e = os.MkdirAll(dir, 0755); e != nil {
++			t.Fatal(e)
++		}
++		data, _ := json.MarshalIndent(map[string]interface{}{"runtime_os": runtime.GOOS, "runtime_arch": runtime.GOARCH, "go_version": runtime.Version(), "plan_sha256": fmt.Sprintf("%x", sha256.Sum256(bytes)), "trials": trials, "real_kubernetes_client": false, "supervision": "synthetic"}, "", "  ")
++		if e = os.WriteFile(filepath.Join(dir, "native-ablation.json"), data, 0644); e != nil {
++			t.Fatal(e)
++		}
++	}
++}
++
++func TestRFLiveAblationSequentialLedger(t *testing.T) {
++	if os.Getenv("RF_ABLATION_PLAN") == "" {
++		t.Skip("dedicated live runner")
++	}
++	rfTestConfig(t)
++	RFEndpoint = os.Getenv("RF_LIVE_ENDPOINT")
++	RFTimeoutMS = 10000
++	cap := uint(16384)
++	low := uint(10240)
++	c := ablCase{ID: "sequence", Family: "dynamic_followup", Task: "training", Memory: 4096, Compute: 25, Nodes: []ablNode{{Name: "seq-l40", Model: "NVIDIA-NVIDIA L40", Capacity: 46068, States: []ablState{{ID: "q40", Free: &cap, Compute: 40}, {ID: "q80", Free: &low, Compute: 80}, {ID: "empty", Compute: 100}}}}}
++	seed := ablSeed(c)
++	initial := rfHash(ablSnapshots(seed))
++	records := []map[string]interface{}{}
++	commit := func(name, task string, mem, cores int64) (*GPUDevices, *v1.Pod) {
++		t.Helper()
++		c.ID = name
++		c.Task = task
++		c.Memory = mem
++		c.Compute = cores
++		p := rfTestPod(name, task, mem, cores)
++		on := ablTrialRun(t, c, seed, p.DeepCopy(), "rf_on", nil)
++		off := ablTrialRun(t, c, seed, p.DeepCopy(), "rf_off", nil)
++		records = append(records, map[string]interface{}{"stage": name, "on": on, "off": off})
++		ablMode("rf_on")
++		var n *GPUDevices
++		for _, x := range seed {
++			if x.Name == on.Node {
++				n = x
++			}
++		}
++		client := fake.NewSimpleClientset(p.DeepCopy())
++		if e := n.Allocate(client, p); e != nil {
++			t.Fatal(e)
++		}
++		saved, e := client.CoreV1().Pods(p.Namespace).Get(context.Background(), p.Name, metav1.GetOptions{})
++		if e != nil {
++			t.Fatal(e)
++		}
++		return n, saved
++	}
++	nA, a := commit("pod-A", "training", 4096, 25)
++	nB, b := commit("pod-B", "inference", 1024, 10)
++	before := ablSnapshots(seed)
++	nA.SubResource(a)
++	records = append(records, map[string]interface{}{"stage": "release-A", "before": before, "after": ablSnapshots(seed)})
++	nC, cPod := commit("pod-C", "training", 4096, 25)
++	nB.SubResource(b)
++	nC.SubResource(cPod)
++	if rfHash(ablSnapshots(seed)) != initial {
++		t.Fatal("sequential full release failed")
++	}
++	if dir := os.Getenv("RF_ABLATION_OUTPUT"); dir != "" {
++		data, _ := json.MarshalIndent(map[string]interface{}{"records": records, "all_resources_restored": true, "final": ablSnapshots(seed)}, "", "  ")
++		if e := os.WriteFile(filepath.Join(dir, "sequential-ledger.json"), data, 0644); e != nil {
++			t.Fatal(e)
++		}
++	}
++}
++
++func TestRFLiveAblationFilterControl(t *testing.T) {
++	if os.Getenv("RF_ABLATION_PLAN") == "" {
++		t.Skip("dedicated live runner")
++	}
++	rfTestConfig(t)
++	RFEndpoint = os.Getenv("RF_LIVE_ENDPOINT")
++	RFTimeoutMS = 10000
++	n := rfTestNode("filter-control", "NVIDIA-NVIDIA GeForce RTX 4090", 2, 24564)
++	seed := rfTestPod("filter-existing", "training", 24000, 90)
++	seed.Annotations = map[string]string{AssignedIDsAnnotations: encodePodDevices([]ContainerDevices{{{UUID: n.Device[0].UUID, Type: NvidiaGPUDevice, Usedmem: 24000, Usedcores: 90}}})}
++	n.AddResource(seed)
++	p := rfTestPod("filter-control", "training", 4096, 25)
++	uuids := []string{}
++	for _, enabled := range []bool{true, false} {
++		RFPredictionEnabled = enabled
++		copy := rfClone(n)
++		if _, _, e := copy.FilterNode(p, "binpack"); e != nil {
++			t.Fatal(e)
++		}
++		client := fake.NewSimpleClientset(p.DeepCopy())
++		if e := copy.Allocate(client, p); e != nil {
++			t.Fatal(e)
++		}
++		saved, _ := client.CoreV1().Pods(p.Namespace).Get(context.Background(), p.Name, metav1.GetOptions{})
++		uuid := decodePodDevices(saved.Annotations[AssignedIDsAnnotations])[0][0].UUID
++		if uuid != n.Device[1].UUID {
++			t.Fatal("model bypassed resource filter")
++		}
++		uuids = append(uuids, uuid)
++		copy.SubResource(saved)
++		if rfHash(rfGPUs(copy)) != rfHash(rfGPUs(n)) {
++			t.Fatal("filter control release failed")
++		}
++	}
++	if dir := os.Getenv("RF_ABLATION_OUTPUT"); dir != "" {
++		data, _ := json.MarshalIndent(map[string]interface{}{"excluded_uuid": n.Device[0].UUID, "reason": "native logical memory and compute insufficient", "rf_on_allocate_uuid": uuids[0], "rf_off_allocate_uuid": uuids[1], "excluded_from_primary_ablation_counts": true}, "", "  ")
++		if e := os.WriteFile(filepath.Join(dir, "filter-control.json"), data, 0644); e != nil {
++			t.Fatal(e)
++		}
++	}
++}
++
++// Explicit coverage control, separate from the frozen 180-case denominator.
++// Unknown existing workload composition is a real guard in the frozen runtime;
++// we never force pending status or alter its evidence threshold/model weights.
++func TestRFLiveAblationPending5090Control(t *testing.T) {
++	if os.Getenv("RF_ABLATION_PLAN") == "" {
++		t.Skip("dedicated live runner")
++	}
++	rfTestConfig(t)
++	RFEndpoint = os.Getenv("RF_LIVE_ENDPOINT")
++	RFTimeoutMS = 10000
++	records := []ablTrial{}
++	for _, cause := range []string{"unlabelled", "unrestricted"} {
++		n := rfTestNode("pending-5090-"+cause, "NVIDIA-NVIDIA GeForce RTX 5090", 4, 32607)
++		label, cores := "", uint(20)
++		if cause == "unrestricted" {
++			label, cores = "training", 0 // native zero quota means unrestricted, not zero real utilization
++		}
++		for i, g := range n.Device {
++			p := rfTestPod(fmt.Sprintf("existing-%s-%d", cause, i), label, 4096, int64(cores))
++			p.Annotations = map[string]string{AssignedIDsAnnotations: encodePodDevices([]ContainerDevices{{{UUID: g.UUID, Type: NvidiaGPUDevice, Usedmem: 4096, Usedcores: cores}}})}
++			n.AddResource(p)
++		}
++		for _, task := range []string{"training", "inference"} {
++			c := ablCase{ID: "pending-" + cause + "-5090-" + task, Family: "explicit_pending_control", Task: task, Memory: 4096, Compute: 25}
++			pod := rfTestPod(c.ID, task, c.Memory, c.Compute)
++			on := ablTrialRun(t, c, []*GPUDevices{n}, pod.DeepCopy(), "rf_on", nil)
++			off := ablTrialRun(t, c, []*GPUDevices{n}, pod.DeepCopy(), "rf_off", nil)
++			if on.UUID != off.UUID || on.SnapshotHash != off.SnapshotHash || on.PodHash != off.PodHash {
++				t.Fatal("pending control changed inputs/UUID under RF switch")
++			}
++			byUUID := map[string]ablCandidate{}
++			for _, c := range off.Candidates {
++				byUUID[c.UUID] = c
++			}
++			for _, a := range on.Candidates {
++				b := byUUID[a.UUID]
++				if a.Classification["prediction_status"] != "pending_verification" {
++					t.Fatal("expected actual pending guard", a.Classification)
++				}
++				if cause == "unrestricted" && a.Classification["raw_rf"] == nil {
++					t.Fatal("unrestricted guard should retain diagnostic RF prediction")
++				}
++				if !reflect.DeepEqual(a.Classification, b.Classification) || a.RF != 0 || b.RF != 0 || a.Score != b.Score || a.Heuristic != b.Heuristic || a.Conservative != b.Conservative {
++					t.Fatal("RF affected conservative pending ranking")
++				}
++			}
++			records = append(records, on, off)
++		}
++	}
++	if dir := os.Getenv("RF_ABLATION_OUTPUT"); dir != "" {
++		data, _ := json.MarshalIndent(map[string]interface{}{"trials": records, "causes": []string{"existing Pod lacks gpu-lab/workload-type; composition unknown, raw RF may be null", "existing Pod has zero compute quota; unrestricted sharing retains diagnostic RF but falls back"}, "status_forced_by_test": false, "excluded_from_primary_ablation_counts": true}, "", "  ")
++		if e := os.WriteFile(filepath.Join(dir, "pending-control.json"), data, 0644); e != nil {
++			t.Fatal(e)
++		}
++	}
++}
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/rf_canary.go b/pkg/scheduler/api/devices/nvidia/vgpu/rf_canary.go
+new file mode 100644
+index 0000000..94dc774
+--- /dev/null
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/rf_canary.go
+@@ -0,0 +1,45 @@
++package vgpu
++
++import (
++	"fmt"
++	"time"
++
++	v1 "k8s.io/api/core/v1"
++	"k8s.io/client-go/kubernetes"
++)
++
++// Keep the configured legacy device order and native feasibility rules. The
++// canary changes the commit synchronization, not the DQN policy or its service.
++// This mutex coordinates ONLY this process; it is not cross-scheduler isolation.
++func (gs *GPUDevices) allocateLegacyShared(client kubernetes.Interface, pod *v1.Pod) error {
++	if !checkVGPUResourcesInPod(pod) {
++		return nil
++	}
++	if gs.Mode != vGPUControllerHAMICore {
++		return fmt.Errorf("mixed-policy MVP requires hami-core; do not enable on MIG nodes")
++	}
++	rfLedgerMu.RLock()
++	present := rfAlreadyAllocated(gs, pod)
++	snap := rfClone(gs)
++	rfLedgerMu.RUnlock()
++	if present {
++		return fmt.Errorf("legacy Pod already accounted; refusing duplicate Allocate")
++	}
++	token := rfSnapshotToken(snap)
++	// Existing DQN RPCs run outside the ledger lock; Python is not called here.
++	fit, devices, score, err := checkNodeGPUSharingNative(pod, snap, false, "")
++	if err != nil {
++		return err
++	}
++	if !fit {
++		return fmt.Errorf("legacy native policy cannot fit Pod")
++	}
++	plan := &rfPlan{Created: time.Now(), SnapshotToken: token, Devices: devices, Score: score}
++	plan.RequestID = rfHash(struct{ Token, UID, Policy string }{token, string(pod.UID), GPUSelectPolicy})
++	rfLedgerMu.Lock()
++	defer rfLedgerMu.Unlock()
++	if rfSnapshotToken(gs) != token || rfAlreadyAllocated(gs, pod) {
++		return fmt.Errorf("legacy stale plan; retry scheduling")
++	}
++	return gs.commitNativePlan(client, pod, plan, devices, "legacy-"+normalizeGPUSelectPolicy(GPUSelectPolicy))
++}
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/rf_canary_test.go b/pkg/scheduler/api/devices/nvidia/vgpu/rf_canary_test.go
+new file mode 100644
+index 0000000..35740b3
+--- /dev/null
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/rf_canary_test.go
+@@ -0,0 +1,213 @@
++package vgpu
++
++import (
++	"context"
++	"net"
++	"os"
++	"sync"
++	"sync/atomic"
++	"testing"
++
++	"google.golang.org/grpc"
++	v1 "k8s.io/api/core/v1"
++	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
++	"k8s.io/apimachinery/pkg/runtime"
++	"k8s.io/client-go/kubernetes/fake"
++
++	dqngrpc "volcano.sh/volcano/pkg/scheduler/api/devices/nvidia/vgpu/dqngrpc"
++)
++
++func canaryTestConfig(t *testing.T) {
++	rfTestConfig(t)
++	old, ns, policy := RFCanaryEnabled, RFCanaryNamespace, GPUSelectPolicy
++	RFCanaryEnabled, RFCanaryNamespace, GPUSelectPolicy = true, "gpu-rf-tests", BinpackPolicy
++	t.Cleanup(func() { RFCanaryEnabled, RFCanaryNamespace, GPUSelectPolicy = old, ns, policy })
++}
++
++func canaryPod(name, kind string) *v1.Pod {
++	p := rfTestPod(name, kind, 4096, 20)
++	p.Namespace = "gpu-rf-tests"
++	p.Labels["gpu-lab/experiment"] = "round7-rf"
++	return p
++}
++
++func TestRFCanaryGateAndDisable(t *testing.T) {
++	canaryTestConfig(t)
++	p := canaryPod("test", "training")
++	if !RFForPod(p) || !RFActive() {
++		t.Fatal("canary not selected")
++	}
++	bad := p.DeepCopy()
++	bad.Labels[RFWorkloadLabel] = ""
++	if !RFForPod(bad) {
++		t.Fatal("invalid label bypassed validation via legacy route")
++	}
++	if _, err := rfPodRequest(bad); err == nil {
++		t.Fatal("empty workload label must be rejected")
++	}
++	for _, alter := range []func(*v1.Pod){
++		func(p *v1.Pod) { p.Namespace = "default" },
++		func(p *v1.Pod) { delete(p.Labels, "gpu-lab/experiment") },
++		func(p *v1.Pod) { delete(p.Labels, RFWorkloadLabel) },
++	} {
++		q := p.DeepCopy()
++		alter(q)
++		if RFForPod(q) {
++			t.Fatal("unrelated Pod routed to RF")
++		}
++	}
++	RFCanaryEnabled = false
++	if RFForPod(p) || RFActive() {
++		t.Fatal("default legacy policy changed")
++	}
++}
++
++type canaryDQN struct {
++	dqngrpc.UnimplementedDQNSchedulerServer
++	calls atomic.Int32
++}
++
++func (s *canaryDQN) ScheduleJob(_ context.Context, r *dqngrpc.ScheduleJobRequest) (*dqngrpc.ScheduleJobResponse, error) {
++	s.calls.Add(1)
++	if !rfLedgerMu.TryLock() {
++		panic("DQN RPC holds shared ledger lock")
++	}
++	rfLedgerMu.Unlock()
++	allocations := []*dqngrpc.PodAllocation{}
++	for _, p := range r.Pods {
++		allocations = append(allocations, &dqngrpc.PodAllocation{PodNamespace: p.PodNamespace, PodName: p.PodName, Success: true, SelectedIndexes: []int32{1}})
++	}
++	return &dqngrpc.ScheduleJobResponse{Allocations: allocations}, nil
++}
++
++func TestRFCanaryDQNAndRFShareNativeLedger(t *testing.T) {
++	canaryTestConfig(t)
++	GPUSelectPolicy = DQNJobPolicy
++	dqn := &canaryDQN{}
++	l, err := net.Listen("tcp", "127.0.0.1:0")
++	if err != nil {
++		t.Fatal(err)
++	}
++	server := grpc.NewServer()
++	dqngrpc.RegisterDQNSchedulerServer(server, dqn)
++	go server.Serve(l)
++	endpoint, kube := DQNGRPCEndpoint, dqnKubeClient
++	resetDQNClient()
++	DQNGRPCEndpoint = l.Addr().String()
++	p := canaryPod("experiment", "training")
++	q := rfTestPod("business", "inference", 4096, 20) // no canary namespace/label
++	client := fake.NewSimpleClientset(p.DeepCopy(), q.DeepCopy())
++	dqnKubeClient = client
++	dqnJobCacheMu.Lock()
++	dqnJobCache = map[string]dqnJobCacheEntry{}
++	dqnJobCacheMu.Unlock()
++	t.Cleanup(func() { resetDQNClient(); server.Stop(); l.Close(); DQNGRPCEndpoint, dqnKubeClient = endpoint, kube })
++	gs := rfTestNode("shared", "NVIDIA-GeForce RTX 4090", 2, 24564)
++	calls := rfMockServer(t, rfMockResponse)
++	for _, item := range []*v1.Pod{q, p} {
++		if _, _, err := gs.FilterNode(item, "binpack"); err != nil {
++			t.Fatal(err)
++		}
++		_ = gs.ScoreNode(item, "binpack")
++		if err := gs.Allocate(client, item); err != nil {
++			t.Fatal(err)
++		}
++	}
++	if dqn.calls.Load() != 1 || calls.Load() != 1 {
++		t.Fatalf("wrong dispatch DQN=%d RF=%d", dqn.calls.Load(), calls.Load())
++	}
++	if gs.Device[1].UsedMem != 4096 || gs.Device[0].UsedMem != 4096 {
++		t.Fatal("legacy/RF UUID or shared accounting changed")
++	}
++	for _, item := range []*v1.Pod{q, p} {
++		saved, e := client.CoreV1().Pods(item.Namespace).Get(context.Background(), item.Name, metav1.GetOptions{})
++		if e != nil {
++			t.Fatal(e)
++		}
++		gs.AddResource(saved) // native informer replay must not reserve twice
++		if gs.Device[0].UsedNum != 1 || gs.Device[1].UsedNum != 1 {
++			t.Fatal("duplicate informer accounting")
++		}
++		_ = saved
++	}
++	for _, item := range []*v1.Pod{q, p} {
++		gs.SubResource(item)
++	}
++	rfAssertEmpty(t, gs)
++}
++
++func TestRFCanaryConcurrentPoliciesCannotOverallocate(t *testing.T) {
++	canaryTestConfig(t)
++	rfMockServer(t, rfMockResponse)
++	gs := rfTestNode("one-slot", "NVIDIA-L40", 1, 4096)
++	ps := []*v1.Pod{canaryPod("rf", "training"), rfTestPod("legacy", "", 4096, 20)}
++	objects := []runtime.Object{ps[0].DeepCopy(), ps[1].DeepCopy()}
++	client := fake.NewSimpleClientset(objects...)
++	var wg sync.WaitGroup
++	var succeeded atomic.Int32
++	for _, p := range ps {
++		wg.Add(1)
++		go func(p *v1.Pod) {
++			defer wg.Done()
++			if gs.Allocate(client, p) == nil {
++				succeeded.Add(1)
++			}
++		}(p)
++	}
++	wg.Wait()
++	if succeeded.Load() != 1 || gs.Device[0].UsedMem != 4096 || gs.Device[0].UsedNum != 1 {
++		t.Fatal("shared policies overallocated")
++	}
++	for _, p := range ps {
++		if rfAlreadyAllocated(gs, p) {
++			gs.SubResource(p)
++		}
++	}
++	rfAssertEmpty(t, gs)
++}
++
++func TestRFCanaryLiveFrozenModel(t *testing.T) {
++	endpoint := os.Getenv("RF_LIVE_ENDPOINT")
++	if endpoint == "" {
++		t.Skip("requires isolated Python service")
++	}
++	canaryTestConfig(t)
++	RFEndpoint = endpoint
++	gs := rfTestNode("live-canary", "NVIDIA-GeForce RTX 4090", 2, 24564)
++	p := canaryPod("live-a", "training")
++	q := canaryPod("live-b", "inference")
++	client := fake.NewSimpleClientset(p.DeepCopy(), q.DeepCopy())
++	initial := rfSnapshotToken(gs)
++	for _, item := range []*v1.Pod{p, q} {
++		plan, err := rfPlanFor(gs, item)
++		if err != nil || plan.Fallback != "" {
++			t.Fatalf("no real RF advice: %+v %v", plan, err)
++		}
++		if _, _, err = gs.FilterNode(item, "binpack"); err != nil {
++			t.Fatal(err)
++		}
++		_ = gs.ScoreNode(item, "binpack")
++		if err = gs.Allocate(client, item); err != nil {
++			t.Fatal(err)
++		}
++		saved, err := client.CoreV1().Pods(item.Namespace).Get(context.Background(), item.Name, metav1.GetOptions{})
++		if err != nil {
++			t.Fatal(err)
++		}
++		if saved.Annotations[AssignedIDsAnnotations] != encodePodDevices(plan.Devices) {
++			t.Fatal("RF/final Allocate UUID mismatch")
++		}
++		if rfSnapshotToken(gs) == initial {
++			t.Fatal("logical state not updated")
++		}
++	}
++	gs.SubResource(p)
++	gs.SubResource(q)
++	rfAssertEmpty(t, gs)
++	if rfSnapshotToken(gs) != initial {
++		t.Fatal("state not restored")
++	}
++	if _, err := rfPlanFor(gs, canaryPod("after-release", "training")); err != nil {
++		t.Fatal(err)
++	}
++}
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/rf_job.go b/pkg/scheduler/api/devices/nvidia/vgpu/rf_job.go
+new file mode 100644
+index 0000000..20d51d9
+--- /dev/null
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/rf_job.go
+@@ -0,0 +1,724 @@
++package vgpu
++
++// RF advice is stateless. The native Volcano ledger remains the only resource
++// owner. All memory fields below are logical quota units (MiB in this MVP).
++import (
++	"bytes"
++	"context"
++	"crypto/sha256"
++	_ "embed"
++	"encoding/hex"
++	"encoding/json"
++	"fmt"
++	"io"
++	"math"
++	"net/http"
++	"net/url"
++	"sort"
++	"strings"
++	"sync"
++	"time"
++	"unicode"
++
++	v1 "k8s.io/api/core/v1"
++	"k8s.io/client-go/kubernetes"
++	"k8s.io/klog/v2"
++	"volcano.sh/volcano/pkg/scheduler/plugins/util/nodelock"
++)
++
++const RFJobPolicy = "rf-job"
++const RFWorkloadLabel = "gpu-lab/workload-type"
++const rfSchema = "rf-job/v1"
++
++//go:embed rf_profiles.json
++var rfProfilesJSON []byte
++var rfProfileOnce sync.Once
++var rfProfiles map[string]struct {
++	Hardware map[string]interface{} `json:"hardware"`
++}
++
++func rfHardware(model string) map[string]interface{} {
++	rfProfileOnce.Do(func() { _ = json.Unmarshal(rfProfilesJSON, &rfProfiles) })
++	parts := strings.FieldsFunc(strings.ToUpper(model), func(r rune) bool { return !unicode.IsLetter(r) && !unicode.IsDigit(r) })
++	key := ""
++	for _, p := range parts {
++		if p != "NVIDIA" && p != "GEFORCE" {
++			key += p
++		}
++	}
++	return rfProfiles[key].Hardware // nil for unknown/unverified SKU, never guessed
++}
++
++var (
++	RFEnabled           = false
++	RFCanaryEnabled     = false // opt-in mixed-policy mode, never enables a second scheduler
++	RFCanaryNamespace   = "gpu-rf-tests"
++	RFEndpoint          = "http://127.0.0.1:18081/v1/rank"
++	RFModelVersion      = "rf-v4-known-states-ee35cfabe30f"
++	RFTimeoutMS         = 500
++	RFPredictionEnabled = true // ablation only: RFActive/constraints/heuristics remain unchanged
++	rfLedgerMu          sync.RWMutex
++	rfCacheMu           sync.Mutex
++	rfPlans             = map[string]*rfPlan{}
++	rfHTTP              = &http.Client{Transport: &http.Transport{Proxy: nil}, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return fmt.Errorf("RF redirects disabled") }}
++)
++
++// RFActive guards shared bookkeeping, including non-RF Pods in canary mode.
++// RFForPod is the separate per-Pod policy gate; never mutate global policy in a request.
++func RFActive() bool {
++	return VGPUEnable && RFEnabled && (GPUSelectPolicy == RFJobPolicy || RFCanaryEnabled)
++}
++
++func RFForPod(pod *v1.Pod) bool {
++	if !RFActive() || pod == nil {
++		return false
++	}
++	if GPUSelectPolicy == RFJobPolicy {
++		return true // preserve round-six missing-label deterministic fallback
++	}
++	_, hasWorkload := pod.Labels[RFWorkloadLabel]
++	return RFCanaryEnabled && RFCanaryNamespace != "" && pod.Namespace == RFCanaryNamespace &&
++		pod.Labels["gpu-lab/experiment"] == "round7-rf" && hasWorkload
++}
++
++type rfGPU struct {
++	UUID             string                 `json:"uuid"`
++	Node             string                 `json:"node"`
++	Model            string                 `json:"model"`
++	RegisteredMemory uint                   `json:"registered_memory_mib"`
++	AllocatedMemory  uint                   `json:"allocated_memory_mib"`
++	AllocatedCompute uint                   `json:"allocated_compute_quota"`
++	AllocatedCount   uint                   `json:"allocated_vgpu_count"`
++	TrainingCount    uint                   `json:"training_vgpu_count"`
++	InferenceCount   uint                   `json:"inference_vgpu_count"`
++	TrainingPods     uint                   `json:"training_pod_count"`
++	InferencePods    uint                   `json:"inference_pod_count"`
++	Unrestricted     uint                   `json:"unrestricted_vgpu_count"`
++	MaxInstances     uint                   `json:"max_instances"`
++	Healthy          bool                   `json:"healthy"`
++	Mode             string                 `json:"sharing_mode"`
++	Hardware         map[string]interface{} `json:"hardware,omitempty"`
++}
++type rfRequest struct {
++	PredictionEnabled *bool   `json:"rf_prediction_enabled,omitempty"`
++	Schema            string  `json:"schema_version"`
++	RequestID         string  `json:"request_id"`
++	SnapshotToken     string  `json:"snapshot_token"`
++	ModelVersion      string  `json:"model_version"`
++	MemoryUnitMiB     int     `json:"memory_unit_mib"`
++	Pod               *v1.Pod `json:"pod"`
++	GPUs              []rfGPU `json:"gpus"`
++}
++
++// Kubernetes quantities may marshal 10000 as "10k". The RPC contract uses
++// integer MiB/quota units, not Kubernetes SI syntax. Canonicalize explicitly.
++func (r rfRequest) MarshalJSON() ([]byte, error) {
++	type alias rfRequest
++	raw, err := json.Marshal(r.Pod)
++	if err != nil {
++		return nil, err
++	}
++	var pod map[string]interface{}
++	if err = json.Unmarshal(raw, &pod); err != nil {
++		return nil, err
++	}
++	if r.Pod != nil {
++		spec, _ := pod["spec"].(map[string]interface{})
++		containers, _ := spec["containers"].([]interface{})
++		for i, c := range r.Pod.Spec.Containers {
++			if i >= len(containers) {
++				continue
++			}
++			cm := containers[i].(map[string]interface{})
++			resources, _ := cm["resources"].(map[string]interface{})
++			for name, list := range map[string]v1.ResourceList{"limits": c.Resources.Limits, "requests": c.Resources.Requests} {
++				lm, _ := resources[name].(map[string]interface{})
++				for key, q := range list {
++					if strings.HasPrefix(string(key), "volcano.sh/vgpu-") {
++						n, ok := q.AsInt64()
++						if !ok || n < 0 {
++							return nil, fmt.Errorf("non-integer/negative vGPU quantity")
++						}
++						lm[string(key)] = n
++					}
++				}
++			}
++		}
++	}
++	return json.Marshal(struct {
++		*alias
++		Pod map[string]interface{} `json:"pod"`
++	}{alias: (*alias)(&r), Pod: pod})
++}
++
++type rfAssignment struct {
++	Container string `json:"container"`
++	Unit      int    `json:"unit"`
++	UUID      string `json:"gpu_uuid"`
++	Node      string `json:"node"`
++	Memory    uint   `json:"memory_mib"`
++	Compute   uint   `json:"compute_quota"`
++	Instances int    `json:"instances"`
++}
++type rfResponse struct {
++	PredictionEnabled *bool           `json:"rf_prediction_enabled,omitempty"`
++	Schema            string          `json:"schema_version"`
++	RequestID         string          `json:"request_id"`
++	SnapshotToken     string          `json:"snapshot_token"`
++	ModelVersion      string          `json:"model_version"`
++	Status            string          `json:"status"`
++	ModelReady        bool            `json:"model_ready"`
++	Score             float64         `json:"score"`
++	Assignments       []rfAssignment  `json:"assignments"`
++	Classifications   json.RawMessage `json:"classifications"`
++}
++type rfPlan struct {
++	Created       time.Time
++	RequestID     string
++	SnapshotToken string
++	Devices       []ContainerDevices
++	Score         float64
++	Fallback      string
++	Diagnostics   json.RawMessage
++}
++
++func rfHash(v interface{}) string {
++	b, _ := json.Marshal(v)
++	h := sha256.Sum256(b)
++	return hex.EncodeToString(h[:])
++}
++
++// Metadata is rebuilt from native PodMap/addResource events, not from a Python
++// reservation service. Counts are allocated vGPU slices, plus distinct Pods.
++func rfRecordPod(g *GPUDevice, pod *v1.Pod, core uint, sign int) {
++	if !RFActive() {
++		return
++	}
++	u := g.PodMap[string(pod.UID)]
++	if u == nil {
++		return
++	}
++	u.RFWorkloadType = pod.Labels[RFWorkloadLabel]
++	if sign > 0 {
++		u.RFInstances++
++		if core == 0 {
++			u.RFUnrestrictedInstances++
++		}
++	} else if u.RFInstances > 0 {
++		u.RFInstances--
++		if core == 0 && u.RFUnrestrictedInstances > 0 {
++			u.RFUnrestrictedInstances--
++		}
++	}
++}
++
++func rfClone(gs *GPUDevices) *GPUDevices {
++	copy := getGPUDeviceSnapShot(gs)
++	copy.Mode = gs.Mode
++	for idx, g := range gs.Device {
++		if g == nil {
++			continue
++		}
++		copy.Device[idx].PodMap = make(map[string]*GPUUsage)
++		for uid, usage := range g.PodMap {
++			if usage == nil {
++				continue
++			}
++			u := *usage
++			copy.Device[idx].PodMap[uid] = &u
++		}
++	}
++	return copy
++}
++
++func rfGPUs(gs *GPUDevices) []rfGPU {
++	rows := []rfGPU{}
++	for _, g := range gs.Device {
++		if g == nil {
++			continue
++		}
++		r := rfGPU{UUID: g.UUID, Node: gs.Name, Model: g.Type, RegisteredMemory: g.Memory, AllocatedMemory: g.UsedMem,
++			AllocatedCompute: g.UsedCore, AllocatedCount: g.UsedNum, MaxInstances: g.Number, Healthy: g.Health, Mode: gs.Mode}
++		r.Hardware = rfHardware(g.Type)
++		for _, u := range g.PodMap {
++			if u == nil {
++				continue
++			}
++			switch u.RFWorkloadType {
++			case "training":
++				r.TrainingCount += u.RFInstances
++				if u.RFInstances > 0 {
++					r.TrainingPods++
++				}
++			case "inference":
++				r.InferenceCount += u.RFInstances
++				if u.RFInstances > 0 {
++					r.InferencePods++
++				}
++			}
++			r.Unrestricted += u.RFUnrestrictedInstances
++		}
++		rows = append(rows, r)
++	}
++	sort.Slice(rows, func(i, j int) bool { return rows[i].UUID < rows[j].UUID })
++	return rows
++}
++
++func rfSnapshotToken(gs *GPUDevices) string { return rfHash(rfGPUs(gs)) }
++
++func rfOriginalScore(gs *GPUDevices, plan *rfPlan, schedulePolicy string) float64 {
++	rfLedgerMu.RLock()
++	snap := rfClone(gs)
++	rfLedgerMu.RUnlock()
++	if rfSnapshotToken(snap) != plan.SnapshotToken {
++		return 0
++	}
++	score := 0.0
++	for _, list := range plan.Devices {
++		for _, d := range list {
++			for _, g := range snap.Device {
++				if g.UUID == d.UUID {
++					_, _ = snap.Sharing.TryAddPod(g, d.Usedmem, d.Usedcores)
++					score += GPUScore(schedulePolicy, g)
++					break
++				}
++			}
++		}
++	}
++	return score
++}
++
++func rfPodRequest(pod *v1.Pod) (*v1.Pod, error) {
++	cfg := getConfig()
++	task, present := pod.Labels[RFWorkloadLabel]
++	if present && task != "training" && task != "inference" {
++		return nil, fmt.Errorf("invalid %s=%q", RFWorkloadLabel, task)
++	}
++	if backend := pod.Annotations["gpu-lab/backend"]; backend != "" && backend != "CUDA" {
++		return nil, fmt.Errorf("unsupported RF backend %q", backend)
++	}
++	for _, c := range pod.Spec.InitContainers {
++		for _, list := range []v1.ResourceList{c.Resources.Limits, c.Resources.Requests} {
++			for key := range list {
++				if strings.HasPrefix(string(key), "volcano.sh/vgpu-") || string(key) == cfg.ResourceCountName || string(key) == cfg.ResourceMemoryName || string(key) == cfg.ResourceCoreName {
++					return nil, fmt.Errorf("GPU initContainers unsupported by rf-job MVP")
++				}
++			}
++		}
++	}
++	copy := pod.DeepCopy()
++	copy.Kind, copy.APIVersion = "Pod", "v1"
++	// These are already handled by native predicates. Do not approximate them in
++	// the GPU-only adviser, or discard the native scheduler's decisions.
++	copy.Spec.Affinity = nil
++	copy.Spec.TopologySpreadConstraints = nil
++	copy.Spec.NodeSelector = nil
++	if cfg.ResourceMemoryPercentageName == "" {
++		for _, c := range pod.Spec.Containers {
++			for _, list := range []v1.ResourceList{c.Resources.Limits, c.Resources.Requests} {
++				if _, ok := list["volcano.sh/vgpu-memory-percentage"]; ok {
++					return nil, fmt.Errorf("native memory-percentage resource name not configured")
++				}
++			}
++		}
++	}
++	keys := map[v1.ResourceName]v1.ResourceName{v1.ResourceName(cfg.ResourceCountName): "volcano.sh/vgpu-number",
++		v1.ResourceName(cfg.ResourceMemoryName): "volcano.sh/vgpu-memory", v1.ResourceName(cfg.ResourceCoreName): "volcano.sh/vgpu-cores",
++		v1.ResourceName(cfg.ResourceMemoryPercentageName): "volcano.sh/vgpu-memory-percentage"}
++	for idx := range copy.Spec.Containers {
++		for _, list := range []v1.ResourceList{copy.Spec.Containers[idx].Resources.Limits, copy.Spec.Containers[idx].Resources.Requests} {
++			for old, canonical := range keys {
++				if value, ok := list[old]; ok {
++					delete(list, old)
++					list[canonical] = value
++				}
++			}
++		}
++		c := copy.Spec.Containers[idx]
++		for _, list := range []v1.ResourceList{c.Resources.Limits, c.Resources.Requests} {
++			for key, q := range list {
++				if !strings.HasPrefix(string(key), "volcano.sh/vgpu-") {
++					continue
++				}
++				n, ok := q.AsInt64()
++				if !ok || n < 0 {
++					return nil, fmt.Errorf("vGPU resource must be nonnegative integer units: %s", key)
++				}
++				if key == "volcano.sh/vgpu-number" && (n < 1 || n > 64) {
++					return nil, fmt.Errorf("invalid vGPU count")
++				}
++				if key == "volcano.sh/vgpu-cores" && n > 100 {
++					return nil, fmt.Errorf("vGPU compute quota exceeds 100")
++				}
++				if key == "volcano.sh/vgpu-memory-percentage" && (n < 1 || n > 100) {
++					return nil, fmt.Errorf("invalid vGPU memory percentage")
++				}
++				if l, yes := c.Resources.Limits[key]; yes {
++					if req, yes := c.Resources.Requests[key]; yes && l.Cmp(req) != 0 {
++						return nil, fmt.Errorf("vGPU requests/limits disagree")
++					}
++				}
++			}
++		}
++	}
++	return copy, nil
++}
++
++func rfRequestFor(gs *GPUDevices, pod *v1.Pod) (rfRequest, error) {
++	p, err := rfPodRequest(pod)
++	if err != nil {
++		return rfRequest{}, err
++	}
++	p.Spec.NodeName = gs.Name
++	enabled := RFPredictionEnabled
++	r := rfRequest{PredictionEnabled: &enabled, Schema: rfSchema, ModelVersion: RFModelVersion, MemoryUnitMiB: 1, Pod: p, GPUs: rfGPUs(gs), SnapshotToken: rfSnapshotToken(gs)}
++	r.RequestID = rfHash(r)
++	return r, nil
++}
++
++func rfCall(r rfRequest) (rfResponse, error) {
++	var result rfResponse
++	u, err := url.Parse(RFEndpoint)
++	if err != nil || u.Scheme != "http" || u.Host == "" || u.User != nil {
++		return result, fmt.Errorf("invalid RF HTTP endpoint")
++	}
++	body, err := json.Marshal(r)
++	if err != nil {
++		return result, err
++	}
++	timeout := RFTimeoutMS
++	if timeout < 1 || timeout > 10000 {
++		timeout = 500
++	}
++	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(timeout)*time.Millisecond)
++	defer cancel()
++	req, err := http.NewRequestWithContext(ctx, http.MethodPost, RFEndpoint, bytes.NewReader(body))
++	if err != nil {
++		return result, err
++	}
++	req.Header.Set("Content-Type", "application/json")
++	resp, err := rfHTTP.Do(req)
++	if err != nil {
++		return result, err
++	}
++	defer resp.Body.Close()
++	if resp.StatusCode != http.StatusOK {
++		diagnostic, _ := io.ReadAll(io.LimitReader(resp.Body, 512))
++		return result, fmt.Errorf("RF HTTP status %d: %s", resp.StatusCode, diagnostic)
++	}
++	data, err := io.ReadAll(io.LimitReader(resp.Body, 4*1024*1024+1))
++	if err != nil {
++		return result, err
++	}
++	if len(data) > 4*1024*1024 {
++		return result, fmt.Errorf("RF response too large")
++	}
++	if err = json.Unmarshal(data, &result); err != nil {
++		return result, err
++	}
++	if result.Schema != rfSchema || result.RequestID != r.RequestID || result.SnapshotToken != r.SnapshotToken || result.ModelVersion != r.ModelVersion {
++		return result, fmt.Errorf("RF response identity/version mismatch")
++	}
++	if r.PredictionEnabled != nil && (result.PredictionEnabled == nil || *result.PredictionEnabled != *r.PredictionEnabled) {
++		return result, fmt.Errorf("RF prediction-switch echo mismatch")
++	}
++	if result.Status != "ranked" || !result.ModelReady || math.IsNaN(result.Score) || math.IsInf(result.Score, 0) || result.Score < 0 || result.Score > 100 {
++		return result, fmt.Errorf("RF response unavailable/invalid score")
++	}
++	return result, nil
++}
++
++func rfResolve(g *GPUDevice, req ContainerDeviceRequest) ContainerDeviceRequest {
++	if req.Memreq == 0 && req.MemPercentagereq != DefaultMemPercentage {
++		req.Memreq = g.Memory * uint(req.MemPercentagereq) / 100
++	}
++	return req
++}
++
++func rfFits(pod *v1.Pod, g *GPUDevice, req ContainerDeviceRequest) bool {
++	return g != nil && g.UUID != "" && g.Memory > 0 && g.Number > 0 && g.Health && g.UsedMem <= g.Memory && g.UsedCore <= 100 && req.Nums > 0 && req.Coresreq <= 100 && rfResolve(g, req).Memreq > 0 && canFitForOrder(g, rfResolve(g, req)) && checkType(pod.Annotations, *g, req)
++}
++
++func rfContainerRequests(pod *v1.Pod) map[string]ContainerDeviceRequest {
++	result := map[string]ContainerDeviceRequest{}
++	for _, c := range pod.Spec.Containers {
++		p := pod.DeepCopy()
++		p.Spec.Containers = []v1.Container{c}
++		reqs := resourcereqs(p)
++		if len(reqs) > 0 {
++			result[c.Name] = reqs[0]
++		}
++	}
++	return result
++}
++
++// Validate every returned UUID/slot/request against a fresh native clone. The
++// model can rank feasible devices but cannot relax quotas or select alien UUIDs.
++func rfValidate(gs *GPUDevices, pod *v1.Pod, assignments []rfAssignment) ([]ContainerDevices, error) {
++	working := rfClone(gs)
++	reqs := rfContainerRequests(pod)
++	devices := make([]ContainerDevices, len(pod.Spec.Containers))
++	byUUID := map[string]int{}
++	for idx, g := range working.Device {
++		if g != nil {
++			byUUID[g.UUID] = idx
++		}
++	}
++	slots := map[string]bool{}
++	used := map[string]bool{}
++	expected := 0
++	for _, r := range reqs {
++		if r.Nums < 1 || r.Coresreq > 100 || r.MemPercentagereq < 0 {
++			return nil, fmt.Errorf("invalid GPU request")
++		}
++		expected += int(r.Nums)
++	}
++	if len(assignments) != expected {
++		return nil, fmt.Errorf("RF incomplete assignment count")
++	}
++	for _, a := range assignments {
++		r, ok := reqs[a.Container]
++		if !ok || a.Unit < 0 || a.Unit >= int(r.Nums) || a.Node != gs.Name || a.Instances != 1 {
++			return nil, fmt.Errorf("RF invalid container/unit/node")
++		}
++		slot := fmt.Sprintf("%s/%d", a.Container, a.Unit)
++		pair := a.Container + "/" + a.UUID
++		if slots[slot] || used[pair] {
++			return nil, fmt.Errorf("RF duplicate slot or per-container UUID")
++		}
++		slots[slot] = true
++		used[pair] = true
++		idx, ok := byUUID[a.UUID]
++		if !ok {
++			return nil, fmt.Errorf("RF unknown GPU UUID")
++		}
++		g := working.Device[idx]
++		r = rfResolve(g, r)
++		if a.Memory != r.Memreq || a.Compute != r.Coresreq || !rfFits(pod, g, r) {
++			return nil, fmt.Errorf("RF UUID violates native resource constraints")
++		}
++		fit, uuid := working.Sharing.TryAddPod(g, r.Memreq, r.Coresreq)
++		if !fit || uuid != a.UUID {
++			return nil, fmt.Errorf("RF native TryAddPod UUID mismatch")
++		}
++		for i, c := range pod.Spec.Containers {
++			if c.Name == a.Container {
++				devices[i] = append(devices[i], ContainerDevice{UUID: uuid, Type: r.Type, Usedmem: r.Memreq, Usedcores: r.Coresreq})
++			}
++		}
++	}
++	return devices, nil
++}
++
++func rfFallback(gs *GPUDevices, pod *v1.Pod, original bool) ([]rfAssignment, float64, error) {
++	working := rfClone(gs)
++	reqs := rfContainerRequests(pod)
++	result := []rfAssignment{}
++	score := 0.0
++	for _, c := range pod.Spec.Containers {
++		r, ok := reqs[c.Name]
++		if !ok {
++			continue
++		}
++		used := map[int]bool{}
++		for unit := 0; unit < int(r.Nums); unit++ {
++			indexes := []int{}
++			for idx, g := range working.Device {
++				if !used[idx] && rfFits(pod, g, r) {
++					indexes = append(indexes, idx)
++				}
++			}
++			if len(indexes) == 0 {
++				return nil, 0, fmt.Errorf("no complete native binpack plan")
++			}
++			sort.Slice(indexes, func(i, j int) bool {
++				a, b := working.Device[indexes[i]], working.Device[indexes[j]]
++				if original {
++					return a.ID > b.ID
++				}
++				if a.UsedMem != b.UsedMem {
++					return a.UsedMem > b.UsedMem
++				}
++				if a.UsedCore != b.UsedCore {
++					return a.UsedCore > b.UsedCore
++				}
++				if a.UsedNum != b.UsedNum {
++					return a.UsedNum > b.UsedNum
++				}
++				return a.ID > b.ID
++			})
++			idx := indexes[0]
++			g := working.Device[idx]
++			resolved := rfResolve(g, r)
++			fit, uuid := working.Sharing.TryAddPod(g, resolved.Memreq, resolved.Coresreq)
++			if !fit || uuid != g.UUID {
++				return nil, 0, fmt.Errorf("fallback native UUID mismatch")
++			}
++			used[idx] = true
++			result = append(result, rfAssignment{Container: c.Name, Unit: unit, UUID: uuid, Node: gs.Name, Memory: resolved.Memreq, Compute: resolved.Coresreq, Instances: 1})
++			score += 100 * (1 - (.5*float64(g.Memory-g.UsedMem)/float64(g.Memory) + .4*float64(100-g.UsedCore)/100 + .1*float64(g.Number-g.UsedNum)/float64(g.Number)))
++		}
++	}
++	if len(result) == 0 {
++		return result, 0, nil
++	}
++	return result, score / float64(len(result)), nil
++}
++
++func rfPlanFor(gs *GPUDevices, pod *v1.Pod) (*rfPlan, error) {
++	rfLedgerMu.RLock()
++	snap := rfClone(gs)
++	rfLedgerMu.RUnlock()
++	if snap.Mode != vGPUControllerHAMICore {
++		return nil, fmt.Errorf("rf-job MVP supports hami-core only")
++	}
++	if mode, ok := pod.Annotations[GPUModeAnnotation]; ok && mode != snap.Mode {
++		return nil, fmt.Errorf("RF sharing mode mismatch")
++	}
++	if pod.Spec.NodeName != "" && pod.Spec.NodeName != snap.Name {
++		return nil, fmt.Errorf("RF native node binding mismatch")
++	}
++	r, err := rfRequestFor(snap, pod)
++	if err != nil {
++		return nil, err
++	}
++	// Native feasibility comes first, before any RPC. Only candidates that fit
++	// at least one requested container are exposed to the adviser.
++	original := pod.Labels[RFWorkloadLabel] == ""
++	fallbackAssignments, fallbackScore, err := rfFallback(snap, pod, original)
++	if err != nil {
++		return nil, err
++	}
++	reqs := rfContainerRequests(pod)
++	eligible := map[string]bool{}
++	for _, g := range snap.Device {
++		for _, req := range reqs {
++			if rfFits(pod, g, req) {
++				eligible[g.UUID] = true
++			}
++		}
++	}
++	filtered := []rfGPU{}
++	for _, g := range r.GPUs {
++		if eligible[g.UUID] {
++			filtered = append(filtered, g)
++		}
++	}
++	r.GPUs = filtered
++	r.RequestID = ""
++	r.RequestID = rfHash(r)
++	rfCacheMu.Lock()
++	cached := rfPlans[r.RequestID]
++	rfCacheMu.Unlock()
++	ttl := 30 * time.Second
++	if cached != nil && cached.Fallback != "" {
++		ttl = 500 * time.Millisecond
++	}
++	if cached != nil && time.Since(cached.Created) < ttl {
++		return cached, nil
++	}
++	plan := &rfPlan{Created: time.Now(), RequestID: r.RequestID, SnapshotToken: r.SnapshotToken}
++	var response rfResponse
++	if original {
++		err = fmt.Errorf("missing workload label: original deterministic ordering")
++	} else if getConfig().GPUMemoryFactor > 1 {
++		err = fmt.Errorf("RF MVP requires memory factor=1")
++	} else {
++		response, err = rfCall(r)
++	}
++	if err == nil {
++		plan.Devices, err = rfValidate(snap, pod, response.Assignments)
++		plan.Score = response.Score
++		plan.Diagnostics = response.Classifications
++	}
++	if err != nil {
++		plan.Fallback = err.Error()
++		plan.Devices, err = rfValidate(snap, pod, fallbackAssignments)
++		if err != nil {
++			return nil, err
++		}
++		plan.Score = fallbackScore
++		klog.V(3).InfoS("rf-job deterministic fallback", "pod", pod.Name, "node", gs.Name, "reason", plan.Fallback)
++	}
++	rfCacheMu.Lock()
++	if len(rfPlans) >= 512 {
++		rfPlans = map[string]*rfPlan{}
++	}
++	rfPlans[r.RequestID] = plan
++	rfCacheMu.Unlock()
++	return plan, nil
++}
++
++func rfAlreadyAllocated(gs *GPUDevices, pod *v1.Pod) bool {
++	for _, g := range gs.Device {
++		if g != nil {
++			if u := g.PodMap[string(pod.UID)]; u != nil && (u.UsedMem > 0 || u.UsedCore > 0 || u.RFInstances > 0) {
++				return true
++			}
++		}
++	}
++	return false
++}
++
++func (gs *GPUDevices) allocateRF(client kubernetes.Interface, pod *v1.Pod) error {
++	rfLedgerMu.RLock()
++	present := rfAlreadyAllocated(gs, pod)
++	rfLedgerMu.RUnlock()
++	if present {
++		return fmt.Errorf("rf-job Pod already accounted; refusing duplicate Allocate")
++	}
++	plan, err := rfPlanFor(gs, pod)
++	if err != nil {
++		return err
++	}
++	rfLedgerMu.Lock()
++	defer rfLedgerMu.Unlock()
++	if rfSnapshotToken(gs) != plan.SnapshotToken || rfAlreadyAllocated(gs, pod) {
++		return fmt.Errorf("rf-job stale plan; retry scheduling")
++	}
++	// A plan is never an authority: recheck native UUIDs and quotas at commit.
++	assignments := []rfAssignment{}
++	for i, list := range plan.Devices {
++		for unit, d := range list {
++			assignments = append(assignments, rfAssignment{Container: pod.Spec.Containers[i].Name, Unit: unit, UUID: d.UUID, Node: gs.Name, Memory: d.Usedmem, Compute: d.Usedcores, Instances: 1})
++		}
++	}
++	devices, err := rfValidate(gs, pod, assignments)
++	if err != nil {
++		return err
++	}
++	return gs.commitNativePlan(client, pod, plan, devices, RFJobPolicy)
++}
++
++// Caller holds rfLedgerMu and has checked its plan against the current ledger.
++// Both canary policies commit through the same AddPod/annotation/rollback path.
++func (gs *GPUDevices) commitNativePlan(client kubernetes.Interface, pod *v1.Pod, plan *rfPlan, devices []ContainerDevices, route string) error {
++	var err error
++	if NodeLockEnable {
++		nodelock.UseClient(client)
++		if err = nodelock.LockNode(gs.Name, DeviceName); err != nil {
++			return err
++		}
++	}
++	annotations := map[string]string{AssignedNodeAnnotations: gs.Name, AssignedTimeAnnotations: fmt.Sprint(time.Now().Unix()), AssignedIDsAnnotations: encodePodDevices(devices),
++		AssignedIDsToAllocateAnnotations: encodePodDevices(devices), DeviceBindPhase: "allocating", BindTimeAnnotations: fmt.Sprint(time.Now().Unix())}
++	before := rfGPUs(gs)
++	gs.addResource(annotations, pod)
++	if err = patchPodAnnotations(client, pod, annotations); err != nil {
++		copy := pod.DeepCopy()
++		copy.Annotations = annotations
++		gs.subResource(copy)
++		if NodeLockEnable {
++			_ = nodelock.ReleaseNodeLock(gs.Name, DeviceName)
++		}
++		return err
++	}
++	if pod.Annotations == nil {
++		pod.Annotations = map[string]string{}
++	}
++	for key, value := range annotations {
++		pod.Annotations[key] = value
++	}
++	klog.InfoS("rf-job UUID allocation", "route", route, "pod", pod.Namespace+"/"+pod.Name, "podUID", pod.UID, "node", gs.Name, "requestID", plan.RequestID, "devices", annotations[AssignedIDsAnnotations], "score", plan.Score, "fallback", plan.Fallback, "logicalBefore", before, "logicalAfter", rfGPUs(gs))
++	return nil
++}
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/rf_job_test.go b/pkg/scheduler/api/devices/nvidia/vgpu/rf_job_test.go
+new file mode 100644
+index 0000000..45cd90c
+--- /dev/null
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/rf_job_test.go
+@@ -0,0 +1,627 @@
++// Offline native allocator tests. No Kubernetes server or NVIDIA hardware used.
++package vgpu
++
++import (
++	"bytes"
++	"context"
++	"encoding/json"
++	"fmt"
++	"io"
++	"net/http"
++	"net/http/httptest"
++	"os"
++	"path/filepath"
++	"strings"
++	"sync"
++	"sync/atomic"
++	"testing"
++	"time"
++
++	v1 "k8s.io/api/core/v1"
++	"k8s.io/apimachinery/pkg/api/resource"
++	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
++	"k8s.io/apimachinery/pkg/runtime"
++	"k8s.io/apimachinery/pkg/types"
++	"k8s.io/client-go/kubernetes/fake"
++	clienttesting "k8s.io/client-go/testing"
++)
++
++type rfTraceTransport struct {
++	base http.RoundTripper
++	mu   sync.Mutex
++	rows []map[string]interface{}
++}
++
++func (rt *rfTraceTransport) RoundTrip(r *http.Request) (*http.Response, error) {
++	request, err := io.ReadAll(r.Body)
++	if err != nil {
++		return nil, err
++	}
++	_ = r.Body.Close()
++	r.Body = io.NopCloser(bytes.NewReader(request))
++	response, err := rt.base.RoundTrip(r)
++	if err != nil {
++		return nil, err
++	}
++	body, err := io.ReadAll(response.Body)
++	_ = response.Body.Close()
++	if err != nil {
++		return nil, err
++	}
++	response.Body = io.NopCloser(bytes.NewReader(body))
++	rt.mu.Lock()
++	rt.rows = append(rt.rows, map[string]interface{}{"request": json.RawMessage(request), "response": json.RawMessage(body), "http_status": response.StatusCode})
++	rt.mu.Unlock()
++	return response, nil
++}
++
++func rfTestConfig(t *testing.T) {
++	t.Helper()
++	predictionEnabled := RFPredictionEnabled
++	RFPredictionEnabled = true
++	t.Cleanup(func() { RFPredictionEnabled = predictionEnabled })
++	enabled, policy, vgpu, lock, endpoint, version, timeout, client := RFEnabled, GPUSelectPolicy, VGPUEnable, NodeLockEnable, RFEndpoint, RFModelVersion, RFTimeoutMS, rfHTTP
++	RFEnabled, GPUSelectPolicy, VGPUEnable, NodeLockEnable = true, RFJobPolicy, true, false
++	RFTimeoutMS = 1000
++	rfCacheMu.Lock()
++	rfPlans = map[string]*rfPlan{}
++	rfCacheMu.Unlock()
++	t.Cleanup(func() {
++		RFEnabled, GPUSelectPolicy, VGPUEnable, NodeLockEnable = enabled, policy, vgpu, lock
++		RFEndpoint, RFModelVersion, RFTimeoutMS, rfHTTP = endpoint, version, timeout, client
++	})
++}
++
++func rfTestPod(name, task string, mem, cores int64) *v1.Pod {
++	labels := map[string]string{}
++	if task != "" {
++		labels[RFWorkloadLabel] = task
++	}
++	return &v1.Pod{ObjectMeta: metav1.ObjectMeta{Name: name, Namespace: "rf-offline", UID: types.UID(name), Labels: labels}, Spec: v1.PodSpec{Containers: []v1.Container{{Name: "work", Image: "offline-never-launched", Resources: v1.ResourceRequirements{Limits: v1.ResourceList{
++		"volcano.sh/vgpu-number": *resource.NewQuantity(1, resource.DecimalSI), "volcano.sh/vgpu-memory": *resource.NewQuantity(mem, resource.DecimalSI), "volcano.sh/vgpu-cores": *resource.NewQuantity(cores, resource.DecimalSI),
++	}}}}}}
++}
++
++func rfTestNode(name, model string, count int, mem uint) *GPUDevices {
++	gs := &GPUDevices{Name: name, Mode: vGPUControllerHAMICore, Device: map[int]*GPUDevice{}, Sharing: HAMICoreFactory{}}
++	for i := 0; i < count; i++ {
++		g := NewGPUDevice(i, mem)
++		g.UUID = fmt.Sprintf("SIM-%s-GPU-%02d", name, i)
++		g.Node = name
++		g.Type = model
++		g.Number = 10
++		g.Health = true
++		gs.Device[i] = g
++	}
++	return gs
++}
++
++func rfMockServer(t *testing.T, fn func(rfRequest) *rfResponse) *atomic.Int32 {
++	t.Helper()
++	calls := &atomic.Int32{}
++	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
++		calls.Add(1)
++		var request rfRequest
++		if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
++			t.Error(err)
++			w.WriteHeader(400)
++			return
++		}
++		// In the single-request test there can be no unrelated commit. Other
++		// concurrent callers may legitimately hold this lock during our RPC.
++		if request.Pod.Name == "train" {
++			if !rfLedgerMu.TryLock() {
++				t.Error("RPC holds logical-ledger lock")
++			} else {
++				rfLedgerMu.Unlock()
++			}
++		}
++		response := fn(request)
++		if response == nil {
++			w.WriteHeader(503)
++			return
++		}
++		_ = json.NewEncoder(w).Encode(response)
++	}))
++	t.Cleanup(server.Close)
++	RFEndpoint = server.URL
++	return calls
++}
++
++func rfMockResponse(r rfRequest) *rfResponse {
++	a := []rfAssignment{}
++	gs := rfTestNode(r.GPUs[0].Node, r.GPUs[0].Model, len(r.GPUs), r.GPUs[0].RegisteredMemory)
++	reqs := rfContainerRequests(r.Pod)
++	for _, c := range r.Pod.Spec.Containers {
++		req, ok := reqs[c.Name]
++		if !ok {
++			continue
++		}
++		for u := 0; u < int(req.Nums); u++ {
++			g := r.GPUs[u]
++			req = rfResolve(gs.Device[u], req)
++			a = append(a, rfAssignment{Container: c.Name, Unit: u, UUID: g.UUID, Node: g.Node, Memory: req.Memreq, Compute: req.Coresreq, Instances: 1})
++		}
++	}
++	return &rfResponse{PredictionEnabled: r.PredictionEnabled, Schema: rfSchema, RequestID: r.RequestID, SnapshotToken: r.SnapshotToken, ModelVersion: r.ModelVersion, Status: "ranked", ModelReady: true, Score: 80, Assignments: a, Classifications: json.RawMessage(`[{"source":"mock-not-RF"}]`)}
++}
++
++func rfAssertEmpty(t *testing.T, gs *GPUDevices) {
++	t.Helper()
++	for _, g := range gs.Device {
++		if g.UsedMem != 0 || g.UsedCore != 0 || g.UsedNum != 0 || len(g.PodMap) != 0 {
++			t.Fatalf("ledger not restored: %+v", g)
++		}
++	}
++}
++
++func TestRFNativeAllocateUsesAdvisedUUIDAndNativeLedger(t *testing.T) {
++	rfTestConfig(t)
++	calls := rfMockServer(t, rfMockResponse)
++	gs := rfTestNode("4090", "NVIDIA-GeForce RTX 4090", 2, 24564)
++	pod := rfTestPod("train", "training", 4096, 30)
++	client := fake.NewSimpleClientset(pod.DeepCopy())
++	if _, _, err := gs.FilterNode(pod, "binpack"); err != nil {
++		t.Fatal(err)
++	}
++	if gs.ScoreNode(pod, "binpack") != 80 {
++		t.Fatal("RF score lost")
++	}
++	rfAssertEmpty(t, gs)
++	plan, err := rfPlanFor(gs, pod)
++	if err != nil || plan.Fallback != "" {
++		t.Fatalf("%+v %v", plan, err)
++	}
++	if err = gs.Allocate(client, pod); err != nil {
++		t.Fatal(err)
++	}
++	saved, err := client.CoreV1().Pods(pod.Namespace).Get(context.Background(), pod.Name, metav1.GetOptions{})
++	if err != nil {
++		t.Fatal(err)
++	}
++	devices := decodePodDevices(saved.Annotations[AssignedIDsToAllocateAnnotations])
++	uuid := devices[0][0].UUID
++	if uuid != gs.Device[0].UUID || uuid != plan.Devices[0][0].UUID {
++		t.Fatalf("RF/Allocate UUID mismatch %s", uuid)
++	}
++	if calls.Load() != 1 {
++		t.Fatalf("Filter/Score/Allocate should reuse current-snapshot advice, got %d calls", calls.Load())
++	}
++	if gs.Device[0].UsedMem != 4096 || gs.Device[0].UsedCore != 30 || gs.Device[0].UsedNum != 1 || gs.Device[1].UsedNum != 0 {
++		t.Fatal("wrong native accounting")
++	}
++	if rfGPUs(gs)[0].TrainingCount != 1 {
++		t.Fatal("task composition missing")
++	}
++	gs.AddResource(saved)
++	if gs.Device[0].UsedNum != 1 {
++		t.Fatal("informer replay double-counted")
++	}
++	if err = gs.Allocate(client, pod); err == nil {
++		t.Fatal("duplicate Allocate must not reserve twice")
++	}
++	gs.SubResource(saved)
++	rfAssertEmpty(t, gs)
++}
++
++func TestRFEnableDisableAndMissingLabel(t *testing.T) {
++	for _, tc := range []struct {
++		name, task string
++		enabled    bool
++		wantID     int
++		calls      int32
++	}{{"enabled", "inference", true, 0, 1}, {"disabled", "training", false, 1, 0}, {"missing-label", "", true, 1, 0}} {
++		t.Run(tc.name, func(t *testing.T) {
++			rfTestConfig(t)
++			calls := rfMockServer(t, rfMockResponse)
++			RFEnabled = tc.enabled
++			gs := rfTestNode("node", "NVIDIA-L40", 2, 46068)
++			p := rfTestPod(tc.name, tc.task, 4096, 30)
++			client := fake.NewSimpleClientset(p.DeepCopy())
++			if err := gs.Allocate(client, p); err != nil {
++				t.Fatal(err)
++			}
++			got, _ := client.CoreV1().Pods(p.Namespace).Get(context.Background(), p.Name, metav1.GetOptions{})
++			if decodePodDevices(got.Annotations[AssignedIDsAnnotations])[0][0].UUID != gs.Device[tc.wantID].UUID {
++				t.Fatal("unexpected UUID")
++			}
++			if calls.Load() != tc.calls {
++				t.Fatal("unexpected RPC")
++			}
++		})
++	}
++}
++
++func TestRFExceptionFallback(t *testing.T) {
++	for _, name := range []string{"unavailable", "timeout", "wrong-version", "alien-uuid", "wrong-quota", "invalid-score", "partial-plan"} {
++		t.Run(name, func(t *testing.T) {
++			rfTestConfig(t)
++			RFTimeoutMS = 30
++			calls := rfMockServer(t, func(r rfRequest) *rfResponse {
++				out := rfMockResponse(r)
++				switch name {
++				case "unavailable":
++					return nil
++				case "timeout":
++					time.Sleep(70 * time.Millisecond)
++				case "wrong-version":
++					out.ModelVersion = "wrong"
++				case "alien-uuid":
++					out.Assignments[0].UUID = "GPU-not-present"
++				case "wrong-quota":
++					out.Assignments[0].Memory = 1
++				case "invalid-score":
++					out.Score = 101
++				case "partial-plan":
++					out.Assignments = nil
++				}
++				return out
++			})
++			gs := rfTestNode("node", "NVIDIA-L40", 2, 46068)
++			p := rfTestPod(name, "training", 4096, 30)
++			plan, err := rfPlanFor(gs, p)
++			if err != nil || plan.Fallback == "" {
++				t.Fatalf("fallback absent: %+v %v", plan, err)
++			}
++			if strings.Contains(plan.Fallback, "memory factor") {
++				t.Fatalf("case %s did not exercise intended failure: %s", name, plan.Fallback)
++			}
++			want := map[string]string{"unavailable": "HTTP status 503", "timeout": "deadline", "wrong-version": "identity/version mismatch", "alien-uuid": "unknown GPU UUID", "wrong-quota": "native resource constraints", "invalid-score": "invalid score", "partial-plan": "incomplete assignment count"}[name]
++			if !strings.Contains(plan.Fallback, want) || calls.Load() != 1 {
++				t.Fatalf("case %s wrong branch: calls=%d reason=%s", name, calls.Load(), plan.Fallback)
++			}
++			if plan.Devices[0][0].UUID != gs.Device[1].UUID {
++				t.Fatal("fallback must use native deterministic order")
++			}
++			if err = gs.Allocate(fake.NewSimpleClientset(p.DeepCopy()), p); err != nil {
++				t.Fatal(err)
++			}
++			gs.SubResource(p)
++			rfAssertEmpty(t, gs)
++		})
++	}
++}
++
++func TestRFRejectsImpossibleOrInvalidRequestsBeforeHTTP(t *testing.T) {
++	for _, name := range []string{"memory", "compute", "instances", "health", "backend", "label", "mode", "multi-device"} {
++		t.Run(name, func(t *testing.T) {
++			rfTestConfig(t)
++			calls := rfMockServer(t, rfMockResponse)
++			gs := rfTestNode("node", "NVIDIA-L40", 1, 46068)
++			p := rfTestPod(name, "training", 4096, 30)
++			switch name {
++			case "memory":
++				gs.Device[0].UsedMem = 45000
++			case "compute":
++				gs.Device[0].UsedCore = 90
++			case "instances":
++				gs.Device[0].UsedNum = 10
++			case "health":
++				gs.Device[0].Health = false
++			case "backend":
++				p.Annotations = map[string]string{"gpu-lab/backend": "ROCm"}
++			case "label":
++				p.Labels[RFWorkloadLabel] = "auto"
++			case "mode":
++				p.Annotations = map[string]string{GPUModeAnnotation: "mig"}
++			case "multi-device":
++				p.Spec.Containers[0].Resources.Limits["volcano.sh/vgpu-number"] = resource.MustParse("2")
++			}
++			if _, _, err := gs.FilterNode(p, "binpack"); err == nil {
++				t.Fatal("invalid/unfit Pod passed")
++			}
++			if calls.Load() != 0 {
++				t.Fatal("unfit Pod sent to RF")
++			}
++			if err := gs.Allocate(fake.NewSimpleClientset(p.DeepCopy()), p); err == nil {
++				t.Fatal("Allocate bypassed native constraint")
++			}
++		})
++	}
++}
++
++func TestRFStaleStateDuringRPCAndRetry(t *testing.T) {
++	rfTestConfig(t)
++	gs := rfTestNode("node", "NVIDIA-L40", 1, 46068)
++	first := true
++	rfMockServer(t, func(r rfRequest) *rfResponse {
++		if first {
++			first = false
++			rfLedgerMu.Lock()
++			gs.Device[0].UsedCore = 10
++			rfLedgerMu.Unlock()
++		}
++		return rfMockResponse(r)
++	})
++	p := rfTestPod("stale", "training", 4096, 30)
++	client := fake.NewSimpleClientset(p.DeepCopy())
++	if err := gs.Allocate(client, p); err == nil || !strings.Contains(err.Error(), "stale") {
++		t.Fatalf("stale commit accepted: %v", err)
++	}
++	if gs.Device[0].UsedMem != 0 || gs.Device[0].UsedNum != 0 {
++		t.Fatal("stale plan changed native ledger")
++	}
++	if err := gs.Allocate(client, p); err != nil {
++		t.Fatal("fresh retry failed", err)
++	}
++	if gs.Device[0].UsedCore != 40 {
++		t.Fatal("fresh snapshot lost existing quota")
++	}
++	gs.SubResource(p)
++	if gs.Device[0].UsedCore != 10 {
++		t.Fatal("release lost unrelated allocation")
++	}
++}
++
++func TestRFPatchFailureRollsBackNativeLedger(t *testing.T) {
++	rfTestConfig(t)
++	rfMockServer(t, rfMockResponse)
++	gs := rfTestNode("node", "NVIDIA-L40", 1, 46068)
++	p := rfTestPod("rollback", "inference", 4096, 30)
++	client := fake.NewSimpleClientset(p.DeepCopy())
++	client.PrependReactor("patch", "pods", func(clienttesting.Action) (bool, runtime.Object, error) {
++		return true, nil, fmt.Errorf("injected patch failure")
++	})
++	if gs.Allocate(client, p) == nil {
++		t.Fatal("patch failure hidden")
++	}
++	rfAssertEmpty(t, gs)
++}
++
++func TestRFMultipleGPUsAndCPUContainer(t *testing.T) {
++	rfTestConfig(t)
++	rfMockServer(t, rfMockResponse)
++	gs := rfTestNode("node", "NVIDIA-L40", 2, 46068)
++	p := rfTestPod("multiple", "training", 4096, 30)
++	p.Spec.Containers[0].Resources.Limits["volcano.sh/vgpu-number"] = resource.MustParse("2")
++	p.Spec.Containers = append([]v1.Container{{Name: "cpu", Image: "never-launched"}}, p.Spec.Containers...)
++	if err := gs.Allocate(fake.NewSimpleClientset(p.DeepCopy()), p); err != nil {
++		t.Fatal(err)
++	}
++	d := decodePodDevices(p.Annotations[AssignedIDsAnnotations])
++	if len(d) != 2 || len(d[0]) != 0 || len(d[1]) != 2 || d[1][0].UUID == d[1][1].UUID {
++		t.Fatalf("container/UUID shape wrong: %+v", d)
++	}
++	for _, g := range gs.Device {
++		if g.UsedMem != 4096 || g.UsedCore != 30 || g.UsedNum != 1 {
++			t.Fatal("incorrect multi-device accounting")
++		}
++	}
++	gs.SubResource(p)
++	rfAssertEmpty(t, gs)
++}
++
++func TestRFPercentResolutionUsesRegisteredMiB(t *testing.T) {
++	g := NewGPUDevice(0, 46068)
++	r := rfResolve(g, ContainerDeviceRequest{Nums: 1, MemPercentagereq: 50})
++	if r.Memreq != 23034 {
++		t.Fatal("percentage must use native registered MiB")
++	}
++}
++
++func TestRFQuantityWireContractAndInvalidInputs(t *testing.T) {
++	rfTestConfig(t)
++	gs := rfTestNode("node", "NVIDIA-L40", 1, 46068)
++	p := rfTestPod("wire", "training", 10000, 65)
++	r, err := rfRequestFor(gs, p)
++	if err != nil {
++		t.Fatal(err)
++	}
++	raw, err := json.Marshal(r)
++	if err != nil {
++		t.Fatal(err)
++	}
++	if !strings.Contains(string(raw), `"volcano.sh/vgpu-memory":10000`) {
++		t.Fatalf("quantity not normalized: %s", raw)
++	}
++	for _, q := range []string{"1.5", "-1"} {
++		p.Spec.Containers[0].Resources.Limits["volcano.sh/vgpu-memory"] = resource.MustParse(q)
++		if _, err = rfRequestFor(gs, p); err == nil {
++			t.Fatal("invalid quantity accepted", q)
++		}
++	}
++}
++
++func TestRFConnectionRefusedFallback(t *testing.T) {
++	rfTestConfig(t)
++	server := httptest.NewServer(http.HandlerFunc(func(http.ResponseWriter, *http.Request) {}))
++	RFEndpoint = server.URL
++	server.Close()
++	gs := rfTestNode("node", "NVIDIA-L40", 2, 46068)
++	p := rfTestPod("disconnected", "training", 4096, 30)
++	plan, err := rfPlanFor(gs, p)
++	if err != nil || plan.Fallback == "" || plan.Devices[0][0].UUID != gs.Device[1].UUID {
++		t.Fatalf("bad connection fallback: %+v %v", plan, err)
++	}
++}
++
++func TestRFConcurrentPodsNeverOvercommit(t *testing.T) {
++	rfTestConfig(t)
++	rfMockServer(t, rfMockResponse)
++	gs := rfTestNode("node", "NVIDIA-L40", 1, 512)
++	gs.Device[0].Number = 2
++	client := fake.NewSimpleClientset()
++	var wg sync.WaitGroup
++	var mu sync.Mutex
++	allocated := []*v1.Pod{}
++	for i := 0; i < 20; i++ {
++		p := rfTestPod(fmt.Sprintf("parallel-%02d", i), "inference", 256, 50)
++		_, _ = client.CoreV1().Pods(p.Namespace).Create(context.Background(), p, metav1.CreateOptions{})
++		wg.Add(1)
++		go func() {
++			defer wg.Done()
++			if gs.Allocate(client, p) == nil {
++				mu.Lock()
++				allocated = append(allocated, p)
++				mu.Unlock()
++			}
++		}()
++	}
++	wg.Wait()
++	if len(allocated) == 0 || len(allocated) > 2 {
++		t.Fatalf("wrong success count %d", len(allocated))
++	}
++	g := gs.Device[0]
++	if g.UsedNum != uint(len(allocated)) || g.UsedMem > 512 || g.UsedCore > 100 || g.UsedNum > 2 {
++		t.Fatal("overcommit/inconsistent native ledger")
++	}
++	for _, p := range allocated {
++		gs.SubResource(p)
++	}
++	rfAssertEmpty(t, gs)
++}
++
++// Run with RF_LIVE_ENDPOINT set to the actual resident Python HTTP server.
++// Uses production FilterNode/ScoreNode/Allocate, native HAMICoreFactory and a
++// client-go fake API server. This is NOT a real Kubernetes cluster deployment.
++func TestRFLivePythonNativeExperiments(t *testing.T) {
++	endpoint := os.Getenv("RF_LIVE_ENDPOINT")
++	if endpoint == "" {
++		t.Skip("set RF_LIVE_ENDPOINT for real Go-Python integration")
++	}
++	rfTestConfig(t)
++	RFEndpoint = endpoint
++	RFTimeoutMS = 3000
++	trace := &rfTraceTransport{base: rfHTTP.Transport}
++	if trace.base == nil {
++		trace.base = http.DefaultTransport
++	}
++	clientCopy := *rfHTTP
++	clientCopy.Transport = trace
++	rfHTTP = &clientCopy
++	fleet := func() []*GPUDevices {
++		return []*GPUDevices{rfTestNode("sim-4090", "NVIDIA-NVIDIA GeForce RTX 4090", 4, 24564), rfTestNode("sim-5090", "NVIDIA-NVIDIA GeForce RTX 5090", 4, 32607), rfTestNode("sim-l40", "NVIDIA-NVIDIA L40", 3, 46068)}
++	}
++	type decision struct {
++		Stage           string                   `json:"stage"`
++		Task            string                   `json:"task"`
++		Node            string                   `json:"node"`
++		RFUUID          string                   `json:"recommended_uuid"`
++		Actual          string                   `json:"allocate_annotation_uuid"`
++		Fallback        string                   `json:"fallback"`
++		Score           float64                  `json:"score"`
++		Before          []rfGPU                  `json:"before"`
++		After           []rfGPU                  `json:"after"`
++		Classifications json.RawMessage          `json:"classifications"`
++		Candidates      []map[string]interface{} `json:"candidate_nodes"`
++	}
++	decisions := []decision{}
++	schedule := func(nodes []*GPUDevices, p *v1.Pod, stage string) (*GPUDevices, *v1.Pod) {
++		t.Helper()
++		client := fake.NewSimpleClientset(p.DeepCopy())
++		var chosen *GPUDevices
++		var best *rfPlan
++		candidates := []map[string]interface{}{}
++		for _, n := range nodes {
++			if _, _, err := n.FilterNode(p, "binpack"); err != nil {
++				continue
++			}
++			plan, err := rfPlanFor(n, p)
++			if err != nil {
++				t.Fatal(err)
++			}
++			score := n.ScoreNode(p, "binpack")
++			candidates = append(candidates, map[string]interface{}{"node": n.Name, "score": score, "plan": plan, "ledger": rfGPUs(n)})
++			if chosen == nil || score > best.Score {
++				chosen, best = n, plan
++			}
++		}
++		if chosen == nil {
++			t.Fatal("no feasible node")
++		}
++		before := rfGPUs(chosen)
++		if err := chosen.Allocate(client, p); err != nil {
++			t.Fatal(err)
++		}
++		saved, err := client.CoreV1().Pods(p.Namespace).Get(context.Background(), p.Name, metav1.GetOptions{})
++		if err != nil {
++			t.Fatal(err)
++		}
++		actual := decodePodDevices(saved.Annotations[AssignedIDsToAllocateAnnotations])[0][0].UUID
++		if best.Fallback != "" {
++			t.Fatalf("real RF was not used: %s", best.Fallback)
++		}
++		if actual != best.Devices[0][0].UUID {
++			t.Fatal("real RF/native Allocate UUID mismatch")
++		}
++		decisions = append(decisions, decision{Stage: stage, Task: p.Labels[RFWorkloadLabel], Node: chosen.Name, RFUUID: best.Devices[0][0].UUID, Actual: actual, Score: best.Score, Before: before, After: rfGPUs(chosen), Classifications: best.Diagnostics, Candidates: candidates})
++		return chosen, saved
++	}
++	// A: both task types request IDENTICAL resources, every one of 11 GPUs fits.
++	baseline := []map[string]interface{}{}
++	for _, task := range []string{"training", "inference"} {
++		nodes := fleet()
++		p := rfTestPod("baseline-"+task, task, 4096, 30)
++		RFEnabled = false
++		fit, dev, _, err := checkNodeGPUSharingPredicateAndScore(p, nodes[0], true, "")
++		if err != nil || !fit {
++			t.Fatal(err)
++		}
++		client := fake.NewSimpleClientset(p.DeepCopy())
++		if err = nodes[0].Allocate(client, p); err != nil {
++			t.Fatal(err)
++		}
++		saved, _ := client.CoreV1().Pods(p.Namespace).Get(context.Background(), p.Name, metav1.GetOptions{})
++		baseline = append(baseline, map[string]interface{}{"task": task, "policy": "original node-score tie, stable node order", "planned_uuid": dev[0][0].UUID, "actual_uuid": decodePodDevices(saved.Annotations[AssignedIDsAnnotations])[0][0].UUID})
++		RFEnabled = true
++		nodes = fleet()
++		for _, n := range nodes {
++			for _, g := range n.Device {
++				for _, r := range rfContainerRequests(p) {
++					if !rfFits(p, g, r) {
++						t.Fatal("A must not rely on resource rejection")
++					}
++				}
++			}
++		}
++		schedule(nodes, rfTestPod("rf-"+task, task, 4096, 30), "A-"+task)
++	}
++	// B: native ledger changes, subsequent requests use a new snapshot/cache key.
++	nodes := fleet()
++	nA, pA := schedule(nodes, rfTestPod("sequence-A", "training", 10000, 65), "B-allocate-A")
++	_, _ = schedule(nodes, rfTestPod("sequence-B", "inference", 6000, 25), "B-allocate-B")
++	beforeRelease := rfGPUs(nA)
++	nA.SubResource(pA)
++	afterRelease := rfGPUs(nA)
++	_, _ = schedule(nodes, rfTestPod("sequence-C", "training", 4096, 30), "B-after-release-A")
++	// A controlled single-GPU transition demonstrates reclassification independent
++	// of fleet placement. The model may return pending; its output is not forced.
++	one := rfTestNode("sim-single-l40", "NVIDIA-NVIDIA L40", 1, 46068)
++	transitions := []map[string]interface{}{}
++	probe := rfTestPod("probe", "inference", 100, 1)
++	capture := func(stage string) {
++		q, e := rfRequestFor(one, probe)
++		if e != nil {
++			t.Fatal(e)
++		}
++		resp, e := rfCall(q)
++		if e != nil {
++			t.Fatal(e)
++		}
++		transitions = append(transitions, map[string]interface{}{"stage": stage, "ledger": rfGPUs(one), "classification": json.RawMessage(resp.Classifications), "score": resp.Score})
++	}
++	capture("initial")
++	_, a := schedule([]*GPUDevices{one}, rfTestPod("compute-heavy", "training", 4000, 65), "B-single-compute")
++	capture("after-compute")
++	_, b := schedule([]*GPUDevices{one}, rfTestPod("memory-heavy", "inference", 34000, 20), "B-single-memory")
++	capture("after-memory")
++	one.SubResource(a)
++	capture("release-compute")
++	one.SubResource(b)
++	capture("release-all")
++	rfAssertEmpty(t, one)
++	out := map[string]interface{}{"evidence_level": "real Go-Python HTTP + native Volcano GPUDevices Allocate + fake Kubernetes client; NOT live cluster", "model_version": RFModelVersion, "synthetic_only": true, "baseline": baseline, "decisions": decisions, "release_A_before": beforeRelease, "release_A_after": afterRelease, "dynamic_transitions": transitions}
++	if dir := os.Getenv("RF_DEMO_OUTPUT"); dir != "" {
++		if err := os.MkdirAll(dir, 0755); err != nil {
++			t.Fatal(err)
++		}
++		data, _ := json.MarshalIndent(out, "", "  ")
++		if err := os.WriteFile(filepath.Join(dir, "native-experiments.json"), data, 0644); err != nil {
++			t.Fatal(err)
++		}
++		exchanges, _ := json.MarshalIndent(trace.rows, "", "  ")
++		if err := os.WriteFile(filepath.Join(dir, "rf-http-exchanges.json"), exchanges, 0644); err != nil {
++			t.Fatal(err)
++		}
++	}
++}
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/rf_profiles.json b/pkg/scheduler/api/devices/nvidia/vgpu/rf_profiles.json
+new file mode 100644
+index 0000000..0fc7aaa
+--- /dev/null
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/rf_profiles.json
+@@ -0,0 +1,197 @@
++{
++  "RTX3090": {
++    "device_id": "rtx3090",
++    "hardware": {
++      "memory_capacity_mib": 22888,
++      "memory_bandwidth_gbps": 936,
++      "fp32_tflops": 35.6,
++      "fp16_dense_tflops": 71.2,
++      "bf16_dense_tflops": 71.2,
++      "int8_dense_tops": 284.7,
++      "max_board_power_w": 350
++    },
++    "source": "frozen audited catalog; nominal memory reference, not NVML"
++  },
++  "RTX4090": {
++    "device_id": "rtx4090",
++    "hardware": {
++      "memory_capacity_mib": 22888,
++      "memory_bandwidth_gbps": 1008,
++      "fp32_tflops": 82.6,
++      "fp16_dense_tflops": 165.2,
++      "bf16_dense_tflops": 165.2,
++      "int8_dense_tops": 660.6,
++      "max_board_power_w": 450
++    },
++    "source": "frozen audited catalog; nominal memory reference, not NVML"
++  },
++  "RTX5090": {
++    "device_id": "rtx5090",
++    "hardware": {
++      "memory_capacity_mib": 30517,
++      "memory_bandwidth_gbps": 1792,
++      "fp32_tflops": 104.8,
++      "fp16_dense_tflops": 209.5,
++      "bf16_dense_tflops": 209.5,
++      "int8_dense_tops": 838,
++      "max_board_power_w": 575
++    },
++    "source": "frozen audited catalog; nominal memory reference, not NVML"
++  },
++  "L40": {
++    "device_id": "l40",
++    "hardware": {
++      "memory_capacity_mib": 45776,
++      "memory_bandwidth_gbps": 864,
++      "fp32_tflops": 90.5,
++      "fp16_dense_tflops": 181.05,
++      "bf16_dense_tflops": 181.05,
++      "int8_dense_tops": 362,
++      "max_board_power_w": 300
++    },
++    "source": "frozen audited catalog; nominal memory reference, not NVML"
++  },
++  "L40S": {
++    "device_id": "l40s",
++    "hardware": {
++      "memory_capacity_mib": 45776,
++      "memory_bandwidth_gbps": 864,
++      "fp32_tflops": 91.6,
++      "fp16_dense_tflops": 362.05,
++      "bf16_dense_tflops": 362.05,
++      "int8_dense_tops": 733,
++      "max_board_power_w": 350
++    },
++    "source": "frozen audited catalog; nominal memory reference, not NVML"
++  },
++  "L4": {
++    "device_id": "l4",
++    "hardware": {
++      "memory_capacity_mib": 22888,
++      "memory_bandwidth_gbps": 300,
++      "fp32_tflops": 30.3,
++      "fp16_dense_tflops": null,
++      "bf16_dense_tflops": null,
++      "int8_dense_tops": null,
++      "max_board_power_w": 72
++    },
++    "source": "frozen audited catalog; nominal memory reference, not NVML"
++  },
++  "A10": {
++    "device_id": "a10",
++    "hardware": {
++      "memory_capacity_mib": 22888,
++      "memory_bandwidth_gbps": 600,
++      "fp32_tflops": 31.2,
++      "fp16_dense_tflops": 125,
++      "bf16_dense_tflops": 125,
++      "int8_dense_tops": 250,
++      "max_board_power_w": 150
++    },
++    "source": "frozen audited catalog; nominal memory reference, not NVML"
++  },
++  "A30": {
++    "device_id": "a30",
++    "hardware": {
++      "memory_capacity_mib": 22888,
++      "memory_bandwidth_gbps": 933,
++      "fp32_tflops": 10.3,
++      "fp16_dense_tflops": 165,
++      "bf16_dense_tflops": 165,
++      "int8_dense_tops": 330,
++      "max_board_power_w": 165
++    },
++    "source": "frozen audited catalog; nominal memory reference, not NVML"
++  },
++  "A40": {
++    "device_id": "a40",
++    "hardware": {
++      "memory_capacity_mib": 45776,
++      "memory_bandwidth_gbps": 696,
++      "fp32_tflops": 37.4,
++      "fp16_dense_tflops": 149.7,
++      "bf16_dense_tflops": 149.7,
++      "int8_dense_tops": 299.3,
++      "max_board_power_w": 300
++    },
++    "source": "frozen audited catalog; nominal memory reference, not NVML"
++  },
++  "A10080GBSXMSTANDARD400W": {
++    "device_id": "a100_sxm80",
++    "hardware": {
++      "memory_capacity_mib": 76293,
++      "memory_bandwidth_gbps": 2039,
++      "fp32_tflops": 19.5,
++      "fp16_dense_tflops": 312,
++      "bf16_dense_tflops": 312,
++      "int8_dense_tops": 624,
++      "max_board_power_w": 400
++    },
++    "source": "frozen audited catalog; nominal memory reference, not NVML"
++  },
++  "H100SXM": {
++    "device_id": "h100_sxm",
++    "hardware": {
++      "memory_capacity_mib": 76293,
++      "memory_bandwidth_gbps": 3350,
++      "fp32_tflops": 67,
++      "fp16_dense_tflops": null,
++      "bf16_dense_tflops": null,
++      "int8_dense_tops": null,
++      "max_board_power_w": 700
++    },
++    "source": "frozen audited catalog; nominal memory reference, not NVML"
++  },
++  "H200SXM": {
++    "device_id": "h200_sxm",
++    "hardware": {
++      "memory_capacity_mib": 134468,
++      "memory_bandwidth_gbps": 4800,
++      "fp32_tflops": 67,
++      "fp16_dense_tflops": null,
++      "bf16_dense_tflops": null,
++      "int8_dense_tops": null,
++      "max_board_power_w": 700
++    },
++    "source": "frozen audited catalog; nominal memory reference, not NVML"
++  },
++  "RTXA600048GBPCIE": {
++    "device_id": "rtx_a6000",
++    "hardware": {
++      "memory_capacity_mib": 45776,
++      "memory_bandwidth_gbps": 768,
++      "fp32_tflops": 38.7,
++      "fp16_dense_tflops": null,
++      "bf16_dense_tflops": null,
++      "int8_dense_tops": null,
++      "max_board_power_w": 300
++    },
++    "source": "frozen audited catalog; nominal memory reference, not NVML"
++  },
++  "RTX6000ADA48GBPCIE": {
++    "device_id": "rtx6000_ada",
++    "hardware": {
++      "memory_capacity_mib": 45776,
++      "memory_bandwidth_gbps": 960,
++      "fp32_tflops": 91.1,
++      "fp16_dense_tflops": null,
++      "bf16_dense_tflops": null,
++      "int8_dense_tops": null,
++      "max_board_power_w": 300
++    },
++    "source": "frozen audited catalog; nominal memory reference, not NVML"
++  },
++  "RTX508016GBREFERENCE": {
++    "device_id": "rtx5080",
++    "hardware": {
++      "memory_capacity_mib": 15258,
++      "memory_bandwidth_gbps": 960,
++      "fp32_tflops": 56.3,
++      "fp16_dense_tflops": 112.6,
++      "bf16_dense_tflops": 112.6,
++      "int8_dense_tops": 450.2,
++      "max_board_power_w": 360
++    },
++    "source": "frozen audited catalog; nominal memory reference, not NVML"
++  }
++}
+\ No newline at end of file
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/rf_window_policy_test.go b/pkg/scheduler/api/devices/nvidia/vgpu/rf_window_policy_test.go
+new file mode 100644
+index 0000000..fb2d60d
+--- /dev/null
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/rf_window_policy_test.go
+@@ -0,0 +1,72 @@
++package vgpu
++
++// Offline CEL validation only. Does not install a policy or contact API Server.
++import (
++	"encoding/json"
++	"os"
++	"testing"
++
++	"github.com/google/cel-go/cel"
++)
++
++func TestRFLogicalWindowPolicyCEL(t *testing.T) {
++	path := os.Getenv("RF_WINDOW_CASES")
++	if path == "" {
++		t.Skip("set RF_WINDOW_CASES to generated policy-cases.json")
++	}
++	var fixtures struct {
++		Variables  []struct{ Name, Expression string }
++		Expression string
++		Cases      []struct {
++			Name    string
++			Pod     map[string]interface{}
++			Allowed bool
++		}
++	}
++	data, err := os.ReadFile(path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	if err = json.Unmarshal(data, &fixtures); err != nil {
++		t.Fatal(err)
++	}
++	env, err := cel.NewEnv(cel.Variable("object", cel.DynType), cel.Variable("variables", cel.MapType(cel.StringType, cel.DynType)))
++	if err != nil {
++		t.Fatal(err)
++	}
++	compile := func(expr string) cel.Program {
++		ast, issues := env.Compile(expr)
++		if issues.Err() != nil {
++			t.Fatal(issues.Err())
++		}
++		program, e := env.Program(ast)
++		if e != nil {
++			t.Fatal(e)
++		}
++		return program
++	}
++	variables := make([]cel.Program, len(fixtures.Variables))
++	for i, v := range fixtures.Variables {
++		variables[i] = compile(v.Expression)
++	}
++	validation := compile(fixtures.Expression)
++	for _, c := range fixtures.Cases {
++		t.Run(c.Name, func(t *testing.T) {
++			values := map[string]interface{}{}
++			for i, v := range fixtures.Variables {
++				value, _, e := variables[i].Eval(map[string]interface{}{"object": c.Pod, "variables": values})
++				if e != nil {
++					t.Fatal(e)
++				}
++				values[v.Name] = value
++			}
++			value, _, e := validation.Eval(map[string]interface{}{"object": c.Pod, "variables": values})
++			if e != nil {
++				t.Fatal(e)
++			}
++			if value.Value() != c.Allowed {
++				t.Fatalf("allowed=%v expected=%v", value.Value(), c.Allowed)
++			}
++		})
++	}
++}
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/utils.go b/pkg/scheduler/api/devices/nvidia/vgpu/utils.go
+index 7b20c14..674b5aa 100644
+--- a/pkg/scheduler/api/devices/nvidia/vgpu/utils.go
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/utils.go
+@@ -555,7 +555,7 @@ func getSharingMode(mode string) string {
+ 
+ func normalizeGPUSelectPolicy(policy string) string {
+ 	switch policy {
+-	case OriginalPolicy, BinpackPolicy, SpreadPolicy, RandomPolicy, DQNPolicy, DQNJobPolicy:
++	case OriginalPolicy, BinpackPolicy, SpreadPolicy, RandomPolicy, DQNPolicy, DQNJobPolicy, RFJobPolicy:
+ 		return policy
+ 	default:
+ 		return OriginalPolicy
+@@ -601,6 +601,9 @@ func orderedGPUIndexes(gs *GPUDevices, pod *v1.Pod, req ContainerDeviceRequest)
+ 	}
+ 
+ 	policy := normalizeGPUSelectPolicy(GPUSelectPolicy)
++	if policy == RFJobPolicy {
++		policy = OriginalPolicy
++	} // rf-job disabled: preserve original ordering
+ 	if policy == DQNJobPolicy {
+ 		jobIndexes, err := queryDQNJobOrderedGPUIndexes(gs, pod, req)
+ 		if err == nil && len(jobIndexes) > 0 {
+@@ -766,6 +769,24 @@ func orderedGPUIndexes(gs *GPUDevices, pod *v1.Pod, req ContainerDeviceRequest)
+ // - float64: 该次分配得到的调度分数
+ // - error: 不可调度原因
+ func checkNodeGPUSharingPredicateAndScore(pod *v1.Pod, gssnap *GPUDevices, replicate bool, schedulePolicy string) (bool, []ContainerDevices, float64, error) {
++	if RFForPod(pod) && checkVGPUResourcesInPod(pod) {
++		plan, err := rfPlanFor(gssnap, pod)
++		if err != nil {
++			return false, nil, 0, err
++		}
++		return true, plan.Devices, plan.Score, nil
++	}
++	if RFActive() {
++		rfLedgerMu.RLock()
++		gssnap = rfClone(gssnap)
++		rfLedgerMu.RUnlock()
++	}
++	return checkNodeGPUSharingNative(pod, gssnap, replicate, schedulePolicy)
++}
++
++// Original policy path, including dqn-job ordering. All RPCs operate on a
++// detached snapshot in mixed-policy mode, outside the ledger write lock.
++func checkNodeGPUSharingNative(pod *v1.Pod, gssnap *GPUDevices, replicate bool, schedulePolicy string) (bool, []ContainerDevices, float64, error) {
+ 	score := float64(0)
+ 
+ 	if !checkVGPUResourcesInPod(pod) {
+diff --git a/pkg/scheduler/plugins/deviceshare/deviceshare.go b/pkg/scheduler/plugins/deviceshare/deviceshare.go
+index e1254c1..9b75b6d 100644
+--- a/pkg/scheduler/plugins/deviceshare/deviceshare.go
++++ b/pkg/scheduler/plugins/deviceshare/deviceshare.go
+@@ -46,8 +46,16 @@ const (
+ 	SchedulePolicyArgument = "deviceshare.SchedulePolicy"
+ 	ScheduleWeight         = "deviceshare.ScheduleWeight"
+ 	//节点内GPU选择策略
+-	GPUSelectPolicyArgument = "deviceshare.GPUSelectPolicy"
+-	DQNGRPCEndpointArgument = "deviceshare.DQNGRPCEndpoint"
++	GPUSelectPolicyArgument   = "deviceshare.GPUSelectPolicy"
++	DQNGRPCEndpointArgument   = "deviceshare.DQNGRPCEndpoint"
++	RFEnableArgument          = "deviceshare.RFEnable"
++	RFEndpointArgument        = "deviceshare.RFEndpoint"
++	RFModelVersionArgument    = "deviceshare.RFModelVersion"
++	RFTimeoutArgument         = "deviceshare.RFTimeoutMS"
++	RFPredictionArgument      = "deviceshare.RFPredictionEnabled"
++	RFCanaryArgument          = "deviceshare.RFCanaryEnable"
++	RFCanaryNamespaceArgument = "deviceshare.RFCanaryNamespace"
++	RFCanaryWeightArgument    = "deviceshare.RFCanaryScheduleWeight"
+ 
+ 	KnownGeometriesCMName      = "deviceshare.KnownGeometriesCMName"
+ 	KnownGeometriesCMNamespace = "deviceshare.KnownGeometriesCMNamespace"
+@@ -58,11 +66,12 @@ type deviceSharePlugin struct {
+ 	pluginArguments framework.Arguments
+ 	schedulePolicy  string
+ 	scheduleWeight  int
++	canaryWeight    int
+ }
+ 
+ // New return priority plugin
+ func New(arguments framework.Arguments) framework.Plugin {
+-	dsp := &deviceSharePlugin{pluginArguments: arguments, schedulePolicy: "", scheduleWeight: 0}
++	dsp := &deviceSharePlugin{pluginArguments: arguments, schedulePolicy: "", scheduleWeight: 0, canaryWeight: 1}
+ 	enablePredicate(dsp)
+ 	return dsp
+ }
+@@ -89,6 +98,24 @@ func enablePredicate(dsp *deviceSharePlugin) {
+ 	vgpu.GPUSelectPolicy = vgpu.OriginalPolicy
+ 	args.GetString(&vgpu.GPUSelectPolicy, GPUSelectPolicyArgument)
+ 	klog.Infof("deviceshare GPUSelectPolicy=%s", vgpu.GPUSelectPolicy)
++	vgpu.RFEnabled = false
++	args.GetBool(&vgpu.RFEnabled, RFEnableArgument)
++	vgpu.RFCanaryEnabled = false
++	vgpu.RFCanaryNamespace = "gpu-rf-tests"
++	args.GetBool(&vgpu.RFCanaryEnabled, RFCanaryArgument)
++	args.GetString(&vgpu.RFCanaryNamespace, RFCanaryNamespaceArgument)
++	args.GetInt(&dsp.canaryWeight, RFCanaryWeightArgument)
++	args.GetString(&vgpu.RFEndpoint, RFEndpointArgument)
++	args.GetString(&vgpu.RFModelVersion, RFModelVersionArgument)
++	args.GetInt(&vgpu.RFTimeoutMS, RFTimeoutArgument)
++	vgpu.RFPredictionEnabled = true // same frozen weights; optional single-term ablation
++	args.GetBool(&vgpu.RFPredictionEnabled, RFPredictionArgument)
++	if vgpu.RFActive() {
++		if _, explicit := args[ScheduleWeight]; !explicit && vgpu.GPUSelectPolicy == vgpu.RFJobPolicy {
++			dsp.scheduleWeight = 1
++		}
++		klog.Infof("deviceshare rf-job enabled endpoint=%s model=%s timeoutMs=%d", vgpu.RFEndpoint, vgpu.RFModelVersion, vgpu.RFTimeoutMS)
++	}
+ 
+ 	args.GetString(&vgpu.DQNGRPCEndpoint, DQNGRPCEndpointArgument)
+ 	klog.Infof("deviceshare DQNGRPCEndpoint=%s", vgpu.DQNGRPCEndpoint)
+@@ -118,6 +145,13 @@ func createStatus(code int, reason string) *api.Status {
+ 	return &status
+ }
+ 
++func (dp *deviceSharePlugin) weightForPod(pod *v1.Pod) int {
++	if vgpu.RFCanaryEnabled && vgpu.GPUSelectPolicy != vgpu.RFJobPolicy && vgpu.RFForPod(pod) {
++		return dp.canaryWeight
++	}
++	return dp.scheduleWeight
++}
++
+ func getDeviceScore(ctx context.Context, pod *v1.Pod, node *api.NodeInfo, schedulePolicy string) (int64, *k8sframework.Status) {
+ 	s := float64(0)
+ 	for _, devices := range node.Others {
+@@ -174,7 +208,8 @@ func (dp *deviceSharePlugin) OnSessionOpen(ssn *framework.Session) {
+ 	ssn.AddNodeOrderFn(dp.Name(), func(task *api.TaskInfo, node *api.NodeInfo) (float64, error) {
+ 		// DeviceScore
+ 		nodeScore := float64(0)
+-		if dp.scheduleWeight > 0 {
++		weight := dp.weightForPod(task.Pod)
++		if weight > 0 {
+ 			score, status := getDeviceScore(context.TODO(), task.Pod, node, dp.schedulePolicy)
+ 			if !status.IsSuccess() {
+ 				klog.Warningf("Node: %s, Calculate Device Score Failed because of Error: %v", node.Name, status.AsError())
+@@ -182,8 +217,8 @@ func (dp *deviceSharePlugin) OnSessionOpen(ssn *framework.Session) {
+ 			}
+ 
+ 			// TODO: we should use a seperate plugin for devices, and seperate them from predicates and nodeOrder plugin.
+-			nodeScore = float64(score) * float64(dp.scheduleWeight)
+-			klog.V(5).Infof("Node: %s, task<%s/%s> Device Score weight %d, score: %f", node.Name, task.Namespace, task.Name, dp.scheduleWeight, nodeScore)
++			nodeScore = float64(score) * float64(weight)
++			klog.V(5).Infof("Node: %s, task<%s/%s> Device Score weight %d, score: %f", node.Name, task.Namespace, task.Name, weight, nodeScore)
+ 		}
+ 		return nodeScore, nil
+ 	})
+diff --git a/pkg/scheduler/plugins/deviceshare/rf_round7_test.go b/pkg/scheduler/plugins/deviceshare/rf_round7_test.go
+new file mode 100644
+index 0000000..5e9e7c5
+--- /dev/null
++++ b/pkg/scheduler/plugins/deviceshare/rf_round7_test.go
+@@ -0,0 +1,43 @@
++package deviceshare
++
++import (
++	v1 "k8s.io/api/core/v1"
++	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
++	"testing"
++
++	"volcano.sh/volcano/pkg/scheduler/api/devices/nvidia/vgpu"
++	"volcano.sh/volcano/pkg/scheduler/framework"
++)
++
++func TestRFPredictionArgumentDefaultAndOverride(t *testing.T) {
++	oldRF, oldPrediction, oldVGPU, oldPolicy := vgpu.RFEnabled, vgpu.RFPredictionEnabled, vgpu.VGPUEnable, vgpu.GPUSelectPolicy
++	t.Cleanup(func() {
++		vgpu.RFEnabled, vgpu.RFPredictionEnabled, vgpu.VGPUEnable, vgpu.GPUSelectPolicy = oldRF, oldPrediction, oldVGPU, oldPolicy
++	})
++	// VGPU disabled avoids any cluster config initialization in this unit test.
++	New(framework.Arguments{VGPUEnable: false, RFPredictionArgument: false})
++	if vgpu.RFPredictionEnabled || vgpu.RFActive() {
++		t.Fatal("explicit RF-term disable not honored")
++	}
++	New(framework.Arguments{VGPUEnable: false})
++	if !vgpu.RFPredictionEnabled || vgpu.RFEnabled {
++		t.Fatal("default changed")
++	}
++}
++
++func TestRFCanaryConfigKeepsLegacyWeightAndPolicy(t *testing.T) {
++	oldRF, oldCanary, oldVGPU, oldPolicy, oldNS := vgpu.RFEnabled, vgpu.RFCanaryEnabled, vgpu.VGPUEnable, vgpu.GPUSelectPolicy, vgpu.RFCanaryNamespace
++	t.Cleanup(func() {
++		vgpu.RFEnabled, vgpu.RFCanaryEnabled, vgpu.VGPUEnable, vgpu.GPUSelectPolicy, vgpu.RFCanaryNamespace = oldRF, oldCanary, oldVGPU, oldPolicy, oldNS
++	})
++	dp := New(framework.Arguments{VGPUEnable: false, RFEnableArgument: true, RFCanaryArgument: true, GPUSelectPolicyArgument: vgpu.DQNJobPolicy}).(*deviceSharePlugin)
++	vgpu.VGPUEnable = true // avoid cluster config initialization; policy logic only
++	p := &v1.Pod{ObjectMeta: metav1.ObjectMeta{Namespace: "gpu-rf-tests", Labels: map[string]string{"gpu-lab/experiment": "round7-rf", vgpu.RFWorkloadLabel: "training"}}}
++	if !vgpu.RFForPod(p) || vgpu.GPUSelectPolicy != vgpu.DQNJobPolicy || dp.weightForPod(p) != 1 {
++		t.Fatal("canary not isolated from configured legacy policy")
++	}
++	p.Namespace = "default"
++	if vgpu.RFForPod(p) || dp.weightForPod(p) != 0 {
++		t.Fatal("legacy weight changed")
++	}
++}
+diff --git a/pkg/scheduler/plugins/predicates/predicates.go b/pkg/scheduler/plugins/predicates/predicates.go
+index cbd76eb..b7a865c 100644
+--- a/pkg/scheduler/plugins/predicates/predicates.go
++++ b/pkg/scheduler/plugins/predicates/predicates.go
+@@ -47,6 +47,7 @@ import (
+ 	"k8s.io/kubernetes/pkg/scheduler/framework/plugins/volumezone"
+ 
+ 	"volcano.sh/volcano/pkg/scheduler/api"
++	"volcano.sh/volcano/pkg/scheduler/api/devices/nvidia/vgpu"
+ 	"volcano.sh/volcano/pkg/scheduler/cache"
+ 	vbcap "volcano.sh/volcano/pkg/scheduler/capabilities/volumebinding"
+ 	"volcano.sh/volcano/pkg/scheduler/framework"
+@@ -224,8 +225,16 @@ func (pp *predicatesPlugin) OnSessionOpen(ssn *framework.Session) {
+ 					err := devices.Allocate(ssn.KubeClient(), pod)
+ 					if err != nil {
+ 						klog.Errorf("AllocateToPod failed %s", err.Error())
++						if vgpu.RFActive() {
++							event.Err = err
++						}
+ 						return
+ 					}
++					if vgpu.RFActive() {
++						// PodLister stores a copy; native UnAllocate/RemoveTask uses
++						// Task.Pod. Preserve committed UUIDs for native rollback.
++						event.Task.Pod.Annotations = pod.DeepCopy().Annotations
++					}
+ 				} else {
+ 					klog.Warningf("Devices %s assertion conversion failed, skip", val)
+ 				}

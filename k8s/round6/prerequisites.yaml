@@ -1,0 +1,14 @@
+# Preparation only; NOT applied. Separate approval and device isolation needed.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gpu-lab-rf-test
+---
+apiVersion: scheduling.volcano.sh/v1beta1
+kind: PodGroup
+metadata:
+  name: rf-sleep-check
+  namespace: gpu-lab-rf-test
+spec:
+  minMember: 1
+  queue: default

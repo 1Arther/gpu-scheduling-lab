@@ -1,0 +1,23 @@
+{"old_stopped": true, "rf_started": false, "target_uuid": null, "experiment_success": false, "actual_labels": null, "error": "KeyError('GPU-27be0024-0498-4114-e6b9-b2d0db148309')", "restored": true, "cleanup_errors": [], "started_utc": "2026-10-20T07:23:32.571625+00:00", "restored_utc": "2026-10-20T07:24:50.305655+00:00"}
+STATES []
+PODS [{"kind": "Pod", "name": "rf-v8-blocker-0", "namespace": "gpu-rf-tests", "uid": "691c83e6-cfe6-4c32-a510-9afaa798905d"}, {"kind": "Pod", "name": "rf-v8-blocker-1", "namespace": "gpu-rf-tests", "uid": "73f3ec53-b533-42be-8a2a-30027ad980c9"}]
+CONSOLE Traceback (most recent call last):
+  File "/home/zbs/rf-round8-live-20261020/round8_live.py", line 375, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/zbs/rf-round8-live-20261020/round8_live.py", line 371, in main
+    elif a.execute:r.execute()
+                   ^^^^^^^^^^^
+  File "/home/zbs/rf-round8-live-20261020/round8_live.py", line 322, in execute
+    p,proof=self.submit(f'blocker-{i}.yaml',f'blocker-{i}')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zbs/rf-round8-live-20261020/round8_live.py", line 183, in submit
+    if inputs[uuid][key]!=d[key]:raise RuntimeError('RF snapshot differs from current logical state')
+       ~~~~~~^^^^^^
+KeyError: 'GPU-27be0024-0498-4114-e6b9-b2d0db148309'
+
+EVENTS {"utc": "2026-10-20T07:24:49.955467+00:00", "event": "command", "args": ["sudo", "-n", "crictl", "ps", "-o", "json"]}
+{"utc": "2026-10-20T07:24:50.002953+00:00", "event": "command", "args": ["sudo", "-n", "crictl", "inspect", "-o", "json", "1fb8fd42695530884d083ed34d69d28a4966d2780dc9c1f29605cf52436eb1ec"]}
+{"utc": "2026-10-20T07:24:50.044548+00:00", "event": "command", "args": ["sudo", "-n", "sha256sum", "/proc/2679556/exe"]}
+{"utc": "2026-10-20T07:24:50.213410+00:00", "event": "command", "args": ["sudo", "-n", "kubectl", "--kubeconfig=/etc/kubernetes/admin.conf", "get", "deployment", "dqn-scheduler-grpc", "-n", "volcano-system", "-o", "json", "--request-timeout=15s"]}
+{"utc": "2026-10-20T07:24:50.306291+00:00", "event": "restored", "errors": []}

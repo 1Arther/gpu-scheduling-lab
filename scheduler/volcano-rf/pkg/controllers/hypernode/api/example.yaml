@@ -1,0 +1,29 @@
+# This is an example configuration file of configMap for the Hypernode auto discovery.
+networkTopologyDiscovery:
+  - source: ufm
+    enabled: true
+    interval: 10m
+    credentials:
+      secretRef:
+        name: ufm-credentials
+        namespace: volcano-system
+    config:
+      endpoint: https://ufm-server:8080
+      insecureSkipVerify: true
+  - source: roce
+    enabled: false
+    interval: 15m
+    config:
+      endpoint: https://roce-server:9090
+      token: token
+  - source: label
+    enabled: true
+    config:
+      networkTopologyTypes:
+        topologyA2:
+          - nodeLabel: "volcano.sh/tor"
+          - nodeLabel: "kubernetes.io/hostname"
+        topologyA3:
+          - nodeLabel: "volcano.sh/hypercluster"
+          - nodeLabel: "volcano.sh/hypernode"
+          - nodeLabel: "kubernetes.io/hostname"

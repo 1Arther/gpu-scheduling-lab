@@ -1,0 +1,29 @@
+{
+  "scenarios": [
+    "steady_mixed",
+    "bursty_mixed",
+    "training_heavy",
+    "memory_heavy"
+  ],
+  "seeds": [
+    11,
+    29,
+    47
+  ],
+  "pods": 120,
+  "horizon_s": 600.0,
+  "execution_seed_offset": 20261016,
+  "sensitivity": true,
+  "queue_policy": "FCFS feasible backfill",
+  "real_cluster_changes": false,
+  "scoring_policy_source": "C:\\Users\\EDY\\Documents\\ChatGPT\\vGPU调度\\gpu-scheduling-lab\\results\\offline-v2-policy-validation-final\\selected-policy.json",
+  "no_rf_policy_source": "C:\\Users\\EDY\\Documents\\ChatGPT\\vGPU调度\\gpu-scheduling-lab\\results\\offline-v2-policy-validation-final\\selected-no-rf-ablation.json",
+  "versions": {
+    "python": "3.12.10",
+    "numpy": "2.2.6",
+    "sklearn": "1.7.2"
+  },
+  "execution-model.json_sha256": "ff392e6469df87409761d97dff99ff230ebcf95359f5102d3b40a2d2aa3a6f21",
+  "scoring-policy.json_sha256": "cf73ab3745b1fe36b9d83eaad338b84400db39ddb0e0427322f0cd6f4aa2c5e1",
+  "cluster-layout.json_sha256": "ac5d52c2a2ff50a407efcd130c562778d4d3d0c4596fed1ad37b4ff90ef80599"
+}

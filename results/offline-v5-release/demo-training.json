@@ -1,0 +1,998 @@
+{
+  "schema_version": "pod-gpu-api/v1",
+  "model_version": "rf-v4-known-states-ee35cfabe30f",
+  "recommendation": {
+    "node": "sim-node-l40",
+    "assignments": [
+      {
+        "container": "workload",
+        "unit": 0,
+        "gpu_uuid": "SIM-GPU-l40-00",
+        "node": "sim-node-l40",
+        "memory_mib": 36864,
+        "compute_quota": 50,
+        "instances": 1,
+        "score": 0.727070219111642,
+        "ranking_basis": "RF_marginal_soft_hint"
+      }
+    ],
+    "score": 0.727070219111642,
+    "gpu_uuid": "SIM-GPU-l40-00",
+    "gpu_uuids": [
+      "SIM-GPU-l40-00"
+    ],
+    "expected_revisions": {
+      "SIM-GPU-l40-00": 0
+    },
+    "pod_fingerprint": "88be30cd962a88ea055d7060ee23698bd6c32344c98a6bd938848f318541e719",
+    "model_version": "rf-v4-known-states-ee35cfabe30f",
+    "reason": "all hard filters passed; maximum explainable node placement score, stable UUID tie-break",
+    "requires_locked_revalidation": true,
+    "selection_fingerprint": "b0a4bb875037e003a49f19f21ce9794af8e2caa9e7393b7f17aac9ac5b186716"
+  },
+  "advice_only": true,
+  "scope": "GPU-only; native CPU/memory/affinity/taints and final device allocation remain authoritative",
+  "status": "ranked",
+  "task_type": "training",
+  "pod_uid": "offline:default/offline-training-large-memory",
+  "pod_fingerprint": "88be30cd962a88ea055d7060ee23698bd6c32344c98a6bd938848f318541e719",
+  "strategy": "dynamic_rf",
+  "warnings": [],
+  "fallback_reason": null,
+  "eligible_gpus": [
+    {
+      "gpu_uuid": "SIM-GPU-l40-00",
+      "node": "sim-node-l40",
+      "revision": 0,
+      "feasible": true,
+      "rejection_reasons": [],
+      "resolved_request": {
+        "memory_mib": 36864,
+        "compute_quota": 50,
+        "instances": 1
+      },
+      "score": 0.727070219111642,
+      "packing_residual": 0.3873435861586858,
+      "components": {
+        "adaptation_hint": 1.0,
+        "hardware_sharing": 0.5904511995637951,
+        "packing": 0.6126564138413142,
+        "balance": 0.6946871723173715
+      },
+      "component_weights": {
+        "adaptation_hint": 0.3,
+        "hardware_sharing": 0.45,
+        "packing": 0.15,
+        "balance": 0.1
+      },
+      "classification": {
+        "schema_version": "pod-gpu-api/v1",
+        "model_version": "rf-v4-known-states-ee35cfabe30f",
+        "gpu_uuid": "SIM-GPU-l40-00",
+        "node": "sim-node-l40",
+        "prediction_status": "provisional",
+        "label": "balanced",
+        "label_zh": "训推一体型",
+        "training_adapted": true,
+        "inference_adapted": true,
+        "raw_rf": {
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "training_vote_fraction": 1.0,
+          "inference_vote_fraction": 1.0,
+          "class_probabilities": {
+            "training_preferred": 0.0,
+            "inference_preferred": 0.0,
+            "balanced": 1.0,
+            "unavailable": 0.0
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "model_load_error": null,
+        "supervision": "synthetic",
+        "real_performance_guarantee": false,
+        "rf_probability_is_reliability": false,
+        "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+        "input_sha256": "57cdf6b0b24f79668ff1da844c171b89ef9c9dc4da81bfc8ba7035df5b7fb101",
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "model_limitations": [
+          "fixed dense-FP32 reference contracts only",
+          "hypothetical quota performance scaling",
+          "RF instance counters differ from distinct Pod counters",
+          "health/backend/resource admission remains independent"
+        ],
+        "validation_evidence": {
+          "training": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 221,
+            "validation_sign_correct": 221,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 215,
+            "validation_sign_correct": 215,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "related_validation_models": [
+          {
+            "device_id": "l40",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.0
+          },
+          {
+            "device_id": "l40s",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.017429806126376148
+          },
+          {
+            "device_id": "rtx4090",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          }
+        ],
+        "outside_training_ranges": {}
+      },
+      "ranking_basis": "RF_marginal_soft_hint",
+      "rf_probability": 1.0,
+      "rf_probability_is_reliability": false,
+      "fallback_score": null,
+      "fallback_score_is_probability": false,
+      "reference_category_is_admission_gate": false
+    },
+    {
+      "gpu_uuid": "SIM-GPU-l40-01",
+      "node": "sim-node-l40",
+      "revision": 0,
+      "feasible": true,
+      "rejection_reasons": [],
+      "resolved_request": {
+        "memory_mib": 36864,
+        "compute_quota": 50,
+        "instances": 1
+      },
+      "score": 0.727070219111642,
+      "packing_residual": 0.3873435861586858,
+      "components": {
+        "adaptation_hint": 1.0,
+        "hardware_sharing": 0.5904511995637951,
+        "packing": 0.6126564138413142,
+        "balance": 0.6946871723173715
+      },
+      "component_weights": {
+        "adaptation_hint": 0.3,
+        "hardware_sharing": 0.45,
+        "packing": 0.15,
+        "balance": 0.1
+      },
+      "classification": {
+        "schema_version": "pod-gpu-api/v1",
+        "model_version": "rf-v4-known-states-ee35cfabe30f",
+        "gpu_uuid": "SIM-GPU-l40-01",
+        "node": "sim-node-l40",
+        "prediction_status": "provisional",
+        "label": "balanced",
+        "label_zh": "训推一体型",
+        "training_adapted": true,
+        "inference_adapted": true,
+        "raw_rf": {
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "training_vote_fraction": 1.0,
+          "inference_vote_fraction": 1.0,
+          "class_probabilities": {
+            "training_preferred": 0.0,
+            "inference_preferred": 0.0,
+            "balanced": 1.0,
+            "unavailable": 0.0
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "model_load_error": null,
+        "supervision": "synthetic",
+        "real_performance_guarantee": false,
+        "rf_probability_is_reliability": false,
+        "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+        "input_sha256": "5a86f033be6fde221176cd4866744702320f710222eccb3fd634d62d2427b8c4",
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "model_limitations": [
+          "fixed dense-FP32 reference contracts only",
+          "hypothetical quota performance scaling",
+          "RF instance counters differ from distinct Pod counters",
+          "health/backend/resource admission remains independent"
+        ],
+        "validation_evidence": {
+          "training": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 221,
+            "validation_sign_correct": 221,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 215,
+            "validation_sign_correct": 215,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "related_validation_models": [
+          {
+            "device_id": "l40",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.0
+          },
+          {
+            "device_id": "l40s",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.017429806126376148
+          },
+          {
+            "device_id": "rtx4090",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          }
+        ],
+        "outside_training_ranges": {}
+      },
+      "ranking_basis": "RF_marginal_soft_hint",
+      "rf_probability": 1.0,
+      "rf_probability_is_reliability": false,
+      "fallback_score": null,
+      "fallback_score_is_probability": false,
+      "reference_category_is_admission_gate": false
+    },
+    {
+      "gpu_uuid": "SIM-GPU-l40-02",
+      "node": "sim-node-l40",
+      "revision": 0,
+      "feasible": true,
+      "rejection_reasons": [],
+      "resolved_request": {
+        "memory_mib": 36864,
+        "compute_quota": 50,
+        "instances": 1
+      },
+      "score": 0.727070219111642,
+      "packing_residual": 0.3873435861586858,
+      "components": {
+        "adaptation_hint": 1.0,
+        "hardware_sharing": 0.5904511995637951,
+        "packing": 0.6126564138413142,
+        "balance": 0.6946871723173715
+      },
+      "component_weights": {
+        "adaptation_hint": 0.3,
+        "hardware_sharing": 0.45,
+        "packing": 0.15,
+        "balance": 0.1
+      },
+      "classification": {
+        "schema_version": "pod-gpu-api/v1",
+        "model_version": "rf-v4-known-states-ee35cfabe30f",
+        "gpu_uuid": "SIM-GPU-l40-02",
+        "node": "sim-node-l40",
+        "prediction_status": "provisional",
+        "label": "balanced",
+        "label_zh": "训推一体型",
+        "training_adapted": true,
+        "inference_adapted": true,
+        "raw_rf": {
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "training_vote_fraction": 1.0,
+          "inference_vote_fraction": 1.0,
+          "class_probabilities": {
+            "training_preferred": 0.0,
+            "inference_preferred": 0.0,
+            "balanced": 1.0,
+            "unavailable": 0.0
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "model_load_error": null,
+        "supervision": "synthetic",
+        "real_performance_guarantee": false,
+        "rf_probability_is_reliability": false,
+        "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+        "input_sha256": "f5e22a3caea0979d0caaf16414550622298e97b8af659c0920ea8f33914b0fbe",
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "model_limitations": [
+          "fixed dense-FP32 reference contracts only",
+          "hypothetical quota performance scaling",
+          "RF instance counters differ from distinct Pod counters",
+          "health/backend/resource admission remains independent"
+        ],
+        "validation_evidence": {
+          "training": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 221,
+            "validation_sign_correct": 221,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 215,
+            "validation_sign_correct": 215,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "related_validation_models": [
+          {
+            "device_id": "l40",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.0
+          },
+          {
+            "device_id": "l40s",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.017429806126376148
+          },
+          {
+            "device_id": "rtx4090",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          }
+        ],
+        "outside_training_ranges": {}
+      },
+      "ranking_basis": "RF_marginal_soft_hint",
+      "rf_probability": 1.0,
+      "rf_probability_is_reliability": false,
+      "fallback_score": null,
+      "fallback_score_is_probability": false,
+      "reference_category_is_admission_gate": false
+    }
+  ],
+  "rejected_gpus": [
+    {
+      "gpu_uuid": "SIM-GPU-rtx4090-00",
+      "node": "sim-node-rtx4090",
+      "revision": 0,
+      "feasible": false,
+      "rejection_reasons": [
+        "insufficient_memory_mib"
+      ],
+      "resolved_request": {
+        "memory_mib": 36864,
+        "compute_quota": 50,
+        "instances": 1
+      },
+      "score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-rtx4090-01",
+      "node": "sim-node-rtx4090",
+      "revision": 0,
+      "feasible": false,
+      "rejection_reasons": [
+        "insufficient_memory_mib"
+      ],
+      "resolved_request": {
+        "memory_mib": 36864,
+        "compute_quota": 50,
+        "instances": 1
+      },
+      "score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-rtx4090-02",
+      "node": "sim-node-rtx4090",
+      "revision": 0,
+      "feasible": false,
+      "rejection_reasons": [
+        "insufficient_memory_mib"
+      ],
+      "resolved_request": {
+        "memory_mib": 36864,
+        "compute_quota": 50,
+        "instances": 1
+      },
+      "score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-rtx4090-03",
+      "node": "sim-node-rtx4090",
+      "revision": 0,
+      "feasible": false,
+      "rejection_reasons": [
+        "insufficient_memory_mib"
+      ],
+      "resolved_request": {
+        "memory_mib": 36864,
+        "compute_quota": 50,
+        "instances": 1
+      },
+      "score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-rtx5090-00",
+      "node": "sim-node-rtx5090",
+      "revision": 0,
+      "feasible": false,
+      "rejection_reasons": [
+        "insufficient_memory_mib"
+      ],
+      "resolved_request": {
+        "memory_mib": 36864,
+        "compute_quota": 50,
+        "instances": 1
+      },
+      "score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-rtx5090-01",
+      "node": "sim-node-rtx5090",
+      "revision": 0,
+      "feasible": false,
+      "rejection_reasons": [
+        "insufficient_memory_mib"
+      ],
+      "resolved_request": {
+        "memory_mib": 36864,
+        "compute_quota": 50,
+        "instances": 1
+      },
+      "score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-rtx5090-02",
+      "node": "sim-node-rtx5090",
+      "revision": 0,
+      "feasible": false,
+      "rejection_reasons": [
+        "insufficient_memory_mib"
+      ],
+      "resolved_request": {
+        "memory_mib": 36864,
+        "compute_quota": 50,
+        "instances": 1
+      },
+      "score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-rtx5090-03",
+      "node": "sim-node-rtx5090",
+      "revision": 0,
+      "feasible": false,
+      "rejection_reasons": [
+        "insufficient_memory_mib"
+      ],
+      "resolved_request": {
+        "memory_mib": 36864,
+        "compute_quota": 50,
+        "instances": 1
+      },
+      "score": null
+    }
+  ],
+  "per_container_evaluations": [
+    {
+      "container": "workload",
+      "count": 1,
+      "devices": [
+        {
+          "gpu_uuid": "SIM-GPU-rtx4090-00",
+          "node": "sim-node-rtx4090",
+          "revision": 0,
+          "feasible": false,
+          "rejection_reasons": [
+            "insufficient_memory_mib"
+          ],
+          "resolved_request": {
+            "memory_mib": 36864,
+            "compute_quota": 50,
+            "instances": 1
+          },
+          "score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-rtx4090-01",
+          "node": "sim-node-rtx4090",
+          "revision": 0,
+          "feasible": false,
+          "rejection_reasons": [
+            "insufficient_memory_mib"
+          ],
+          "resolved_request": {
+            "memory_mib": 36864,
+            "compute_quota": 50,
+            "instances": 1
+          },
+          "score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-rtx4090-02",
+          "node": "sim-node-rtx4090",
+          "revision": 0,
+          "feasible": false,
+          "rejection_reasons": [
+            "insufficient_memory_mib"
+          ],
+          "resolved_request": {
+            "memory_mib": 36864,
+            "compute_quota": 50,
+            "instances": 1
+          },
+          "score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-rtx4090-03",
+          "node": "sim-node-rtx4090",
+          "revision": 0,
+          "feasible": false,
+          "rejection_reasons": [
+            "insufficient_memory_mib"
+          ],
+          "resolved_request": {
+            "memory_mib": 36864,
+            "compute_quota": 50,
+            "instances": 1
+          },
+          "score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-rtx5090-00",
+          "node": "sim-node-rtx5090",
+          "revision": 0,
+          "feasible": false,
+          "rejection_reasons": [
+            "insufficient_memory_mib"
+          ],
+          "resolved_request": {
+            "memory_mib": 36864,
+            "compute_quota": 50,
+            "instances": 1
+          },
+          "score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-rtx5090-01",
+          "node": "sim-node-rtx5090",
+          "revision": 0,
+          "feasible": false,
+          "rejection_reasons": [
+            "insufficient_memory_mib"
+          ],
+          "resolved_request": {
+            "memory_mib": 36864,
+            "compute_quota": 50,
+            "instances": 1
+          },
+          "score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-rtx5090-02",
+          "node": "sim-node-rtx5090",
+          "revision": 0,
+          "feasible": false,
+          "rejection_reasons": [
+            "insufficient_memory_mib"
+          ],
+          "resolved_request": {
+            "memory_mib": 36864,
+            "compute_quota": 50,
+            "instances": 1
+          },
+          "score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-rtx5090-03",
+          "node": "sim-node-rtx5090",
+          "revision": 0,
+          "feasible": false,
+          "rejection_reasons": [
+            "insufficient_memory_mib"
+          ],
+          "resolved_request": {
+            "memory_mib": 36864,
+            "compute_quota": 50,
+            "instances": 1
+          },
+          "score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-l40-00",
+          "node": "sim-node-l40",
+          "revision": 0,
+          "feasible": true,
+          "rejection_reasons": [],
+          "resolved_request": {
+            "memory_mib": 36864,
+            "compute_quota": 50,
+            "instances": 1
+          },
+          "score": 0.727070219111642,
+          "packing_residual": 0.3873435861586858,
+          "components": {
+            "adaptation_hint": 1.0,
+            "hardware_sharing": 0.5904511995637951,
+            "packing": 0.6126564138413142,
+            "balance": 0.6946871723173715
+          },
+          "component_weights": {
+            "adaptation_hint": 0.3,
+            "hardware_sharing": 0.45,
+            "packing": 0.15,
+            "balance": 0.1
+          },
+          "classification": {
+            "schema_version": "pod-gpu-api/v1",
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "gpu_uuid": "SIM-GPU-l40-00",
+            "node": "sim-node-l40",
+            "prediction_status": "provisional",
+            "label": "balanced",
+            "label_zh": "训推一体型",
+            "training_adapted": true,
+            "inference_adapted": true,
+            "raw_rf": {
+              "training": true,
+              "inference": true,
+              "label": "balanced",
+              "training_vote_fraction": 1.0,
+              "inference_vote_fraction": 1.0,
+              "class_probabilities": {
+                "training_preferred": 0.0,
+                "inference_preferred": 0.0,
+                "balanced": 1.0,
+                "unavailable": 0.0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "vote_fraction_is_reliability": false
+            },
+            "reasons": [
+              "resource constraints and related binary validation cells passed; no real performance assurance"
+            ],
+            "model_load_error": null,
+            "supervision": "synthetic",
+            "real_performance_guarantee": false,
+            "rf_probability_is_reliability": false,
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "input_sha256": "57cdf6b0b24f79668ff1da844c171b89ef9c9dc4da81bfc8ba7035df5b7fb101",
+            "quota_semantics": "synthetic_device_share_100_v1",
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "validation_evidence": {
+              "training": {
+                "basis": "related_architecture_validation",
+                "predicted_sign": true,
+                "validation_sign_support": 221,
+                "validation_sign_correct": 221,
+                "validation_sign_precision": 1.0,
+                "validation_sign_episodes": 36,
+                "supported": true,
+                "not_a_calibrated_confidence_interval": true
+              },
+              "inference": {
+                "basis": "related_architecture_validation",
+                "predicted_sign": true,
+                "validation_sign_support": 215,
+                "validation_sign_correct": 215,
+                "validation_sign_precision": 1.0,
+                "validation_sign_episodes": 36,
+                "supported": true,
+                "not_a_calibrated_confidence_interval": true
+              }
+            },
+            "related_validation_models": [
+              {
+                "device_id": "l40",
+                "architecture": "Ada Lovelace",
+                "log2_distance": 0.0
+              },
+              {
+                "device_id": "l40s",
+                "architecture": "Ada Lovelace",
+                "log2_distance": 0.017429806126376148
+              },
+              {
+                "device_id": "rtx4090",
+                "architecture": "Ada Lovelace",
+                "log2_distance": 1.0
+              }
+            ],
+            "outside_training_ranges": {}
+          },
+          "ranking_basis": "RF_marginal_soft_hint",
+          "rf_probability": 1.0,
+          "rf_probability_is_reliability": false,
+          "fallback_score": null,
+          "fallback_score_is_probability": false,
+          "reference_category_is_admission_gate": false
+        },
+        {
+          "gpu_uuid": "SIM-GPU-l40-01",
+          "node": "sim-node-l40",
+          "revision": 0,
+          "feasible": true,
+          "rejection_reasons": [],
+          "resolved_request": {
+            "memory_mib": 36864,
+            "compute_quota": 50,
+            "instances": 1
+          },
+          "score": 0.727070219111642,
+          "packing_residual": 0.3873435861586858,
+          "components": {
+            "adaptation_hint": 1.0,
+            "hardware_sharing": 0.5904511995637951,
+            "packing": 0.6126564138413142,
+            "balance": 0.6946871723173715
+          },
+          "component_weights": {
+            "adaptation_hint": 0.3,
+            "hardware_sharing": 0.45,
+            "packing": 0.15,
+            "balance": 0.1
+          },
+          "classification": {
+            "schema_version": "pod-gpu-api/v1",
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "gpu_uuid": "SIM-GPU-l40-01",
+            "node": "sim-node-l40",
+            "prediction_status": "provisional",
+            "label": "balanced",
+            "label_zh": "训推一体型",
+            "training_adapted": true,
+            "inference_adapted": true,
+            "raw_rf": {
+              "training": true,
+              "inference": true,
+              "label": "balanced",
+              "training_vote_fraction": 1.0,
+              "inference_vote_fraction": 1.0,
+              "class_probabilities": {
+                "training_preferred": 0.0,
+                "inference_preferred": 0.0,
+                "balanced": 1.0,
+                "unavailable": 0.0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "vote_fraction_is_reliability": false
+            },
+            "reasons": [
+              "resource constraints and related binary validation cells passed; no real performance assurance"
+            ],
+            "model_load_error": null,
+            "supervision": "synthetic",
+            "real_performance_guarantee": false,
+            "rf_probability_is_reliability": false,
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "input_sha256": "5a86f033be6fde221176cd4866744702320f710222eccb3fd634d62d2427b8c4",
+            "quota_semantics": "synthetic_device_share_100_v1",
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "validation_evidence": {
+              "training": {
+                "basis": "related_architecture_validation",
+                "predicted_sign": true,
+                "validation_sign_support": 221,
+                "validation_sign_correct": 221,
+                "validation_sign_precision": 1.0,
+                "validation_sign_episodes": 36,
+                "supported": true,
+                "not_a_calibrated_confidence_interval": true
+              },
+              "inference": {
+                "basis": "related_architecture_validation",
+                "predicted_sign": true,
+                "validation_sign_support": 215,
+                "validation_sign_correct": 215,
+                "validation_sign_precision": 1.0,
+                "validation_sign_episodes": 36,
+                "supported": true,
+                "not_a_calibrated_confidence_interval": true
+              }
+            },
+            "related_validation_models": [
+              {
+                "device_id": "l40",
+                "architecture": "Ada Lovelace",
+                "log2_distance": 0.0
+              },
+              {
+                "device_id": "l40s",
+                "architecture": "Ada Lovelace",
+                "log2_distance": 0.017429806126376148
+              },
+              {
+                "device_id": "rtx4090",
+                "architecture": "Ada Lovelace",
+                "log2_distance": 1.0
+              }
+            ],
+            "outside_training_ranges": {}
+          },
+          "ranking_basis": "RF_marginal_soft_hint",
+          "rf_probability": 1.0,
+          "rf_probability_is_reliability": false,
+          "fallback_score": null,
+          "fallback_score_is_probability": false,
+          "reference_category_is_admission_gate": false
+        },
+        {
+          "gpu_uuid": "SIM-GPU-l40-02",
+          "node": "sim-node-l40",
+          "revision": 0,
+          "feasible": true,
+          "rejection_reasons": [],
+          "resolved_request": {
+            "memory_mib": 36864,
+            "compute_quota": 50,
+            "instances": 1
+          },
+          "score": 0.727070219111642,
+          "packing_residual": 0.3873435861586858,
+          "components": {
+            "adaptation_hint": 1.0,
+            "hardware_sharing": 0.5904511995637951,
+            "packing": 0.6126564138413142,
+            "balance": 0.6946871723173715
+          },
+          "component_weights": {
+            "adaptation_hint": 0.3,
+            "hardware_sharing": 0.45,
+            "packing": 0.15,
+            "balance": 0.1
+          },
+          "classification": {
+            "schema_version": "pod-gpu-api/v1",
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "gpu_uuid": "SIM-GPU-l40-02",
+            "node": "sim-node-l40",
+            "prediction_status": "provisional",
+            "label": "balanced",
+            "label_zh": "训推一体型",
+            "training_adapted": true,
+            "inference_adapted": true,
+            "raw_rf": {
+              "training": true,
+              "inference": true,
+              "label": "balanced",
+              "training_vote_fraction": 1.0,
+              "inference_vote_fraction": 1.0,
+              "class_probabilities": {
+                "training_preferred": 0.0,
+                "inference_preferred": 0.0,
+                "balanced": 1.0,
+                "unavailable": 0.0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "vote_fraction_is_reliability": false
+            },
+            "reasons": [
+              "resource constraints and related binary validation cells passed; no real performance assurance"
+            ],
+            "model_load_error": null,
+            "supervision": "synthetic",
+            "real_performance_guarantee": false,
+            "rf_probability_is_reliability": false,
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "input_sha256": "f5e22a3caea0979d0caaf16414550622298e97b8af659c0920ea8f33914b0fbe",
+            "quota_semantics": "synthetic_device_share_100_v1",
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "validation_evidence": {
+              "training": {
+                "basis": "related_architecture_validation",
+                "predicted_sign": true,
+                "validation_sign_support": 221,
+                "validation_sign_correct": 221,
+                "validation_sign_precision": 1.0,
+                "validation_sign_episodes": 36,
+                "supported": true,
+                "not_a_calibrated_confidence_interval": true
+              },
+              "inference": {
+                "basis": "related_architecture_validation",
+                "predicted_sign": true,
+                "validation_sign_support": 215,
+                "validation_sign_correct": 215,
+                "validation_sign_precision": 1.0,
+                "validation_sign_episodes": 36,
+                "supported": true,
+                "not_a_calibrated_confidence_interval": true
+              }
+            },
+            "related_validation_models": [
+              {
+                "device_id": "l40",
+                "architecture": "Ada Lovelace",
+                "log2_distance": 0.0
+              },
+              {
+                "device_id": "l40s",
+                "architecture": "Ada Lovelace",
+                "log2_distance": 0.017429806126376148
+              },
+              {
+                "device_id": "rtx4090",
+                "architecture": "Ada Lovelace",
+                "log2_distance": 1.0
+              }
+            ],
+            "outside_training_ranges": {}
+          },
+          "ranking_basis": "RF_marginal_soft_hint",
+          "rf_probability": 1.0,
+          "rf_probability_is_reliability": false,
+          "fallback_score": null,
+          "fallback_score_is_probability": false,
+          "reference_category_is_admission_gate": false
+        }
+      ]
+    }
+  ],
+  "candidate_scope": "individual feasibility for first container; complete same-node placement required below",
+  "node_plans": [
+    {
+      "node": "sim-node-l40",
+      "assignments": [
+        {
+          "container": "workload",
+          "unit": 0,
+          "gpu_uuid": "SIM-GPU-l40-00",
+          "node": "sim-node-l40",
+          "memory_mib": 36864,
+          "compute_quota": 50,
+          "instances": 1,
+          "score": 0.727070219111642,
+          "ranking_basis": "RF_marginal_soft_hint"
+        }
+      ],
+      "score": 0.727070219111642
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+﻿round,experiment,evidence_kind,sample_count,result,boundary,source,real_performance_claim
+1,known_states_legacy,synthetic_theory_classifier,1925,Accuracy=0.998961; Macro-F1(4)=0.996510,not empirical performance,results/offline-v1/metrics.json,False
+3,A-known-models,synthetic_theory_classifier,972,Accuracy=0.988683; Macro-F1(4)=0.976853,not empirical performance,results/offline-v3-release/A-known-models-metrics.json,False
+3,B-unseen-models,synthetic_theory_classifier,921,Accuracy=0.765472; Macro-F1(4)=0.577829,not empirical performance,results/offline-v3-release/B-unseen-models-metrics.json,False
+4,known_states,synthetic_theory_classifier,1244,Accuracy=1.000000; Macro-F1(4)=1.000000,not empirical performance,results/offline-v4/known_states/metrics.json,False
+4,A_ampere,synthetic_theory_classifier,522,Accuracy=0.957854; Macro-F1(4)=0.705817,not empirical performance,results/offline-v4/A_ampere/metrics.json,False
+4,A_ada,synthetic_theory_classifier,515,Accuracy=0.966990; Macro-F1(4)=0.954745,not empirical performance,results/offline-v4/A_ada/metrics.json,False
+4,B_multi_architecture,synthetic_theory_classifier,2067,Accuracy=0.999516; Macro-F1(4)=0.999210,not empirical performance,results/offline-v4/B_multi_architecture/metrics.json,False
+4,C_blackwell_holdout,synthetic_theory_classifier,1044,Accuracy=1.000000; Macro-F1(4)=0.750000,not empirical performance,results/offline-v4/C_blackwell_holdout/metrics.json,False
+4,D_a10_diagnostic,synthetic_theory_classifier,514,Accuracy=0.959144; Macro-F1(4)=0.722454,not empirical performance,results/offline-v4/D_a10_diagnostic/metrics.json,False
+2,三策略四场景主仿真,offline_DES,36,4 scenarios ×3 seeds ×3 policies;120 Pods/trace,independent synthetic execution model; no physical performance calibration,results/offline-v2/simulation-metrics.csv,False
+5,冻结 API 与资源账本,offline_Python_API,,classify/rank/commit/release + fallback/concurrency,"process-local fixture, not Kubernetes ledger",results/offline-v5-release,False
+6,180 组消融,native_Go_fake_client_RF_HTTP,180,37/180 RF-only UUID changes; 176/180 full strategy vs Binpack,all hard-fit; selected synthetic snapshots; change ≠ improvement,results/rf-ablation-20261019/linux-final/decisions.csv,False
+7,六个真实 sleep Pod,real_Kubernetes_logical_allocation,6,native/plugin6/6;RF/native/plugin5/5;quota6/6;observed overalloc0;deleted6,one4090 node;classes all balanced;on/off UUID unchanged;CUDA untested,results/round7-live-window-20261019/verified/summary.json,False
+8,同一4090动态四类轨迹,offline_frozen_RF_synthetic_logical_states,5,balanced→training_preferred→unavailable→inference_preferred→balanced,new real dynamic-class experiment NOT executed,results/round8-20261020/dynamic-path.json,False

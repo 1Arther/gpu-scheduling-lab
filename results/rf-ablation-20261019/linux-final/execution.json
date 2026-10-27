@@ -1,0 +1,103 @@
+{
+  "started_utc": "2026-10-19T06:35:53.911337+00:00",
+  "hostname": "T3DGQ",
+  "uname": [
+    "Linux",
+    "T3DGQ",
+    "6.18.5+deb14-amd64",
+    "#1 SMP PREEMPT_DYNAMIC Debian 6.18.5-1 (2026-01-16)",
+    "x86_64",
+    ""
+  ],
+  "python": "3.12.7 | packaged by Anaconda, Inc. | (main, Oct  4 2024, 13:27:36) [GCC 11.2.0]",
+  "python_executable": "/home/zbs/rf-ablation-20261019-1425/lab/.venv/bin/python",
+  "packages": {
+    "numpy": "2.2.6",
+    "scipy": "1.16.3",
+    "sklearn": "1.7.2",
+    "joblib": "1.5.2",
+    "yaml": "6.0.3",
+    "pytest": "8.4.2"
+  },
+  "root": "/home/zbs/rf-ablation-20261019-1425/lab",
+  "model_version": "rf-v4-known-states-ee35cfabe30f",
+  "plan_sha256": "b0f1c6a4fbbb4a182b4918655ca17efc062170cc4717cb05c25fd131da758628",
+  "bundle_sha256_before": {
+    "dataset-summary.json": "d0c8fb4ddaa270aeaea28256eddfb75e97b967e3e48cc215d59448450eb09d0f",
+    "manifest.json": "aa9fd474284d6a3f1ab7825e795eb5dae01ffbd4f95456b16add19bc45f505ab",
+    "model-metadata.json": "e14a11c18dc47defebdd0ab69fe4c0e9141c157ed688498301a669866b182c32",
+    "random_forest.joblib": "ee35cfabe30fffc28ff0be09d3738587d4f9bffbe26386e2a9fae5c5b9e80748",
+    "reference-contract.json": "5627b01f5b517d15ba77fabb6dc1f8e9a050adc01bd902b270b4dfe850b096b5",
+    "scoring-policy.json": "c05a0144bcfb1f8a8d58da25ae450e3d4569c003b199da5419edd53ac5e46d78",
+    "source-records.json": "eae6c4d0bcde171036ba28021c82730da63ffd8f24f93e3399939f9682e1cf0e"
+  },
+  "endpoint": "http://127.0.0.1:24323/v1/rank",
+  "go_version": "go version go1.27.1 linux/amd64",
+  "real_kubernetes_client": false,
+  "gpu_workloads": false,
+  "model_training": false,
+  "commands": [
+    {
+      "name": "pytest",
+      "command": [
+        "/home/zbs/rf-ablation-20261019-1425/lab/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_rf_ablation.py",
+        "tests/test_round6.py",
+        "tests/test_round5.py",
+        "-q",
+        "--junitxml=/home/zbs/rf-ablation-20261019-1425/lab/results/linux-verification-final-checked/pytest.xml"
+      ],
+      "cwd": "/home/zbs/rf-ablation-20261019-1425/lab",
+      "exit_code": 0,
+      "elapsed_s": 3.297
+    },
+    {
+      "name": "go-tests",
+      "command": [
+        "/usr/bin/go",
+        "test",
+        "-p",
+        "2",
+        "-count=1",
+        "-json",
+        "./pkg/scheduler/api/devices/nvidia/vgpu",
+        "./pkg/scheduler/plugins/deviceshare",
+        "./pkg/scheduler/plugins/predicates"
+      ],
+      "cwd": "/home/zbs/rf-ablation-20261019-1425/lab/scheduler/volcano-rf",
+      "exit_code": 0,
+      "elapsed_s": 11.471
+    },
+    {
+      "name": "scheduler-build",
+      "command": [
+        "/usr/bin/go",
+        "build",
+        "-p",
+        "2",
+        "-o",
+        "/home/zbs/rf-ablation-20261019-1425/lab/results/linux-verification-final-checked/vc-scheduler",
+        "./cmd/scheduler"
+      ],
+      "cwd": "/home/zbs/rf-ablation-20261019-1425/lab/scheduler/volcano-rf",
+      "exit_code": 0,
+      "elapsed_s": 4.023
+    }
+  ],
+  "stage": "finished",
+  "success": true,
+  "bundle_sha256_after": {
+    "dataset-summary.json": "d0c8fb4ddaa270aeaea28256eddfb75e97b967e3e48cc215d59448450eb09d0f",
+    "manifest.json": "aa9fd474284d6a3f1ab7825e795eb5dae01ffbd4f95456b16add19bc45f505ab",
+    "model-metadata.json": "e14a11c18dc47defebdd0ab69fe4c0e9141c157ed688498301a669866b182c32",
+    "random_forest.joblib": "ee35cfabe30fffc28ff0be09d3738587d4f9bffbe26386e2a9fae5c5b9e80748",
+    "reference-contract.json": "5627b01f5b517d15ba77fabb6dc1f8e9a050adc01bd902b270b4dfe850b096b5",
+    "scoring-policy.json": "c05a0144bcfb1f8a8d58da25ae450e3d4569c003b199da5419edd53ac5e46d78",
+    "source-records.json": "eae6c4d0bcde171036ba28021c82730da63ffd8f24f93e3399939f9682e1cf0e"
+  },
+  "frozen_artifacts_unchanged": true,
+  "actual_model_inference_calls": 28,
+  "finished_utc": "2026-10-19T06:36:13.123276+00:00"
+}

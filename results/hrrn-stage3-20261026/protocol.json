@@ -1,0 +1,50 @@
+{
+  "namespace": "hrrn-rl-stage3-20261026-v1",
+  "quantiles": "within-trace quantile, macro mean over conditions and seeds",
+  "window": "trace generator observation_end; complete drain for waiting/slowdown",
+  "primary_metrics": [
+    "p95_wait",
+    "long_wait_ratio",
+    "completed_work"
+  ],
+  "primary_comparators": [
+    "hrrn",
+    "hrrn_protect",
+    "hrrn_adaptive_heuristic",
+    "hrrn_easy"
+  ],
+  "multiplicity": "12 primary paired contrasts; Bonferroni simultaneous bootstrap 1-0.05/12 intervals",
+  "bootstrap": "resample 20 paired seed blocks, 100000 replicates, RNG 76291; average conditions within block",
+  "training": {
+    "steps_per_model": 512,
+    "seeds": [
+      17,
+      43
+    ],
+    "variants": [
+      "joint",
+      "switch_only",
+      "no_hrrn"
+    ],
+    "idle_weights": [
+      0.25,
+      1.0
+    ]
+  },
+  "selection": "Each variant: minimize dev macro p95 + 8*long_wait_ratio + 0.5*mean_wait; ties lower work loss, then stable ID",
+  "heuristic_selection": "same development objective over predeclared grid",
+  "fixed_protection": {
+    "H_abs": 12.0,
+    "kappa": 8.0
+  },
+  "adaptive_eligibility": {
+    "H_abs": 2.0,
+    "kappa": 1.0
+  },
+  "gamma": 1.0,
+  "gae_lambda": 1.0,
+  "reward": "negative exact synthetic-time integral through full drain; constant pre-decision prefix charged once",
+  "training_convergence": "Small-budget functional experiment; no claim of convergence",
+  "future_information": "only environment event advancement and offline evaluation access actual synthetic durations",
+  "test_retuning_forbidden": true
+}

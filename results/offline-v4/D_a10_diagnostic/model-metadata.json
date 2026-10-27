@@ -1,0 +1,328 @@
+{
+  "feature_names": [
+    "memory_capacity_mib",
+    "memory_bandwidth_gbps",
+    "fp32_tflops",
+    "fp16_dense_tflops",
+    "bf16_dense_tflops",
+    "int8_dense_tops",
+    "max_board_power_w",
+    "free_memory_mib",
+    "free_compute_quota",
+    "allocated_vgpu_count",
+    "running_training_count",
+    "running_inference_count",
+    "free_memory_ratio",
+    "free_compute_quota_ratio",
+    "effective_fp32_tflops",
+    "effective_bandwidth_gbps"
+  ],
+  "feature_set": "effective_both",
+  "seed": 20261017,
+  "hyperparameters": {
+    "n_estimators": 120,
+    "min_samples_leaf": 2,
+    "max_features": 0.85
+  },
+  "identity_features_excluded": [
+    "device_id",
+    "model",
+    "vendor",
+    "architecture"
+  ],
+  "supervision": "synthetic_theoretical_contract_v3",
+  "test_used_for_selection": false,
+  "imputer_fit_scope": "training rows only",
+  "train_device_ids": [
+    "a100_sxm80",
+    "a30",
+    "a40",
+    "h200_sxm",
+    "l4",
+    "l40s",
+    "rtx4090",
+    "rtx5090"
+  ],
+  "validation_devices": [
+    {
+      "device_id": "h100_sxm",
+      "architecture": "Hopper",
+      "hardware": {
+        "memory_capacity_mib": 76293,
+        "memory_bandwidth_gbps": 3350,
+        "fp32_tflops": 67
+      },
+      "cells": {
+        "training": {
+          "0": {
+            "support": 153,
+            "correct": 153,
+            "episodes": 51
+          },
+          "1": {
+            "support": 336,
+            "correct": 336,
+            "episodes": 59
+          }
+        },
+        "inference": {
+          "0": {
+            "support": 96,
+            "correct": 96,
+            "episodes": 47
+          },
+          "1": {
+            "support": 393,
+            "correct": 392,
+            "episodes": 60
+          }
+        }
+      }
+    },
+    {
+      "device_id": "l40",
+      "architecture": "Ada Lovelace",
+      "hardware": {
+        "memory_capacity_mib": 45776,
+        "memory_bandwidth_gbps": 864,
+        "fp32_tflops": 90.5
+      },
+      "cells": {
+        "training": {
+          "0": {
+            "support": 141,
+            "correct": 141,
+            "episodes": 56
+          },
+          "1": {
+            "support": 330,
+            "correct": 330,
+            "episodes": 60
+          }
+        },
+        "inference": {
+          "0": {
+            "support": 176,
+            "correct": 176,
+            "episodes": 51
+          },
+          "1": {
+            "support": 295,
+            "correct": 295,
+            "episodes": 58
+          }
+        }
+      }
+    },
+    {
+      "device_id": "rtx3090",
+      "architecture": "Ampere",
+      "hardware": {
+        "memory_capacity_mib": 22888,
+        "memory_bandwidth_gbps": 936,
+        "fp32_tflops": 35.6
+      },
+      "cells": {
+        "training": {
+          "0": {
+            "support": 363,
+            "correct": 363,
+            "episodes": 60
+          },
+          "1": {
+            "support": 149,
+            "correct": 149,
+            "episodes": 42
+          }
+        },
+        "inference": {
+          "0": {
+            "support": 257,
+            "correct": 158,
+            "episodes": 56
+          },
+          "1": {
+            "support": 255,
+            "correct": 254,
+            "episodes": 51
+          }
+        }
+      }
+    }
+  ],
+  "quality_policy": {
+    "min_prediction_sign_support": 20,
+    "min_prediction_sign_episodes": 3,
+    "min_prediction_sign_precision": 0.9,
+    "max_validation_neighbor_log2_distance": 1.0,
+    "numeric_fallback_min_validation_models": 2,
+    "reference_hard_constraints_override": true,
+    "static_core_out_of_training_range": "pending; do not stretch training bounds using test hardware",
+    "cohort": "Same architecture validation models within factor2 for all three core static fields; otherwise at least two numeric-neighbor validation models. Architecture is optional metadata for evidence routing, never RF input.",
+    "decision": "Each predicted binary sign needs validation support/precision in the related cohort. Missing an unrelated combined class does not reject every GPU. No RF probability threshold or global four-class switch.",
+    "limitations": "Correlated synthetic states; support and precision are operational checks, not calibrated real-world confidence. No thresholds selected on test results."
+  },
+  "static_core_training_ranges": {
+    "memory_capacity_mib": [
+      22888,
+      134468
+    ],
+    "memory_bandwidth_gbps": [
+      300,
+      4800
+    ],
+    "fp32_tflops": [
+      10.3,
+      104.8
+    ]
+  },
+  "validation_four_class_counts": {
+    "balanced": 765,
+    "unavailable": 382,
+    "inference_preferred": 275,
+    "training_preferred": 50
+  },
+  "no_global_missing_class_rejection": true,
+  "validation_metrics": {
+    "samples": 1472,
+    "truth_kind": "synthetic",
+    "real_performance_labels": 0,
+    "accuracy": 0.9313858695652174,
+    "macro_f1": 0.9149341209589957,
+    "misclassified": 101,
+    "labels": [
+      "training_preferred",
+      "inference_preferred",
+      "balanced",
+      "unavailable"
+    ],
+    "class_counts": {
+      "balanced": 765,
+      "unavailable": 382,
+      "inference_preferred": 275,
+      "training_preferred": 50
+    },
+    "per_class_precision_recall_f1_support": {
+      "training_preferred": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 50.0
+      },
+      "inference_preferred": {
+        "precision": 0.9887640449438202,
+        "recall": 0.64,
+        "f1-score": 0.7770419426048565,
+        "support": 275.0
+      },
+      "balanced": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 765.0
+      },
+      "unavailable": {
+        "precision": 0.7933194154488518,
+        "recall": 0.9947643979057592,
+        "f1-score": 0.8826945412311266,
+        "support": 382.0
+      }
+    },
+    "confusion_matrix_true_rows_predicted_columns": [
+      [
+        50,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        176,
+        0,
+        99
+      ],
+      [
+        0,
+        0,
+        765,
+        0
+      ],
+      [
+        0,
+        2,
+        0,
+        380
+      ]
+    ],
+    "targets": {
+      "training": {
+        "accuracy": 1.0,
+        "precision_recall_f1": {
+          "False": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 657.0
+          },
+          "True": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 815.0
+          },
+          "accuracy": 1.0,
+          "macro avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 1472.0
+          },
+          "weighted avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 1472.0
+          }
+        }
+      },
+      "inference": {
+        "accuracy": 0.9313858695652174,
+        "precision_recall_f1": {
+          "False": {
+            "precision": 0.8128544423440454,
+            "recall": 0.9953703703703703,
+            "f1-score": 0.894901144640999,
+            "support": 432.0
+          },
+          "True": {
+            "precision": 0.9978791092258749,
+            "recall": 0.9048076923076923,
+            "f1-score": 0.9490670700958144,
+            "support": 1040.0
+          },
+          "accuracy": 0.9313858695652174,
+          "macro avg": {
+            "precision": 0.9053667757849602,
+            "recall": 0.9500890313390313,
+            "f1-score": 0.9219841073684067,
+            "support": 1472.0
+          },
+          "weighted avg": {
+            "precision": 0.9435783917714248,
+            "recall": 0.9313858695652174,
+            "f1-score": 0.9331705484949445,
+            "support": 1472.0
+          }
+        }
+      }
+    },
+    "observed_true_classes": [
+      "balanced",
+      "inference_preferred",
+      "training_preferred",
+      "unavailable"
+    ],
+    "macro_f1_observed_classes": 0.9149341209589957,
+    "complete_four_class_truth_coverage": true
+  }
+}

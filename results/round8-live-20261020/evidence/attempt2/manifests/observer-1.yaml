@@ -1,0 +1,63 @@
+# PENDING APPROVAL. Apply sequentially; never apply this whole directory.
+apiVersion: scheduling.volcano.sh/v1beta1
+kind: PodGroup
+metadata:
+  name: rf-v8-observer-1
+  namespace: gpu-rf-tests
+  labels:
+    gpu-lab/experiment: round8-dynamic
+spec:
+  minMember: 1
+  queue: rf-v7-queue
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rf-v8-observer-1
+  namespace: gpu-rf-tests
+  labels:
+    gpu-lab/experiment: round8-dynamic
+    gpu-lab/workload-type: inference
+  annotations:
+    scheduling.k8s.io/group-name: rf-v8-observer-1
+spec:
+  schedulerName: volcano-rf-test
+  runtimeClassName: nvidia
+  restartPolicy: Never
+  automountServiceAccountToken: false
+  activeDeadlineSeconds: 900
+  terminationGracePeriodSeconds: 5
+  nodeSelector:
+    kubernetes.io/hostname: t3dgq
+  tolerations:
+  - key: node-role.kubernetes.io/control-plane
+    operator: Exists
+    effect: NoSchedule
+  - key: node-role.kubernetes.io/master
+    operator: Exists
+    effect: NoSchedule
+  containers:
+  - name: sleep
+    image: docker.io/pytorch/pytorch@sha256:923f687790bec78081c357e71dcd5dcef80b0cc00f6c34484902a5e83362c854
+    imagePullPolicy: Never
+    command:
+    - /bin/sleep
+    - '600'
+    resources:
+      requests:
+        volcano.sh/vgpu-number: '1'
+        volcano.sh/vgpu-memory: '64'
+        volcano.sh/vgpu-cores: '1'
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        volcano.sh/vgpu-number: '1'
+        volcano.sh/vgpu-memory: '64'
+        volcano.sh/vgpu-cores: '1'
+        cpu: 500m
+        memory: 256Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL

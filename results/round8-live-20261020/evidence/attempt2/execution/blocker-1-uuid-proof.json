@@ -1,0 +1,1418 @@
+{
+  "utc": "2026-10-20T07:29:35.142020+00:00",
+  "pod_uid": "b44dd9b5-cac7-4037-b77e-0a665537a009",
+  "pod_name": "rf-v8-blocker-1",
+  "workload_type": "training",
+  "rf_recommended_uuids": [
+    "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e"
+  ],
+  "native_permanent_uuids": [
+    "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e"
+  ],
+  "device_plugin_consumed_uuids": [
+    "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e"
+  ],
+  "device_plugin_evidence_source": "matching Pod UID/container/vgpu-number kubelet AllocateResponse.NVIDIA_VISIBLE_DEVICES",
+  "native_commit_log": "2026-10-20T15:29:31.947691446+08:00 I1020 07:29:31.947536       1 rf_job.go:722] \"rf-job UUID allocation\" route=\"rf-job\" pod=\"gpu-rf-tests/rf-v8-blocker-1\" podUID=\"b44dd9b5-cac7-4037-b77e-0a665537a009\" node=\"t3dgq\" requestID=\"c7d56612a58651679c127fb707b62c75fca78a234369a1caf4963090f539d130\" devices=\"GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e,NVIDIA,64,100:\" score=69.63214098146484 fallback=\"\" logicalBefore=[{\"uuid\":\"GPU-27be0024-0498-4114-e6b9-b2d0db148309\",\"node\":\"t3dgq\",\"model\":\"NVIDIA-NVIDIA GeForce RTX 4090\",\"registered_memory_mib\":24564,\"allocated_memory_mib\":64,\"allocated_compute_quota\":100,\"allocated_vgpu_count\":1,\"training_vgpu_count\":1,\"inference_vgpu_count\":0,\"training_pod_count\":1,\"inference_pod_count\":0,\"unrestricted_vgpu_count\":0,\"max_instances\":10,\"healthy\":true,\"sharing_mode\":\"hami-core\",\"hardware\":{\"bf16_dense_tflops\":165.2,\"fp16_dense_tflops\":165.2,\"fp32_tflops\":82.6,\"int8_dense_tops\":660.6,\"max_board_power_w\":450,\"memory_bandwidth_gbps\":1008,\"memory_capacity_mib\":22888}},{\"uuid\":\"GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e\",\"node\":\"t3dgq\",\"model\":\"NVIDIA-NVIDIA GeForce RTX 4090\",\"registered_memory_mib\":24564,\"allocated_memory_mib\":0,\"allocated_compute_quota\":0,\"allocated_vgpu_count\":0,\"training_vgpu_count\":0,\"inference_vgpu_count\":0,\"training_pod_count\":0,\"inference_pod_count\":0,\"unrestricted_vgpu_count\":0,\"max_instances\":10,\"healthy\":true,\"sharing_mode\":\"hami-core\",\"hardware\":{\"bf16_dense_tflops\":165.2,\"fp16_dense_tflops\":165.2,\"fp32_tflops\":82.6,\"int8_dense_tops\":660.6,\"max_board_power_w\":450,\"memory_bandwidth_gbps\":1008,\"memory_capacity_mib\":22888}},{\"uuid\":\"GPU-7b94f673-ce00-719b-2c94-706baa032dae\",\"node\":\"t3dgq\",\"model\":\"NVIDIA-NVIDIA GeForce RTX 4090\",\"registered_memory_mib\":24564,\"allocated_memory_mib\":0,\"allocated_compute_quota\":0,\"allocated_vgpu_count\":0,\"training_vgpu_count\":0,\"inference_vgpu_count\":0,\"training_pod_count\":0,\"inference_pod_count\":0,\"unrestricted_vgpu_count\":0,\"max_instances\":10,\"healthy\":true,\"sharing_mode\":\"hami-core\",\"hardware\":{\"bf16_dense_tflops\":165.2,\"fp16_dense_tflops\":165.2,\"fp32_tflops\":82.6,\"int8_dense_tops\":660.6,\"max_board_power_w\":450,\"memory_bandwidth_gbps\":1008,\"memory_capacity_mib\":22888}},{\"uuid\":\"GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd\",\"node\":\"t3dgq\",\"model\":\"NVIDIA-NVIDIA GeForce RTX 4090\",\"registered_memory_mib\":24564,\"allocated_memory_mib\":0,\"allocated_compute_quota\":0,\"allocated_vgpu_count\":0,\"training_vgpu_count\":0,\"inference_vgpu_count\":0,\"training_pod_count\":0,\"inference_pod_count\":0,\"unrestricted_vgpu_count\":0,\"max_instances\":10,\"healthy\":true,\"sharing_mode\":\"hami-core\",\"hardware\":{\"bf16_dense_tflops\":165.2,\"fp16_dense_tflops\":165.2,\"fp32_tflops\":82.6,\"int8_dense_tops\":660.6,\"max_board_power_w\":450,\"memory_bandwidth_gbps\":1008,\"memory_capacity_mib\":22888}}] logicalAfter=[{\"uuid\":\"GPU-27be0024-0498-4114-e6b9-b2d0db148309\",\"node\":\"t3dgq\",\"model\":\"NVIDIA-NVIDIA GeForce RTX 4090\",\"registered_memory_mib\":24564,\"allocated_memory_mib\":64,\"allocated_compute_quota\":100,\"allocated_vgpu_count\":1,\"training_vgpu_count\":1,\"inference_vgpu_count\":0,\"training_pod_count\":1,\"inference_pod_count\":0,\"unrestricted_vgpu_count\":0,\"max_instances\":10,\"healthy\":true,\"sharing_mode\":\"hami-core\",\"hardware\":{\"bf16_dense_tflops\":165.2,\"fp16_dense_tflops\":165.2,\"fp32_tflops\":82.6,\"int8_dense_tops\":660.6,\"max_board_power_w\":450,\"memory_bandwidth_gbps\":1008,\"memory_capacity_mib\":22888}},{\"uuid\":\"GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e\",\"node\":\"t3dgq\",\"model\":\"NVIDIA-NVIDIA GeForce RTX 4090\",\"registered_memory_mib\":24564,\"allocated_memory_mib\":64,\"allocated_compute_quota\":100,\"allocated_vgpu_count\":1,\"training_vgpu_count\":1,\"inference_vgpu_count\":0,\"training_pod_count\":1,\"inference_pod_count\":0,\"unrestricted_vgpu_count\":0,\"max_instances\":10,\"healthy\":true,\"sharing_mode\":\"hami-core\",\"hardware\":{\"bf16_dense_tflops\":165.2,\"fp16_dense_tflops\":165.2,\"fp32_tflops\":82.6,\"int8_dense_tops\":660.6,\"max_board_power_w\":450,\"memory_bandwidth_gbps\":1008,\"memory_capacity_mib\":22888}},{\"uuid\":\"GPU-7b94f673-ce00-719b-2c94-706baa032dae\",\"node\":\"t3dgq\",\"model\":\"NVIDIA-NVIDIA GeForce RTX 4090\",\"registered_memory_mib\":24564,\"allocated_memory_mib\":0,\"allocated_compute_quota\":0,\"allocated_vgpu_count\":0,\"training_vgpu_count\":0,\"inference_vgpu_count\":0,\"training_pod_count\":0,\"inference_pod_count\":0,\"unrestricted_vgpu_count\":0,\"max_instances\":10,\"healthy\":true,\"sharing_mode\":\"hami-core\",\"hardware\":{\"bf16_dense_tflops\":165.2,\"fp16_dense_tflops\":165.2,\"fp32_tflops\":82.6,\"int8_dense_tops\":660.6,\"max_board_power_w\":450,\"memory_bandwidth_gbps\":1008,\"memory_capacity_mib\":22888}},{\"uuid\":\"GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd\",\"node\":\"t3dgq\",\"model\":\"NVIDIA-NVIDIA GeForce RTX 4090\",\"registered_memory_mib\":24564,\"allocated_memory_mib\":0,\"allocated_compute_quota\":0,\"allocated_vgpu_count\":0,\"training_vgpu_count\":0,\"inference_vgpu_count\":0,\"training_pod_count\":0,\"inference_pod_count\":0,\"unrestricted_vgpu_count\":0,\"max_instances\":10,\"healthy\":true,\"sharing_mode\":\"hami-core\",\"hardware\":{\"bf16_dense_tflops\":165.2,\"fp16_dense_tflops\":165.2,\"fp32_tflops\":82.6,\"int8_dense_tops\":660.6,\"max_board_power_w\":450,\"memory_bandwidth_gbps\":1008,\"memory_capacity_mib\":22888}}]",
+  "rf_advice": {
+    "event": "rf_advice",
+    "utc": "2026-10-20T07:29:31.916100+00:00",
+    "request_id": "c7d56612a58651679c127fb707b62c75fca78a234369a1caf4963090f539d130",
+    "snapshot_token": "29e755e56bbb9df3a7fd7171d9d5c7836f419ac28d6a5479821e4695e13bafc4",
+    "model_version": "rf-v4-known-states-ee35cfabe30f",
+    "rf_prediction_enabled": true,
+    "status": "ranked",
+    "model_ready": true,
+    "pod": {
+      "name": "rf-v8-blocker-1",
+      "namespace": "gpu-rf-tests",
+      "uid": "b44dd9b5-cac7-4037-b77e-0a665537a009",
+      "labels": {
+        "gpu-lab/experiment": "round8-dynamic",
+        "gpu-lab/workload-type": "training"
+      }
+    },
+    "requests": [
+      {
+        "name": "sleep",
+        "resources": {
+          "limits": {
+            "cpu": "500m",
+            "memory": "256Mi",
+            "volcano.sh/vgpu-cores": 100,
+            "volcano.sh/vgpu-memory": 64,
+            "volcano.sh/vgpu-number": 1
+          },
+          "requests": {
+            "cpu": "100m",
+            "memory": "128Mi",
+            "volcano.sh/vgpu-cores": 100,
+            "volcano.sh/vgpu-memory": 64,
+            "volcano.sh/vgpu-number": 1
+          }
+        }
+      }
+    ],
+    "gpus": [
+      {
+        "uuid": "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e",
+        "node": "t3dgq",
+        "model": "NVIDIA-NVIDIA GeForce RTX 4090",
+        "registered_memory_mib": 24564,
+        "allocated_memory_mib": 0,
+        "allocated_compute_quota": 0,
+        "allocated_vgpu_count": 0,
+        "training_vgpu_count": 0,
+        "inference_vgpu_count": 0,
+        "training_pod_count": 0,
+        "inference_pod_count": 0,
+        "unrestricted_vgpu_count": 0,
+        "max_instances": 10,
+        "healthy": true,
+        "sharing_mode": "hami-core",
+        "hardware": {
+          "bf16_dense_tflops": 165.2,
+          "fp16_dense_tflops": 165.2,
+          "fp32_tflops": 82.6,
+          "int8_dense_tops": 660.6,
+          "max_board_power_w": 450,
+          "memory_bandwidth_gbps": 1008,
+          "memory_capacity_mib": 22888
+        }
+      },
+      {
+        "uuid": "GPU-7b94f673-ce00-719b-2c94-706baa032dae",
+        "node": "t3dgq",
+        "model": "NVIDIA-NVIDIA GeForce RTX 4090",
+        "registered_memory_mib": 24564,
+        "allocated_memory_mib": 0,
+        "allocated_compute_quota": 0,
+        "allocated_vgpu_count": 0,
+        "training_vgpu_count": 0,
+        "inference_vgpu_count": 0,
+        "training_pod_count": 0,
+        "inference_pod_count": 0,
+        "unrestricted_vgpu_count": 0,
+        "max_instances": 10,
+        "healthy": true,
+        "sharing_mode": "hami-core",
+        "hardware": {
+          "bf16_dense_tflops": 165.2,
+          "fp16_dense_tflops": 165.2,
+          "fp32_tflops": 82.6,
+          "int8_dense_tops": 660.6,
+          "max_board_power_w": 450,
+          "memory_bandwidth_gbps": 1008,
+          "memory_capacity_mib": 22888
+        }
+      },
+      {
+        "uuid": "GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd",
+        "node": "t3dgq",
+        "model": "NVIDIA-NVIDIA GeForce RTX 4090",
+        "registered_memory_mib": 24564,
+        "allocated_memory_mib": 0,
+        "allocated_compute_quota": 0,
+        "allocated_vgpu_count": 0,
+        "training_vgpu_count": 0,
+        "inference_vgpu_count": 0,
+        "training_pod_count": 0,
+        "inference_pod_count": 0,
+        "unrestricted_vgpu_count": 0,
+        "max_instances": 10,
+        "healthy": true,
+        "sharing_mode": "hami-core",
+        "hardware": {
+          "bf16_dense_tflops": 165.2,
+          "fp16_dense_tflops": 165.2,
+          "fp32_tflops": 82.6,
+          "int8_dense_tops": 660.6,
+          "max_board_power_w": 450,
+          "memory_bandwidth_gbps": 1008,
+          "memory_capacity_mib": 22888
+        }
+      }
+    ],
+    "classifications": [
+      {
+        "gpu_uuid": "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e",
+        "snapshot": {
+          "uuid": "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e",
+          "node": "t3dgq",
+          "model": "NVIDIA-NVIDIA GeForce RTX 4090",
+          "card_type": "NVIDIA-NVIDIA GeForce RTX 4090",
+          "device_id": "rtx4090",
+          "vendor": "NVIDIA",
+          "backend": "CUDA",
+          "plugin": "volcano-vgpu",
+          "healthy": true,
+          "managed": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "memory_capacity_mib": 22888,
+            "memory_bandwidth_gbps": 1008,
+            "fp32_tflops": 82.6,
+            "fp16_dense_tflops": 165.2,
+            "bf16_dense_tflops": 165.2,
+            "int8_dense_tops": 660.6,
+            "max_board_power_w": 450
+          },
+          "logical_memory_capacity_mib": 24564,
+          "max_instances": 10,
+          "model_memory_mapping": "registered_fraction_to_frozen_catalog_reference_v1",
+          "quota_semantics": "volcano_hami_core_percent_100_v1",
+          "revision": 0,
+          "node_labels": {},
+          "dynamic": {
+            "free_memory_mib": 24564,
+            "free_compute_quota": 100,
+            "allocated_vgpu_count": 0,
+            "running_training_count": 0,
+            "running_inference_count": 0,
+            "running_unknown_count": 0,
+            "running_training_pod_count": 0,
+            "running_inference_pod_count": 0,
+            "unrestricted_vgpu_count": 0
+          },
+          "resource_source": "Volcano logical reservation ledger; no NVML measurements",
+          "hardware_source": "frozen catalog"
+        },
+        "classification": {
+          "schema_version": "pod-gpu-api/v1",
+          "model_version": "rf-v4-known-states-ee35cfabe30f",
+          "gpu_uuid": "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e",
+          "node": "t3dgq",
+          "prediction_status": "provisional",
+          "label": "balanced",
+          "label_zh": "\u8bad\u63a8\u4e00\u4f53\u578b",
+          "training_adapted": true,
+          "inference_adapted": true,
+          "raw_rf": {
+            "training": true,
+            "inference": true,
+            "label": "balanced",
+            "training_vote_fraction": 1.0,
+            "inference_vote_fraction": 1.0,
+            "class_probabilities": {
+              "training_preferred": 0.0,
+              "inference_preferred": 0.0,
+              "balanced": 1.0,
+              "unavailable": 0.0
+            },
+            "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+            "vote_fraction_is_reliability": false
+          },
+          "reasons": [
+            "resource constraints and related binary validation cells passed; no real performance assurance"
+          ],
+          "model_load_error": null,
+          "supervision": "synthetic",
+          "real_performance_guarantee": false,
+          "rf_probability_is_reliability": false,
+          "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+          "input_sha256": "13415b2cf6d1bc691cf8264e1e5943687044d2f0730ed1221ef4d68dae54f9d9",
+          "quota_semantics": "volcano_hami_core_percent_100_v1",
+          "model_limitations": [
+            "fixed dense-FP32 reference contracts only",
+            "hypothetical quota performance scaling",
+            "RF instance counters differ from distinct Pod counters",
+            "health/backend/resource admission remains independent"
+          ],
+          "model_feature_mapping": {
+            "method": "registered_fraction_to_frozen_catalog_reference_v1",
+            "registered_logical_capacity_mib": 24564,
+            "catalog_reference_capacity_mib": 22888,
+            "logical_free_memory_mib": 24564,
+            "model_reference_free_memory_mib": 22888,
+            "admission_uses_original_logical_mib": true,
+            "empirically_validated": false
+          },
+          "validation_evidence": {
+            "training": {
+              "basis": "related_architecture_validation",
+              "predicted_sign": true,
+              "validation_sign_support": 221,
+              "validation_sign_correct": 221,
+              "validation_sign_precision": 1.0,
+              "validation_sign_episodes": 36,
+              "supported": true,
+              "not_a_calibrated_confidence_interval": true
+            },
+            "inference": {
+              "basis": "related_architecture_validation",
+              "predicted_sign": true,
+              "validation_sign_support": 215,
+              "validation_sign_correct": 215,
+              "validation_sign_precision": 1.0,
+              "validation_sign_episodes": 36,
+              "supported": true,
+              "not_a_calibrated_confidence_interval": true
+            }
+          },
+          "related_validation_models": [
+            {
+              "device_id": "l40",
+              "architecture": "Ada Lovelace",
+              "log2_distance": 1.0
+            },
+            {
+              "device_id": "l40s",
+              "architecture": "Ada Lovelace",
+              "log2_distance": 1.0
+            },
+            {
+              "device_id": "rtx4090",
+              "architecture": "Ada Lovelace",
+              "log2_distance": 0.0
+            }
+          ],
+          "outside_training_ranges": {},
+          "reference_hard_constraints": {
+            "training": true,
+            "inference": true
+          }
+        },
+        "request_specific_scores": {
+          "training": {
+            "gpu_uuid": "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e",
+            "node": "t3dgq",
+            "revision": 0,
+            "feasible": true,
+            "rejection_reasons": [],
+            "resolved_request": {
+              "memory_mib": 64,
+              "compute_quota": 100,
+              "instances": 1
+            },
+            "score": 0.6963214098146484,
+            "packing_residual": 0.5886972805731966,
+            "components": {
+              "adaptation_hint": 1.0,
+              "hardware_sharing": 0.7430343511450381,
+              "packing": 0.4113027194268034,
+              "balance": 0.0026054388536068673
+            },
+            "component_weights": {
+              "adaptation_hint": 0.3,
+              "hardware_sharing": 0.45,
+              "packing": 0.15,
+              "balance": 0.1
+            },
+            "classification": {
+              "schema_version": "pod-gpu-api/v1",
+              "model_version": "rf-v4-known-states-ee35cfabe30f",
+              "gpu_uuid": "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e",
+              "node": "t3dgq",
+              "prediction_status": "provisional",
+              "label": "balanced",
+              "label_zh": "\u8bad\u63a8\u4e00\u4f53\u578b",
+              "training_adapted": true,
+              "inference_adapted": true,
+              "raw_rf": {
+                "training": true,
+                "inference": true,
+                "label": "balanced",
+                "training_vote_fraction": 1.0,
+                "inference_vote_fraction": 1.0,
+                "class_probabilities": {
+                  "training_preferred": 0.0,
+                  "inference_preferred": 0.0,
+                  "balanced": 1.0,
+                  "unavailable": 0.0
+                },
+                "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+                "vote_fraction_is_reliability": false
+              },
+              "reasons": [
+                "resource constraints and related binary validation cells passed; no real performance assurance"
+              ],
+              "model_load_error": null,
+              "supervision": "synthetic",
+              "real_performance_guarantee": false,
+              "rf_probability_is_reliability": false,
+              "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+              "input_sha256": "13415b2cf6d1bc691cf8264e1e5943687044d2f0730ed1221ef4d68dae54f9d9",
+              "quota_semantics": "volcano_hami_core_percent_100_v1",
+              "model_limitations": [
+                "fixed dense-FP32 reference contracts only",
+                "hypothetical quota performance scaling",
+                "RF instance counters differ from distinct Pod counters",
+                "health/backend/resource admission remains independent"
+              ],
+              "model_feature_mapping": {
+                "method": "registered_fraction_to_frozen_catalog_reference_v1",
+                "registered_logical_capacity_mib": 24564,
+                "catalog_reference_capacity_mib": 22888,
+                "logical_free_memory_mib": 24564,
+                "model_reference_free_memory_mib": 22888,
+                "admission_uses_original_logical_mib": true,
+                "empirically_validated": false
+              },
+              "validation_evidence": {
+                "training": {
+                  "basis": "related_architecture_validation",
+                  "predicted_sign": true,
+                  "validation_sign_support": 221,
+                  "validation_sign_correct": 221,
+                  "validation_sign_precision": 1.0,
+                  "validation_sign_episodes": 36,
+                  "supported": true,
+                  "not_a_calibrated_confidence_interval": true
+                },
+                "inference": {
+                  "basis": "related_architecture_validation",
+                  "predicted_sign": true,
+                  "validation_sign_support": 215,
+                  "validation_sign_correct": 215,
+                  "validation_sign_precision": 1.0,
+                  "validation_sign_episodes": 36,
+                  "supported": true,
+                  "not_a_calibrated_confidence_interval": true
+                }
+              },
+              "related_validation_models": [
+                {
+                  "device_id": "l40",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 1.0
+                },
+                {
+                  "device_id": "l40s",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 1.0
+                },
+                {
+                  "device_id": "rtx4090",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 0.0
+                }
+              ],
+              "outside_training_ranges": {},
+              "reference_hard_constraints": {
+                "training": true,
+                "inference": true
+              }
+            },
+            "ranking_basis": "RF_marginal_soft_hint",
+            "rf_probability": 1.0,
+            "rf_probability_is_reliability": false,
+            "fallback_score": null,
+            "fallback_score_is_probability": false,
+            "reference_category_is_admission_gate": false,
+            "score_decomposition": {
+              "rf_prediction_enabled": true,
+              "potential_rf_contribution": 0.3,
+              "applied_rf_contribution": 0.3,
+              "heuristic_contribution": 0.3963214098146484,
+              "conservative_fallback_contribution": 0.0,
+              "weighted_hardware_sharing": 0.3343654580152672,
+              "weighted_packing": 0.061695407914020506,
+              "weighted_balance": 0.00026054388536068674,
+              "weights_unchanged": true,
+              "renormalized": false
+            }
+          },
+          "inference": {
+            "gpu_uuid": "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e",
+            "node": "t3dgq",
+            "revision": 0,
+            "feasible": true,
+            "rejection_reasons": [],
+            "resolved_request": {
+              "memory_mib": 64,
+              "compute_quota": 100,
+              "instances": 1
+            },
+            "score": 0.635391066303198,
+            "packing_residual": 0.5886972805731966,
+            "components": {
+              "adaptation_hint": 1.0,
+              "hardware_sharing": 0.6076335877862595,
+              "packing": 0.4113027194268034,
+              "balance": 0.0026054388536068673
+            },
+            "component_weights": {
+              "adaptation_hint": 0.3,
+              "hardware_sharing": 0.45,
+              "packing": 0.15,
+              "balance": 0.1
+            },
+            "classification": {
+              "schema_version": "pod-gpu-api/v1",
+              "model_version": "rf-v4-known-states-ee35cfabe30f",
+              "gpu_uuid": "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e",
+              "node": "t3dgq",
+              "prediction_status": "provisional",
+              "label": "balanced",
+              "label_zh": "\u8bad\u63a8\u4e00\u4f53\u578b",
+              "training_adapted": true,
+              "inference_adapted": true,
+              "raw_rf": {
+                "training": true,
+                "inference": true,
+                "label": "balanced",
+                "training_vote_fraction": 1.0,
+                "inference_vote_fraction": 1.0,
+                "class_probabilities": {
+                  "training_preferred": 0.0,
+                  "inference_preferred": 0.0,
+                  "balanced": 1.0,
+                  "unavailable": 0.0
+                },
+                "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+                "vote_fraction_is_reliability": false
+              },
+              "reasons": [
+                "resource constraints and related binary validation cells passed; no real performance assurance"
+              ],
+              "model_load_error": null,
+              "supervision": "synthetic",
+              "real_performance_guarantee": false,
+              "rf_probability_is_reliability": false,
+              "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+              "input_sha256": "13415b2cf6d1bc691cf8264e1e5943687044d2f0730ed1221ef4d68dae54f9d9",
+              "quota_semantics": "volcano_hami_core_percent_100_v1",
+              "model_limitations": [
+                "fixed dense-FP32 reference contracts only",
+                "hypothetical quota performance scaling",
+                "RF instance counters differ from distinct Pod counters",
+                "health/backend/resource admission remains independent"
+              ],
+              "model_feature_mapping": {
+                "method": "registered_fraction_to_frozen_catalog_reference_v1",
+                "registered_logical_capacity_mib": 24564,
+                "catalog_reference_capacity_mib": 22888,
+                "logical_free_memory_mib": 24564,
+                "model_reference_free_memory_mib": 22888,
+                "admission_uses_original_logical_mib": true,
+                "empirically_validated": false
+              },
+              "validation_evidence": {
+                "training": {
+                  "basis": "related_architecture_validation",
+                  "predicted_sign": true,
+                  "validation_sign_support": 221,
+                  "validation_sign_correct": 221,
+                  "validation_sign_precision": 1.0,
+                  "validation_sign_episodes": 36,
+                  "supported": true,
+                  "not_a_calibrated_confidence_interval": true
+                },
+                "inference": {
+                  "basis": "related_architecture_validation",
+                  "predicted_sign": true,
+                  "validation_sign_support": 215,
+                  "validation_sign_correct": 215,
+                  "validation_sign_precision": 1.0,
+                  "validation_sign_episodes": 36,
+                  "supported": true,
+                  "not_a_calibrated_confidence_interval": true
+                }
+              },
+              "related_validation_models": [
+                {
+                  "device_id": "l40",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 1.0
+                },
+                {
+                  "device_id": "l40s",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 1.0
+                },
+                {
+                  "device_id": "rtx4090",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 0.0
+                }
+              ],
+              "outside_training_ranges": {},
+              "reference_hard_constraints": {
+                "training": true,
+                "inference": true
+              }
+            },
+            "ranking_basis": "RF_marginal_soft_hint",
+            "rf_probability": 1.0,
+            "rf_probability_is_reliability": false,
+            "fallback_score": null,
+            "fallback_score_is_probability": false,
+            "reference_category_is_admission_gate": false,
+            "score_decomposition": {
+              "rf_prediction_enabled": true,
+              "potential_rf_contribution": 0.3,
+              "applied_rf_contribution": 0.3,
+              "heuristic_contribution": 0.335391066303198,
+              "conservative_fallback_contribution": 0.0,
+              "weighted_hardware_sharing": 0.2734351145038168,
+              "weighted_packing": 0.061695407914020506,
+              "weighted_balance": 0.00026054388536068674,
+              "weights_unchanged": true,
+              "renormalized": false
+            }
+          }
+        },
+        "score_scope": "first requested container, logical resources"
+      },
+      {
+        "gpu_uuid": "GPU-7b94f673-ce00-719b-2c94-706baa032dae",
+        "snapshot": {
+          "uuid": "GPU-7b94f673-ce00-719b-2c94-706baa032dae",
+          "node": "t3dgq",
+          "model": "NVIDIA-NVIDIA GeForce RTX 4090",
+          "card_type": "NVIDIA-NVIDIA GeForce RTX 4090",
+          "device_id": "rtx4090",
+          "vendor": "NVIDIA",
+          "backend": "CUDA",
+          "plugin": "volcano-vgpu",
+          "healthy": true,
+          "managed": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "memory_capacity_mib": 22888,
+            "memory_bandwidth_gbps": 1008,
+            "fp32_tflops": 82.6,
+            "fp16_dense_tflops": 165.2,
+            "bf16_dense_tflops": 165.2,
+            "int8_dense_tops": 660.6,
+            "max_board_power_w": 450
+          },
+          "logical_memory_capacity_mib": 24564,
+          "max_instances": 10,
+          "model_memory_mapping": "registered_fraction_to_frozen_catalog_reference_v1",
+          "quota_semantics": "volcano_hami_core_percent_100_v1",
+          "revision": 0,
+          "node_labels": {},
+          "dynamic": {
+            "free_memory_mib": 24564,
+            "free_compute_quota": 100,
+            "allocated_vgpu_count": 0,
+            "running_training_count": 0,
+            "running_inference_count": 0,
+            "running_unknown_count": 0,
+            "running_training_pod_count": 0,
+            "running_inference_pod_count": 0,
+            "unrestricted_vgpu_count": 0
+          },
+          "resource_source": "Volcano logical reservation ledger; no NVML measurements",
+          "hardware_source": "frozen catalog"
+        },
+        "classification": {
+          "schema_version": "pod-gpu-api/v1",
+          "model_version": "rf-v4-known-states-ee35cfabe30f",
+          "gpu_uuid": "GPU-7b94f673-ce00-719b-2c94-706baa032dae",
+          "node": "t3dgq",
+          "prediction_status": "provisional",
+          "label": "balanced",
+          "label_zh": "\u8bad\u63a8\u4e00\u4f53\u578b",
+          "training_adapted": true,
+          "inference_adapted": true,
+          "raw_rf": {
+            "training": true,
+            "inference": true,
+            "label": "balanced",
+            "training_vote_fraction": 1.0,
+            "inference_vote_fraction": 1.0,
+            "class_probabilities": {
+              "training_preferred": 0.0,
+              "inference_preferred": 0.0,
+              "balanced": 1.0,
+              "unavailable": 0.0
+            },
+            "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+            "vote_fraction_is_reliability": false
+          },
+          "reasons": [
+            "resource constraints and related binary validation cells passed; no real performance assurance"
+          ],
+          "model_load_error": null,
+          "supervision": "synthetic",
+          "real_performance_guarantee": false,
+          "rf_probability_is_reliability": false,
+          "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+          "input_sha256": "99627c83b1704a819bd72f2b269db8a6acad40eac811615c09f5e358518fbbd1",
+          "quota_semantics": "volcano_hami_core_percent_100_v1",
+          "model_limitations": [
+            "fixed dense-FP32 reference contracts only",
+            "hypothetical quota performance scaling",
+            "RF instance counters differ from distinct Pod counters",
+            "health/backend/resource admission remains independent"
+          ],
+          "model_feature_mapping": {
+            "method": "registered_fraction_to_frozen_catalog_reference_v1",
+            "registered_logical_capacity_mib": 24564,
+            "catalog_reference_capacity_mib": 22888,
+            "logical_free_memory_mib": 24564,
+            "model_reference_free_memory_mib": 22888,
+            "admission_uses_original_logical_mib": true,
+            "empirically_validated": false
+          },
+          "validation_evidence": {
+            "training": {
+              "basis": "related_architecture_validation",
+              "predicted_sign": true,
+              "validation_sign_support": 221,
+              "validation_sign_correct": 221,
+              "validation_sign_precision": 1.0,
+              "validation_sign_episodes": 36,
+              "supported": true,
+              "not_a_calibrated_confidence_interval": true
+            },
+            "inference": {
+              "basis": "related_architecture_validation",
+              "predicted_sign": true,
+              "validation_sign_support": 215,
+              "validation_sign_correct": 215,
+              "validation_sign_precision": 1.0,
+              "validation_sign_episodes": 36,
+              "supported": true,
+              "not_a_calibrated_confidence_interval": true
+            }
+          },
+          "related_validation_models": [
+            {
+              "device_id": "l40",
+              "architecture": "Ada Lovelace",
+              "log2_distance": 1.0
+            },
+            {
+              "device_id": "l40s",
+              "architecture": "Ada Lovelace",
+              "log2_distance": 1.0
+            },
+            {
+              "device_id": "rtx4090",
+              "architecture": "Ada Lovelace",
+              "log2_distance": 0.0
+            }
+          ],
+          "outside_training_ranges": {},
+          "reference_hard_constraints": {
+            "training": true,
+            "inference": true
+          }
+        },
+        "request_specific_scores": {
+          "training": {
+            "gpu_uuid": "GPU-7b94f673-ce00-719b-2c94-706baa032dae",
+            "node": "t3dgq",
+            "revision": 0,
+            "feasible": true,
+            "rejection_reasons": [],
+            "resolved_request": {
+              "memory_mib": 64,
+              "compute_quota": 100,
+              "instances": 1
+            },
+            "score": 0.6963214098146484,
+            "packing_residual": 0.5886972805731966,
+            "components": {
+              "adaptation_hint": 1.0,
+              "hardware_sharing": 0.7430343511450381,
+              "packing": 0.4113027194268034,
+              "balance": 0.0026054388536068673
+            },
+            "component_weights": {
+              "adaptation_hint": 0.3,
+              "hardware_sharing": 0.45,
+              "packing": 0.15,
+              "balance": 0.1
+            },
+            "classification": {
+              "schema_version": "pod-gpu-api/v1",
+              "model_version": "rf-v4-known-states-ee35cfabe30f",
+              "gpu_uuid": "GPU-7b94f673-ce00-719b-2c94-706baa032dae",
+              "node": "t3dgq",
+              "prediction_status": "provisional",
+              "label": "balanced",
+              "label_zh": "\u8bad\u63a8\u4e00\u4f53\u578b",
+              "training_adapted": true,
+              "inference_adapted": true,
+              "raw_rf": {
+                "training": true,
+                "inference": true,
+                "label": "balanced",
+                "training_vote_fraction": 1.0,
+                "inference_vote_fraction": 1.0,
+                "class_probabilities": {
+                  "training_preferred": 0.0,
+                  "inference_preferred": 0.0,
+                  "balanced": 1.0,
+                  "unavailable": 0.0
+                },
+                "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+                "vote_fraction_is_reliability": false
+              },
+              "reasons": [
+                "resource constraints and related binary validation cells passed; no real performance assurance"
+              ],
+              "model_load_error": null,
+              "supervision": "synthetic",
+              "real_performance_guarantee": false,
+              "rf_probability_is_reliability": false,
+              "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+              "input_sha256": "99627c83b1704a819bd72f2b269db8a6acad40eac811615c09f5e358518fbbd1",
+              "quota_semantics": "volcano_hami_core_percent_100_v1",
+              "model_limitations": [
+                "fixed dense-FP32 reference contracts only",
+                "hypothetical quota performance scaling",
+                "RF instance counters differ from distinct Pod counters",
+                "health/backend/resource admission remains independent"
+              ],
+              "model_feature_mapping": {
+                "method": "registered_fraction_to_frozen_catalog_reference_v1",
+                "registered_logical_capacity_mib": 24564,
+                "catalog_reference_capacity_mib": 22888,
+                "logical_free_memory_mib": 24564,
+                "model_reference_free_memory_mib": 22888,
+                "admission_uses_original_logical_mib": true,
+                "empirically_validated": false
+              },
+              "validation_evidence": {
+                "training": {
+                  "basis": "related_architecture_validation",
+                  "predicted_sign": true,
+                  "validation_sign_support": 221,
+                  "validation_sign_correct": 221,
+                  "validation_sign_precision": 1.0,
+                  "validation_sign_episodes": 36,
+                  "supported": true,
+                  "not_a_calibrated_confidence_interval": true
+                },
+                "inference": {
+                  "basis": "related_architecture_validation",
+                  "predicted_sign": true,
+                  "validation_sign_support": 215,
+                  "validation_sign_correct": 215,
+                  "validation_sign_precision": 1.0,
+                  "validation_sign_episodes": 36,
+                  "supported": true,
+                  "not_a_calibrated_confidence_interval": true
+                }
+              },
+              "related_validation_models": [
+                {
+                  "device_id": "l40",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 1.0
+                },
+                {
+                  "device_id": "l40s",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 1.0
+                },
+                {
+                  "device_id": "rtx4090",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 0.0
+                }
+              ],
+              "outside_training_ranges": {},
+              "reference_hard_constraints": {
+                "training": true,
+                "inference": true
+              }
+            },
+            "ranking_basis": "RF_marginal_soft_hint",
+            "rf_probability": 1.0,
+            "rf_probability_is_reliability": false,
+            "fallback_score": null,
+            "fallback_score_is_probability": false,
+            "reference_category_is_admission_gate": false,
+            "score_decomposition": {
+              "rf_prediction_enabled": true,
+              "potential_rf_contribution": 0.3,
+              "applied_rf_contribution": 0.3,
+              "heuristic_contribution": 0.3963214098146484,
+              "conservative_fallback_contribution": 0.0,
+              "weighted_hardware_sharing": 0.3343654580152672,
+              "weighted_packing": 0.061695407914020506,
+              "weighted_balance": 0.00026054388536068674,
+              "weights_unchanged": true,
+              "renormalized": false
+            }
+          },
+          "inference": {
+            "gpu_uuid": "GPU-7b94f673-ce00-719b-2c94-706baa032dae",
+            "node": "t3dgq",
+            "revision": 0,
+            "feasible": true,
+            "rejection_reasons": [],
+            "resolved_request": {
+              "memory_mib": 64,
+              "compute_quota": 100,
+              "instances": 1
+            },
+            "score": 0.635391066303198,
+            "packing_residual": 0.5886972805731966,
+            "components": {
+              "adaptation_hint": 1.0,
+              "hardware_sharing": 0.6076335877862595,
+              "packing": 0.4113027194268034,
+              "balance": 0.0026054388536068673
+            },
+            "component_weights": {
+              "adaptation_hint": 0.3,
+              "hardware_sharing": 0.45,
+              "packing": 0.15,
+              "balance": 0.1
+            },
+            "classification": {
+              "schema_version": "pod-gpu-api/v1",
+              "model_version": "rf-v4-known-states-ee35cfabe30f",
+              "gpu_uuid": "GPU-7b94f673-ce00-719b-2c94-706baa032dae",
+              "node": "t3dgq",
+              "prediction_status": "provisional",
+              "label": "balanced",
+              "label_zh": "\u8bad\u63a8\u4e00\u4f53\u578b",
+              "training_adapted": true,
+              "inference_adapted": true,
+              "raw_rf": {
+                "training": true,
+                "inference": true,
+                "label": "balanced",
+                "training_vote_fraction": 1.0,
+                "inference_vote_fraction": 1.0,
+                "class_probabilities": {
+                  "training_preferred": 0.0,
+                  "inference_preferred": 0.0,
+                  "balanced": 1.0,
+                  "unavailable": 0.0
+                },
+                "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+                "vote_fraction_is_reliability": false
+              },
+              "reasons": [
+                "resource constraints and related binary validation cells passed; no real performance assurance"
+              ],
+              "model_load_error": null,
+              "supervision": "synthetic",
+              "real_performance_guarantee": false,
+              "rf_probability_is_reliability": false,
+              "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+              "input_sha256": "99627c83b1704a819bd72f2b269db8a6acad40eac811615c09f5e358518fbbd1",
+              "quota_semantics": "volcano_hami_core_percent_100_v1",
+              "model_limitations": [
+                "fixed dense-FP32 reference contracts only",
+                "hypothetical quota performance scaling",
+                "RF instance counters differ from distinct Pod counters",
+                "health/backend/resource admission remains independent"
+              ],
+              "model_feature_mapping": {
+                "method": "registered_fraction_to_frozen_catalog_reference_v1",
+                "registered_logical_capacity_mib": 24564,
+                "catalog_reference_capacity_mib": 22888,
+                "logical_free_memory_mib": 24564,
+                "model_reference_free_memory_mib": 22888,
+                "admission_uses_original_logical_mib": true,
+                "empirically_validated": false
+              },
+              "validation_evidence": {
+                "training": {
+                  "basis": "related_architecture_validation",
+                  "predicted_sign": true,
+                  "validation_sign_support": 221,
+                  "validation_sign_correct": 221,
+                  "validation_sign_precision": 1.0,
+                  "validation_sign_episodes": 36,
+                  "supported": true,
+                  "not_a_calibrated_confidence_interval": true
+                },
+                "inference": {
+                  "basis": "related_architecture_validation",
+                  "predicted_sign": true,
+                  "validation_sign_support": 215,
+                  "validation_sign_correct": 215,
+                  "validation_sign_precision": 1.0,
+                  "validation_sign_episodes": 36,
+                  "supported": true,
+                  "not_a_calibrated_confidence_interval": true
+                }
+              },
+              "related_validation_models": [
+                {
+                  "device_id": "l40",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 1.0
+                },
+                {
+                  "device_id": "l40s",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 1.0
+                },
+                {
+                  "device_id": "rtx4090",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 0.0
+                }
+              ],
+              "outside_training_ranges": {},
+              "reference_hard_constraints": {
+                "training": true,
+                "inference": true
+              }
+            },
+            "ranking_basis": "RF_marginal_soft_hint",
+            "rf_probability": 1.0,
+            "rf_probability_is_reliability": false,
+            "fallback_score": null,
+            "fallback_score_is_probability": false,
+            "reference_category_is_admission_gate": false,
+            "score_decomposition": {
+              "rf_prediction_enabled": true,
+              "potential_rf_contribution": 0.3,
+              "applied_rf_contribution": 0.3,
+              "heuristic_contribution": 0.335391066303198,
+              "conservative_fallback_contribution": 0.0,
+              "weighted_hardware_sharing": 0.2734351145038168,
+              "weighted_packing": 0.061695407914020506,
+              "weighted_balance": 0.00026054388536068674,
+              "weights_unchanged": true,
+              "renormalized": false
+            }
+          }
+        },
+        "score_scope": "first requested container, logical resources"
+      },
+      {
+        "gpu_uuid": "GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd",
+        "snapshot": {
+          "uuid": "GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd",
+          "node": "t3dgq",
+          "model": "NVIDIA-NVIDIA GeForce RTX 4090",
+          "card_type": "NVIDIA-NVIDIA GeForce RTX 4090",
+          "device_id": "rtx4090",
+          "vendor": "NVIDIA",
+          "backend": "CUDA",
+          "plugin": "volcano-vgpu",
+          "healthy": true,
+          "managed": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "memory_capacity_mib": 22888,
+            "memory_bandwidth_gbps": 1008,
+            "fp32_tflops": 82.6,
+            "fp16_dense_tflops": 165.2,
+            "bf16_dense_tflops": 165.2,
+            "int8_dense_tops": 660.6,
+            "max_board_power_w": 450
+          },
+          "logical_memory_capacity_mib": 24564,
+          "max_instances": 10,
+          "model_memory_mapping": "registered_fraction_to_frozen_catalog_reference_v1",
+          "quota_semantics": "volcano_hami_core_percent_100_v1",
+          "revision": 0,
+          "node_labels": {},
+          "dynamic": {
+            "free_memory_mib": 24564,
+            "free_compute_quota": 100,
+            "allocated_vgpu_count": 0,
+            "running_training_count": 0,
+            "running_inference_count": 0,
+            "running_unknown_count": 0,
+            "running_training_pod_count": 0,
+            "running_inference_pod_count": 0,
+            "unrestricted_vgpu_count": 0
+          },
+          "resource_source": "Volcano logical reservation ledger; no NVML measurements",
+          "hardware_source": "frozen catalog"
+        },
+        "classification": {
+          "schema_version": "pod-gpu-api/v1",
+          "model_version": "rf-v4-known-states-ee35cfabe30f",
+          "gpu_uuid": "GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd",
+          "node": "t3dgq",
+          "prediction_status": "provisional",
+          "label": "balanced",
+          "label_zh": "\u8bad\u63a8\u4e00\u4f53\u578b",
+          "training_adapted": true,
+          "inference_adapted": true,
+          "raw_rf": {
+            "training": true,
+            "inference": true,
+            "label": "balanced",
+            "training_vote_fraction": 1.0,
+            "inference_vote_fraction": 1.0,
+            "class_probabilities": {
+              "training_preferred": 0.0,
+              "inference_preferred": 0.0,
+              "balanced": 1.0,
+              "unavailable": 0.0
+            },
+            "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+            "vote_fraction_is_reliability": false
+          },
+          "reasons": [
+            "resource constraints and related binary validation cells passed; no real performance assurance"
+          ],
+          "model_load_error": null,
+          "supervision": "synthetic",
+          "real_performance_guarantee": false,
+          "rf_probability_is_reliability": false,
+          "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+          "input_sha256": "d2992d78995e628f5382079670957e4578ca505f8b952d419c32abcc0230ba37",
+          "quota_semantics": "volcano_hami_core_percent_100_v1",
+          "model_limitations": [
+            "fixed dense-FP32 reference contracts only",
+            "hypothetical quota performance scaling",
+            "RF instance counters differ from distinct Pod counters",
+            "health/backend/resource admission remains independent"
+          ],
+          "model_feature_mapping": {
+            "method": "registered_fraction_to_frozen_catalog_reference_v1",
+            "registered_logical_capacity_mib": 24564,
+            "catalog_reference_capacity_mib": 22888,
+            "logical_free_memory_mib": 24564,
+            "model_reference_free_memory_mib": 22888,
+            "admission_uses_original_logical_mib": true,
+            "empirically_validated": false
+          },
+          "validation_evidence": {
+            "training": {
+              "basis": "related_architecture_validation",
+              "predicted_sign": true,
+              "validation_sign_support": 221,
+              "validation_sign_correct": 221,
+              "validation_sign_precision": 1.0,
+              "validation_sign_episodes": 36,
+              "supported": true,
+              "not_a_calibrated_confidence_interval": true
+            },
+            "inference": {
+              "basis": "related_architecture_validation",
+              "predicted_sign": true,
+              "validation_sign_support": 215,
+              "validation_sign_correct": 215,
+              "validation_sign_precision": 1.0,
+              "validation_sign_episodes": 36,
+              "supported": true,
+              "not_a_calibrated_confidence_interval": true
+            }
+          },
+          "related_validation_models": [
+            {
+              "device_id": "l40",
+              "architecture": "Ada Lovelace",
+              "log2_distance": 1.0
+            },
+            {
+              "device_id": "l40s",
+              "architecture": "Ada Lovelace",
+              "log2_distance": 1.0
+            },
+            {
+              "device_id": "rtx4090",
+              "architecture": "Ada Lovelace",
+              "log2_distance": 0.0
+            }
+          ],
+          "outside_training_ranges": {},
+          "reference_hard_constraints": {
+            "training": true,
+            "inference": true
+          }
+        },
+        "request_specific_scores": {
+          "training": {
+            "gpu_uuid": "GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd",
+            "node": "t3dgq",
+            "revision": 0,
+            "feasible": true,
+            "rejection_reasons": [],
+            "resolved_request": {
+              "memory_mib": 64,
+              "compute_quota": 100,
+              "instances": 1
+            },
+            "score": 0.6963214098146484,
+            "packing_residual": 0.5886972805731966,
+            "components": {
+              "adaptation_hint": 1.0,
+              "hardware_sharing": 0.7430343511450381,
+              "packing": 0.4113027194268034,
+              "balance": 0.0026054388536068673
+            },
+            "component_weights": {
+              "adaptation_hint": 0.3,
+              "hardware_sharing": 0.45,
+              "packing": 0.15,
+              "balance": 0.1
+            },
+            "classification": {
+              "schema_version": "pod-gpu-api/v1",
+              "model_version": "rf-v4-known-states-ee35cfabe30f",
+              "gpu_uuid": "GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd",
+              "node": "t3dgq",
+              "prediction_status": "provisional",
+              "label": "balanced",
+              "label_zh": "\u8bad\u63a8\u4e00\u4f53\u578b",
+              "training_adapted": true,
+              "inference_adapted": true,
+              "raw_rf": {
+                "training": true,
+                "inference": true,
+                "label": "balanced",
+                "training_vote_fraction": 1.0,
+                "inference_vote_fraction": 1.0,
+                "class_probabilities": {
+                  "training_preferred": 0.0,
+                  "inference_preferred": 0.0,
+                  "balanced": 1.0,
+                  "unavailable": 0.0
+                },
+                "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+                "vote_fraction_is_reliability": false
+              },
+              "reasons": [
+                "resource constraints and related binary validation cells passed; no real performance assurance"
+              ],
+              "model_load_error": null,
+              "supervision": "synthetic",
+              "real_performance_guarantee": false,
+              "rf_probability_is_reliability": false,
+              "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+              "input_sha256": "d2992d78995e628f5382079670957e4578ca505f8b952d419c32abcc0230ba37",
+              "quota_semantics": "volcano_hami_core_percent_100_v1",
+              "model_limitations": [
+                "fixed dense-FP32 reference contracts only",
+                "hypothetical quota performance scaling",
+                "RF instance counters differ from distinct Pod counters",
+                "health/backend/resource admission remains independent"
+              ],
+              "model_feature_mapping": {
+                "method": "registered_fraction_to_frozen_catalog_reference_v1",
+                "registered_logical_capacity_mib": 24564,
+                "catalog_reference_capacity_mib": 22888,
+                "logical_free_memory_mib": 24564,
+                "model_reference_free_memory_mib": 22888,
+                "admission_uses_original_logical_mib": true,
+                "empirically_validated": false
+              },
+              "validation_evidence": {
+                "training": {
+                  "basis": "related_architecture_validation",
+                  "predicted_sign": true,
+                  "validation_sign_support": 221,
+                  "validation_sign_correct": 221,
+                  "validation_sign_precision": 1.0,
+                  "validation_sign_episodes": 36,
+                  "supported": true,
+                  "not_a_calibrated_confidence_interval": true
+                },
+                "inference": {
+                  "basis": "related_architecture_validation",
+                  "predicted_sign": true,
+                  "validation_sign_support": 215,
+                  "validation_sign_correct": 215,
+                  "validation_sign_precision": 1.0,
+                  "validation_sign_episodes": 36,
+                  "supported": true,
+                  "not_a_calibrated_confidence_interval": true
+                }
+              },
+              "related_validation_models": [
+                {
+                  "device_id": "l40",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 1.0
+                },
+                {
+                  "device_id": "l40s",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 1.0
+                },
+                {
+                  "device_id": "rtx4090",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 0.0
+                }
+              ],
+              "outside_training_ranges": {},
+              "reference_hard_constraints": {
+                "training": true,
+                "inference": true
+              }
+            },
+            "ranking_basis": "RF_marginal_soft_hint",
+            "rf_probability": 1.0,
+            "rf_probability_is_reliability": false,
+            "fallback_score": null,
+            "fallback_score_is_probability": false,
+            "reference_category_is_admission_gate": false,
+            "score_decomposition": {
+              "rf_prediction_enabled": true,
+              "potential_rf_contribution": 0.3,
+              "applied_rf_contribution": 0.3,
+              "heuristic_contribution": 0.3963214098146484,
+              "conservative_fallback_contribution": 0.0,
+              "weighted_hardware_sharing": 0.3343654580152672,
+              "weighted_packing": 0.061695407914020506,
+              "weighted_balance": 0.00026054388536068674,
+              "weights_unchanged": true,
+              "renormalized": false
+            }
+          },
+          "inference": {
+            "gpu_uuid": "GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd",
+            "node": "t3dgq",
+            "revision": 0,
+            "feasible": true,
+            "rejection_reasons": [],
+            "resolved_request": {
+              "memory_mib": 64,
+              "compute_quota": 100,
+              "instances": 1
+            },
+            "score": 0.635391066303198,
+            "packing_residual": 0.5886972805731966,
+            "components": {
+              "adaptation_hint": 1.0,
+              "hardware_sharing": 0.6076335877862595,
+              "packing": 0.4113027194268034,
+              "balance": 0.0026054388536068673
+            },
+            "component_weights": {
+              "adaptation_hint": 0.3,
+              "hardware_sharing": 0.45,
+              "packing": 0.15,
+              "balance": 0.1
+            },
+            "classification": {
+              "schema_version": "pod-gpu-api/v1",
+              "model_version": "rf-v4-known-states-ee35cfabe30f",
+              "gpu_uuid": "GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd",
+              "node": "t3dgq",
+              "prediction_status": "provisional",
+              "label": "balanced",
+              "label_zh": "\u8bad\u63a8\u4e00\u4f53\u578b",
+              "training_adapted": true,
+              "inference_adapted": true,
+              "raw_rf": {
+                "training": true,
+                "inference": true,
+                "label": "balanced",
+                "training_vote_fraction": 1.0,
+                "inference_vote_fraction": 1.0,
+                "class_probabilities": {
+                  "training_preferred": 0.0,
+                  "inference_preferred": 0.0,
+                  "balanced": 1.0,
+                  "unavailable": 0.0
+                },
+                "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+                "vote_fraction_is_reliability": false
+              },
+              "reasons": [
+                "resource constraints and related binary validation cells passed; no real performance assurance"
+              ],
+              "model_load_error": null,
+              "supervision": "synthetic",
+              "real_performance_guarantee": false,
+              "rf_probability_is_reliability": false,
+              "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+              "input_sha256": "d2992d78995e628f5382079670957e4578ca505f8b952d419c32abcc0230ba37",
+              "quota_semantics": "volcano_hami_core_percent_100_v1",
+              "model_limitations": [
+                "fixed dense-FP32 reference contracts only",
+                "hypothetical quota performance scaling",
+                "RF instance counters differ from distinct Pod counters",
+                "health/backend/resource admission remains independent"
+              ],
+              "model_feature_mapping": {
+                "method": "registered_fraction_to_frozen_catalog_reference_v1",
+                "registered_logical_capacity_mib": 24564,
+                "catalog_reference_capacity_mib": 22888,
+                "logical_free_memory_mib": 24564,
+                "model_reference_free_memory_mib": 22888,
+                "admission_uses_original_logical_mib": true,
+                "empirically_validated": false
+              },
+              "validation_evidence": {
+                "training": {
+                  "basis": "related_architecture_validation",
+                  "predicted_sign": true,
+                  "validation_sign_support": 221,
+                  "validation_sign_correct": 221,
+                  "validation_sign_precision": 1.0,
+                  "validation_sign_episodes": 36,
+                  "supported": true,
+                  "not_a_calibrated_confidence_interval": true
+                },
+                "inference": {
+                  "basis": "related_architecture_validation",
+                  "predicted_sign": true,
+                  "validation_sign_support": 215,
+                  "validation_sign_correct": 215,
+                  "validation_sign_precision": 1.0,
+                  "validation_sign_episodes": 36,
+                  "supported": true,
+                  "not_a_calibrated_confidence_interval": true
+                }
+              },
+              "related_validation_models": [
+                {
+                  "device_id": "l40",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 1.0
+                },
+                {
+                  "device_id": "l40s",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 1.0
+                },
+                {
+                  "device_id": "rtx4090",
+                  "architecture": "Ada Lovelace",
+                  "log2_distance": 0.0
+                }
+              ],
+              "outside_training_ranges": {},
+              "reference_hard_constraints": {
+                "training": true,
+                "inference": true
+              }
+            },
+            "ranking_basis": "RF_marginal_soft_hint",
+            "rf_probability": 1.0,
+            "rf_probability_is_reliability": false,
+            "fallback_score": null,
+            "fallback_score_is_probability": false,
+            "reference_category_is_admission_gate": false,
+            "score_decomposition": {
+              "rf_prediction_enabled": true,
+              "potential_rf_contribution": 0.3,
+              "applied_rf_contribution": 0.3,
+              "heuristic_contribution": 0.335391066303198,
+              "conservative_fallback_contribution": 0.0,
+              "weighted_hardware_sharing": 0.2734351145038168,
+              "weighted_packing": 0.061695407914020506,
+              "weighted_balance": 0.00026054388536068674,
+              "weights_unchanged": true,
+              "renormalized": false
+            }
+          }
+        },
+        "score_scope": "first requested container, logical resources"
+      }
+    ],
+    "assignments": [
+      {
+        "container": "sleep",
+        "unit": 0,
+        "gpu_uuid": "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e",
+        "node": "t3dgq",
+        "memory_mib": 64,
+        "compute_quota": 100,
+        "instances": 1,
+        "score": 0.6963214098146484,
+        "ranking_basis": "RF_marginal_soft_hint"
+      }
+    ],
+    "node_score": 69.63214098146484,
+    "errors": [],
+    "source": "RF request snapshot; native scheduler ledger remains authoritative",
+    "real_performance_guarantee": false
+  },
+  "real_pod_phase": "Running",
+  "cuda_executed": false
+}

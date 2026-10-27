@@ -1,0 +1,280 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: volcano-hrrn-lab
+  labels:
+    gpu-lab/experiment: hrrn-stage4
+  namespace: hrrn-lab-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: hrrn-s4-scheduler
+  labels:
+    gpu-lab/experiment: hrrn-stage4
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - nodes
+  - pods
+  - namespaces
+  - services
+  - replicationcontrollers
+  - persistentvolumeclaims
+  - persistentvolumes
+  - resourcequotas
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - replicasets
+  - statefulsets
+  - daemonsets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - storageclasses
+  - csinodes
+  - csidrivers
+  - csistoragecapacities
+  - volumeattachments
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - scheduling.k8s.io
+  resources:
+  - priorityclasses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - scheduling.volcano.sh
+  resources:
+  - queues
+  - podgroups
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - nodeinfo.volcano.sh
+  resources:
+  - numatopologies
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - topology.volcano.sh
+  resources:
+  - hypernodes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - resource.k8s.io
+  resources:
+  - resourceclaims
+  - resourceclaims/status
+  - deviceclasses
+  - resourceslices
+  - devicetaintrules
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - scheduling.volcano.sh
+  resources:
+  - queues
+  verbs:
+  - create
+- apiGroups:
+  - ''
+  resources:
+  - nodes
+  resourceNames:
+  - review-required-node
+  verbs:
+  - update
+  - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: hrrn-s4-scheduler
+  labels:
+    gpu-lab/experiment: hrrn-stage4
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: hrrn-s4-scheduler
+subjects:
+- kind: ServiceAccount
+  name: volcano-hrrn-lab
+  namespace: hrrn-lab-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: hrrn-s4-local-writes
+  labels:
+    gpu-lab/experiment: hrrn-stage4
+  namespace: hrrn-lab-system
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - events
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  verbs:
+  - patch
+- apiGroups:
+  - ''
+  resources:
+  - pods/status
+  verbs:
+  - update
+  - patch
+- apiGroups:
+  - ''
+  resources:
+  - pods/binding
+  verbs:
+  - create
+- apiGroups:
+  - scheduling.volcano.sh
+  resources:
+  - podgroups
+  - podgroups/status
+  verbs:
+  - update
+  - patch
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+- apiGroups:
+  - ''
+  resources:
+  - configmaps
+  resourceNames:
+  - hrrn-s4-device-config
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: hrrn-s4-local-writes
+  labels:
+    gpu-lab/experiment: hrrn-stage4
+  namespace: hrrn-lab-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: hrrn-s4-local-writes
+subjects:
+- kind: ServiceAccount
+  name: volcano-hrrn-lab
+  namespace: hrrn-lab-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: hrrn-s4-local-writes
+  labels:
+    gpu-lab/experiment: hrrn-stage4
+  namespace: hrrn-lab-tests
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - events
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  verbs:
+  - patch
+- apiGroups:
+  - ''
+  resources:
+  - pods/status
+  verbs:
+  - update
+  - patch
+- apiGroups:
+  - ''
+  resources:
+  - pods/binding
+  verbs:
+  - create
+- apiGroups:
+  - scheduling.volcano.sh
+  resources:
+  - podgroups
+  - podgroups/status
+  verbs:
+  - update
+  - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: hrrn-s4-local-writes
+  labels:
+    gpu-lab/experiment: hrrn-stage4
+  namespace: hrrn-lab-tests
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: hrrn-s4-local-writes
+subjects:
+- kind: ServiceAccount
+  name: volcano-hrrn-lab
+  namespace: hrrn-lab-system

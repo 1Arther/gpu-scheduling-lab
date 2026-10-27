@@ -1,0 +1,353 @@
+{
+  "resource_request": {
+    "memory_mib": 8192,
+    "compute_units": 40
+  },
+  "ranking": [
+    {
+      "gpu_id": "rtx5080",
+      "feasible": true,
+      "score": 1.0,
+      "packing_residual": 0.5615506619478307,
+      "basis": "conservative_theory",
+      "prediction": {
+        "device_id": "rtx5080",
+        "model": "GeForce RTX 5080 16GB reference",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": false,
+        "hard_constraints": {
+          "training": true,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "training_vote_fraction": 1.0,
+          "inference_vote_fraction": 1.0,
+          "class_probabilities": {
+            "training_preferred": 0.0,
+            "inference_preferred": 0.0,
+            "balanced": 1.0,
+            "unavailable": 0.0
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "details": {
+            "training": {
+              "adapted": true,
+              "theoretical_latency_s": 0.1268713524486171,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            },
+            "inference": {
+              "adapted": true,
+              "theoretical_latency_s": 0.005918560606060606,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "outside_training_static_core_range",
+          "insufficient_related_validation_for_training_sign_1",
+          "insufficient_related_validation_for_inference_sign_1"
+        ],
+        "outside_training_ranges": {
+          "memory_capacity_mib": {
+            "value": 15258,
+            "train_min": 22888,
+            "train_max": 76293
+          }
+        },
+        "evidence_mode": "no_related_validation_evidence",
+        "related_validation_models": [],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "no_related_validation_evidence",
+            "predicted_sign": true,
+            "validation_sign_support": 0,
+            "validation_sign_correct": 0,
+            "validation_sign_precision": null,
+            "validation_sign_episodes": 0,
+            "supported": false,
+            "not_a_calibrated_confidence_interval": true
+          },
+          "inference": {
+            "basis": "no_related_validation_evidence",
+            "predicted_sign": true,
+            "validation_sign_support": 0,
+            "validation_sign_correct": 0,
+            "validation_sign_precision": null,
+            "validation_sign_episodes": 0,
+            "supported": false,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": null,
+        "inference": null,
+        "label": "pending_verification",
+        "label_zh": "信息不足、待验证",
+        "reliability": "pending_related_validation_or_coverage",
+        "class_probability_basis": "legacy ranking interface carrying deterministic conservative scores, NOT classification probabilities",
+        "ranking_fallback": true
+      }
+    },
+    {
+      "gpu_id": "rtx6000_ada",
+      "feasible": true,
+      "score": 1.0,
+      "packing_residual": 0.7405207969241524,
+      "basis": "RF_soft_hint",
+      "prediction": {
+        "device_id": "rtx6000_ada",
+        "model": "RTX 6000 Ada 48GB PCIe",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": false,
+        "hard_constraints": {
+          "training": true,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "training_vote_fraction": 1.0,
+          "inference_vote_fraction": 1.0,
+          "class_probabilities": {
+            "training_preferred": 0.0,
+            "inference_preferred": 0.0,
+            "balanced": 1.0,
+            "unavailable": 0.0
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "details": {
+            "training": {
+              "adapted": true,
+              "theoretical_latency_s": 0.07840677434530345,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            },
+            "inference": {
+              "adapted": true,
+              "theoretical_latency_s": 0.005918560606060606,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "l40",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.15200309344505006
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 330,
+            "validation_sign_correct": 330,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 60,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 295,
+            "validation_sign_correct": 295,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 58,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "label_zh": "训推一体型",
+        "reliability": "provisional_synthetic_validation_only",
+        "class_probability_basis": "product of two RF marginals for legacy interface; not calibrated joint reliability"
+      }
+    },
+    {
+      "gpu_id": "rtx_a6000",
+      "feasible": true,
+      "score": 1.0,
+      "packing_residual": 0.7405207969241524,
+      "basis": "RF_soft_hint",
+      "prediction": {
+        "device_id": "rtx_a6000",
+        "model": "RTX A6000 48GB PCIe",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": false,
+        "hard_constraints": {
+          "training": true,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "training_vote_fraction": 1.0,
+          "inference_vote_fraction": 1.0,
+          "class_probabilities": {
+            "training_preferred": 0.0,
+            "inference_preferred": 0.0,
+            "balanced": 1.0,
+            "unavailable": 0.0
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "details": {
+            "training": {
+              "adapted": true,
+              "theoretical_latency_s": 0.18456995201181248,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            },
+            "inference": {
+              "adapted": true,
+              "theoretical_latency_s": 0.007398200757575756,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "rtx3090",
+            "architecture": "Ampere",
+            "log2_distance": 1.0
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 149,
+            "validation_sign_correct": 149,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 42,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 353,
+            "validation_sign_correct": 353,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 59,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "label_zh": "训推一体型",
+        "reliability": "provisional_synthetic_validation_only",
+        "class_probability_basis": "product of two RF marginals for legacy interface; not calibrated joint reliability"
+      }
+    }
+  ],
+  "impossible_request_filter": [
+    {
+      "gpu_id": "rtx5080",
+      "feasible": false,
+      "reason": "memory/compute/instance hard constraints"
+    },
+    {
+      "gpu_id": "rtx6000_ada",
+      "feasible": false,
+      "reason": "memory/compute/instance hard constraints"
+    },
+    {
+      "gpu_id": "rtx_a6000",
+      "feasible": false,
+      "reason": "memory/compute/instance hard constraints"
+    }
+  ],
+  "data_kind": "offline synthetic model/ranking demonstration; no GPU workload"
+}

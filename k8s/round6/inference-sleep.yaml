@@ -1,0 +1,23 @@
+# Preparation only. Not submitted. Same resources as training-sleep.yaml.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rf-inference-sleep
+  namespace: gpu-lab-rf-test
+  labels:
+    gpu-lab/workload-type: inference
+  annotations:
+    scheduling.k8s.io/group-name: rf-sleep-check
+    volcano.sh/vgpu-mode: hami-core
+spec:
+  schedulerName: volcano-rf-test
+  restartPolicy: Never
+  containers:
+    - name: sleep
+      image: busybox:1.36.1
+      command: ["sh", "-c", "sleep 120"]
+      resources:
+        limits:
+          volcano.sh/vgpu-number: 1
+          volcano.sh/vgpu-memory: 4096
+          volcano.sh/vgpu-cores: 30

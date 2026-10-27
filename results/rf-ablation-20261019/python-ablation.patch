@@ -1,0 +1,88 @@
+--- round6/gpu_lab/runtime/service.py
++++ current/gpu_lab/runtime/service.py
+@@ -102,6 +102,7 @@
+                           related_validation_models=prediction.get("related_validation_models",[]),
+                           outside_training_ranges=prediction.get("outside_training_ranges",{}),
+                           prediction_status="provisional" if prediction["label"] != UNKNOWN else "pending_verification")
++            result["reference_hard_constraints"] = prediction.get("hard_constraints",{})
+             if g["dynamic"].get("unrestricted_vgpu_count",0):
+                 result.update(label=UNKNOWN,label_zh=NAMES[UNKNOWN],training_adapted=None,inference_adapted=None,
+                               prediction_status="pending_verification",reasons=["unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"])
+@@ -151,7 +152,7 @@
+             reasons.append("GPU_type_in_blacklist")
+         return reasons,{"memory_mib":mem,"compute_quota":request.compute_quota,"instances":1}
+ 
+-    def _score(self,pod,g,request,strategy):
++    def _score(self,pod,g,request,strategy,*,rf_prediction_enabled=True):
+         reasons,resolved = self.hard_filter(pod,g,request)
+         row = {"gpu_uuid":g.get("uuid"),"node":g.get("node"),"revision":g.get("revision",0),"feasible":not reasons,
+                "rejection_reasons":reasons,"resolved_request":resolved,"score":None}
+@@ -193,12 +194,26 @@
+         components = {"adaptation_hint":hint,"hardware_sharing":hardware,"packing":packing,"balance":balance}
+         weights = {"adaptation_hint":self.policy["weights"]["model_probability"],**{k:self.policy["weights"][k] for k in ("hardware_sharing","packing","balance")}}
+         score = hint if strategy == "static_rf" else sum(weights[k]*v for k,v in components.items())
++        # Paired mechanism ablation: remove ONLY the learned term. A pending
++        # device's conservative proxy is deterministic and must stay unchanged.
++        rf_term = weights["adaptation_hint"]*hint if provisional else 0.
++        deterministic_hint = weights["adaptation_hint"]*hint if not provisional else 0.
++        heuristic_term = score-rf_term if strategy == "dynamic_rf" else 0.
++        if strategy == "dynamic_rf":
++            if not rf_prediction_enabled:score = heuristic_term
+         row.update(score=score,components=components,component_weights=weights,classification=classification,ranking_basis=basis,
+                    rf_probability=probability,rf_probability_is_reliability=False,fallback_score=fallback,
+                    fallback_score_is_probability=False,reference_category_is_admission_gate=False)
++        if strategy == "dynamic_rf":
++            row["score_decomposition"] = {"rf_prediction_enabled":rf_prediction_enabled,
++                "potential_rf_contribution":rf_term,"applied_rf_contribution":rf_term if rf_prediction_enabled else 0.,
++                "heuristic_contribution":heuristic_term,"conservative_fallback_contribution":deterministic_hint,
++                "weighted_hardware_sharing":weights["hardware_sharing"]*hardware,
++                "weighted_packing":weights["packing"]*packing,"weighted_balance":weights["balance"]*balance,
++                "weights_unchanged":True,"renormalized":False}
+         return row
+ 
+-    def rank_gpus(self,pod,gpu_list,*,strategy="dynamic_rf"):
++    def rank_gpus(self,pod,gpu_list,*,strategy="dynamic_rf",rf_prediction_enabled=True):
+         base = {"schema_version":SCHEMA_VERSION,"model_version":self.version,"recommendation":None,"advice_only":True,
+                 "scope":"GPU-only; native CPU/memory/affinity/taints and final device allocation remain authoritative"}
+         try:
+@@ -217,7 +232,7 @@
+             return {**base,"status":"invalid_input","errors":["duplicate_or_invalid_gpu_uuid"],"eligible_gpus":[],"rejected_gpus":[]}
+         evaluations = []
+         for req in pod.requests:
+-            rows = [self._score(pod,g,req,strategy) for g in views]
++            rows = [self._score(pod,g,req,strategy,rf_prediction_enabled=rf_prediction_enabled) for g in views]
+             evaluations.append({"container":req.container,"count":req.count,"devices":rows})
+         first = evaluations[0]["devices"]
+         plans = []
+@@ -227,7 +242,7 @@
+             for req in pod.requests:
+                 used = set()
+                 for unit in range(req.count):
+-                    rows = [self._score(pod,g,req,strategy) for key,g in working.items() if key not in used]
++                    rows = [self._score(pod,g,req,strategy,rf_prediction_enabled=rf_prediction_enabled) for key,g in working.items() if key not in used]
+                     candidates = [r for r in rows if r["feasible"]]
+                     if not candidates:
+                         complete = False
+--- round6/gpu_lab/runtime/volcano.py
++++ current/gpu_lab/runtime/volcano.py
+@@ -82,15 +82,18 @@
+                 if not isinstance(payload.get(key),str) or not payload[key]:raise ValueError("missing_"+key)
+             if payload.get("model_version") != self.service.version:raise ValueError("model_version_mismatch")
+             if payload.get("memory_unit_mib") != 1:raise ValueError("MVP_requires_one_MiB_per_memory_unit")
++            enabled=payload.get("rf_prediction_enabled",True)
++            if not isinstance(enabled,bool):raise ValueError("rf_prediction_enabled_must_be_boolean")
++            base['rf_prediction_enabled']=enabled
+             pod=parse_pod(payload.get("pod"))
+             gpus=[self.snapshot(g) for g in payload.get("gpus",[])]
+             if len({g["node"] for g in gpus}) > 1:raise ValueError("one_node_per_advice_request")
+-            result=self.service.rank_gpus(pod,gpus)
++            result=self.service.rank_gpus(pod,gpus,rf_prediction_enabled=enabled)
+             rec=result.get("recommendation")
+             if result["status"]=="invalid_input":raise ValueError(";".join(result.get("errors",[])))
+             classifications=[]
+             for g in gpus:
+-                scores={task:self.service._score(replace(pod,task_type=task),g,pod.requests[0],"dynamic_rf")
++                scores={task:self.service._score(replace(pod,task_type=task),g,pod.requests[0],"dynamic_rf",rf_prediction_enabled=enabled)
+                         for task in ("training","inference")} if pod.requests else {}
+                 classifications.append({"gpu_uuid":g["uuid"],"snapshot":g,"classification":self.service.classify_gpu(g),
+                                         "request_specific_scores":scores,"score_scope":"first requested container, logical resources"})

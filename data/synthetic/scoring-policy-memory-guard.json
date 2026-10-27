@@ -1,0 +1,11 @@
+{
+  "policy_id": "pod-aware-memory-bottleneck-guard-v2",
+  "data_kind": "declared_scheduler_heuristic_combined_with_RF_probabilities",
+  "weights": {"model_probability": 0.30, "hardware_sharing": 0.45, "packing": 0.15, "balance": 0.10},
+  "training": {"compute_weight": 0.80, "per_neighbor": 0.10, "per_opposite_type": 0.15},
+  "inference": {"compute_weight": 0.20, "per_neighbor": 0.22, "per_opposite_type": 0.40},
+  "packing_slack": 0.02,
+  "guard_task_types": ["training"],
+  "guard_memory_dominated_only": true,
+  "note": "Apply the compact-fit guard only to memory-dominated training requests. Inference retains the original type-aware ranking. Memory dominance compares requested memory fraction of the smallest feasible card with requested compute fraction."
+}

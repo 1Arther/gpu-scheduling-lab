@@ -1,0 +1,216 @@
+{
+  "started_utc": "2026-10-19T11:31:51.036193+00:00",
+  "images": {
+    "scheduler": {
+      "tag": "docker.io/gpu-lab/volcano-rf:live-20261019",
+      "immutable_reference": "docker.io/gpu-lab/volcano-rf@sha256:43c62614e45fb18197af5c3b19081bb814c47de2f573f6b382c5639ee0bdcdbc",
+      "cri_image_id": "sha256:4063f02b7f2ec4493c5ff1fddcd9d5ab985d11f6ed20ef70f58565e062b1d9e8"
+    },
+    "rf": {
+      "tag": "docker.io/gpu-lab/rf-model:live-20261019",
+      "immutable_reference": "docker.io/gpu-lab/rf-model@sha256:7ef2fd82031578388f75e101f9a6ab572faacf7c96fa27e39bfcfe8b213c4259",
+      "cri_image_id": "sha256:22f46a740fdc47d7baddbfa656f68739a3540c53cb662145da372e6e8ec61f68"
+    }
+  },
+  "commands": [
+    {
+      "name": "binary-file",
+      "command": [
+        "file",
+        "/home/zbs/rf-round7-reassess-20261019/results/reassess-release-cpu/vc-scheduler"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "docker-build-scheduler",
+      "command": [
+        "sudo",
+        "-n",
+        "docker",
+        "build",
+        "--pull=false",
+        "-f",
+        "Dockerfile.scheduler.live",
+        "-t",
+        "docker.io/gpu-lab/volcano-rf:live-20261019",
+        "."
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "docker-save-scheduler",
+      "command": [
+        "sudo",
+        "-n",
+        "docker",
+        "save",
+        "-o",
+        "/home/zbs/rf-round7-live-window-20261019/build/scheduler-image.tar",
+        "docker.io/gpu-lab/volcano-rf:live-20261019"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "ctr-import-scheduler",
+      "command": [
+        "sudo",
+        "-n",
+        "ctr",
+        "-n",
+        "k8s.io",
+        "images",
+        "import",
+        "/home/zbs/rf-round7-live-window-20261019/build/scheduler-image.tar"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "ctr-list-scheduler",
+      "command": [
+        "sudo",
+        "-n",
+        "ctr",
+        "-n",
+        "k8s.io",
+        "images",
+        "list"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "ctr-tag-scheduler",
+      "command": [
+        "sudo",
+        "-n",
+        "ctr",
+        "-n",
+        "k8s.io",
+        "images",
+        "tag",
+        "docker.io/gpu-lab/volcano-rf:live-20261019",
+        "docker.io/gpu-lab/volcano-rf@sha256:43c62614e45fb18197af5c3b19081bb814c47de2f573f6b382c5639ee0bdcdbc"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "cri-inspect-scheduler",
+      "command": [
+        "sudo",
+        "-n",
+        "crictl",
+        "inspecti",
+        "-o",
+        "json",
+        "docker.io/gpu-lab/volcano-rf@sha256:43c62614e45fb18197af5c3b19081bb814c47de2f573f6b382c5639ee0bdcdbc"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "docker-build-rf",
+      "command": [
+        "sudo",
+        "-n",
+        "docker",
+        "build",
+        "--pull=false",
+        "-f",
+        "Dockerfile.rf.live",
+        "-t",
+        "docker.io/gpu-lab/rf-model:live-20261019",
+        "."
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "docker-save-rf",
+      "command": [
+        "sudo",
+        "-n",
+        "docker",
+        "save",
+        "-o",
+        "/home/zbs/rf-round7-live-window-20261019/build/rf-image.tar",
+        "docker.io/gpu-lab/rf-model:live-20261019"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "ctr-import-rf",
+      "command": [
+        "sudo",
+        "-n",
+        "ctr",
+        "-n",
+        "k8s.io",
+        "images",
+        "import",
+        "/home/zbs/rf-round7-live-window-20261019/build/rf-image.tar"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "ctr-list-rf",
+      "command": [
+        "sudo",
+        "-n",
+        "ctr",
+        "-n",
+        "k8s.io",
+        "images",
+        "list"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "ctr-tag-rf",
+      "command": [
+        "sudo",
+        "-n",
+        "ctr",
+        "-n",
+        "k8s.io",
+        "images",
+        "tag",
+        "docker.io/gpu-lab/rf-model:live-20261019",
+        "docker.io/gpu-lab/rf-model@sha256:7ef2fd82031578388f75e101f9a6ab572faacf7c96fa27e39bfcfe8b213c4259"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "cri-inspect-rf",
+      "command": [
+        "sudo",
+        "-n",
+        "crictl",
+        "inspecti",
+        "-o",
+        "json",
+        "docker.io/gpu-lab/rf-model@sha256:7ef2fd82031578388f75e101f9a6ab572faacf7c96fa27e39bfcfe8b213c4259"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "rf-image-smoke",
+      "command": [
+        "sudo",
+        "-n",
+        "docker",
+        "run",
+        "--rm",
+        "--network=none",
+        "--read-only",
+        "--tmpfs",
+        "/tmp",
+        "--entrypoint",
+        "python",
+        "docker.io/gpu-lab/rf-model:live-20261019",
+        "-c",
+        "from gpu_lab.runtime.service import SuitabilityService; s=SuitabilityService(); assert s.model is not None, s.model_error; print(s.version)"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "cluster_resources_changed": false,
+  "finished_utc": "2026-10-19T11:32:24.015805+00:00",
+  "success": true
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "hrrn-queue-mvp/v1",
+  "data_kind": "synthetic_only_not_GPU_performance",
+  "devices": [
+    {
+      "gpu_id": "mechanism-node/gpu-0",
+      "node": "mechanism-node",
+      "profile_id": "rtx4090",
+      "max_instances": 10
+    },
+    {
+      "gpu_id": "mechanism-node/gpu-1",
+      "node": "mechanism-node",
+      "profile_id": "rtx4090",
+      "max_instances": 10
+    }
+  ],
+  "jobs": [
+    {
+      "job_id": "impossible",
+      "arrival_at": 0.0,
+      "ready_at": 0.0,
+      "task_type": "training",
+      "estimated_service": 20.0,
+      "request": {
+        "memory_mib": 22889,
+        "compute_units": 10,
+        "instances": 1
+      },
+      "gpu_count": 2,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 1.0,
+      "cancel_at": null
+    },
+    {
+      "job_id": "valid",
+      "arrival_at": 1.0,
+      "ready_at": 1.0,
+      "task_type": "inference",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 11444,
+        "compute_units": 50,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 2.0,
+      "cancel_at": null
+    }
+  ],
+  "availability": [],
+  "config": {
+    "tau": 0.1,
+    "protection_absolute_wait": 0.5,
+    "protection_kappa": 2.0,
+    "evaluation_long_wait": 4.0,
+    "observation_end": 12.0
+  }
+}

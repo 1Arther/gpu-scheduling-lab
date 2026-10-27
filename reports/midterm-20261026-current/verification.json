@@ -1,0 +1,42 @@
+{
+  "source": "C:\\Users\\EDY\\Desktop\\中期报告_张兵昇_汇报版.docx",
+  "output": "C:\\Users\\EDY\\Desktop\\中期报告_张兵昇_定稿.docx",
+  "old_target_sha256": "2943a1cef326f8fe012ae2885ce2421e02472a8227e44c27e60b72f55bc92edd",
+  "source_sha256": "2e5fec46f16376dd9aa0048157b8c5076968e9557787ae2fb570e68dfb7b393a",
+  "output_sha256": "8ebbbb34cde32d89efabbe2598bf70c5733a0359c63d3fe8a77813ddc66fddbc",
+  "changed_from_audience_report": [
+    "word/document.xml"
+  ],
+  "changes": [
+    {
+      "before": "实验观察到“训推一体→训练优先→参考负载不足→推理优先→训推一体”的完整变化，全部释放后资源与类别恢复初始状态。动态场景的8次分配中，RF推荐UUID、Volcano分配UUID与Device Plugin消费UUID全部一致，逻辑配额增量核对正确，观察到超分配0次。",
+      "after": "真实集群实验观察到同一GPU完成“训推一体→训练优先→参考负载不足→推理优先→训推一体”的完整变化。动态场景的8次分配中，RF推荐、Volcano实际分配与设备插件接收的GPU UUID全部一致，逻辑显存、算力和实例配额更新正确，未观察到超分配；全部释放后资源与分类恢复初始状态。"
+    },
+    {
+      "before": "配对离线测试用于检验RF学习项的独立作用，同卡连续实验用于验证动态分类、设备分配和资源释放的一致性。实验结束后已清理测试资源并恢复原调度器；GPU计算进程与运行环境保持原状。",
+      "after": "后续Pod到达时，系统能够读取更新后的剩余配额，重新执行适配分类和设备选择。上述结果验证了任务提交、动态分类、设备分配与资源释放的完整调度流程，为进一步研究异构资源匹配和公平调度提供了可运行的实验基础。"
+    }
+  ],
+  "previous_revision_backed_up": true,
+  "title_and_experiment_results_unchanged": true,
+  "model_and_experiment_artifacts_unchanged": true,
+  "old_revision_locked_by_viewer": true,
+  "page_count": 8,
+  "changed_rendered_pages": [
+    6
+  ],
+  "pixel_identical_to_previously_checked_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7,
+    8
+  ],
+  "title_layout_dynamic_results_and_review_fields_preserved": true,
+  "visually_checked_changed_pages": [
+    6
+  ],
+  "qa_passed": true
+}

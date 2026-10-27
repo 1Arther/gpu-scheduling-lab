@@ -1,0 +1,86 @@
+{
+  "created_at_utc": "2026-10-26T07:31:57.839540+00:00",
+  "scope": "new training and development only; old test is diagnostic evidence, never a selection set",
+  "training_seeds": [
+    17,
+    43,
+    71
+  ],
+  "train_trace_seeds": [
+    21000001,
+    21007920,
+    21015839,
+    21023758,
+    21031677,
+    21039596,
+    21047515,
+    21055434,
+    21063353,
+    21071272,
+    21079191,
+    21087110,
+    21095029,
+    21102948,
+    21110867,
+    21118786,
+    21126705,
+    21134624,
+    21142543,
+    21150462,
+    21158381,
+    21166300,
+    21174219,
+    21182138
+  ],
+  "development_trace_seeds": [
+    31000019,
+    31104748,
+    31209477,
+    31314206,
+    31418935,
+    31523664,
+    31628393,
+    31733122,
+    31837851,
+    31942580,
+    32047309,
+    32152038
+  ],
+  "budgets": [
+    0,
+    512,
+    2048,
+    8192,
+    32768
+  ],
+  "variant": "joint",
+  "reward_idle": 1.0,
+  "hyperparameters": {
+    "net_arch": [
+      64,
+      64
+    ],
+    "learning_rate": 0.0003,
+    "n_steps": 64,
+    "batch_size": 32,
+    "n_epochs": 6,
+    "gamma": 1.0,
+    "gae_lambda": 1.0,
+    "ent_coef": 0.01
+  },
+  "frozen_scales": {
+    "time": 3.97265,
+    "jobs": 24.0
+  },
+  "generator": "unchanged stage3 generator, all new disjoint seeds, identical 14-condition distribution",
+  "primary": "macro all-job P95 waiting, average conditions within workload-seed blocks",
+  "small_job_bound": "small-job P95 <= HRRN small-job P95 + max(0.05, 5% of HRRN small-job P95)",
+  "long_wait_bound": "long-wait ratio <= HRRN + 0.005 (0.5 percentage points); threshold remains 8",
+  "work_bound": "completed synthetic work >= 99% of HRRN",
+  "promotion": "At least 2 of 3 seeds: P95 <= 97% of HRRN and <= 99% of best(EASY,heuristic,fixed); all three bounds pass. Mean P95 improves >= 1% against 512 and >= 3% against untrained.",
+  "staircase_stop": "After 8192, stop before 32768 if mean P95 improves < 1% against 2048 AND fewer than 2/3 seeds improve >= 1% AND promotion fails. Otherwise execute 32768.",
+  "final_test": "Generate and freeze a completely new final test only if promotion passes; otherwise no new test and preserve negative results.",
+  "uncertainty": "Exploratory paired 95% percentile bootstrap over 12 new workload-seed blocks; 10000 replicates RNG 92931; training seed range reported separately, not 36 independent samples.",
+  "all_durations": "synthetic; CPU discrete events only",
+  "original_artifacts_immutable": true
+}

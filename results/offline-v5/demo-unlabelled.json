@@ -1,0 +1,591 @@
+{
+  "schema_version": "pod-gpu-api/v1",
+  "model_version": "rf-v4-known-states-ee35cfabe30f",
+  "recommendation": {
+    "node": "sim-node-rtx4090",
+    "assignments": [
+      {
+        "container": "workload",
+        "unit": 0,
+        "gpu_uuid": "SIM-GPU-rtx4090-00",
+        "node": "sim-node-rtx4090",
+        "memory_mib": 4096,
+        "compute_quota": 20,
+        "instances": 1,
+        "score": 0.17947920307584753,
+        "ranking_basis": "ordinary_resource_binpack"
+      }
+    ],
+    "score": 0.17947920307584753,
+    "gpu_uuid": "SIM-GPU-rtx4090-00",
+    "gpu_uuids": [
+      "SIM-GPU-rtx4090-00"
+    ],
+    "expected_revisions": {
+      "SIM-GPU-rtx4090-00": 0
+    },
+    "pod_fingerprint": "7f19e0bac2ca21199214c00b43f5b1eec6977574d2d75fd0292b7fd844776f9f",
+    "model_version": "rf-v4-known-states-ee35cfabe30f",
+    "reason": "all hard filters passed; maximum explainable node placement score, stable UUID tie-break",
+    "requires_locked_revalidation": true,
+    "selection_fingerprint": "de0e80830e611866b324144201e933f57c5f32d4fb83a3300c90c442e170cf01"
+  },
+  "advice_only": true,
+  "scope": "GPU-only; native CPU/memory/affinity/taints and final device allocation remain authoritative",
+  "status": "ranked",
+  "task_type": null,
+  "pod_uid": "offline:default/offline-unlabelled-resource-fallback",
+  "pod_fingerprint": "7f19e0bac2ca21199214c00b43f5b1eec6977574d2d75fd0292b7fd844776f9f",
+  "strategy": "ordinary_binpack",
+  "warnings": [],
+  "fallback_reason": "missing_workload_label",
+  "eligible_gpus": [
+    {
+      "gpu_uuid": "SIM-GPU-rtx4090-00",
+      "node": "sim-node-rtx4090",
+      "revision": 0,
+      "feasible": true,
+      "rejection_reasons": [],
+      "resolved_request": {
+        "memory_mib": 4096,
+        "compute_quota": 20,
+        "instances": 1
+      },
+      "score": 0.17947920307584753,
+      "packing_residual": 0.8205207969241525,
+      "components": {
+        "packing": 0.17947920307584753,
+        "balance": 0.9789584061516953
+      },
+      "ranking_basis": "ordinary_resource_binpack",
+      "classification": null,
+      "rf_probability": null,
+      "fallback_score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-rtx4090-01",
+      "node": "sim-node-rtx4090",
+      "revision": 0,
+      "feasible": true,
+      "rejection_reasons": [],
+      "resolved_request": {
+        "memory_mib": 4096,
+        "compute_quota": 20,
+        "instances": 1
+      },
+      "score": 0.17947920307584753,
+      "packing_residual": 0.8205207969241525,
+      "components": {
+        "packing": 0.17947920307584753,
+        "balance": 0.9789584061516953
+      },
+      "ranking_basis": "ordinary_resource_binpack",
+      "classification": null,
+      "rf_probability": null,
+      "fallback_score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-rtx4090-02",
+      "node": "sim-node-rtx4090",
+      "revision": 0,
+      "feasible": true,
+      "rejection_reasons": [],
+      "resolved_request": {
+        "memory_mib": 4096,
+        "compute_quota": 20,
+        "instances": 1
+      },
+      "score": 0.17947920307584753,
+      "packing_residual": 0.8205207969241525,
+      "components": {
+        "packing": 0.17947920307584753,
+        "balance": 0.9789584061516953
+      },
+      "ranking_basis": "ordinary_resource_binpack",
+      "classification": null,
+      "rf_probability": null,
+      "fallback_score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-rtx4090-03",
+      "node": "sim-node-rtx4090",
+      "revision": 0,
+      "feasible": true,
+      "rejection_reasons": [],
+      "resolved_request": {
+        "memory_mib": 4096,
+        "compute_quota": 20,
+        "instances": 1
+      },
+      "score": 0.17947920307584753,
+      "packing_residual": 0.8205207969241525,
+      "components": {
+        "packing": 0.17947920307584753,
+        "balance": 0.9789584061516953
+      },
+      "ranking_basis": "ordinary_resource_binpack",
+      "classification": null,
+      "rf_probability": null,
+      "fallback_score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-rtx5090-00",
+      "node": "sim-node-rtx5090",
+      "revision": 0,
+      "feasible": true,
+      "rejection_reasons": [],
+      "resolved_request": {
+        "memory_mib": 4096,
+        "compute_quota": 20,
+        "instances": 1
+      },
+      "score": 0.15711013533440377,
+      "packing_residual": 0.8428898646655962,
+      "components": {
+        "packing": 0.15711013533440377,
+        "balance": 0.9342202706688076
+      },
+      "ranking_basis": "ordinary_resource_binpack",
+      "classification": null,
+      "rf_probability": null,
+      "fallback_score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-rtx5090-01",
+      "node": "sim-node-rtx5090",
+      "revision": 0,
+      "feasible": true,
+      "rejection_reasons": [],
+      "resolved_request": {
+        "memory_mib": 4096,
+        "compute_quota": 20,
+        "instances": 1
+      },
+      "score": 0.15711013533440377,
+      "packing_residual": 0.8428898646655962,
+      "components": {
+        "packing": 0.15711013533440377,
+        "balance": 0.9342202706688076
+      },
+      "ranking_basis": "ordinary_resource_binpack",
+      "classification": null,
+      "rf_probability": null,
+      "fallback_score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-rtx5090-02",
+      "node": "sim-node-rtx5090",
+      "revision": 0,
+      "feasible": true,
+      "rejection_reasons": [],
+      "resolved_request": {
+        "memory_mib": 4096,
+        "compute_quota": 20,
+        "instances": 1
+      },
+      "score": 0.15711013533440377,
+      "packing_residual": 0.8428898646655962,
+      "components": {
+        "packing": 0.15711013533440377,
+        "balance": 0.9342202706688076
+      },
+      "ranking_basis": "ordinary_resource_binpack",
+      "classification": null,
+      "rf_probability": null,
+      "fallback_score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-rtx5090-03",
+      "node": "sim-node-rtx5090",
+      "revision": 0,
+      "feasible": true,
+      "rejection_reasons": [],
+      "resolved_request": {
+        "memory_mib": 4096,
+        "compute_quota": 20,
+        "instances": 1
+      },
+      "score": 0.15711013533440377,
+      "packing_residual": 0.8428898646655962,
+      "components": {
+        "packing": 0.15711013533440377,
+        "balance": 0.9342202706688076
+      },
+      "ranking_basis": "ordinary_resource_binpack",
+      "classification": null,
+      "rf_probability": null,
+      "fallback_score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-l40-00",
+      "node": "sim-node-l40",
+      "revision": 0,
+      "feasible": true,
+      "rejection_reasons": [],
+      "resolved_request": {
+        "memory_mib": 4096,
+        "compute_quota": 20,
+        "instances": 1
+      },
+      "score": 0.13473960153792375,
+      "packing_residual": 0.8652603984620763,
+      "components": {
+        "packing": 0.13473960153792375,
+        "balance": 0.8894792030758476
+      },
+      "ranking_basis": "ordinary_resource_binpack",
+      "classification": null,
+      "rf_probability": null,
+      "fallback_score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-l40-01",
+      "node": "sim-node-l40",
+      "revision": 0,
+      "feasible": true,
+      "rejection_reasons": [],
+      "resolved_request": {
+        "memory_mib": 4096,
+        "compute_quota": 20,
+        "instances": 1
+      },
+      "score": 0.13473960153792375,
+      "packing_residual": 0.8652603984620763,
+      "components": {
+        "packing": 0.13473960153792375,
+        "balance": 0.8894792030758476
+      },
+      "ranking_basis": "ordinary_resource_binpack",
+      "classification": null,
+      "rf_probability": null,
+      "fallback_score": null
+    },
+    {
+      "gpu_uuid": "SIM-GPU-l40-02",
+      "node": "sim-node-l40",
+      "revision": 0,
+      "feasible": true,
+      "rejection_reasons": [],
+      "resolved_request": {
+        "memory_mib": 4096,
+        "compute_quota": 20,
+        "instances": 1
+      },
+      "score": 0.13473960153792375,
+      "packing_residual": 0.8652603984620763,
+      "components": {
+        "packing": 0.13473960153792375,
+        "balance": 0.8894792030758476
+      },
+      "ranking_basis": "ordinary_resource_binpack",
+      "classification": null,
+      "rf_probability": null,
+      "fallback_score": null
+    }
+  ],
+  "rejected_gpus": [],
+  "per_container_evaluations": [
+    {
+      "container": "workload",
+      "count": 1,
+      "devices": [
+        {
+          "gpu_uuid": "SIM-GPU-rtx4090-00",
+          "node": "sim-node-rtx4090",
+          "revision": 0,
+          "feasible": true,
+          "rejection_reasons": [],
+          "resolved_request": {
+            "memory_mib": 4096,
+            "compute_quota": 20,
+            "instances": 1
+          },
+          "score": 0.17947920307584753,
+          "packing_residual": 0.8205207969241525,
+          "components": {
+            "packing": 0.17947920307584753,
+            "balance": 0.9789584061516953
+          },
+          "ranking_basis": "ordinary_resource_binpack",
+          "classification": null,
+          "rf_probability": null,
+          "fallback_score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-rtx4090-01",
+          "node": "sim-node-rtx4090",
+          "revision": 0,
+          "feasible": true,
+          "rejection_reasons": [],
+          "resolved_request": {
+            "memory_mib": 4096,
+            "compute_quota": 20,
+            "instances": 1
+          },
+          "score": 0.17947920307584753,
+          "packing_residual": 0.8205207969241525,
+          "components": {
+            "packing": 0.17947920307584753,
+            "balance": 0.9789584061516953
+          },
+          "ranking_basis": "ordinary_resource_binpack",
+          "classification": null,
+          "rf_probability": null,
+          "fallback_score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-rtx4090-02",
+          "node": "sim-node-rtx4090",
+          "revision": 0,
+          "feasible": true,
+          "rejection_reasons": [],
+          "resolved_request": {
+            "memory_mib": 4096,
+            "compute_quota": 20,
+            "instances": 1
+          },
+          "score": 0.17947920307584753,
+          "packing_residual": 0.8205207969241525,
+          "components": {
+            "packing": 0.17947920307584753,
+            "balance": 0.9789584061516953
+          },
+          "ranking_basis": "ordinary_resource_binpack",
+          "classification": null,
+          "rf_probability": null,
+          "fallback_score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-rtx4090-03",
+          "node": "sim-node-rtx4090",
+          "revision": 0,
+          "feasible": true,
+          "rejection_reasons": [],
+          "resolved_request": {
+            "memory_mib": 4096,
+            "compute_quota": 20,
+            "instances": 1
+          },
+          "score": 0.17947920307584753,
+          "packing_residual": 0.8205207969241525,
+          "components": {
+            "packing": 0.17947920307584753,
+            "balance": 0.9789584061516953
+          },
+          "ranking_basis": "ordinary_resource_binpack",
+          "classification": null,
+          "rf_probability": null,
+          "fallback_score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-rtx5090-00",
+          "node": "sim-node-rtx5090",
+          "revision": 0,
+          "feasible": true,
+          "rejection_reasons": [],
+          "resolved_request": {
+            "memory_mib": 4096,
+            "compute_quota": 20,
+            "instances": 1
+          },
+          "score": 0.15711013533440377,
+          "packing_residual": 0.8428898646655962,
+          "components": {
+            "packing": 0.15711013533440377,
+            "balance": 0.9342202706688076
+          },
+          "ranking_basis": "ordinary_resource_binpack",
+          "classification": null,
+          "rf_probability": null,
+          "fallback_score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-rtx5090-01",
+          "node": "sim-node-rtx5090",
+          "revision": 0,
+          "feasible": true,
+          "rejection_reasons": [],
+          "resolved_request": {
+            "memory_mib": 4096,
+            "compute_quota": 20,
+            "instances": 1
+          },
+          "score": 0.15711013533440377,
+          "packing_residual": 0.8428898646655962,
+          "components": {
+            "packing": 0.15711013533440377,
+            "balance": 0.9342202706688076
+          },
+          "ranking_basis": "ordinary_resource_binpack",
+          "classification": null,
+          "rf_probability": null,
+          "fallback_score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-rtx5090-02",
+          "node": "sim-node-rtx5090",
+          "revision": 0,
+          "feasible": true,
+          "rejection_reasons": [],
+          "resolved_request": {
+            "memory_mib": 4096,
+            "compute_quota": 20,
+            "instances": 1
+          },
+          "score": 0.15711013533440377,
+          "packing_residual": 0.8428898646655962,
+          "components": {
+            "packing": 0.15711013533440377,
+            "balance": 0.9342202706688076
+          },
+          "ranking_basis": "ordinary_resource_binpack",
+          "classification": null,
+          "rf_probability": null,
+          "fallback_score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-rtx5090-03",
+          "node": "sim-node-rtx5090",
+          "revision": 0,
+          "feasible": true,
+          "rejection_reasons": [],
+          "resolved_request": {
+            "memory_mib": 4096,
+            "compute_quota": 20,
+            "instances": 1
+          },
+          "score": 0.15711013533440377,
+          "packing_residual": 0.8428898646655962,
+          "components": {
+            "packing": 0.15711013533440377,
+            "balance": 0.9342202706688076
+          },
+          "ranking_basis": "ordinary_resource_binpack",
+          "classification": null,
+          "rf_probability": null,
+          "fallback_score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-l40-00",
+          "node": "sim-node-l40",
+          "revision": 0,
+          "feasible": true,
+          "rejection_reasons": [],
+          "resolved_request": {
+            "memory_mib": 4096,
+            "compute_quota": 20,
+            "instances": 1
+          },
+          "score": 0.13473960153792375,
+          "packing_residual": 0.8652603984620763,
+          "components": {
+            "packing": 0.13473960153792375,
+            "balance": 0.8894792030758476
+          },
+          "ranking_basis": "ordinary_resource_binpack",
+          "classification": null,
+          "rf_probability": null,
+          "fallback_score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-l40-01",
+          "node": "sim-node-l40",
+          "revision": 0,
+          "feasible": true,
+          "rejection_reasons": [],
+          "resolved_request": {
+            "memory_mib": 4096,
+            "compute_quota": 20,
+            "instances": 1
+          },
+          "score": 0.13473960153792375,
+          "packing_residual": 0.8652603984620763,
+          "components": {
+            "packing": 0.13473960153792375,
+            "balance": 0.8894792030758476
+          },
+          "ranking_basis": "ordinary_resource_binpack",
+          "classification": null,
+          "rf_probability": null,
+          "fallback_score": null
+        },
+        {
+          "gpu_uuid": "SIM-GPU-l40-02",
+          "node": "sim-node-l40",
+          "revision": 0,
+          "feasible": true,
+          "rejection_reasons": [],
+          "resolved_request": {
+            "memory_mib": 4096,
+            "compute_quota": 20,
+            "instances": 1
+          },
+          "score": 0.13473960153792375,
+          "packing_residual": 0.8652603984620763,
+          "components": {
+            "packing": 0.13473960153792375,
+            "balance": 0.8894792030758476
+          },
+          "ranking_basis": "ordinary_resource_binpack",
+          "classification": null,
+          "rf_probability": null,
+          "fallback_score": null
+        }
+      ]
+    }
+  ],
+  "candidate_scope": "individual feasibility for first container; complete same-node placement required below",
+  "node_plans": [
+    {
+      "node": "sim-node-l40",
+      "assignments": [
+        {
+          "container": "workload",
+          "unit": 0,
+          "gpu_uuid": "SIM-GPU-l40-00",
+          "node": "sim-node-l40",
+          "memory_mib": 4096,
+          "compute_quota": 20,
+          "instances": 1,
+          "score": 0.13473960153792375,
+          "ranking_basis": "ordinary_resource_binpack"
+        }
+      ],
+      "score": 0.13473960153792375
+    },
+    {
+      "node": "sim-node-rtx4090",
+      "assignments": [
+        {
+          "container": "workload",
+          "unit": 0,
+          "gpu_uuid": "SIM-GPU-rtx4090-00",
+          "node": "sim-node-rtx4090",
+          "memory_mib": 4096,
+          "compute_quota": 20,
+          "instances": 1,
+          "score": 0.17947920307584753,
+          "ranking_basis": "ordinary_resource_binpack"
+        }
+      ],
+      "score": 0.17947920307584753
+    },
+    {
+      "node": "sim-node-rtx5090",
+      "assignments": [
+        {
+          "container": "workload",
+          "unit": 0,
+          "gpu_uuid": "SIM-GPU-rtx5090-00",
+          "node": "sim-node-rtx5090",
+          "memory_mib": 4096,
+          "compute_quota": 20,
+          "instances": 1,
+          "score": 0.15711013533440377,
+          "ranking_basis": "ordinary_resource_binpack"
+        }
+      ],
+      "score": 0.15711013533440377
+    }
+  ]
+}

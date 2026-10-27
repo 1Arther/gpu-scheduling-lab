@@ -1,0 +1,119 @@
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/rf_job.go b/pkg/scheduler/api/devices/nvidia/vgpu/rf_job.go
+index 73908b3..8ac72ce 100644
+--- a/pkg/scheduler/api/devices/nvidia/vgpu/rf_job.go
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/rf_job.go
+@@ -50,14 +50,15 @@ func rfHardware(model string) map[string]interface{} {
+ }
+ 
+ var (
+-	RFEnabled      = false
+-	RFEndpoint     = "http://127.0.0.1:18081/v1/rank"
+-	RFModelVersion = "rf-v4-known-states-ee35cfabe30f"
+-	RFTimeoutMS    = 500
+-	rfLedgerMu     sync.RWMutex
+-	rfCacheMu      sync.Mutex
+-	rfPlans        = map[string]*rfPlan{}
+-	rfHTTP         = &http.Client{Transport: &http.Transport{Proxy: nil}, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return fmt.Errorf("RF redirects disabled") }}
++	RFEnabled           = false
++	RFEndpoint          = "http://127.0.0.1:18081/v1/rank"
++	RFModelVersion      = "rf-v4-known-states-ee35cfabe30f"
++	RFTimeoutMS         = 500
++	RFPredictionEnabled = true // ablation only: RFActive/constraints/heuristics remain unchanged
++	rfLedgerMu          sync.RWMutex
++	rfCacheMu           sync.Mutex
++	rfPlans             = map[string]*rfPlan{}
++	rfHTTP              = &http.Client{Transport: &http.Transport{Proxy: nil}, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return fmt.Errorf("RF redirects disabled") }}
+ )
+ 
+ func RFActive() bool { return VGPUEnable && RFEnabled && GPUSelectPolicy == RFJobPolicy }
+@@ -81,13 +82,14 @@ type rfGPU struct {
+ 	Hardware         map[string]interface{} `json:"hardware,omitempty"`
+ }
+ type rfRequest struct {
+-	Schema        string  `json:"schema_version"`
+-	RequestID     string  `json:"request_id"`
+-	SnapshotToken string  `json:"snapshot_token"`
+-	ModelVersion  string  `json:"model_version"`
+-	MemoryUnitMiB int     `json:"memory_unit_mib"`
+-	Pod           *v1.Pod `json:"pod"`
+-	GPUs          []rfGPU `json:"gpus"`
++	PredictionEnabled *bool   `json:"rf_prediction_enabled,omitempty"`
++	Schema            string  `json:"schema_version"`
++	RequestID         string  `json:"request_id"`
++	SnapshotToken     string  `json:"snapshot_token"`
++	ModelVersion      string  `json:"model_version"`
++	MemoryUnitMiB     int     `json:"memory_unit_mib"`
++	Pod               *v1.Pod `json:"pod"`
++	GPUs              []rfGPU `json:"gpus"`
+ }
+ 
+ // Kubernetes quantities may marshal 10000 as "10k". The RPC contract uses
+@@ -141,15 +143,16 @@ type rfAssignment struct {
+ 	Instances int    `json:"instances"`
+ }
+ type rfResponse struct {
+-	Schema          string          `json:"schema_version"`
+-	RequestID       string          `json:"request_id"`
+-	SnapshotToken   string          `json:"snapshot_token"`
+-	ModelVersion    string          `json:"model_version"`
+-	Status          string          `json:"status"`
+-	ModelReady      bool            `json:"model_ready"`
+-	Score           float64         `json:"score"`
+-	Assignments     []rfAssignment  `json:"assignments"`
+-	Classifications json.RawMessage `json:"classifications"`
++	PredictionEnabled *bool           `json:"rf_prediction_enabled,omitempty"`
++	Schema            string          `json:"schema_version"`
++	RequestID         string          `json:"request_id"`
++	SnapshotToken     string          `json:"snapshot_token"`
++	ModelVersion      string          `json:"model_version"`
++	Status            string          `json:"status"`
++	ModelReady        bool            `json:"model_ready"`
++	Score             float64         `json:"score"`
++	Assignments       []rfAssignment  `json:"assignments"`
++	Classifications   json.RawMessage `json:"classifications"`
+ }
+ type rfPlan struct {
+ 	Created       time.Time
+@@ -349,7 +352,8 @@ func rfRequestFor(gs *GPUDevices, pod *v1.Pod) (rfRequest, error) {
+ 		return rfRequest{}, err
+ 	}
+ 	p.Spec.NodeName = gs.Name
+-	r := rfRequest{Schema: rfSchema, ModelVersion: RFModelVersion, MemoryUnitMiB: 1, Pod: p, GPUs: rfGPUs(gs), SnapshotToken: rfSnapshotToken(gs)}
++	enabled := RFPredictionEnabled
++	r := rfRequest{PredictionEnabled: &enabled, Schema: rfSchema, ModelVersion: RFModelVersion, MemoryUnitMiB: 1, Pod: p, GPUs: rfGPUs(gs), SnapshotToken: rfSnapshotToken(gs)}
+ 	r.RequestID = rfHash(r)
+ 	return r, nil
+ }
+@@ -397,6 +401,9 @@ func rfCall(r rfRequest) (rfResponse, error) {
+ 	if result.Schema != rfSchema || result.RequestID != r.RequestID || result.SnapshotToken != r.SnapshotToken || result.ModelVersion != r.ModelVersion {
+ 		return result, fmt.Errorf("RF response identity/version mismatch")
+ 	}
++	if r.PredictionEnabled != nil && (result.PredictionEnabled == nil || *result.PredictionEnabled != *r.PredictionEnabled) {
++		return result, fmt.Errorf("RF prediction-switch echo mismatch")
++	}
+ 	if result.Status != "ranked" || !result.ModelReady || math.IsNaN(result.Score) || math.IsInf(result.Score, 0) || result.Score < 0 || result.Score > 100 {
+ 		return result, fmt.Errorf("RF response unavailable/invalid score")
+ 	}
+diff --git a/pkg/scheduler/api/devices/nvidia/vgpu/rf_job_test.go b/pkg/scheduler/api/devices/nvidia/vgpu/rf_job_test.go
+index 8d2c844..45cd90c 100644
+--- a/pkg/scheduler/api/devices/nvidia/vgpu/rf_job_test.go
++++ b/pkg/scheduler/api/devices/nvidia/vgpu/rf_job_test.go
+@@ -57,6 +57,9 @@ func (rt *rfTraceTransport) RoundTrip(r *http.Request) (*http.Response, error) {
+ 
+ func rfTestConfig(t *testing.T) {
+ 	t.Helper()
++	predictionEnabled := RFPredictionEnabled
++	RFPredictionEnabled = true
++	t.Cleanup(func() { RFPredictionEnabled = predictionEnabled })
+ 	enabled, policy, vgpu, lock, endpoint, version, timeout, client := RFEnabled, GPUSelectPolicy, VGPUEnable, NodeLockEnable, RFEndpoint, RFModelVersion, RFTimeoutMS, rfHTTP
+ 	RFEnabled, GPUSelectPolicy, VGPUEnable, NodeLockEnable = true, RFJobPolicy, true, false
+ 	RFTimeoutMS = 1000
+@@ -140,7 +143,7 @@ func rfMockResponse(r rfRequest) *rfResponse {
+ 			a = append(a, rfAssignment{Container: c.Name, Unit: u, UUID: g.UUID, Node: g.Node, Memory: req.Memreq, Compute: req.Coresreq, Instances: 1})
+ 		}
+ 	}
+-	return &rfResponse{Schema: rfSchema, RequestID: r.RequestID, SnapshotToken: r.SnapshotToken, ModelVersion: r.ModelVersion, Status: "ranked", ModelReady: true, Score: 80, Assignments: a, Classifications: json.RawMessage(`[{"source":"mock-not-RF"}]`)}
++	return &rfResponse{PredictionEnabled: r.PredictionEnabled, Schema: rfSchema, RequestID: r.RequestID, SnapshotToken: r.SnapshotToken, ModelVersion: r.ModelVersion, Status: "ranked", ModelReady: true, Score: 80, Assignments: a, Classifications: json.RawMessage(`[{"source":"mock-not-RF"}]`)}
+ }
+ 
+ func rfAssertEmpty(t *testing.T, gs *GPUDevices) {

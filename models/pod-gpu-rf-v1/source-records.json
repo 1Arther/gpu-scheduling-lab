@@ -1,0 +1,430 @@
+{
+  "schema_version": 4,
+  "verified_on": "2026-10-16",
+  "value_order": [
+    "memory_gb_nominal",
+    "memory_bandwidth_gbps",
+    "fp32_tflops",
+    "fp16_dense_tflops",
+    "bf16_dense_tflops",
+    "int8_dense_tops",
+    "max_board_power_w"
+  ],
+  "sources": {
+    "nv_blackwell": {
+      "url": "https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf",
+      "publisher": "NVIDIA",
+      "locator": "Appendix A, Table 3, printed pp46-48; RTX3090/4090/5090 columns",
+      "status": "verified_official"
+    },
+    "nv_l40": {
+      "url": "https://images.nvidia.com/content/Solutions/data-center/vgpu-L40-datasheet.pdf",
+      "publisher": "NVIDIA",
+      "locator": "Technical Specifications p2, first value before sparse alternative",
+      "status": "verified_official"
+    },
+    "nv_l40s": {
+      "url": "https://www.nvidia.com/en-us/data-center/l40s/",
+      "publisher": "NVIDIA",
+      "locator": "Specifications; first value is dense; published 362.05 is retained without correcting the vendor's non-exact sparse ratio",
+      "status": "verified_official"
+    },
+    "nv_l4": {
+      "url": "https://www.nvidia.com/en-us/data-center/l4/",
+      "publisher": "NVIDIA",
+      "locator": "Specifications; FP16/BF16/INT8 figures carry sparsity footnote and are NOT used as dense values",
+      "status": "verified_official"
+    },
+    "nv_a10": {
+      "url": "https://www.nvidia.com/en-us/data-center/products/a10-gpu/",
+      "publisher": "NVIDIA",
+      "locator": "A10 Technical Specifications, non-starred dense values",
+      "status": "verified_official"
+    },
+    "nv_a30": {
+      "url": "https://www.nvidia.com/en-us/data-center/products/a30-gpu/",
+      "publisher": "NVIDIA",
+      "locator": "Specifications, non-starred dense values",
+      "status": "verified_official"
+    },
+    "nv_a100": {
+      "url": "https://www.nvidia.com/en-us/data-center/a100/",
+      "publisher": "NVIDIA",
+      "locator": "A100 80GB SXM standard 400W column; excludes custom CTS 500W SKU; dense non-starred numbers",
+      "status": "verified_official"
+    },
+    "nv_h100": {
+      "url": "https://www.nvidia.com/en-us/data-center/h100/",
+      "publisher": "NVIDIA",
+      "locator": "H100 SXM column only; sparse Tensor peaks retained as rejected observations, no undocumented halving",
+      "status": "verified_official"
+    },
+    "nv_h200": {
+      "url": "https://www.nvidia.com/en-us/data-center/h200/",
+      "publisher": "NVIDIA",
+      "locator": "H200 SXM column only; 4.8TB/s; sparse Tensor peaks not used as dense",
+      "status": "verified_official"
+    },
+    "nv_a40_pdf_v4": {
+      "url": "https://images.nvidia.com/content/Solutions/data-center/a40/nvidia-a40-datasheet.pdf",
+      "publisher": "NVIDIA",
+      "locator": "Mar22 datasheet, Specifications and sparsity footnote; non-Tensor FP32, first dense number",
+      "status": "verified_official"
+    },
+    "nv_a6000_v4": {
+      "url": "https://www.nvidia.com/content/dam/en-zz/Solutions/products/workstations/nvidia-rtx-a6000-datasheet.pdf",
+      "publisher": "NVIDIA",
+      "locator": "May22 datasheet p1 Specifications, p2 footnote8: Tensor309.7 uses sparsity; not dense FP16",
+      "status": "verified_official"
+    },
+    "nv_6000ada_v4": {
+      "url": "https://www.nvidia.com/content/dam/en-zz/Solutions/design-visualization/rtx-6000/proviz-print-rtx6000-datasheet-web-2504660.pdf",
+      "publisher": "NVIDIA",
+      "locator": "Feb23 datasheet p2 Technical Specifications; Tensor1457 is sparse FP8, not dense FP16/BF16/INT8",
+      "status": "verified_official"
+    },
+    "nv_5080_v4": {
+      "url": "https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf",
+      "publisher": "NVIDIA",
+      "locator": "Appendix B, Table4, printed pp49-51; RTX5080 column; FP16/BF16 Tensor FP32 accumulate dense112.6; INT8 dense450.2",
+      "status": "verified_official"
+    }
+  },
+  "devices": [
+    {
+      "id": "rtx3090",
+      "vendor": "NVIDIA",
+      "model": "GeForce RTX 3090",
+      "architecture": "Ampere",
+      "device_type": "GPU",
+      "scope": "single_accelerator",
+      "backend": "CUDA",
+      "source": "nv_blackwell",
+      "values": [
+        24,
+        936,
+        35.6,
+        71.2,
+        71.2,
+        284.7,
+        350
+      ],
+      "mixed_precision_basis": "FP16/BF16 Tensor FP32 accumulate; INT8 accumulator unspecified",
+      "comparable_mixed_features": []
+    },
+    {
+      "id": "rtx4090",
+      "vendor": "NVIDIA",
+      "model": "GeForce RTX 4090",
+      "architecture": "Ada Lovelace",
+      "device_type": "GPU",
+      "scope": "single_accelerator",
+      "backend": "CUDA",
+      "source": "nv_blackwell",
+      "values": [
+        24,
+        1008,
+        82.6,
+        165.2,
+        165.2,
+        660.6,
+        450
+      ],
+      "mixed_precision_basis": "FP16/BF16 Tensor FP32 accumulate; INT8 accumulator unspecified",
+      "comparable_mixed_features": []
+    },
+    {
+      "id": "rtx5090",
+      "vendor": "NVIDIA",
+      "model": "GeForce RTX 5090",
+      "architecture": "Blackwell",
+      "device_type": "GPU",
+      "scope": "single_accelerator",
+      "backend": "CUDA",
+      "source": "nv_blackwell",
+      "values": [
+        32,
+        1792,
+        104.8,
+        209.5,
+        209.5,
+        838,
+        575
+      ],
+      "mixed_precision_basis": "FP16/BF16 Tensor FP32 accumulate; INT8 accumulator unspecified",
+      "comparable_mixed_features": []
+    },
+    {
+      "id": "l40",
+      "vendor": "NVIDIA",
+      "model": "L40",
+      "architecture": "Ada Lovelace",
+      "device_type": "GPU",
+      "scope": "single_accelerator",
+      "backend": "CUDA",
+      "source": "nv_l40",
+      "values": [
+        48,
+        864,
+        90.5,
+        181.05,
+        181.05,
+        362,
+        300
+      ],
+      "comparable_mixed_features": []
+    },
+    {
+      "id": "l40s",
+      "vendor": "NVIDIA",
+      "model": "L40S",
+      "architecture": "Ada Lovelace",
+      "device_type": "GPU",
+      "scope": "single_accelerator",
+      "backend": "CUDA",
+      "source": "nv_l40s",
+      "values": [
+        48,
+        864,
+        91.6,
+        362.05,
+        362.05,
+        733,
+        350
+      ],
+      "comparable_mixed_features": []
+    },
+    {
+      "id": "l4",
+      "vendor": "NVIDIA",
+      "model": "L4",
+      "architecture": "Ada Lovelace",
+      "device_type": "GPU",
+      "scope": "single_accelerator",
+      "backend": "CUDA",
+      "source": "nv_l4",
+      "values": [
+        24,
+        300,
+        30.3,
+        null,
+        null,
+        null,
+        72
+      ],
+      "rejected_observations": {
+        "fp16_sparse_tflops": 242,
+        "bf16_sparse_tflops": 242,
+        "int8_sparse_tops": 485
+      },
+      "comparable_mixed_features": []
+    },
+    {
+      "id": "a10",
+      "vendor": "NVIDIA",
+      "model": "A10",
+      "architecture": "Ampere",
+      "device_type": "GPU",
+      "scope": "single_accelerator",
+      "backend": "CUDA",
+      "source": "nv_a10",
+      "values": [
+        24,
+        600,
+        31.2,
+        125,
+        125,
+        250,
+        150
+      ],
+      "comparable_mixed_features": []
+    },
+    {
+      "id": "a30",
+      "vendor": "NVIDIA",
+      "model": "A30",
+      "architecture": "Ampere",
+      "device_type": "GPU",
+      "scope": "single_accelerator",
+      "backend": "CUDA",
+      "source": "nv_a30",
+      "values": [
+        24,
+        933,
+        10.3,
+        165,
+        165,
+        330,
+        165
+      ],
+      "comparable_mixed_features": []
+    },
+    {
+      "id": "a40",
+      "vendor": "NVIDIA",
+      "model": "A40",
+      "architecture": "Ampere",
+      "device_type": "GPU",
+      "scope": "single_accelerator",
+      "backend": "CUDA",
+      "source": "nv_a40_pdf_v4",
+      "values": [
+        48,
+        696,
+        37.4,
+        149.7,
+        149.7,
+        299.3,
+        300
+      ],
+      "note": "Fourth-round official PDF fills the previous partial record. Does not rewrite the third-round source.",
+      "mixed_precision_basis": "FP16 Tensor FP16 accumulate; BF16 Tensor FP32 accumulate; dense first number",
+      "comparable_mixed_features": []
+    },
+    {
+      "id": "a100_sxm80",
+      "vendor": "NVIDIA",
+      "model": "A100 80GB SXM standard 400W",
+      "model_group": "a100",
+      "architecture": "Ampere",
+      "device_type": "GPU",
+      "scope": "single_accelerator",
+      "backend": "CUDA",
+      "source": "nv_a100",
+      "values": [
+        80,
+        2039,
+        19.5,
+        312,
+        312,
+        624,
+        400
+      ],
+      "comparable_mixed_features": []
+    },
+    {
+      "id": "h100_sxm",
+      "vendor": "NVIDIA",
+      "model": "H100 SXM",
+      "model_group": "h100",
+      "architecture": "Hopper",
+      "device_type": "GPU",
+      "scope": "single_accelerator",
+      "backend": "CUDA",
+      "source": "nv_h100",
+      "values": [
+        80,
+        3350,
+        67,
+        null,
+        null,
+        null,
+        700
+      ],
+      "rejected_observations": {
+        "fp16_sparse_tflops": 1979,
+        "bf16_sparse_tflops": 1979,
+        "int8_sparse_tops": 3958
+      },
+      "comparable_mixed_features": []
+    },
+    {
+      "id": "h200_sxm",
+      "vendor": "NVIDIA",
+      "model": "H200 SXM",
+      "model_group": "h200",
+      "architecture": "Hopper",
+      "device_type": "GPU",
+      "scope": "single_accelerator",
+      "backend": "CUDA",
+      "source": "nv_h200",
+      "values": [
+        141,
+        4800,
+        67,
+        null,
+        null,
+        null,
+        700
+      ],
+      "raw_units": {
+        "memory_bandwidth_gbps": "4.8 TB/s"
+      },
+      "rejected_observations": {
+        "fp16_sparse_tflops": 1979,
+        "bf16_sparse_tflops": 1979,
+        "int8_sparse_tops": 3958
+      },
+      "comparable_mixed_features": []
+    },
+    {
+      "id": "rtx_a6000",
+      "vendor": "NVIDIA",
+      "model": "RTX A6000 48GB PCIe",
+      "architecture": "Ampere",
+      "device_type": "GPU",
+      "scope": "single_PCIe_board",
+      "backend": "CUDA",
+      "source": "nv_a6000_v4",
+      "values": [
+        48,
+        768,
+        38.7,
+        null,
+        null,
+        null,
+        300
+      ],
+      "rejected_observations": {
+        "tensor_sparsity_enabled_tflops": 309.7
+      },
+      "note": "Not RTX6000 Ada; sparse Tensor number does not identify a dense precision-specific value.",
+      "comparable_mixed_features": []
+    },
+    {
+      "id": "rtx6000_ada",
+      "vendor": "NVIDIA",
+      "model": "RTX 6000 Ada 48GB PCIe",
+      "architecture": "Ada Lovelace",
+      "device_type": "GPU",
+      "scope": "single_PCIe_board",
+      "backend": "CUDA",
+      "source": "nv_6000ada_v4",
+      "values": [
+        48,
+        960,
+        91.1,
+        null,
+        null,
+        null,
+        300
+      ],
+      "rejected_observations": {
+        "fp8_tensor_sparse_tflops": 1457
+      },
+      "note": "Sparse FP8 is not FP16/BF16/INT8. No unverified division or precision substitution.",
+      "comparable_mixed_features": []
+    },
+    {
+      "id": "rtx5080",
+      "vendor": "NVIDIA",
+      "model": "GeForce RTX 5080 16GB reference",
+      "architecture": "Blackwell",
+      "device_type": "GPU",
+      "scope": "single_reference_board",
+      "backend": "CUDA",
+      "source": "nv_5080_v4",
+      "values": [
+        16,
+        960,
+        56.3,
+        112.6,
+        112.6,
+        450.2,
+        360
+      ],
+      "mixed_precision_basis": "FP16/BF16 Tensor FP32 accumulate, dense first number; INT8 accumulation not explicitly aligned",
+      "comparable_mixed_features": []
+    }
+  ]
+}

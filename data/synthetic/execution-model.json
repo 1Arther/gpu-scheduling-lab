@@ -1,0 +1,9 @@
+{
+  "model_id": "independent-amdahl-sharing-v1",
+  "data_kind": "declared_synthetic_execution_assumptions_not_measurements",
+  "reference": {"fp32_tflops": 90.5, "bandwidth_gb_s": 864},
+  "training": {"compute_weight": 0.78, "serial_fraction": 0.06, "quota_exponent": 0.90, "per_neighbor": 0.10, "per_opposite_type": 0.08, "per_neighbor_pressure": 0.03},
+  "inference": {"compute_weight": 0.25, "serial_fraction": 0.20, "quota_exponent": 0.65, "per_neighbor": 0.18, "per_opposite_type": 0.30, "per_neighbor_pressure": 0.08},
+  "jitter_range": [0.93, 1.07],
+  "interpretation": "Hardware-weighted harmonic speed, Amdahl quota scaling and co-run interference; independent of classifier probabilities, labels, reference-contract SLOs and scorer weights. Not fitted to real GPUs. No performance oracle access by schedulers."
+}

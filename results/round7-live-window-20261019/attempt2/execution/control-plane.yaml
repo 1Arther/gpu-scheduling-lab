@@ -1,0 +1,564 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gpu-rf-system
+  labels:
+    gpu-lab/experiment: round7-rf
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gpu-rf-tests
+  labels:
+    gpu-lab/experiment: round7-rf
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: volcano-rf-test
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: rf-v7-scheduler
+  labels:
+    gpu-lab/experiment: round7-rf
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - nodes
+  - pods
+  - namespaces
+  - services
+  - replicationcontrollers
+  - persistentvolumeclaims
+  - persistentvolumes
+  - resourcequotas
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - replicasets
+  - statefulsets
+  - daemonsets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - storageclasses
+  - csinodes
+  - csidrivers
+  - csistoragecapacities
+  - volumeattachments
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - scheduling.k8s.io
+  resources:
+  - priorityclasses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - scheduling.volcano.sh
+  resources:
+  - queues
+  - podgroups
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - nodeinfo.volcano.sh
+  resources:
+  - numatopologies
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - topology.volcano.sh
+  resources:
+  - hypernodes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - resource.k8s.io
+  resources:
+  - resourceclaims
+  - resourceclaims/status
+  - deviceclasses
+  - resourceslices
+  - devicetaintrules
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - scheduling.volcano.sh
+  resources:
+  - queues
+  verbs:
+  - create
+- apiGroups:
+  - ''
+  resources:
+  - nodes
+  resourceNames:
+  - t3dgq
+  verbs:
+  - update
+  - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: rf-v7-scheduler
+  labels:
+    gpu-lab/experiment: round7-rf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: rf-v7-scheduler
+subjects:
+- kind: ServiceAccount
+  name: volcano-rf-test
+  namespace: gpu-rf-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: rf-v7-local-writes
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-system
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - events
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  verbs:
+  - patch
+- apiGroups:
+  - ''
+  resources:
+  - pods/status
+  verbs:
+  - update
+  - patch
+- apiGroups:
+  - ''
+  resources:
+  - pods/binding
+  verbs:
+  - create
+- apiGroups:
+  - scheduling.volcano.sh
+  resources:
+  - podgroups
+  - podgroups/status
+  verbs:
+  - update
+  - patch
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+- apiGroups:
+  - ''
+  resources:
+  - configmaps
+  resourceNames:
+  - rf-v7-device-config
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: rf-v7-local-writes
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: rf-v7-local-writes
+subjects:
+- kind: ServiceAccount
+  name: volcano-rf-test
+  namespace: gpu-rf-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: rf-v7-local-writes
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-tests
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - events
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  verbs:
+  - patch
+- apiGroups:
+  - ''
+  resources:
+  - pods/status
+  verbs:
+  - update
+  - patch
+- apiGroups:
+  - ''
+  resources:
+  - pods/binding
+  verbs:
+  - create
+- apiGroups:
+  - scheduling.volcano.sh
+  resources:
+  - podgroups
+  - podgroups/status
+  verbs:
+  - update
+  - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: rf-v7-local-writes
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-tests
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: rf-v7-local-writes
+subjects:
+- kind: ServiceAccount
+  name: volcano-rf-test
+  namespace: gpu-rf-system
+---
+apiVersion: scheduling.volcano.sh/v1beta1
+kind: Queue
+metadata:
+  name: rf-v7-queue
+  labels:
+    gpu-lab/experiment: round7-rf
+spec:
+  weight: 1
+  reclaimable: false
+  parent: root
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: rf-v7-test-budget
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-tests
+spec:
+  hard:
+    pods: '4'
+    requests.volcano.sh/vgpu-number: '4'
+    requests.volcano.sh/vgpu-memory: '16384'
+    requests.volcano.sh/vgpu-cores: '80'
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rf-v7-config-on
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-system
+data:
+  volcano-scheduler.conf: "actions: enqueue, allocate\ntiers:\n- plugins:\n  - name:\
+    \ priority\n  - name: gang\n    enablePreemptable: false\n  - name: conformance\n\
+    - plugins:\n  - name: deviceshare\n    arguments:\n      deviceshare.VGPUEnable:\
+    \ true\n      deviceshare.GPUSharingEnable: false\n      deviceshare.GPUNumberEnable:\
+    \ false\n      deviceshare.NodeLockEnable: true\n      deviceshare.SchedulePolicy:\
+    \ binpack\n      deviceshare.ScheduleWeight: 1\n      deviceshare.GPUSelectPolicy:\
+    \ rf-job\n      deviceshare.RFEnable: true\n      deviceshare.RFPredictionEnabled:\
+    \ true\n      deviceshare.RFEndpoint: http://127.0.0.1:18081/v1/rank\n      deviceshare.RFModelVersion:\
+    \ rf-v4-known-states-ee35cfabe30f\n      deviceshare.RFTimeoutMS: 500\n      deviceshare.KnownGeometriesCMName:\
+    \ rf-v7-device-config\n      deviceshare.KnownGeometriesCMNamespace: gpu-rf-system\n\
+    \  - name: predicates\n"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rf-v7-config-no-prediction
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-system
+data:
+  volcano-scheduler.conf: "actions: enqueue, allocate\ntiers:\n- plugins:\n  - name:\
+    \ priority\n  - name: gang\n    enablePreemptable: false\n  - name: conformance\n\
+    - plugins:\n  - name: deviceshare\n    arguments:\n      deviceshare.VGPUEnable:\
+    \ true\n      deviceshare.GPUSharingEnable: false\n      deviceshare.GPUNumberEnable:\
+    \ false\n      deviceshare.NodeLockEnable: true\n      deviceshare.SchedulePolicy:\
+    \ binpack\n      deviceshare.ScheduleWeight: 1\n      deviceshare.GPUSelectPolicy:\
+    \ rf-job\n      deviceshare.RFEnable: true\n      deviceshare.RFPredictionEnabled:\
+    \ false\n      deviceshare.RFEndpoint: http://127.0.0.1:18081/v1/rank\n      deviceshare.RFModelVersion:\
+    \ rf-v4-known-states-ee35cfabe30f\n      deviceshare.RFTimeoutMS: 500\n      deviceshare.KnownGeometriesCMName:\
+    \ rf-v7-device-config\n      deviceshare.KnownGeometriesCMNamespace: gpu-rf-system\n\
+    \  - name: predicates\n"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rf-v7-config-native-binpack
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-system
+data:
+  volcano-scheduler.conf: "actions: enqueue, allocate\ntiers:\n- plugins:\n  - name:\
+    \ priority\n  - name: gang\n    enablePreemptable: false\n  - name: conformance\n\
+    - plugins:\n  - name: deviceshare\n    arguments:\n      deviceshare.VGPUEnable:\
+    \ true\n      deviceshare.GPUSharingEnable: false\n      deviceshare.GPUNumberEnable:\
+    \ false\n      deviceshare.NodeLockEnable: true\n      deviceshare.SchedulePolicy:\
+    \ binpack\n      deviceshare.ScheduleWeight: 1\n      deviceshare.GPUSelectPolicy:\
+    \ binpack\n      deviceshare.RFEnable: false\n      deviceshare.RFPredictionEnabled:\
+    \ true\n      deviceshare.RFEndpoint: http://127.0.0.1:18081/v1/rank\n      deviceshare.RFModelVersion:\
+    \ rf-v4-known-states-ee35cfabe30f\n      deviceshare.RFTimeoutMS: 500\n      deviceshare.KnownGeometriesCMName:\
+    \ rf-v7-device-config\n      deviceshare.KnownGeometriesCMNamespace: gpu-rf-system\n\
+    \  - name: predicates\n"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rf-v7-config-service-unavailable
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-system
+data:
+  volcano-scheduler.conf: "actions: enqueue, allocate\ntiers:\n- plugins:\n  - name:\
+    \ priority\n  - name: gang\n    enablePreemptable: false\n  - name: conformance\n\
+    - plugins:\n  - name: deviceshare\n    arguments:\n      deviceshare.VGPUEnable:\
+    \ true\n      deviceshare.GPUSharingEnable: false\n      deviceshare.GPUNumberEnable:\
+    \ false\n      deviceshare.NodeLockEnable: true\n      deviceshare.SchedulePolicy:\
+    \ binpack\n      deviceshare.ScheduleWeight: 1\n      deviceshare.GPUSelectPolicy:\
+    \ rf-job\n      deviceshare.RFEnable: true\n      deviceshare.RFPredictionEnabled:\
+    \ true\n      deviceshare.RFEndpoint: http://127.0.0.1:1/v1/rank\n      deviceshare.RFModelVersion:\
+    \ rf-v4-known-states-ee35cfabe30f\n      deviceshare.RFTimeoutMS: 500\n      deviceshare.KnownGeometriesCMName:\
+    \ rf-v7-device-config\n      deviceshare.KnownGeometriesCMNamespace: gpu-rf-system\n\
+    \  - name: predicates\n"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rf-v7-device-config
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-system
+data:
+  device-config.yaml: "nvidia:\n  resourceCountName: volcano.sh/vgpu-number\n  resourceMemoryName:\
+    \ volcano.sh/vgpu-memory\n  resourceCoreName: volcano.sh/vgpu-cores\n  resourceMemoryPercentageName:\
+    \ volcano.sh/vgpu-memory-percentage\n  defaultGPUNum: 1\n  defaultMemory: 0\n\
+    \  defaultCores: 0\n  deviceSplitCount: 10\n  deviceMemoryScaling: 1\n  deviceCoreScaling:\
+    \ 1\n  disableCoreLimit: false\n"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: volcano-rf-test
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-system
+spec:
+  replicas: 0
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: volcano-rf-test
+  template:
+    metadata:
+      labels:
+        gpu-lab/experiment: round7-rf
+        app: volcano-rf-test
+    spec:
+      serviceAccountName: volcano-rf-test
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      nodeSelector:
+        kubernetes.io/hostname: t3dgq
+      containers:
+      - name: scheduler
+        image: docker.io/gpu-lab/volcano-rf@sha256:43c62614e45fb18197af5c3b19081bb814c47de2f573f6b382c5639ee0bdcdbc
+        imagePullPolicy: Never
+        command:
+        - /vc-scheduler-rf
+        args:
+        - --scheduler-name=volcano-rf-test
+        - --scheduler-conf=/rf-config/volcano-scheduler.conf
+        - --default-queue=rf-v7-queue
+        - --node-selector=kubernetes.io/hostname:t3dgq
+        - --leader-elect=true
+        - --leader-elect-resource-name=volcano-rf-test
+        - --leader-elect-resource-namespace=gpu-rf-system
+        - --leader-elect-resource-lock=leases
+        - --enable-healthz=true
+        - --healthz-address=:18091
+        - --enable-metrics=true
+        - --listen-address=:18090
+        - --cache-dumper=false
+        - --logtostderr
+        - --v=4
+        securityContext: &id001
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: '2'
+            memory: 1Gi
+        ports:
+        - name: metrics
+          containerPort: 18090
+        - name: health
+          containerPort: 18091
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: health
+          periodSeconds: 3
+        volumeMounts:
+        - name: config
+          mountPath: /rf-config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        - name: api-token
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+          readOnly: true
+      - name: rf-model
+        image: docker.io/gpu-lab/rf-model@sha256:7ef2fd82031578388f75e101f9a6ab572faacf7c96fa27e39bfcfe8b213c4259
+        imagePullPolicy: Never
+        command:
+        - python
+        - -m
+        - gpu_lab.runtime.audit_server
+        - --port
+        - '18081'
+        env:
+        - name: OMP_NUM_THREADS
+          value: '1'
+        - name: OPENBLAS_NUM_THREADS
+          value: '1'
+        - name: MKL_NUM_THREADS
+          value: '1'
+        securityContext: *id001
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: '1'
+            memory: 1Gi
+        readinessProbe:
+          exec:
+            command: &id002
+            - python
+            - -c
+            - import json,urllib.request; r=json.load(urllib.request.urlopen('http://127.0.0.1:18081/health',timeout=1));
+              assert r['model_ready'] and r['model_version']=='rf-v4-known-states-ee35cfabe30f'
+          periodSeconds: 3
+        startupProbe:
+          exec:
+            command: *id002
+          periodSeconds: 2
+          failureThreshold: 30
+        volumeMounts:
+        - name: rf-tmp
+          mountPath: /tmp
+      volumes:
+      - name: config
+        configMap:
+          name: rf-v7-config-on
+      - name: tmp
+        emptyDir: {}
+      - name: rf-tmp
+        emptyDir: {}
+      - name: api-token
+        projected:
+          sources:
+          - serviceAccountToken:
+              path: token
+              expirationSeconds: 3600
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+              - key: ca.crt
+                path: ca.crt
+          - downwardAPI:
+              items:
+              - path: namespace
+                fieldRef:
+                  fieldPath: metadata.namespace

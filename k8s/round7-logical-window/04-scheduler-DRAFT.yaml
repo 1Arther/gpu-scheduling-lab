@@ -1,0 +1,150 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: volcano-rf-test
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-system
+spec:
+  replicas: 0
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: volcano-rf-test
+  template:
+    metadata:
+      labels:
+        gpu-lab/experiment: round7-rf
+        app: volcano-rf-test
+    spec:
+      serviceAccountName: volcano-rf-test
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      nodeSelector:
+        kubernetes.io/hostname: t3dgq
+      containers:
+      - name: scheduler
+        image: gpu-lab/volcano-rf:round7-build-required
+        imagePullPolicy: IfNotPresent
+        command:
+        - /vc-scheduler-rf
+        args:
+        - --scheduler-name=volcano-rf-test
+        - --scheduler-conf=/rf-config/volcano-scheduler.conf
+        - --default-queue=rf-v7-queue
+        - --node-selector=kubernetes.io/hostname:t3dgq
+        - --leader-elect=true
+        - --leader-elect-resource-name=volcano-rf-test
+        - --leader-elect-resource-namespace=gpu-rf-system
+        - --leader-elect-resource-lock=leases
+        - --enable-healthz=true
+        - --healthz-address=:18091
+        - --enable-metrics=true
+        - --listen-address=:18090
+        - --cache-dumper=false
+        - --logtostderr
+        - --v=4
+        securityContext: &id001
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: '2'
+            memory: 1Gi
+        ports:
+        - name: metrics
+          containerPort: 18090
+        - name: health
+          containerPort: 18091
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: health
+          periodSeconds: 3
+        volumeMounts:
+        - name: config
+          mountPath: /rf-config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        - name: api-token
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+          readOnly: true
+      - name: rf-model
+        image: gpu-lab/rf-model:round7-build-required
+        imagePullPolicy: IfNotPresent
+        command:
+        - python
+        - -m
+        - gpu_lab.runtime.audit_server
+        - --port
+        - '18081'
+        env:
+        - name: OMP_NUM_THREADS
+          value: '1'
+        - name: OPENBLAS_NUM_THREADS
+          value: '1'
+        - name: MKL_NUM_THREADS
+          value: '1'
+        securityContext: *id001
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: '1'
+            memory: 1Gi
+        readinessProbe:
+          exec:
+            command: &id002
+            - python
+            - -c
+            - import json,urllib.request; r=json.load(urllib.request.urlopen('http://127.0.0.1:18081/health',timeout=1));
+              assert r['model_ready'] and r['model_version']=='rf-v4-known-states-ee35cfabe30f'
+          periodSeconds: 3
+        startupProbe:
+          exec:
+            command: *id002
+          periodSeconds: 2
+          failureThreshold: 30
+        volumeMounts:
+        - name: rf-tmp
+          mountPath: /tmp
+      volumes:
+      - name: config
+        configMap:
+          name: rf-v7-config-on
+      - name: tmp
+        emptyDir: {}
+      - name: rf-tmp
+        emptyDir: {}
+      - name: api-token
+        projected:
+          sources:
+          - serviceAccountToken:
+              path: token
+              expirationSeconds: 3600
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+              - key: ca.crt
+                path: ca.crt
+          - downwardAPI:
+              items:
+              - path: namespace
+                fieldRef:
+                  fieldPath: metadata.namespace

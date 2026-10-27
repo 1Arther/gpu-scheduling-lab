@@ -1,0 +1,2292 @@
+{
+  "rtx4090": [
+    {
+      "event": "initial",
+      "device_id": "rtx4090",
+      "model": "GeForce RTX 4090",
+      "hardware": {
+        "memory_capacity_mib": 22888,
+        "memory_bandwidth_gbps": 1008,
+        "fp32_tflops": 82.6,
+        "fp16_dense_tflops": 165.2,
+        "bf16_dense_tflops": 165.2,
+        "int8_dense_tops": 660.6,
+        "max_board_power_w": 450
+      },
+      "hardware_sha256": "d6e6ac9e4edb47f9269b5e2921cc49890412680e96163b0e29e8aebd1eb42fff",
+      "state": {
+        "free_memory_mib": 22888,
+        "free_compute_quota": 100,
+        "allocated_vgpu_count": 0,
+        "running_training_count": 0,
+        "running_inference_count": 0,
+        "instance_limit": 10,
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "data_kind": "synthetic_resource_state"
+      },
+      "prediction": {
+        "device_id": "rtx4090",
+        "model": "GeForce RTX 4090",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": true,
+        "hard_constraints": {
+          "training": true,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "training_vote_fraction": 1.0,
+          "inference_vote_fraction": 1.0,
+          "class_probabilities": {
+            "training_preferred": 0.0,
+            "inference_preferred": 0.0,
+            "balanced": 1.0,
+            "unavailable": 0.0
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "details": {
+            "training": {
+              "adapted": true,
+              "theoretical_latency_s": 0.08647526807333103,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            },
+            "inference": {
+              "adapted": true,
+              "theoretical_latency_s": 0.005636724386724385,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "l40",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          },
+          {
+            "device_id": "l40s",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          },
+          {
+            "device_id": "rtx4090",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.0
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 221,
+            "validation_sign_correct": 221,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 215,
+            "validation_sign_correct": 215,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "label_zh": "训推一体型",
+        "reliability": "provisional_synthetic_validation_only"
+      },
+      "independent_reference_rule": {
+        "label_source": "synthetic",
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "details": {
+          "training": {
+            "adapted": true,
+            "theoretical_latency_s": 0.06918021445866483,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.004509379509379509,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          }
+        },
+        "conservative_factor": 1.0,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+    },
+    {
+      "event": "allocate_compute_heavy_1000MiB_60quota",
+      "device_id": "rtx4090",
+      "model": "GeForce RTX 4090",
+      "hardware": {
+        "memory_capacity_mib": 22888,
+        "memory_bandwidth_gbps": 1008,
+        "fp32_tflops": 82.6,
+        "fp16_dense_tflops": 165.2,
+        "bf16_dense_tflops": 165.2,
+        "int8_dense_tops": 660.6,
+        "max_board_power_w": 450
+      },
+      "hardware_sha256": "d6e6ac9e4edb47f9269b5e2921cc49890412680e96163b0e29e8aebd1eb42fff",
+      "state": {
+        "free_memory_mib": 21888,
+        "free_compute_quota": 40,
+        "allocated_vgpu_count": 1,
+        "running_training_count": 1,
+        "running_inference_count": 0,
+        "instance_limit": 10,
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "data_kind": "synthetic_resource_state"
+      },
+      "prediction": {
+        "device_id": "rtx4090",
+        "model": "GeForce RTX 4090",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": true,
+        "hard_constraints": {
+          "training": true,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": true,
+          "inference": false,
+          "label": "training_preferred",
+          "training_vote_fraction": 1.0,
+          "inference_vote_fraction": 0.06750000000000002,
+          "class_probabilities": {
+            "training_preferred": 0.9325,
+            "inference_preferred": 0.0,
+            "balanced": 0.06750000000000002,
+            "unavailable": 0.0
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.9325,
+          "inference_preferred": 0.0,
+          "balanced": 0.06750000000000002,
+          "unavailable": 0.0
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": false,
+          "inference": false,
+          "label": "unavailable",
+          "details": {
+            "training": {
+              "adapted": false,
+              "theoretical_latency_s": 0.21618817018332756,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 0.92512
+            },
+            "inference": {
+              "adapted": false,
+              "theoretical_latency_s": 0.014091810966810963,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 0.7096320000000003
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "l40",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          },
+          {
+            "device_id": "l40s",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          },
+          {
+            "device_id": "rtx4090",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.0
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 221,
+            "validation_sign_correct": 221,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": false,
+            "validation_sign_support": 78,
+            "validation_sign_correct": 78,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 30,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": true,
+        "inference": false,
+        "label": "training_preferred",
+        "label_zh": "训练优先型",
+        "reliability": "provisional_synthetic_validation_only"
+      },
+      "independent_reference_rule": {
+        "label_source": "synthetic",
+        "training": true,
+        "inference": false,
+        "label": "training_preferred",
+        "details": {
+          "training": {
+            "adapted": true,
+            "theoretical_latency_s": 0.17295053614666206,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          },
+          "inference": {
+            "adapted": false,
+            "theoretical_latency_s": 0.01127344877344877,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 0.8870400000000003
+          }
+        },
+        "conservative_factor": 1.0,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+    },
+    {
+      "event": "allocate_memory_heavy_5quota",
+      "device_id": "rtx4090",
+      "model": "GeForce RTX 4090",
+      "hardware": {
+        "memory_capacity_mib": 22888,
+        "memory_bandwidth_gbps": 1008,
+        "fp32_tflops": 82.6,
+        "fp16_dense_tflops": 165.2,
+        "bf16_dense_tflops": 165.2,
+        "int8_dense_tops": 660.6,
+        "max_board_power_w": 450
+      },
+      "hardware_sha256": "d6e6ac9e4edb47f9269b5e2921cc49890412680e96163b0e29e8aebd1eb42fff",
+      "state": {
+        "free_memory_mib": 6000,
+        "free_compute_quota": 35,
+        "allocated_vgpu_count": 2,
+        "running_training_count": 1,
+        "running_inference_count": 1,
+        "instance_limit": 10,
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "data_kind": "synthetic_resource_state"
+      },
+      "prediction": {
+        "device_id": "rtx4090",
+        "model": "GeForce RTX 4090",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": true,
+        "hard_constraints": {
+          "training": false,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": false,
+          "inference": false,
+          "label": "unavailable",
+          "training_vote_fraction": 0.03777777777777778,
+          "inference_vote_fraction": 0.1234722222222222,
+          "class_probabilities": {
+            "training_preferred": 0.03311327160493827,
+            "inference_preferred": 0.1188077160493827,
+            "balanced": 0.004664506172839505,
+            "unavailable": 0.8434145061728395
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.03311327160493827,
+          "inference_preferred": 0.1188077160493827,
+          "balanced": 0.004664506172839505,
+          "unavailable": 0.8434145061728395
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": false,
+          "inference": false,
+          "label": "unavailable",
+          "details": {
+            "training": {
+              "adapted": false,
+              "theoretical_latency_s": 0.24707219449523157,
+              "resource_minimum_met": false,
+              "theoretical_suitability_score": 0.0
+            },
+            "inference": {
+              "adapted": false,
+              "theoretical_latency_s": 0.01610492681921253,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 0.6209280000000001
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "l40",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          },
+          {
+            "device_id": "l40s",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          },
+          {
+            "device_id": "rtx4090",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.0
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "deterministic_reference_resource_filter",
+            "supported": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": false,
+            "validation_sign_support": 78,
+            "validation_sign_correct": 78,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 30,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": false,
+        "inference": false,
+        "label": "unavailable",
+        "label_zh": "当前不满足参考负载要求",
+        "reliability": "provisional_synthetic_validation_only"
+      },
+      "independent_reference_rule": {
+        "label_source": "synthetic",
+        "training": false,
+        "inference": false,
+        "label": "unavailable",
+        "details": {
+          "training": {
+            "adapted": false,
+            "theoretical_latency_s": 0.19765775559618526,
+            "resource_minimum_met": false,
+            "theoretical_suitability_score": 0.0
+          },
+          "inference": {
+            "adapted": false,
+            "theoretical_latency_s": 0.012883941455370026,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 0.7761600000000001
+          }
+        },
+        "conservative_factor": 1.0,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+    },
+    {
+      "event": "release_compute_heavy",
+      "device_id": "rtx4090",
+      "model": "GeForce RTX 4090",
+      "hardware": {
+        "memory_capacity_mib": 22888,
+        "memory_bandwidth_gbps": 1008,
+        "fp32_tflops": 82.6,
+        "fp16_dense_tflops": 165.2,
+        "bf16_dense_tflops": 165.2,
+        "int8_dense_tops": 660.6,
+        "max_board_power_w": 450
+      },
+      "hardware_sha256": "d6e6ac9e4edb47f9269b5e2921cc49890412680e96163b0e29e8aebd1eb42fff",
+      "state": {
+        "free_memory_mib": 7000,
+        "free_compute_quota": 95,
+        "allocated_vgpu_count": 1,
+        "running_training_count": 0,
+        "running_inference_count": 1,
+        "instance_limit": 10,
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "data_kind": "synthetic_resource_state"
+      },
+      "prediction": {
+        "device_id": "rtx4090",
+        "model": "GeForce RTX 4090",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": true,
+        "hard_constraints": {
+          "training": false,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": false,
+          "inference": true,
+          "label": "inference_preferred",
+          "training_vote_fraction": 0.0,
+          "inference_vote_fraction": 0.9979166666666667,
+          "class_probabilities": {
+            "training_preferred": 0.0,
+            "inference_preferred": 0.9979166666666667,
+            "balanced": 0.0,
+            "unavailable": 0.002083333333333326
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.9979166666666667,
+          "balanced": 0.0,
+          "unavailable": 0.002083333333333326
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": false,
+          "inference": true,
+          "label": "inference_preferred",
+          "details": {
+            "training": {
+              "adapted": false,
+              "theoretical_latency_s": 0.09102659797192741,
+              "resource_minimum_met": false,
+              "theoretical_suitability_score": 0.0
+            },
+            "inference": {
+              "adapted": true,
+              "theoretical_latency_s": 0.005933394091288827,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "l40",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          },
+          {
+            "device_id": "l40s",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          },
+          {
+            "device_id": "rtx4090",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.0
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "deterministic_reference_resource_filter",
+            "supported": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 215,
+            "validation_sign_correct": 215,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": false,
+        "inference": true,
+        "label": "inference_preferred",
+        "label_zh": "推理优先型",
+        "reliability": "provisional_synthetic_validation_only"
+      },
+      "independent_reference_rule": {
+        "label_source": "synthetic",
+        "training": false,
+        "inference": true,
+        "label": "inference_preferred",
+        "details": {
+          "training": {
+            "adapted": false,
+            "theoretical_latency_s": 0.07282127837754193,
+            "resource_minimum_met": false,
+            "theoretical_suitability_score": 0.0
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.004746715273031062,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          }
+        },
+        "conservative_factor": 1.0,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+    },
+    {
+      "event": "release_all",
+      "device_id": "rtx4090",
+      "model": "GeForce RTX 4090",
+      "hardware": {
+        "memory_capacity_mib": 22888,
+        "memory_bandwidth_gbps": 1008,
+        "fp32_tflops": 82.6,
+        "fp16_dense_tflops": 165.2,
+        "bf16_dense_tflops": 165.2,
+        "int8_dense_tops": 660.6,
+        "max_board_power_w": 450
+      },
+      "hardware_sha256": "d6e6ac9e4edb47f9269b5e2921cc49890412680e96163b0e29e8aebd1eb42fff",
+      "state": {
+        "free_memory_mib": 22888,
+        "free_compute_quota": 100,
+        "allocated_vgpu_count": 0,
+        "running_training_count": 0,
+        "running_inference_count": 0,
+        "instance_limit": 10,
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "data_kind": "synthetic_resource_state"
+      },
+      "prediction": {
+        "device_id": "rtx4090",
+        "model": "GeForce RTX 4090",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": true,
+        "hard_constraints": {
+          "training": true,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "training_vote_fraction": 1.0,
+          "inference_vote_fraction": 1.0,
+          "class_probabilities": {
+            "training_preferred": 0.0,
+            "inference_preferred": 0.0,
+            "balanced": 1.0,
+            "unavailable": 0.0
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "details": {
+            "training": {
+              "adapted": true,
+              "theoretical_latency_s": 0.08647526807333103,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            },
+            "inference": {
+              "adapted": true,
+              "theoretical_latency_s": 0.005636724386724385,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "l40",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          },
+          {
+            "device_id": "l40s",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          },
+          {
+            "device_id": "rtx4090",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.0
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 221,
+            "validation_sign_correct": 221,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 215,
+            "validation_sign_correct": 215,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "label_zh": "训推一体型",
+        "reliability": "provisional_synthetic_validation_only"
+      },
+      "independent_reference_rule": {
+        "label_source": "synthetic",
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "details": {
+          "training": {
+            "adapted": true,
+            "theoretical_latency_s": 0.06918021445866483,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.004509379509379509,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          }
+        },
+        "conservative_factor": 1.0,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+    }
+  ],
+  "rtx5090": [
+    {
+      "event": "initial",
+      "device_id": "rtx5090",
+      "model": "GeForce RTX 5090",
+      "hardware": {
+        "memory_capacity_mib": 30517,
+        "memory_bandwidth_gbps": 1792,
+        "fp32_tflops": 104.8,
+        "fp16_dense_tflops": 209.5,
+        "bf16_dense_tflops": 209.5,
+        "int8_dense_tops": 838,
+        "max_board_power_w": 575
+      },
+      "hardware_sha256": "b488eec45a853daeb881a554cdc4bc24202763b3f89fb4fcc5492495222c396a",
+      "state": {
+        "free_memory_mib": 30517,
+        "free_compute_quota": 100,
+        "allocated_vgpu_count": 0,
+        "running_training_count": 0,
+        "running_inference_count": 0,
+        "instance_limit": 10,
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "data_kind": "synthetic_resource_state"
+      },
+      "prediction": {
+        "device_id": "rtx5090",
+        "model": "GeForce RTX 5090",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": true,
+        "hard_constraints": {
+          "training": true,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "training_vote_fraction": 1.0,
+          "inference_vote_fraction": 1.0,
+          "class_probabilities": {
+            "training_preferred": 0.0,
+            "inference_preferred": 0.0,
+            "balanced": 1.0,
+            "unavailable": 0.0
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "details": {
+            "training": {
+              "adapted": true,
+              "theoretical_latency_s": 0.06815703380588876,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            },
+            "inference": {
+              "adapted": true,
+              "theoretical_latency_s": 0.003170657467532467,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "rtx5090",
+            "architecture": "Blackwell",
+            "log2_distance": 0.0
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 79,
+            "validation_sign_correct": 79,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 12,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 83,
+            "validation_sign_correct": 83,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 12,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "label_zh": "训推一体型",
+        "reliability": "provisional_synthetic_validation_only"
+      },
+      "independent_reference_rule": {
+        "label_source": "synthetic",
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "details": {
+          "training": {
+            "adapted": true,
+            "theoretical_latency_s": 0.05452562704471101,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.0025365259740259736,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          }
+        },
+        "conservative_factor": 1.0,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+    },
+    {
+      "event": "allocate_compute_heavy_1000MiB_60quota",
+      "device_id": "rtx5090",
+      "model": "GeForce RTX 5090",
+      "hardware": {
+        "memory_capacity_mib": 30517,
+        "memory_bandwidth_gbps": 1792,
+        "fp32_tflops": 104.8,
+        "fp16_dense_tflops": 209.5,
+        "bf16_dense_tflops": 209.5,
+        "int8_dense_tops": 838,
+        "max_board_power_w": 575
+      },
+      "hardware_sha256": "b488eec45a853daeb881a554cdc4bc24202763b3f89fb4fcc5492495222c396a",
+      "state": {
+        "free_memory_mib": 29517,
+        "free_compute_quota": 40,
+        "allocated_vgpu_count": 1,
+        "running_training_count": 1,
+        "running_inference_count": 0,
+        "instance_limit": 10,
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "data_kind": "synthetic_resource_state"
+      },
+      "prediction": {
+        "device_id": "rtx5090",
+        "model": "GeForce RTX 5090",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": true,
+        "hard_constraints": {
+          "training": true,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "training_vote_fraction": 0.9966666666666666,
+          "inference_vote_fraction": 0.9897222222222222,
+          "class_probabilities": {
+            "training_preferred": 0.01024351851851857,
+            "inference_preferred": 0.00329907407407415,
+            "balanced": 0.986423148148148,
+            "unavailable": 3.4259259259260224e-05
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.01024351851851857,
+          "inference_preferred": 0.00329907407407415,
+          "balanced": 0.986423148148148,
+          "unavailable": 3.4259259259260224e-05
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "details": {
+            "training": {
+              "adapted": true,
+              "theoretical_latency_s": 0.17039258451472192,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            },
+            "inference": {
+              "adapted": true,
+              "theoretical_latency_s": 0.007926643668831168,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "rtx5090",
+            "architecture": "Blackwell",
+            "log2_distance": 0.0
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 79,
+            "validation_sign_correct": 79,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 12,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 83,
+            "validation_sign_correct": 83,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 12,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "label_zh": "训推一体型",
+        "reliability": "provisional_synthetic_validation_only"
+      },
+      "independent_reference_rule": {
+        "label_source": "synthetic",
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "details": {
+          "training": {
+            "adapted": true,
+            "theoretical_latency_s": 0.13631406761177753,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.006341314935064934,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          }
+        },
+        "conservative_factor": 1.0,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+    },
+    {
+      "event": "allocate_memory_heavy_5quota",
+      "device_id": "rtx5090",
+      "model": "GeForce RTX 5090",
+      "hardware": {
+        "memory_capacity_mib": 30517,
+        "memory_bandwidth_gbps": 1792,
+        "fp32_tflops": 104.8,
+        "fp16_dense_tflops": 209.5,
+        "bf16_dense_tflops": 209.5,
+        "int8_dense_tops": 838,
+        "max_board_power_w": 575
+      },
+      "hardware_sha256": "b488eec45a853daeb881a554cdc4bc24202763b3f89fb4fcc5492495222c396a",
+      "state": {
+        "free_memory_mib": 6000,
+        "free_compute_quota": 35,
+        "allocated_vgpu_count": 2,
+        "running_training_count": 1,
+        "running_inference_count": 1,
+        "instance_limit": 10,
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "data_kind": "synthetic_resource_state"
+      },
+      "prediction": {
+        "device_id": "rtx5090",
+        "model": "GeForce RTX 5090",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": true,
+        "hard_constraints": {
+          "training": false,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": false,
+          "inference": true,
+          "label": "inference_preferred",
+          "training_vote_fraction": 0.018055555555555554,
+          "inference_vote_fraction": 0.7513888888888888,
+          "class_probabilities": {
+            "training_preferred": 0.0044888117283950636,
+            "inference_preferred": 0.7378221450617283,
+            "balanced": 0.01356674382716049,
+            "unavailable": 0.24412229938271615
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.0044888117283950636,
+          "inference_preferred": 0.7378221450617283,
+          "balanced": 0.01356674382716049,
+          "unavailable": 0.24412229938271615
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": false,
+          "inference": true,
+          "label": "inference_preferred",
+          "details": {
+            "training": {
+              "adapted": false,
+              "theoretical_latency_s": 0.19473438230253934,
+              "resource_minimum_met": false,
+              "theoretical_suitability_score": 0.0
+            },
+            "inference": {
+              "adapted": true,
+              "theoretical_latency_s": 0.00905902133580705,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "rtx5090",
+            "architecture": "Blackwell",
+            "log2_distance": 0.0
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "deterministic_reference_resource_filter",
+            "supported": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 83,
+            "validation_sign_correct": 83,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 12,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": false,
+        "inference": true,
+        "label": "inference_preferred",
+        "label_zh": "推理优先型",
+        "reliability": "provisional_synthetic_validation_only"
+      },
+      "independent_reference_rule": {
+        "label_source": "synthetic",
+        "training": false,
+        "inference": true,
+        "label": "inference_preferred",
+        "details": {
+          "training": {
+            "adapted": false,
+            "theoretical_latency_s": 0.15578750584203147,
+            "resource_minimum_met": false,
+            "theoretical_suitability_score": 0.0
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.007247217068645639,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          }
+        },
+        "conservative_factor": 1.0,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+    },
+    {
+      "event": "release_compute_heavy",
+      "device_id": "rtx5090",
+      "model": "GeForce RTX 5090",
+      "hardware": {
+        "memory_capacity_mib": 30517,
+        "memory_bandwidth_gbps": 1792,
+        "fp32_tflops": 104.8,
+        "fp16_dense_tflops": 209.5,
+        "bf16_dense_tflops": 209.5,
+        "int8_dense_tops": 838,
+        "max_board_power_w": 575
+      },
+      "hardware_sha256": "b488eec45a853daeb881a554cdc4bc24202763b3f89fb4fcc5492495222c396a",
+      "state": {
+        "free_memory_mib": 7000,
+        "free_compute_quota": 95,
+        "allocated_vgpu_count": 1,
+        "running_training_count": 0,
+        "running_inference_count": 1,
+        "instance_limit": 10,
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "data_kind": "synthetic_resource_state"
+      },
+      "prediction": {
+        "device_id": "rtx5090",
+        "model": "GeForce RTX 5090",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": true,
+        "hard_constraints": {
+          "training": false,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": false,
+          "inference": true,
+          "label": "inference_preferred",
+          "training_vote_fraction": 0.0,
+          "inference_vote_fraction": 0.9979166666666667,
+          "class_probabilities": {
+            "training_preferred": 0.0,
+            "inference_preferred": 0.9979166666666667,
+            "balanced": 0.0,
+            "unavailable": 0.002083333333333326
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.9979166666666667,
+          "balanced": 0.0,
+          "unavailable": 0.002083333333333326
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": false,
+          "inference": true,
+          "label": "inference_preferred",
+          "details": {
+            "training": {
+              "adapted": false,
+              "theoretical_latency_s": 0.07174424611146187,
+              "resource_minimum_met": false,
+              "theoretical_suitability_score": 0.0
+            },
+            "inference": {
+              "adapted": true,
+              "theoretical_latency_s": 0.0033375341763499655,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "rtx5090",
+            "architecture": "Blackwell",
+            "log2_distance": 0.0
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "deterministic_reference_resource_filter",
+            "supported": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 83,
+            "validation_sign_correct": 83,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 12,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": false,
+        "inference": true,
+        "label": "inference_preferred",
+        "label_zh": "推理优先型",
+        "reliability": "provisional_synthetic_validation_only"
+      },
+      "independent_reference_rule": {
+        "label_source": "synthetic",
+        "training": false,
+        "inference": true,
+        "label": "inference_preferred",
+        "details": {
+          "training": {
+            "adapted": false,
+            "theoretical_latency_s": 0.057395396889169496,
+            "resource_minimum_met": false,
+            "theoretical_suitability_score": 0.0
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.0026700273410799726,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          }
+        },
+        "conservative_factor": 1.0,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+    },
+    {
+      "event": "release_all",
+      "device_id": "rtx5090",
+      "model": "GeForce RTX 5090",
+      "hardware": {
+        "memory_capacity_mib": 30517,
+        "memory_bandwidth_gbps": 1792,
+        "fp32_tflops": 104.8,
+        "fp16_dense_tflops": 209.5,
+        "bf16_dense_tflops": 209.5,
+        "int8_dense_tops": 838,
+        "max_board_power_w": 575
+      },
+      "hardware_sha256": "b488eec45a853daeb881a554cdc4bc24202763b3f89fb4fcc5492495222c396a",
+      "state": {
+        "free_memory_mib": 30517,
+        "free_compute_quota": 100,
+        "allocated_vgpu_count": 0,
+        "running_training_count": 0,
+        "running_inference_count": 0,
+        "instance_limit": 10,
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "data_kind": "synthetic_resource_state"
+      },
+      "prediction": {
+        "device_id": "rtx5090",
+        "model": "GeForce RTX 5090",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": true,
+        "hard_constraints": {
+          "training": true,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "training_vote_fraction": 1.0,
+          "inference_vote_fraction": 1.0,
+          "class_probabilities": {
+            "training_preferred": 0.0,
+            "inference_preferred": 0.0,
+            "balanced": 1.0,
+            "unavailable": 0.0
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "details": {
+            "training": {
+              "adapted": true,
+              "theoretical_latency_s": 0.06815703380588876,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            },
+            "inference": {
+              "adapted": true,
+              "theoretical_latency_s": 0.003170657467532467,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "rtx5090",
+            "architecture": "Blackwell",
+            "log2_distance": 0.0
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 79,
+            "validation_sign_correct": 79,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 12,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 83,
+            "validation_sign_correct": 83,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 12,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "label_zh": "训推一体型",
+        "reliability": "provisional_synthetic_validation_only"
+      },
+      "independent_reference_rule": {
+        "label_source": "synthetic",
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "details": {
+          "training": {
+            "adapted": true,
+            "theoretical_latency_s": 0.05452562704471101,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.0025365259740259736,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          }
+        },
+        "conservative_factor": 1.0,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+    }
+  ],
+  "l40": [
+    {
+      "event": "initial",
+      "device_id": "l40",
+      "model": "L40",
+      "hardware": {
+        "memory_capacity_mib": 45776,
+        "memory_bandwidth_gbps": 864,
+        "fp32_tflops": 90.5,
+        "fp16_dense_tflops": 181.05,
+        "bf16_dense_tflops": 181.05,
+        "int8_dense_tops": 362,
+        "max_board_power_w": 300
+      },
+      "hardware_sha256": "5b64fe85778b1caa3cdfaee39ba19991113cd7af490aaa6c7baa0bacb5c9551a",
+      "state": {
+        "free_memory_mib": 45776,
+        "free_compute_quota": 100,
+        "allocated_vgpu_count": 0,
+        "running_training_count": 0,
+        "running_inference_count": 0,
+        "instance_limit": 10,
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "data_kind": "synthetic_resource_state"
+      },
+      "prediction": {
+        "device_id": "l40",
+        "model": "L40",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": true,
+        "hard_constraints": {
+          "training": true,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "training_vote_fraction": 1.0,
+          "inference_vote_fraction": 1.0,
+          "class_probabilities": {
+            "training_preferred": 0.0,
+            "inference_preferred": 0.0,
+            "balanced": 1.0,
+            "unavailable": 0.0
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "details": {
+            "training": {
+              "adapted": true,
+              "theoretical_latency_s": 0.07892659826361484,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            },
+            "inference": {
+              "adapted": true,
+              "theoretical_latency_s": 0.00657617845117845,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "l40",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.0
+          },
+          {
+            "device_id": "l40s",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.017429806126376148
+          },
+          {
+            "device_id": "rtx4090",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 221,
+            "validation_sign_correct": 221,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 215,
+            "validation_sign_correct": 215,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "label_zh": "训推一体型",
+        "reliability": "provisional_synthetic_validation_only"
+      },
+      "independent_reference_rule": {
+        "label_source": "synthetic",
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "details": {
+          "training": {
+            "adapted": true,
+            "theoretical_latency_s": 0.06314127861089187,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.00526094276094276,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          }
+        },
+        "conservative_factor": 1.0,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+    },
+    {
+      "event": "allocate_compute_heavy_1000MiB_60quota",
+      "device_id": "l40",
+      "model": "L40",
+      "hardware": {
+        "memory_capacity_mib": 45776,
+        "memory_bandwidth_gbps": 864,
+        "fp32_tflops": 90.5,
+        "fp16_dense_tflops": 181.05,
+        "bf16_dense_tflops": 181.05,
+        "int8_dense_tops": 362,
+        "max_board_power_w": 300
+      },
+      "hardware_sha256": "5b64fe85778b1caa3cdfaee39ba19991113cd7af490aaa6c7baa0bacb5c9551a",
+      "state": {
+        "free_memory_mib": 44776,
+        "free_compute_quota": 40,
+        "allocated_vgpu_count": 1,
+        "running_training_count": 1,
+        "running_inference_count": 0,
+        "instance_limit": 10,
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "data_kind": "synthetic_resource_state"
+      },
+      "prediction": {
+        "device_id": "l40",
+        "model": "L40",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": true,
+        "hard_constraints": {
+          "training": true,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": true,
+          "inference": false,
+          "label": "training_preferred",
+          "training_vote_fraction": 1.0,
+          "inference_vote_fraction": 0.008333333333333333,
+          "class_probabilities": {
+            "training_preferred": 0.9916666666666667,
+            "inference_preferred": 0.0,
+            "balanced": 0.008333333333333333,
+            "unavailable": 0.0
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.9916666666666667,
+          "inference_preferred": 0.0,
+          "balanced": 0.008333333333333333,
+          "unavailable": 0.0
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": true,
+          "inference": false,
+          "label": "training_preferred",
+          "details": {
+            "training": {
+              "adapted": true,
+              "theoretical_latency_s": 0.19731649565903708,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            },
+            "inference": {
+              "adapted": false,
+              "theoretical_latency_s": 0.016440446127946123,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 0.6082560000000001
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "l40",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.0
+          },
+          {
+            "device_id": "l40s",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.017429806126376148
+          },
+          {
+            "device_id": "rtx4090",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 221,
+            "validation_sign_correct": 221,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": false,
+            "validation_sign_support": 78,
+            "validation_sign_correct": 78,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 30,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": true,
+        "inference": false,
+        "label": "training_preferred",
+        "label_zh": "训练优先型",
+        "reliability": "provisional_synthetic_validation_only"
+      },
+      "independent_reference_rule": {
+        "label_source": "synthetic",
+        "training": true,
+        "inference": false,
+        "label": "training_preferred",
+        "details": {
+          "training": {
+            "adapted": true,
+            "theoretical_latency_s": 0.15785319652722968,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          },
+          "inference": {
+            "adapted": false,
+            "theoretical_latency_s": 0.0131523569023569,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 0.7603200000000002
+          }
+        },
+        "conservative_factor": 1.0,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+    },
+    {
+      "event": "allocate_memory_heavy_5quota",
+      "device_id": "l40",
+      "model": "L40",
+      "hardware": {
+        "memory_capacity_mib": 45776,
+        "memory_bandwidth_gbps": 864,
+        "fp32_tflops": 90.5,
+        "fp16_dense_tflops": 181.05,
+        "bf16_dense_tflops": 181.05,
+        "int8_dense_tops": 362,
+        "max_board_power_w": 300
+      },
+      "hardware_sha256": "5b64fe85778b1caa3cdfaee39ba19991113cd7af490aaa6c7baa0bacb5c9551a",
+      "state": {
+        "free_memory_mib": 6000,
+        "free_compute_quota": 35,
+        "allocated_vgpu_count": 2,
+        "running_training_count": 1,
+        "running_inference_count": 1,
+        "instance_limit": 10,
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "data_kind": "synthetic_resource_state"
+      },
+      "prediction": {
+        "device_id": "l40",
+        "model": "L40",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": true,
+        "hard_constraints": {
+          "training": false,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": false,
+          "inference": false,
+          "label": "unavailable",
+          "training_vote_fraction": 0.0033333333333333335,
+          "inference_vote_fraction": 0.07847222222222222,
+          "class_probabilities": {
+            "training_preferred": 0.0030717592592592593,
+            "inference_preferred": 0.07821064814814815,
+            "balanced": 0.00026157407407407406,
+            "unavailable": 0.9184560185185185
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.0030717592592592593,
+          "inference_preferred": 0.07821064814814815,
+          "balanced": 0.00026157407407407406,
+          "unavailable": 0.9184560185185185
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": false,
+          "inference": false,
+          "label": "unavailable",
+          "details": {
+            "training": {
+              "adapted": false,
+              "theoretical_latency_s": 0.22550456646747102,
+              "resource_minimum_met": false,
+              "theoretical_suitability_score": 0.0
+            },
+            "inference": {
+              "adapted": false,
+              "theoretical_latency_s": 0.018789081289081286,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 0.5322240000000001
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "l40",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.0
+          },
+          {
+            "device_id": "l40s",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.017429806126376148
+          },
+          {
+            "device_id": "rtx4090",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "deterministic_reference_resource_filter",
+            "supported": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": false,
+            "validation_sign_support": 78,
+            "validation_sign_correct": 78,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 30,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": false,
+        "inference": false,
+        "label": "unavailable",
+        "label_zh": "当前不满足参考负载要求",
+        "reliability": "provisional_synthetic_validation_only"
+      },
+      "independent_reference_rule": {
+        "label_source": "synthetic",
+        "training": false,
+        "inference": false,
+        "label": "unavailable",
+        "details": {
+          "training": {
+            "adapted": false,
+            "theoretical_latency_s": 0.1804036531739768,
+            "resource_minimum_met": false,
+            "theoretical_suitability_score": 0.0
+          },
+          "inference": {
+            "adapted": false,
+            "theoretical_latency_s": 0.015031265031265032,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 0.66528
+          }
+        },
+        "conservative_factor": 1.0,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+    },
+    {
+      "event": "release_compute_heavy",
+      "device_id": "l40",
+      "model": "L40",
+      "hardware": {
+        "memory_capacity_mib": 45776,
+        "memory_bandwidth_gbps": 864,
+        "fp32_tflops": 90.5,
+        "fp16_dense_tflops": 181.05,
+        "bf16_dense_tflops": 181.05,
+        "int8_dense_tops": 362,
+        "max_board_power_w": 300
+      },
+      "hardware_sha256": "5b64fe85778b1caa3cdfaee39ba19991113cd7af490aaa6c7baa0bacb5c9551a",
+      "state": {
+        "free_memory_mib": 7000,
+        "free_compute_quota": 95,
+        "allocated_vgpu_count": 1,
+        "running_training_count": 0,
+        "running_inference_count": 1,
+        "instance_limit": 10,
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "data_kind": "synthetic_resource_state"
+      },
+      "prediction": {
+        "device_id": "l40",
+        "model": "L40",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": true,
+        "hard_constraints": {
+          "training": false,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": false,
+          "inference": true,
+          "label": "inference_preferred",
+          "training_vote_fraction": 0.0,
+          "inference_vote_fraction": 1.0,
+          "class_probabilities": {
+            "training_preferred": 0.0,
+            "inference_preferred": 1.0,
+            "balanced": 0.0,
+            "unavailable": 0.0
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 1.0,
+          "balanced": 0.0,
+          "unavailable": 0.0
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": false,
+          "inference": true,
+          "label": "inference_preferred",
+          "details": {
+            "training": {
+              "adapted": false,
+              "theoretical_latency_s": 0.08308062975117353,
+              "resource_minimum_met": false,
+              "theoretical_suitability_score": 0.0
+            },
+            "inference": {
+              "adapted": true,
+              "theoretical_latency_s": 0.006922293106503632,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "l40",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.0
+          },
+          {
+            "device_id": "l40s",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.017429806126376148
+          },
+          {
+            "device_id": "rtx4090",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "deterministic_reference_resource_filter",
+            "supported": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 215,
+            "validation_sign_correct": 215,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": false,
+        "inference": true,
+        "label": "inference_preferred",
+        "label_zh": "推理优先型",
+        "reliability": "provisional_synthetic_validation_only"
+      },
+      "independent_reference_rule": {
+        "label_source": "synthetic",
+        "training": false,
+        "inference": true,
+        "label": "inference_preferred",
+        "details": {
+          "training": {
+            "adapted": false,
+            "theoretical_latency_s": 0.06646450380093882,
+            "resource_minimum_met": false,
+            "theoretical_suitability_score": 0.0
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.005537834485202907,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          }
+        },
+        "conservative_factor": 1.0,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+    },
+    {
+      "event": "release_all",
+      "device_id": "l40",
+      "model": "L40",
+      "hardware": {
+        "memory_capacity_mib": 45776,
+        "memory_bandwidth_gbps": 864,
+        "fp32_tflops": 90.5,
+        "fp16_dense_tflops": 181.05,
+        "bf16_dense_tflops": 181.05,
+        "int8_dense_tops": 362,
+        "max_board_power_w": 300
+      },
+      "hardware_sha256": "5b64fe85778b1caa3cdfaee39ba19991113cd7af490aaa6c7baa0bacb5c9551a",
+      "state": {
+        "free_memory_mib": 45776,
+        "free_compute_quota": 100,
+        "allocated_vgpu_count": 0,
+        "running_training_count": 0,
+        "running_inference_count": 0,
+        "instance_limit": 10,
+        "quota_semantics": "synthetic_device_share_100_v1",
+        "data_kind": "synthetic_resource_state"
+      },
+      "prediction": {
+        "device_id": "l40",
+        "model": "L40",
+        "underlying_supervision": "synthetic",
+        "label_source": "model_prediction_not_ground_truth",
+        "known_model": true,
+        "hard_constraints": {
+          "training": true,
+          "inference": true
+        },
+        "raw_rf": {
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "training_vote_fraction": 1.0,
+          "inference_vote_fraction": 1.0,
+          "class_probabilities": {
+            "training_preferred": 0.0,
+            "inference_preferred": 0.0,
+            "balanced": 1.0,
+            "unavailable": 0.0
+          },
+          "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+          "vote_fraction_is_reliability": false
+        },
+        "class_probabilities": {
+          "training_preferred": 0.0,
+          "inference_preferred": 0.0,
+          "balanced": 1.0,
+          "unavailable": 0.0
+        },
+        "vote_fraction_is_reliability": false,
+        "empirical_performance_verified": false,
+        "missing_or_masked_features": [
+          "fp16_dense_tflops",
+          "bf16_dense_tflops",
+          "int8_dense_tops"
+        ],
+        "fallback": {
+          "label_source": "synthetic",
+          "training": true,
+          "inference": true,
+          "label": "balanced",
+          "details": {
+            "training": {
+              "adapted": true,
+              "theoretical_latency_s": 0.07892659826361484,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            },
+            "inference": {
+              "adapted": true,
+              "theoretical_latency_s": 0.00657617845117845,
+              "resource_minimum_met": true,
+              "theoretical_suitability_score": 1.0
+            }
+          },
+          "conservative_factor": 0.8,
+          "note": "Theoretical assumption only, not independently measured performance"
+        },
+        "reasons": [
+          "resource constraints and related binary validation cells passed; no real performance assurance"
+        ],
+        "outside_training_ranges": {},
+        "evidence_mode": "related_architecture_validation",
+        "related_validation_models": [
+          {
+            "device_id": "l40",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.0
+          },
+          {
+            "device_id": "l40s",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 0.017429806126376148
+          },
+          {
+            "device_id": "rtx4090",
+            "architecture": "Ada Lovelace",
+            "log2_distance": 1.0
+          }
+        ],
+        "target_validation_evidence": {
+          "training": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 221,
+            "validation_sign_correct": 221,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          },
+          "inference": {
+            "basis": "related_architecture_validation",
+            "predicted_sign": true,
+            "validation_sign_support": 215,
+            "validation_sign_correct": 215,
+            "validation_sign_precision": 1.0,
+            "validation_sign_episodes": 36,
+            "supported": true,
+            "not_a_calibrated_confidence_interval": true
+          }
+        },
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "label_zh": "训推一体型",
+        "reliability": "provisional_synthetic_validation_only"
+      },
+      "independent_reference_rule": {
+        "label_source": "synthetic",
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "details": {
+          "training": {
+            "adapted": true,
+            "theoretical_latency_s": 0.06314127861089187,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.00526094276094276,
+            "resource_minimum_met": true,
+            "theoretical_suitability_score": 1.0
+          }
+        },
+        "conservative_factor": 1.0,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+    }
+  ]
+}

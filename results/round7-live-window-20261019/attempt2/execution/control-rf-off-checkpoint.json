@@ -1,0 +1,112 @@
+{
+  "entries": [
+    {
+      "PodUID": "1882f62c-bc18-4ed9-8011-effabe201895",
+      "ContainerName": "sleep",
+      "ResourceName": "volcano.sh/vgpu-cores",
+      "DeviceIDs": [
+        "GPU-27be0024-0498-4114-e6b9-b2d0db148309-core-31",
+        "GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd-core-70",
+        "GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd-core-31",
+        "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e-core-19",
+        "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e-core-9",
+        "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e-core-4",
+        "GPU-27be0024-0498-4114-e6b9-b2d0db148309-core-41",
+        "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e-core-43"
+      ],
+      "device_id_count": 20,
+      "device_ids_truncated": true,
+      "allocation_response_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocate_envs": {},
+      "consumed_uuid_source": "kubelet_checkpoint_allocate_response"
+    },
+    {
+      "PodUID": "1882f62c-bc18-4ed9-8011-effabe201895",
+      "ContainerName": "sleep",
+      "ResourceName": "volcano.sh/vgpu-memory",
+      "DeviceIDs": [
+        "3-9151",
+        "1-15582",
+        "0-12301",
+        "3-6982",
+        "3-2070",
+        "1-14450",
+        "2-10883",
+        "3-6436"
+      ],
+      "device_id_count": 4096,
+      "device_ids_truncated": true,
+      "allocation_response_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocate_envs": {},
+      "consumed_uuid_source": "kubelet_checkpoint_allocate_response"
+    },
+    {
+      "PodUID": "1882f62c-bc18-4ed9-8011-effabe201895",
+      "ContainerName": "sleep",
+      "ResourceName": "volcano.sh/vgpu-number",
+      "DeviceIDs": [
+        "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e-1"
+      ],
+      "device_id_count": 1,
+      "device_ids_truncated": false,
+      "allocation_response_sha256": "df0f3920cbb506c37c8ae8c8c69a4eed71d18a62d9567b618303638a415cbe9d",
+      "allocate_envs": {
+        "CUDA_DEVICE_SM_LIMIT": "20",
+        "CUDA_DEVICE_MEMORY_LIMIT_0": "4096m",
+        "NVIDIA_VISIBLE_DEVICES": "GPU-27be0024-0498-4114-e6b9-b2d0db148309"
+      },
+      "consumed_uuid_source": "kubelet_checkpoint_allocate_response"
+    }
+  ],
+  "registered_devices": {
+    "nvidia.com/gpu": {
+      "count": 4,
+      "sample": [
+        "GPU-7b94f673-ce00-719b-2c94-706baa032dae",
+        "GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd",
+        "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e",
+        "GPU-27be0024-0498-4114-e6b9-b2d0db148309"
+      ]
+    },
+    "volcano.sh/vgpu-cores": {
+      "count": 400,
+      "sample": [
+        "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e-core-11",
+        "GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e-core-29",
+        "GPU-27be0024-0498-4114-e6b9-b2d0db148309-core-9",
+        "GPU-27be0024-0498-4114-e6b9-b2d0db148309-core-99",
+        "GPU-7b94f673-ce00-719b-2c94-706baa032dae-core-75",
+        "GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd-core-5",
+        "GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd-core-27",
+        "GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd-core-58"
+      ]
+    },
+    "volcano.sh/vgpu-memory": {
+      "count": 98256,
+      "sample": [
+        "3-20045",
+        "3-20270",
+        "0-23487",
+        "1-737",
+        "2-16868",
+        "2-21175",
+        "3-8846",
+        "1-5294"
+      ]
+    },
+    "volcano.sh/vgpu-number": {
+      "count": 40,
+      "sample": [
+        "GPU-7b94f673-ce00-719b-2c94-706baa032dae-1",
+        "GPU-7b94f673-ce00-719b-2c94-706baa032dae-9",
+        "GPU-27be0024-0498-4114-e6b9-b2d0db148309-0",
+        "GPU-27be0024-0498-4114-e6b9-b2d0db148309-8",
+        "GPU-27be0024-0498-4114-e6b9-b2d0db148309-9",
+        "GPU-7b94f673-ce00-719b-2c94-706baa032dae-0",
+        "GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd-3",
+        "GPU-27be0024-0498-4114-e6b9-b2d0db148309-1"
+      ]
+    }
+  },
+  "provenance": "direct kubelet checkpoint; UUID consumed evidence only when AllocateResponse.envs decoded for matching PodUID"
+}

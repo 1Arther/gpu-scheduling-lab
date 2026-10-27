@@ -1,0 +1,25 @@
+{
+  "contract_id": "cross-gpu-fp32-synthetic-v3",
+  "label_source": "synthetic",
+  "precision": "dense IEEE FP32 general/vector, NOT TF32 or matrix-FP32 peak",
+  "compute_efficiency_assumption": 0.35,
+  "bandwidth_efficiency_assumption": 0.55,
+  "bandwidth_sharing_assumption": "proportional to an EXPLICIT hypothetical device share; not native cross-vendor quota equivalence",
+  "training": {
+    "memory_mib": 8192,
+    "min_compute_quota": 20,
+    "work_tflop": 2.0,
+    "traffic_gb": 8.0,
+    "max_latency_s": 0.2,
+    "min_throughput_s": 5.0
+  },
+  "inference": {
+    "memory_mib": 4096,
+    "min_compute_quota": 10,
+    "work_tflop": 0.06,
+    "traffic_gb": 2.5,
+    "max_latency_s": 0.01,
+    "min_throughput_s": 100.0
+  },
+  "limitation": "Reference contracts and efficiencies are declared assumptions, not named-model benchmarks. Low-precision fields are not used to generate FP32 labels."
+}

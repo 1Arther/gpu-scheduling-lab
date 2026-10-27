@@ -1,0 +1,109 @@
+{
+  "sources": {
+    "nv_blackwell": {
+      "url": "https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf",
+      "publisher": "NVIDIA",
+      "locator": "Appendix A, Table 3, printed pp46-48; RTX3090/4090/5090 columns",
+      "status": "verified_official"
+    },
+    "nv_l40": {
+      "url": "https://images.nvidia.com/content/Solutions/data-center/vgpu-L40-datasheet.pdf",
+      "publisher": "NVIDIA",
+      "locator": "Technical Specifications p2, first value before sparse alternative",
+      "status": "verified_official"
+    },
+    "nv_l40s": {
+      "url": "https://www.nvidia.com/en-us/data-center/l40s/",
+      "publisher": "NVIDIA",
+      "locator": "Specifications; first value is dense; published 362.05 is retained without correcting the vendor's non-exact sparse ratio",
+      "status": "verified_official"
+    },
+    "nv_l4": {
+      "url": "https://www.nvidia.com/en-us/data-center/l4/",
+      "publisher": "NVIDIA",
+      "locator": "Specifications; FP16/BF16/INT8 figures carry sparsity footnote and are NOT used as dense values",
+      "status": "verified_official"
+    },
+    "nv_a10": {
+      "url": "https://www.nvidia.com/en-us/data-center/products/a10-gpu/",
+      "publisher": "NVIDIA",
+      "locator": "A10 Technical Specifications, non-starred dense values",
+      "status": "verified_official"
+    },
+    "nv_a30": {
+      "url": "https://www.nvidia.com/en-us/data-center/products/a30-gpu/",
+      "publisher": "NVIDIA",
+      "locator": "Specifications, non-starred dense values",
+      "status": "verified_official"
+    },
+    "nv_a100": {
+      "url": "https://www.nvidia.com/en-us/data-center/a100/",
+      "publisher": "NVIDIA",
+      "locator": "A100 80GB SXM standard 400W column; excludes custom CTS 500W SKU; dense non-starred numbers",
+      "status": "verified_official"
+    },
+    "nv_h100": {
+      "url": "https://www.nvidia.com/en-us/data-center/h100/",
+      "publisher": "NVIDIA",
+      "locator": "H100 SXM column only; sparse Tensor peaks retained as rejected observations, no undocumented halving",
+      "status": "verified_official"
+    },
+    "nv_h200": {
+      "url": "https://www.nvidia.com/en-us/data-center/h200/",
+      "publisher": "NVIDIA",
+      "locator": "H200 SXM column only; 4.8TB/s; sparse Tensor peaks not used as dense",
+      "status": "verified_official"
+    },
+    "nv_a40_pdf_v4": {
+      "url": "https://images.nvidia.com/content/Solutions/data-center/a40/nvidia-a40-datasheet.pdf",
+      "publisher": "NVIDIA",
+      "locator": "Mar22 datasheet, Specifications and sparsity footnote; non-Tensor FP32, first dense number",
+      "status": "verified_official"
+    },
+    "nv_a6000_v4": {
+      "url": "https://www.nvidia.com/content/dam/en-zz/Solutions/products/workstations/nvidia-rtx-a6000-datasheet.pdf",
+      "publisher": "NVIDIA",
+      "locator": "May22 datasheet p1 Specifications, p2 footnote8: Tensor309.7 uses sparsity; not dense FP16",
+      "status": "verified_official"
+    },
+    "nv_6000ada_v4": {
+      "url": "https://www.nvidia.com/content/dam/en-zz/Solutions/design-visualization/rtx-6000/proviz-print-rtx6000-datasheet-web-2504660.pdf",
+      "publisher": "NVIDIA",
+      "locator": "Feb23 datasheet p2 Technical Specifications; Tensor1457 is sparse FP8, not dense FP16/BF16/INT8",
+      "status": "verified_official"
+    },
+    "nv_5080_v4": {
+      "url": "https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf",
+      "publisher": "NVIDIA",
+      "locator": "Appendix B, Table4, printed pp49-51; RTX5080 column; FP16/BF16 Tensor FP32 accumulate dense112.6; INT8 dense450.2",
+      "status": "verified_official"
+    }
+  },
+  "devices": 15,
+  "architectures": {
+    "Ampere": 6,
+    "Ada Lovelace": 5,
+    "Blackwell": 2,
+    "Hopper": 2
+  },
+  "unknown_per_parameter": {
+    "memory_capacity_mib": 0,
+    "memory_bandwidth_gbps": 0,
+    "fp32_tflops": 0,
+    "fp16_dense_tflops": 5,
+    "bf16_dense_tflops": 5,
+    "int8_dense_tops": 5,
+    "max_board_power_w": 0
+  },
+  "masked_per_parameter": {
+    "memory_capacity_mib": 0,
+    "memory_bandwidth_gbps": 0,
+    "fp32_tflops": 0,
+    "fp16_dense_tflops": 15,
+    "bf16_dense_tflops": 15,
+    "int8_dense_tops": 15,
+    "max_board_power_w": 0
+  },
+  "measured_labels": 0,
+  "public_benchmark_labels": 0
+}

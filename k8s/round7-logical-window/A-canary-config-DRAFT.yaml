@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rf-v7-canary-config
+  namespace: volcano-system
+  labels:
+    gpu-lab/experiment: round7-rf
+data:
+  volcano-scheduler.conf: "actions: enqueue, allocate, backfill\ntiers:\n- plugins:\n\
+    \  - name: priority\n  - name: gang\n    enablePreemptable: false\n  - name: conformance\n\
+    - plugins:\n  - name: overcommit\n  - name: drf\n    enablePreemptable: false\n\
+    \  - name: deviceshare\n    arguments:\n      deviceshare.VGPUEnable: true\n \
+    \     deviceshare.GPUSelectPolicy: dqn-job\n      deviceshare.DQNGRPCEndpoint:\
+    \ dqn-scheduler-grpc.volcano-system.svc.cluster.local:50051\n      deviceshare.RFEnable:\
+    \ true\n      deviceshare.RFCanaryEnable: true\n      deviceshare.RFCanaryNamespace:\
+    \ gpu-rf-tests\n      deviceshare.RFCanaryScheduleWeight: 1\n      deviceshare.RFEndpoint:\
+    \ http://127.0.0.1:18081/v1/rank\n      deviceshare.RFTimeoutMS: 500\n      deviceshare.RFModelVersion:\
+    \ rf-v4-known-states-ee35cfabe30f\n      deviceshare.RFPredictionEnabled: true\n\
+    \  - name: predicates\n  - name: proportion\n  - name: nodeorder\n  - name: binpack\n"

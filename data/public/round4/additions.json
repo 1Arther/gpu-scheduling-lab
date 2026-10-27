@@ -1,0 +1,17 @@
+{
+  "schema_version": 4,
+  "verified_on": "2026-10-16",
+  "sources": {
+    "nv_a40_pdf_v4": {"url":"https://images.nvidia.com/content/Solutions/data-center/a40/nvidia-a40-datasheet.pdf","publisher":"NVIDIA","locator":"Mar22 datasheet, Specifications and sparsity footnote; non-Tensor FP32, first dense number","status":"verified_official"},
+    "nv_a6000_v4": {"url":"https://www.nvidia.com/content/dam/en-zz/Solutions/products/workstations/nvidia-rtx-a6000-datasheet.pdf","publisher":"NVIDIA","locator":"May22 datasheet p1 Specifications, p2 footnote8: Tensor309.7 uses sparsity; not dense FP16","status":"verified_official"},
+    "nv_6000ada_v4": {"url":"https://www.nvidia.com/content/dam/en-zz/Solutions/design-visualization/rtx-6000/proviz-print-rtx6000-datasheet-web-2504660.pdf","publisher":"NVIDIA","locator":"Feb23 datasheet p2 Technical Specifications; Tensor1457 is sparse FP8, not dense FP16/BF16/INT8","status":"verified_official"},
+    "nv_5080_v4": {"url":"https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf","publisher":"NVIDIA","locator":"Appendix B, Table4, printed pp49-51; RTX5080 column; FP16/BF16 Tensor FP32 accumulate dense112.6; INT8 dense450.2","status":"verified_official"}
+  },
+  "devices": [
+    {"id":"rtx_a6000","vendor":"NVIDIA","model":"RTX A6000 48GB PCIe","architecture":"Ampere","device_type":"GPU","scope":"single_PCIe_board","backend":"CUDA","source":"nv_a6000_v4","values":[48,768,38.7,null,null,null,300],"rejected_observations":{"tensor_sparsity_enabled_tflops":309.7},"note":"Not RTX6000 Ada; sparse Tensor number does not identify a dense precision-specific value."},
+    {"id":"rtx6000_ada","vendor":"NVIDIA","model":"RTX 6000 Ada 48GB PCIe","architecture":"Ada Lovelace","device_type":"GPU","scope":"single_PCIe_board","backend":"CUDA","source":"nv_6000ada_v4","values":[48,960,91.1,null,null,null,300],"rejected_observations":{"fp8_tensor_sparse_tflops":1457},"note":"Sparse FP8 is not FP16/BF16/INT8. No unverified division or precision substitution."},
+    {"id":"rtx5080","vendor":"NVIDIA","model":"GeForce RTX 5080 16GB reference","architecture":"Blackwell","device_type":"GPU","scope":"single_reference_board","backend":"CUDA","source":"nv_5080_v4","values":[16,960,56.3,112.6,112.6,450.2,360],"mixed_precision_basis":"FP16/BF16 Tensor FP32 accumulate, dense first number; INT8 accumulation not explicitly aligned"}
+  ],
+  "updates": [{"id":"a40","source":"nv_a40_pdf_v4","values":[48,696,37.4,149.7,149.7,299.3,300],"mixed_precision_basis":"FP16 Tensor FP16 accumulate; BF16 Tensor FP32 accumulate; dense first number","note":"Fourth-round official PDF fills the previous partial record. Does not rewrite the third-round source."}],
+  "scope_decision":"No B200 variant included: this minimal round does not have an audited, complete configuration-specific seven-field record. No inferred FP32/Tensor substitution."
+}

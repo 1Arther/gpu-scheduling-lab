@@ -1,0 +1,339 @@
+{
+  "data_kind": "evaluation_against_synthetic_analytical_reference_labels",
+  "real_gpu_performance_measurements": 0,
+  "seed": 20261016,
+  "generation": {
+    "seed": 20261016,
+    "episodes_per_profile": 300,
+    "steps": 16,
+    "duplicates_removed": 6177,
+    "samples": 9123,
+    "sampling": "uniform synthetic packing regimes, not a production workload distribution",
+    "label_counts": {
+      "balanced": 6238,
+      "unavailable": 2067,
+      "training_preferred": 420,
+      "inference_preferred": 398
+    }
+  },
+  "split_audit": {
+    "passed": true,
+    "overlaps": {
+      "train__validation__sample_id_overlap": 0,
+      "train__test__sample_id_overlap": 0,
+      "validation__test__sample_id_overlap": 0,
+      "train__validation__episode_id_overlap": 0,
+      "train__test__episode_id_overlap": 0,
+      "validation__test__episode_id_overlap": 0,
+      "train__validation__feature_sha256_overlap": 0,
+      "train__test__feature_sha256_overlap": 0,
+      "validation__test__feature_sha256_overlap": 0
+    },
+    "sizes": {
+      "train": 5399,
+      "validation": 1799,
+      "test": 1925
+    },
+    "episodes": {
+      "train": 540,
+      "validation": 180,
+      "test": 180
+    },
+    "class_counts": {
+      "train": {
+        "balanced": 3647,
+        "unavailable": 1253,
+        "training_preferred": 254,
+        "inference_preferred": 245
+      },
+      "validation": {
+        "balanced": 1230,
+        "inference_preferred": 71,
+        "unavailable": 414,
+        "training_preferred": 84
+      },
+      "test": {
+        "balanced": 1361,
+        "unavailable": 400,
+        "training_preferred": 82,
+        "inference_preferred": 82
+      }
+    },
+    "scope": "unseen synthetic states of the same three hardware profiles; not unseen-chip generalization"
+  },
+  "model": {
+    "seed": 20261016,
+    "algorithm": "RandomForestClassifier",
+    "feature_names": [
+      "memory_gb",
+      "bandwidth_gb_s",
+      "fp32_tflops",
+      "cuda_cores",
+      "tdp_w",
+      "remaining_memory_mib",
+      "remaining_compute_units",
+      "allocated_instances",
+      "training_instances",
+      "inference_instances",
+      "max_instances"
+    ],
+    "profile_ids": [
+      "l40",
+      "rtx4090",
+      "rtx5090"
+    ],
+    "fit_split": "train only",
+    "hyperparameters": {
+      "n_estimators": 240,
+      "max_features": 0.8,
+      "min_samples_leaf": 2,
+      "class_weight": "balanced_subsample",
+      "n_jobs": 1
+    },
+    "test_use": "single final evaluation; no test-set parameter selection",
+    "generalization": "same three public hardware profiles, new synthetic resource states",
+    "data_kind": "synthetic_training_data",
+    "hardware_catalog_sha256": "1152468659481237e64a27a1cefad7d3d95564d7ef65fadc24f7d78ac7e3ce57",
+    "reference_contract_sha256": "0d09f59a37306eb2a995d5cb0ac11c90068bd46362ee62650436e75bf35a4adf",
+    "contract_id": "fp32-reference-v1"
+  },
+  "classification": {
+    "train": {
+      "samples": 5399,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "labels": [
+        "training_preferred",
+        "inference_preferred",
+        "balanced",
+        "unavailable"
+      ],
+      "per_class": {
+        "training_preferred": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 254.0
+        },
+        "inference_preferred": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 245.0
+        },
+        "balanced": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 3647.0
+        },
+        "unavailable": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 1253.0
+        }
+      },
+      "confusion_matrix_true_rows_predicted_columns": [
+        [
+          254,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          245,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          3647,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1253
+        ]
+      ]
+    },
+    "validation": {
+      "samples": 1799,
+      "accuracy": 0.9983324068927182,
+      "macro_f1": 0.9946042775727195,
+      "labels": [
+        "training_preferred",
+        "inference_preferred",
+        "balanced",
+        "unavailable"
+      ],
+      "per_class": {
+        "training_preferred": {
+          "precision": 0.9879518072289156,
+          "recall": 0.9761904761904762,
+          "f1-score": 0.9820359281437125,
+          "support": 84.0
+        },
+        "inference_preferred": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 71.0
+        },
+        "balanced": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 1230.0
+        },
+        "unavailable": {
+          "precision": 0.9951807228915662,
+          "recall": 0.9975845410628019,
+          "f1-score": 0.9963811821471653,
+          "support": 414.0
+        }
+      },
+      "confusion_matrix_true_rows_predicted_columns": [
+        [
+          82,
+          0,
+          0,
+          2
+        ],
+        [
+          0,
+          71,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1230,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          413
+        ]
+      ]
+    },
+    "test": {
+      "samples": 1925,
+      "accuracy": 0.9989610389610389,
+      "macro_f1": 0.9965096598811203,
+      "labels": [
+        "training_preferred",
+        "inference_preferred",
+        "balanced",
+        "unavailable"
+      ],
+      "per_class": {
+        "training_preferred": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 82.0
+        },
+        "inference_preferred": {
+          "precision": 1.0,
+          "recall": 0.975609756097561,
+          "f1-score": 0.9876543209876543,
+          "support": 82.0
+        },
+        "balanced": {
+          "precision": 0.9992657856093979,
+          "recall": 1.0,
+          "f1-score": 0.9996327579875137,
+          "support": 1361.0
+        },
+        "unavailable": {
+          "precision": 0.9975062344139651,
+          "recall": 1.0,
+          "f1-score": 0.9987515605493134,
+          "support": 400.0
+        }
+      },
+      "confusion_matrix_true_rows_predicted_columns": [
+        [
+          82,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          80,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1361,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          400
+        ]
+      ]
+    }
+  },
+  "versions": {
+    "python": "3.12.10",
+    "numpy": "2.2.6",
+    "scikit_learn": "1.7.2"
+  },
+  "majority_baseline_test": {
+    "label_selected_from_train": "balanced",
+    "accuracy": 0.707012987012987,
+    "macro_f1": 0.2070906877662812
+  },
+  "test_by_profile": {
+    "rtx4090": {
+      "samples": 634,
+      "accuracy": 0.998422712933754,
+      "macro_f1_fixed_four_classes": 0.9968725398983754,
+      "class_counts": {
+        "balanced": 392,
+        "unavailable": 164,
+        "training_preferred": 33,
+        "inference_preferred": 45
+      },
+      "note": "Fixed-four-class macro-F1 includes zero for any class absent on this profile; inspect support counts"
+    },
+    "rtx5090": {
+      "samples": 700,
+      "accuracy": 0.9985714285714286,
+      "macro_f1_fixed_four_classes": 0.7445111492281304,
+      "class_counts": {
+        "balanced": 540,
+        "inference_preferred": 28,
+        "unavailable": 132
+      },
+      "note": "Fixed-four-class macro-F1 includes zero for any class absent on this profile; inspect support counts"
+    },
+    "l40": {
+      "samples": 591,
+      "accuracy": 1.0,
+      "macro_f1_fixed_four_classes": 1.0,
+      "class_counts": {
+        "balanced": 429,
+        "unavailable": 104,
+        "training_preferred": 49,
+        "inference_preferred": 9
+      },
+      "note": "Fixed-four-class macro-F1 includes zero for any class absent on this profile; inspect support counts"
+    }
+  },
+  "elapsed_seconds": 4.018412100005662
+}

@@ -1,0 +1,9 @@
+# Offline parsing example only. No executable workload is specified; do not apply.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: offline-inference-label-example
+  labels:
+    gpu-lab/workload-type: inference
+spec:
+  containers: []

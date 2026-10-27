@@ -1,0 +1,29 @@
+{
+  "scope": "new CPU-only frozen-RF experiments plus selected historical inference/HTTP/staging tests; no fitting or cluster operations",
+  "final": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "115",
+    "time": "8.803",
+    "timestamp": "2026-10-20T14:58:23.106659+08:00",
+    "hostname": "WIN-4QVUR09I55T"
+  },
+  "command": ".venv/Scripts/python.exe -m pytest tests/test_round8.py tests/test_round5.py tests/test_round6.py tests/test_rf_ablation.py tests/test_round7.py tests/test_round7_reassessment.py tests/test_round7_final_review.py tests/test_vgpu_audit_evidence.py --basetemp=.tmp/round8-pytest-final-20261020r2 --junitxml=results/round8-20261020/pytest-final-r2.xml --tb=short -q",
+  "model_bundle_unchanged_after_tests": true,
+  "new_Go_tests_this_round": false,
+  "historical_Linux_Go_evidence": "results/rf-ablation-20261019/linux-final/summary.json",
+  "initial_attempt": {
+    "xml": "pytest.xml",
+    "passed": 107,
+    "failed": 2,
+    "errors": 5,
+    "reason": "restricted system temp paths and loopback socket permissions"
+  },
+  "resolution": "project-local basetemp and permitted localhost-only HTTP test execution; runtime/model unchanged",
+  "intermediate_passed_xml": "pytest-final.xml",
+  "final_xml": "pytest-final-r2.xml",
+  "cluster_access": false,
+  "training": false
+}

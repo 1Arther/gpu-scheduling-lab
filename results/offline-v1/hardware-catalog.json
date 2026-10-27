@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "data_kind": "public_hardware_specifications",
+  "verified_date": "2026-10-16",
+  "precision": "dense non-Tensor FP32 at vendor boost clock; theoretical peak, not measured throughput",
+  "units": {"memory_gb": "vendor nominal GB", "bandwidth_gb_s": "decimal GB/s", "fp32_tflops": "10^12 floating-point operations/s", "tdp_w": "W"},
+  "sources": {
+    "blackwell_whitepaper": {
+      "publisher": "NVIDIA",
+      "title": "NVIDIA RTX Blackwell GPU Architecture v1.1",
+      "url": "https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf",
+      "locator": "Appendix A, Table 3, printed pages 46-48 (PDF pages 46-48)",
+      "fields": ["architecture", "memory_gb", "bandwidth_gb_s", "fp32_tflops", "cuda_cores", "tdp_w"],
+      "profiles": ["rtx4090", "rtx5090"]
+    },
+    "l40_datasheet": {
+      "publisher": "NVIDIA",
+      "title": "NVIDIA L40 Datasheet, Jan 2023",
+      "url": "https://images.nvidia.com/content/Solutions/data-center/vgpu-L40-datasheet.pdf",
+      "locator": "Technical Specifications, PDF page 2; vendor marks specifications preliminary",
+      "fields": ["architecture", "memory_gb", "bandwidth_gb_s", "fp32_tflops", "cuda_cores", "tdp_w"],
+      "profiles": ["l40"]
+    }
+  },
+  "gpus": [
+    {"profile_id": "rtx4090", "name": "NVIDIA GeForce RTX 4090", "vendor": "NVIDIA", "architecture": "Ada Lovelace", "memory_gb": 24, "bandwidth_gb_s": 1008, "fp32_tflops": 82.6, "cuda_cores": 16384, "tdp_w": 450, "source_id": "blackwell_whitepaper"},
+    {"profile_id": "rtx5090", "name": "NVIDIA GeForce RTX 5090", "vendor": "NVIDIA", "architecture": "Blackwell", "memory_gb": 32, "bandwidth_gb_s": 1792, "fp32_tflops": 104.8, "cuda_cores": 21760, "tdp_w": 575, "source_id": "blackwell_whitepaper"},
+    {"profile_id": "l40", "name": "NVIDIA L40", "vendor": "NVIDIA", "architecture": "Ada Lovelace", "memory_gb": 48, "bandwidth_gb_s": 864, "fp32_tflops": 90.5, "cuda_cores": 18176, "tdp_w": 300, "source_id": "l40_datasheet"}
+  ]
+}

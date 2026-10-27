@@ -1,0 +1,10 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicyBinding
+metadata:
+  name: rf-v7-gpu-window
+  labels:
+    gpu-lab/experiment: round7-rf
+spec:
+  policyName: rf-v7-gpu-window
+  validationActions:
+  - Deny

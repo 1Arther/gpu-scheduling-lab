@@ -1,0 +1,175 @@
+{
+  "devices": 22,
+  "eligible_GPU_records": 16,
+  "vendors": {
+    "NVIDIA": 12,
+    "AMD": 4,
+    "Intel": 2,
+    "Moore Threads": 1,
+    "Cambricon": 1,
+    "Huawei": 1,
+    "Biren": 1
+  },
+  "missing_per_field": {
+    "memory_capacity_mib": 2,
+    "memory_bandwidth_gbps": 3,
+    "fp32_tflops": 5,
+    "fp16_dense_tflops": 10,
+    "bf16_dense_tflops": 10,
+    "int8_dense_tops": 10,
+    "max_board_power_w": 1
+  },
+  "model_masked_per_field": {
+    "memory_capacity_mib": 2,
+    "memory_bandwidth_gbps": 3,
+    "fp32_tflops": 6,
+    "fp16_dense_tflops": 19,
+    "bf16_dense_tflops": 19,
+    "int8_dense_tops": 22,
+    "max_board_power_w": 1
+  },
+  "sources": {
+    "nv_blackwell": {
+      "url": "https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf",
+      "publisher": "NVIDIA",
+      "locator": "Appendix A, Table 3, printed pp46-48; RTX3090/4090/5090 columns",
+      "status": "verified_official"
+    },
+    "nv_l40": {
+      "url": "https://images.nvidia.com/content/Solutions/data-center/vgpu-L40-datasheet.pdf",
+      "publisher": "NVIDIA",
+      "locator": "Technical Specifications p2, first value before sparse alternative",
+      "status": "verified_official"
+    },
+    "nv_l40s": {
+      "url": "https://www.nvidia.com/en-us/data-center/l40s/",
+      "publisher": "NVIDIA",
+      "locator": "Specifications; first value is dense; published 362.05 is retained without correcting the vendor's non-exact sparse ratio",
+      "status": "verified_official"
+    },
+    "nv_l4": {
+      "url": "https://www.nvidia.com/en-us/data-center/l4/",
+      "publisher": "NVIDIA",
+      "locator": "Specifications; FP16/BF16/INT8 figures carry sparsity footnote and are NOT used as dense values",
+      "status": "verified_official"
+    },
+    "nv_a10": {
+      "url": "https://www.nvidia.com/en-us/data-center/products/a10-gpu/",
+      "publisher": "NVIDIA",
+      "locator": "A10 Technical Specifications, non-starred dense values",
+      "status": "verified_official"
+    },
+    "nv_a30": {
+      "url": "https://www.nvidia.com/en-us/data-center/products/a30-gpu/",
+      "publisher": "NVIDIA",
+      "locator": "Specifications, non-starred dense values",
+      "status": "verified_official"
+    },
+    "nv_a40": {
+      "url": "https://www.nvidia.com/en-us/data-center/a40/",
+      "publisher": "NVIDIA",
+      "locator": "Specifications: memory, bandwidth, power; compute not listed in selected current page",
+      "status": "verified_official_partial"
+    },
+    "nv_a100": {
+      "url": "https://www.nvidia.com/en-us/data-center/a100/",
+      "publisher": "NVIDIA",
+      "locator": "A100 80GB SXM standard 400W column; excludes custom CTS 500W SKU; dense non-starred numbers",
+      "status": "verified_official"
+    },
+    "nv_h100": {
+      "url": "https://www.nvidia.com/en-us/data-center/h100/",
+      "publisher": "NVIDIA",
+      "locator": "H100 SXM column only; sparse Tensor peaks retained as rejected observations, no undocumented halving",
+      "status": "verified_official"
+    },
+    "nv_h200": {
+      "url": "https://www.nvidia.com/en-us/data-center/h200/",
+      "publisher": "NVIDIA",
+      "locator": "H200 SXM column only; 4.8TB/s; sparse Tensor peaks not used as dense",
+      "status": "verified_official"
+    },
+    "amd_mi100": {
+      "url": "https://www.amd.com/en/products/accelerators/instinct/mi100.html",
+      "publisher": "AMD",
+      "locator": "GPU Specifications: FP32 23.1, not FP32 Matrix 46.1; Requirements/Memory",
+      "status": "verified_official"
+    },
+    "amd_mi210": {
+      "url": "https://www.amd.com/en/products/accelerators/instinct/mi200/mi210.html",
+      "publisher": "AMD",
+      "locator": "GPU Specifications: FP32 22.6, not Matrix 45.3; memory 1.6TB/s",
+      "status": "verified_official"
+    },
+    "amd_mi210_power": {
+      "url": "https://www.amd.com/content/dam/amd/en/documents/partner-hub/instinct/5-reasons-amd-instinct-mi210-research-innovation.pdf",
+      "publisher": "AMD",
+      "locator": "Technical info footnote: 64GB HBM2e PCIe 300W configuration at 1700MHz",
+      "status": "verified_official"
+    },
+    "amd_mi250x": {
+      "url": "https://www.amd.com/en/products/accelerators/instinct/mi200/mi250x.html",
+      "publisher": "AMD",
+      "locator": "GPU Specifications: FP32 47.9 not Matrix 95.7; 500W | 560W Peak; per OAM accelerator package, two GCDs",
+      "status": "verified_official"
+    },
+    "amd_mi300x": {
+      "url": "https://www.amd.com/en/products/accelerators/instinct/mi300/mi300x.html",
+      "publisher": "AMD",
+      "locator": "GPU Specifications non-sparse fields; 1.3PFLOPS/2.6POPS converted to 1300TFLOPS/2600TOPS; 5.3TB/s",
+      "status": "verified_official"
+    },
+    "intel_1550": {
+      "url": "https://www.intel.com/content/www/us/en/products/sku/232873/intel-data-center-gpu-max-1550/specifications.html",
+      "publisher": "Intel",
+      "locator": "GPU/Memory Specifications: 128GB,3276.8GB/s,600W; FLOPS not published in this selected source",
+      "status": "verified_official_partial"
+    },
+    "intel_max": {
+      "url": "https://www.intel.com/content/dam/www/central-libraries/us/en/documents/2023-01/data-center-gpu-max-series-product-brief.pdf",
+      "publisher": "Intel",
+      "locator": "pp2-3 Max1100 AIC:48GB,300W,Xe-HPC; do not substitute Xe Link bandwidth for memory bandwidth",
+      "status": "verified_official_partial"
+    },
+    "musa_s4000": {
+      "url": "https://docs.mthreads.com/s4000/s4000-doc-online/introduction/",
+      "publisher": "Moore Threads",
+      "locator": "Specifications: FP32 25TFLOPS,48GB,768GB/s,450W; Tensor sparsity/accumulator not specified",
+      "status": "verified_official"
+    },
+    "mlu370": {
+      "url": "https://www.cambricon.com/index.php?m=content&c=index&a=lists&catid=406",
+      "publisher": "Cambricon",
+      "locator": "MLU370-X8 Specifications:48GB,614.4GB/s,FP32 24,FP16/BF16 96,INT8 256,250W; whole dual-chip board, tensor sparsity not stated",
+      "status": "verified_official"
+    },
+    "biren_166c": {
+      "url": "https://sgc-prod.birentech.com/product/hardware/166c/",
+      "publisher": "Biren",
+      "locator": "Product description: peak board power 300W; no verified machine-readable dense FLOPS/memory fields in selected page",
+      "status": "verified_official_partial"
+    },
+    "ascend_910": {
+      "url": "https://solar.huawei.com/~/media/Solar/company/AnnualReport2019_en.pdf",
+      "publisher": "Huawei",
+      "locator": "2019 Annual Report, Ascend910 paragraph: FP16 256TFLOPS,INT8 512TOPS,chip maximum 310W; neither board power nor sparse/dense scope is specified",
+      "status": "verified_official_search_extract",
+      "limitation": "Large official PDF fetch exceeded browser size limit; official indexed excerpt verified, dense fields remain null"
+    }
+  },
+  "performance_label_sources": {
+    "measured": 0,
+    "public_benchmark": 0,
+    "unknown": 22
+  },
+  "audit_scope": "manual official-source audit, not a downloaded immutable vendor-page snapshot; offline replay reads curated source-records.json",
+  "important_limits": [
+    "FP32 vector/general peaks only; AMD matrix FP32 excluded",
+    "all nominal capacity GB -> conservative decimal MiB model, not live capacity",
+    "unqualified sparse figures retained only as rejected observations",
+    "unaligned low-precision accumulator/engine figures masked before RF",
+    "MI250X multi-die package hypothetical pooled resources ignore locality",
+    "no NPU unified supervision/execution model",
+    "Huawei large-PDF evidence limited to official indexed excerpt; all seven numeric fields remain null"
+  ]
+}

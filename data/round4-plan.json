@@ -1,0 +1,36 @@
+{
+  "plan_version":1,
+  "frozen_before_round4_labels_or_test_predictions":true,
+  "seed":20261017,
+  "episodes_per_device":60,
+  "steps":14,
+  "fresh_test_models":["rtx_a6000","rtx6000_ada","rtx5080"],
+  "fresh_test_policy":"Excluded from every fitting and validation partition, including known-state evaluation. Model lists fixed by official hardware availability and architecture membership, not label counts or observed accuracy.",
+  "source_shape_policy":"A10080GB SXM400W, H100SXM80GB, H200SXM141GB remain separate; no PCIe/SXM pooling or capacity-variant merging.",
+  "training":{"trees":120,"min_samples_leaf":[2,5],"max_features":0.85,"seed":20261017,"n_jobs":1},
+  "selection":"For each protocol: choose leaf on validation observed-class macro-F1 for each feature set; choose feature set on validation observed-class macro-F1, then validation accuracy, then fewer features. Test scored only after all selections are frozen. Four-class macro-F1 also always reported.",
+  "feature_sets":["baseline14","absolute_only","relative_memory","no_static_capacity","effective_compute","effective_bandwidth","effective_both","effective_both_balance"],
+  "protocols":{
+    "known_states":{"kind":"known_model_unseen_episode","exclude":["rtx_a6000","rtx6000_ada","rtx5080"]},
+    "A_ampere":{"kind":"same_architecture_unseen_model","train":["a10","a30","a40","a100_sxm80"],"validation":["rtx3090"],"test":["rtx_a6000"]},
+    "A_ada":{"kind":"same_architecture_unseen_model","train":["rtx4090","l4","l40s"],"validation":["l40"],"test":["rtx6000_ada"]},
+    "B_multi_architecture":{"kind":"multi_architecture_unseen_models","train":["a10","a30","a40","a100_sxm80","rtx4090","l4","l40s","h100_sxm","rtx5090"],"validation":["rtx3090","l40"],"test":["rtx_a6000","rtx6000_ada","rtx5080","h200_sxm"],"diagnostic_test_models":["h200_sxm"]},
+    "C_blackwell_holdout":{"kind":"entire_architecture_held_out","held_out_architecture":"Blackwell","train":["a10","a30","a40","a100_sxm80","rtx4090","l4","l40s","h200_sxm"],"validation":["rtx3090","l40","h100_sxm"],"test":["rtx5080","rtx5090"],"diagnostic_test_models":["rtx5090"]},
+    "D_a10_diagnostic":{"kind":"previously_observed_model_diagnostic","train":["a30","a40","a100_sxm80","rtx4090","l4","l40s","rtx5090","h200_sxm"],"validation":["rtx3090","l40","h100_sxm"],"test":["a10"],"diagnostic_test_models":["a10"]}
+  },
+  "quality_policy":{
+    "min_prediction_sign_support":20,
+    "min_prediction_sign_episodes":3,
+    "min_prediction_sign_precision":0.90,
+    "max_validation_neighbor_log2_distance":1.0,
+    "numeric_fallback_min_validation_models":2,
+    "reference_hard_constraints_override":true,
+    "static_core_out_of_training_range":"pending; do not stretch training bounds using test hardware",
+    "cohort":"Same architecture validation models within factor2 for all three core static fields; otherwise at least two numeric-neighbor validation models. Architecture is optional metadata for evidence routing, never RF input.",
+    "decision":"Each predicted binary sign needs validation support/precision in the related cohort. Missing an unrelated combined class does not reject every GPU. No RF probability threshold or global four-class switch.",
+    "limitations":"Correlated synthetic states; support and precision are operational checks, not calibrated real-world confidence. No thresholds selected on test results."
+  },
+  "unmodified_label_contract":"gpu_lab.crossgpu.theory.CONTRACT cross-gpu-fp32-synthetic-v3",
+  "omitted_same_architecture_tests":"Only two Hopper and two Blackwell models: insufficient distinct model groups for train/validation/test within one architecture.",
+  "real_performance_labels":0
+}

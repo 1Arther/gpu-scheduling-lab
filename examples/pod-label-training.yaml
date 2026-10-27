@@ -1,0 +1,9 @@
+# Offline parsing example only. No executable workload is specified; do not apply.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: offline-training-label-example
+  labels:
+    gpu-lab/workload-type: training
+spec:
+  containers: []

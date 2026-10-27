@@ -1,0 +1,36 @@
+{
+  "apiVersion": "v1",
+  "kind": "ResourceQuota",
+  "metadata": {
+    "creationTimestamp": "2026-10-19T11:39:15Z",
+    "labels": {
+      "gpu-lab/experiment": "round7-rf"
+    },
+    "name": "rf-v7-test-budget",
+    "namespace": "gpu-rf-tests",
+    "resourceVersion": "48019258",
+    "uid": "0c2c420c-2a3f-4b81-87d0-93d57cf5debe"
+  },
+  "spec": {
+    "hard": {
+      "pods": "4",
+      "requests.volcano.sh/vgpu-cores": "80",
+      "requests.volcano.sh/vgpu-memory": "16384",
+      "requests.volcano.sh/vgpu-number": "4"
+    }
+  },
+  "status": {
+    "hard": {
+      "pods": "4",
+      "requests.volcano.sh/vgpu-cores": "80",
+      "requests.volcano.sh/vgpu-memory": "16384",
+      "requests.volcano.sh/vgpu-number": "4"
+    },
+    "used": {
+      "pods": "0",
+      "requests.volcano.sh/vgpu-cores": "0",
+      "requests.volcano.sh/vgpu-memory": "0",
+      "requests.volcano.sh/vgpu-number": "0"
+    }
+  }
+}

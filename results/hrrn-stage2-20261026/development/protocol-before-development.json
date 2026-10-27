@@ -1,0 +1,86 @@
+{
+  "namespace": "hrrn-stage2-20261026-v1",
+  "dev_seeds": [
+    1103,
+    2207,
+    3301,
+    4409
+  ],
+  "test_seeds": [
+    900001,
+    1004730,
+    1109459,
+    1214188,
+    1318917,
+    1423646,
+    1528375,
+    1633104,
+    1737833,
+    1842562,
+    1947291,
+    2052020,
+    2156749,
+    2261478,
+    2366207,
+    2470936,
+    2575665,
+    2680394,
+    2785123,
+    2889852
+  ],
+  "grid": [
+    [
+      0.5,
+      0.5
+    ],
+    [
+      0.5,
+      2.0
+    ],
+    [
+      0.5,
+      8.0
+    ],
+    [
+      2.0,
+      0.5
+    ],
+    [
+      2.0,
+      2.0
+    ],
+    [
+      2.0,
+      8.0
+    ],
+    [
+      6.0,
+      0.5
+    ],
+    [
+      6.0,
+      2.0
+    ],
+    [
+      6.0,
+      8.0
+    ],
+    [
+      12.0,
+      0.5
+    ],
+    [
+      12.0,
+      2.0
+    ],
+    [
+      12.0,
+      8.0
+    ]
+  ],
+  "selection": "Guard mean slowdown <=1.05*HRRN; work >=.98*HRRN; small P95 <=1.1*HRRN+.25. Among feasible minimize P95/(HRRN P95+.1)+long fraction/(HRRN long fraction+.02). If none feasible: minimize summed normalized guard violations, then objective; report failure.",
+  "evaluator": "mean of per-trace metrics; equal condition weight within development; holdout equal scenario weight",
+  "long_wait_threshold": 8.0,
+  "tau_bounded_slowdown": 1.0,
+  "synthetic_only": true
+}

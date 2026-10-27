@@ -1,0 +1,59 @@
+commit b289ad75aca8240dc2a3bdfbb27feadb3e647860
+Author:     GPU Lab <gpu-lab@local.invalid>
+AuthorDate: Mon Oct 19 15:36:48 2026 +0800
+Commit:     GPU Lab <gpu-lab@local.invalid>
+CommitDate: Mon Oct 19 15:36:48 2026 +0800
+
+    Expose isolated RF prediction ablation configuration for preflight tests
+
+diff --git a/pkg/scheduler/plugins/deviceshare/deviceshare.go b/pkg/scheduler/plugins/deviceshare/deviceshare.go
+index 682cd1c..0478c21 100644
+--- a/pkg/scheduler/plugins/deviceshare/deviceshare.go
++++ b/pkg/scheduler/plugins/deviceshare/deviceshare.go
+@@ -52,6 +52,7 @@ const (
+ 	RFEndpointArgument      = "deviceshare.RFEndpoint"
+ 	RFModelVersionArgument  = "deviceshare.RFModelVersion"
+ 	RFTimeoutArgument       = "deviceshare.RFTimeoutMS"
++	RFPredictionArgument    = "deviceshare.RFPredictionEnabled"
+ 
+ 	KnownGeometriesCMName      = "deviceshare.KnownGeometriesCMName"
+ 	KnownGeometriesCMNamespace = "deviceshare.KnownGeometriesCMNamespace"
+@@ -98,6 +99,8 @@ func enablePredicate(dsp *deviceSharePlugin) {
+ 	args.GetString(&vgpu.RFEndpoint, RFEndpointArgument)
+ 	args.GetString(&vgpu.RFModelVersion, RFModelVersionArgument)
+ 	args.GetInt(&vgpu.RFTimeoutMS, RFTimeoutArgument)
++	vgpu.RFPredictionEnabled = true // same frozen weights; optional single-term ablation
++	args.GetBool(&vgpu.RFPredictionEnabled, RFPredictionArgument)
+ 	if vgpu.RFActive() {
+ 		if _, explicit := args[ScheduleWeight]; !explicit {
+ 			dsp.scheduleWeight = 1
+diff --git a/pkg/scheduler/plugins/deviceshare/rf_round7_test.go b/pkg/scheduler/plugins/deviceshare/rf_round7_test.go
+new file mode 100644
+index 0000000..c1f1c9f
+--- /dev/null
++++ b/pkg/scheduler/plugins/deviceshare/rf_round7_test.go
+@@ -0,0 +1,24 @@
++package deviceshare
++
++import (
++	"testing"
++
++	"volcano.sh/volcano/pkg/scheduler/api/devices/nvidia/vgpu"
++	"volcano.sh/volcano/pkg/scheduler/framework"
++)
++
++func TestRFPredictionArgumentDefaultAndOverride(t *testing.T) {
++	oldRF, oldPrediction, oldVGPU, oldPolicy := vgpu.RFEnabled, vgpu.RFPredictionEnabled, vgpu.VGPUEnable, vgpu.GPUSelectPolicy
++	t.Cleanup(func() {
++		vgpu.RFEnabled, vgpu.RFPredictionEnabled, vgpu.VGPUEnable, vgpu.GPUSelectPolicy = oldRF, oldPrediction, oldVGPU, oldPolicy
++	})
++	// VGPU disabled avoids any cluster config initialization in this unit test.
++	New(framework.Arguments{VGPUEnable: false, RFPredictionArgument: false})
++	if vgpu.RFPredictionEnabled || vgpu.RFActive() {
++		t.Fatal("explicit RF-term disable not honored")
++	}
++	New(framework.Arguments{VGPUEnable: false})
++	if !vgpu.RFPredictionEnabled || vgpu.RFEnabled {
++		t.Fatal("default changed")
++	}
++}

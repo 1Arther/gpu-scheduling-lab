@@ -1,0 +1,512 @@
+[
+  {
+    "event": "initial",
+    "device_id": "l40",
+    "model": "L40",
+    "hardware": {
+      "memory_capacity_mib": 45776,
+      "memory_bandwidth_gbps": 864,
+      "fp32_tflops": 90.5,
+      "fp16_dense_tflops": 181.05,
+      "bf16_dense_tflops": 181.05,
+      "int8_dense_tops": 362,
+      "max_board_power_w": 300
+    },
+    "hardware_sha256": "5b64fe85778b1caa3cdfaee39ba19991113cd7af490aaa6c7baa0bacb5c9551a",
+    "state": {
+      "free_memory_mib": 45776,
+      "free_compute_quota": 100,
+      "allocated_vgpu_count": 0,
+      "running_training_count": 0,
+      "running_inference_count": 0,
+      "instance_limit": 10,
+      "quota_semantics": "synthetic_device_share_100_v1",
+      "data_kind": "synthetic_resource_state"
+    },
+    "prediction": {
+      "device_id": "l40",
+      "model": "L40",
+      "label_source": "model_prediction_not_ground_truth",
+      "underlying_supervision": "synthetic",
+      "known_model": true,
+      "missing_or_masked_features": [
+        "fp16_dense_tflops",
+        "bf16_dense_tflops",
+        "int8_dense_tops"
+      ],
+      "vote_fraction_is_reliability": false,
+      "hard_constraints": {
+        "training": true,
+        "inference": true
+      },
+      "reasons": [
+        "RF numeric prediction within declared synthetic coverage; reference-specific, not a universal GPU property"
+      ],
+      "raw_rf": {
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "training_vote_fraction": 1.0,
+        "inference_vote_fraction": 1.0,
+        "vote_fraction_is_reliability": false
+      },
+      "coverage": {},
+      "empirical_performance_verified": false,
+      "fallback": {
+        "label_source": "synthetic",
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "details": {
+          "training": {
+            "adapted": true,
+            "theoretical_latency_s": 0.07892659826361484,
+            "resource_minimum_met": true
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.00657617845117845,
+            "resource_minimum_met": true
+          }
+        },
+        "conservative_factor": 0.8,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "reliability_basis": "held-out SYNTHETIC rule agreement + numeric/backend coverage; not real benchmark validation",
+      "training": true,
+      "inference": true,
+      "label": "balanced",
+      "label_zh": "训推一体型",
+      "reliability": "provisional_synthetic_model_only"
+    },
+    "independent_reference_rule": {
+      "label_source": "synthetic",
+      "training": true,
+      "inference": true,
+      "label": "balanced",
+      "details": {
+        "training": {
+          "adapted": true,
+          "theoretical_latency_s": 0.06314127861089187,
+          "resource_minimum_met": true
+        },
+        "inference": {
+          "adapted": true,
+          "theoretical_latency_s": 0.00526094276094276,
+          "resource_minimum_met": true
+        }
+      },
+      "conservative_factor": 1.0,
+      "note": "Theoretical assumption only, not independently measured performance"
+    },
+    "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+  },
+  {
+    "event": "allocate_compute_heavy_1000MiB_60quota",
+    "device_id": "l40",
+    "model": "L40",
+    "hardware": {
+      "memory_capacity_mib": 45776,
+      "memory_bandwidth_gbps": 864,
+      "fp32_tflops": 90.5,
+      "fp16_dense_tflops": 181.05,
+      "bf16_dense_tflops": 181.05,
+      "int8_dense_tops": 362,
+      "max_board_power_w": 300
+    },
+    "hardware_sha256": "5b64fe85778b1caa3cdfaee39ba19991113cd7af490aaa6c7baa0bacb5c9551a",
+    "state": {
+      "free_memory_mib": 44776,
+      "free_compute_quota": 40,
+      "allocated_vgpu_count": 1,
+      "running_training_count": 1,
+      "running_inference_count": 0,
+      "instance_limit": 10,
+      "quota_semantics": "synthetic_device_share_100_v1",
+      "data_kind": "synthetic_resource_state"
+    },
+    "prediction": {
+      "device_id": "l40",
+      "model": "L40",
+      "label_source": "model_prediction_not_ground_truth",
+      "underlying_supervision": "synthetic",
+      "known_model": true,
+      "missing_or_masked_features": [
+        "fp16_dense_tflops",
+        "bf16_dense_tflops",
+        "int8_dense_tops"
+      ],
+      "vote_fraction_is_reliability": false,
+      "hard_constraints": {
+        "training": true,
+        "inference": true
+      },
+      "reasons": [
+        "RF numeric prediction within declared synthetic coverage; reference-specific, not a universal GPU property"
+      ],
+      "raw_rf": {
+        "training": true,
+        "inference": false,
+        "label": "training_preferred",
+        "training_vote_fraction": 0.9531481481481481,
+        "inference_vote_fraction": 0.04074074074074074,
+        "vote_fraction_is_reliability": false
+      },
+      "coverage": {},
+      "empirical_performance_verified": false,
+      "fallback": {
+        "label_source": "synthetic",
+        "training": true,
+        "inference": false,
+        "label": "training_preferred",
+        "details": {
+          "training": {
+            "adapted": true,
+            "theoretical_latency_s": 0.19731649565903708,
+            "resource_minimum_met": true
+          },
+          "inference": {
+            "adapted": false,
+            "theoretical_latency_s": 0.016440446127946123,
+            "resource_minimum_met": true
+          }
+        },
+        "conservative_factor": 0.8,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "reliability_basis": "held-out SYNTHETIC rule agreement + numeric/backend coverage; not real benchmark validation",
+      "training": true,
+      "inference": false,
+      "label": "training_preferred",
+      "label_zh": "训练优先型",
+      "reliability": "provisional_synthetic_model_only"
+    },
+    "independent_reference_rule": {
+      "label_source": "synthetic",
+      "training": true,
+      "inference": false,
+      "label": "training_preferred",
+      "details": {
+        "training": {
+          "adapted": true,
+          "theoretical_latency_s": 0.15785319652722968,
+          "resource_minimum_met": true
+        },
+        "inference": {
+          "adapted": false,
+          "theoretical_latency_s": 0.0131523569023569,
+          "resource_minimum_met": true
+        }
+      },
+      "conservative_factor": 1.0,
+      "note": "Theoretical assumption only, not independently measured performance"
+    },
+    "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+  },
+  {
+    "event": "allocate_memory_heavy_5quota",
+    "device_id": "l40",
+    "model": "L40",
+    "hardware": {
+      "memory_capacity_mib": 45776,
+      "memory_bandwidth_gbps": 864,
+      "fp32_tflops": 90.5,
+      "fp16_dense_tflops": 181.05,
+      "bf16_dense_tflops": 181.05,
+      "int8_dense_tops": 362,
+      "max_board_power_w": 300
+    },
+    "hardware_sha256": "5b64fe85778b1caa3cdfaee39ba19991113cd7af490aaa6c7baa0bacb5c9551a",
+    "state": {
+      "free_memory_mib": 6000,
+      "free_compute_quota": 35,
+      "allocated_vgpu_count": 2,
+      "running_training_count": 1,
+      "running_inference_count": 1,
+      "instance_limit": 10,
+      "quota_semantics": "synthetic_device_share_100_v1",
+      "data_kind": "synthetic_resource_state"
+    },
+    "prediction": {
+      "device_id": "l40",
+      "model": "L40",
+      "label_source": "model_prediction_not_ground_truth",
+      "underlying_supervision": "synthetic",
+      "known_model": true,
+      "missing_or_masked_features": [
+        "fp16_dense_tflops",
+        "bf16_dense_tflops",
+        "int8_dense_tops"
+      ],
+      "vote_fraction_is_reliability": false,
+      "hard_constraints": {
+        "training": false,
+        "inference": true
+      },
+      "reasons": [
+        "RF numeric prediction within declared synthetic coverage; reference-specific, not a universal GPU property"
+      ],
+      "raw_rf": {
+        "training": false,
+        "inference": false,
+        "label": "unavailable",
+        "training_vote_fraction": 0.10379629629629632,
+        "inference_vote_fraction": 0.002777777777777778,
+        "vote_fraction_is_reliability": false
+      },
+      "coverage": {},
+      "empirical_performance_verified": false,
+      "fallback": {
+        "label_source": "synthetic",
+        "training": false,
+        "inference": false,
+        "label": "unavailable",
+        "details": {
+          "training": {
+            "adapted": false,
+            "theoretical_latency_s": 0.22550456646747102,
+            "resource_minimum_met": false
+          },
+          "inference": {
+            "adapted": false,
+            "theoretical_latency_s": 0.018789081289081286,
+            "resource_minimum_met": true
+          }
+        },
+        "conservative_factor": 0.8,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "reliability_basis": "held-out SYNTHETIC rule agreement + numeric/backend coverage; not real benchmark validation",
+      "training": false,
+      "inference": false,
+      "label": "unavailable",
+      "label_zh": "当前不满足参考负载要求",
+      "reliability": "provisional_synthetic_model_only"
+    },
+    "independent_reference_rule": {
+      "label_source": "synthetic",
+      "training": false,
+      "inference": false,
+      "label": "unavailable",
+      "details": {
+        "training": {
+          "adapted": false,
+          "theoretical_latency_s": 0.1804036531739768,
+          "resource_minimum_met": false
+        },
+        "inference": {
+          "adapted": false,
+          "theoretical_latency_s": 0.015031265031265032,
+          "resource_minimum_met": true
+        }
+      },
+      "conservative_factor": 1.0,
+      "note": "Theoretical assumption only, not independently measured performance"
+    },
+    "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+  },
+  {
+    "event": "release_compute_heavy",
+    "device_id": "l40",
+    "model": "L40",
+    "hardware": {
+      "memory_capacity_mib": 45776,
+      "memory_bandwidth_gbps": 864,
+      "fp32_tflops": 90.5,
+      "fp16_dense_tflops": 181.05,
+      "bf16_dense_tflops": 181.05,
+      "int8_dense_tops": 362,
+      "max_board_power_w": 300
+    },
+    "hardware_sha256": "5b64fe85778b1caa3cdfaee39ba19991113cd7af490aaa6c7baa0bacb5c9551a",
+    "state": {
+      "free_memory_mib": 7000,
+      "free_compute_quota": 95,
+      "allocated_vgpu_count": 1,
+      "running_training_count": 0,
+      "running_inference_count": 1,
+      "instance_limit": 10,
+      "quota_semantics": "synthetic_device_share_100_v1",
+      "data_kind": "synthetic_resource_state"
+    },
+    "prediction": {
+      "device_id": "l40",
+      "model": "L40",
+      "label_source": "model_prediction_not_ground_truth",
+      "underlying_supervision": "synthetic",
+      "known_model": true,
+      "missing_or_masked_features": [
+        "fp16_dense_tflops",
+        "bf16_dense_tflops",
+        "int8_dense_tops"
+      ],
+      "vote_fraction_is_reliability": false,
+      "hard_constraints": {
+        "training": false,
+        "inference": true
+      },
+      "reasons": [
+        "RF numeric prediction within declared synthetic coverage; reference-specific, not a universal GPU property"
+      ],
+      "raw_rf": {
+        "training": false,
+        "inference": true,
+        "label": "inference_preferred",
+        "training_vote_fraction": 0.021296296296296296,
+        "inference_vote_fraction": 0.9907407407407408,
+        "vote_fraction_is_reliability": false
+      },
+      "coverage": {},
+      "empirical_performance_verified": false,
+      "fallback": {
+        "label_source": "synthetic",
+        "training": false,
+        "inference": true,
+        "label": "inference_preferred",
+        "details": {
+          "training": {
+            "adapted": false,
+            "theoretical_latency_s": 0.08308062975117353,
+            "resource_minimum_met": false
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.006922293106503632,
+            "resource_minimum_met": true
+          }
+        },
+        "conservative_factor": 0.8,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "reliability_basis": "held-out SYNTHETIC rule agreement + numeric/backend coverage; not real benchmark validation",
+      "training": false,
+      "inference": true,
+      "label": "inference_preferred",
+      "label_zh": "推理优先型",
+      "reliability": "provisional_synthetic_model_only"
+    },
+    "independent_reference_rule": {
+      "label_source": "synthetic",
+      "training": false,
+      "inference": true,
+      "label": "inference_preferred",
+      "details": {
+        "training": {
+          "adapted": false,
+          "theoretical_latency_s": 0.06646450380093882,
+          "resource_minimum_met": false
+        },
+        "inference": {
+          "adapted": true,
+          "theoretical_latency_s": 0.005537834485202907,
+          "resource_minimum_met": true
+        }
+      },
+      "conservative_factor": 1.0,
+      "note": "Theoretical assumption only, not independently measured performance"
+    },
+    "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+  },
+  {
+    "event": "release_all",
+    "device_id": "l40",
+    "model": "L40",
+    "hardware": {
+      "memory_capacity_mib": 45776,
+      "memory_bandwidth_gbps": 864,
+      "fp32_tflops": 90.5,
+      "fp16_dense_tflops": 181.05,
+      "bf16_dense_tflops": 181.05,
+      "int8_dense_tops": 362,
+      "max_board_power_w": 300
+    },
+    "hardware_sha256": "5b64fe85778b1caa3cdfaee39ba19991113cd7af490aaa6c7baa0bacb5c9551a",
+    "state": {
+      "free_memory_mib": 45776,
+      "free_compute_quota": 100,
+      "allocated_vgpu_count": 0,
+      "running_training_count": 0,
+      "running_inference_count": 0,
+      "instance_limit": 10,
+      "quota_semantics": "synthetic_device_share_100_v1",
+      "data_kind": "synthetic_resource_state"
+    },
+    "prediction": {
+      "device_id": "l40",
+      "model": "L40",
+      "label_source": "model_prediction_not_ground_truth",
+      "underlying_supervision": "synthetic",
+      "known_model": true,
+      "missing_or_masked_features": [
+        "fp16_dense_tflops",
+        "bf16_dense_tflops",
+        "int8_dense_tops"
+      ],
+      "vote_fraction_is_reliability": false,
+      "hard_constraints": {
+        "training": true,
+        "inference": true
+      },
+      "reasons": [
+        "RF numeric prediction within declared synthetic coverage; reference-specific, not a universal GPU property"
+      ],
+      "raw_rf": {
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "training_vote_fraction": 1.0,
+        "inference_vote_fraction": 1.0,
+        "vote_fraction_is_reliability": false
+      },
+      "coverage": {},
+      "empirical_performance_verified": false,
+      "fallback": {
+        "label_source": "synthetic",
+        "training": true,
+        "inference": true,
+        "label": "balanced",
+        "details": {
+          "training": {
+            "adapted": true,
+            "theoretical_latency_s": 0.07892659826361484,
+            "resource_minimum_met": true
+          },
+          "inference": {
+            "adapted": true,
+            "theoretical_latency_s": 0.00657617845117845,
+            "resource_minimum_met": true
+          }
+        },
+        "conservative_factor": 0.8,
+        "note": "Theoretical assumption only, not independently measured performance"
+      },
+      "reliability_basis": "held-out SYNTHETIC rule agreement + numeric/backend coverage; not real benchmark validation",
+      "training": true,
+      "inference": true,
+      "label": "balanced",
+      "label_zh": "训推一体型",
+      "reliability": "provisional_synthetic_model_only"
+    },
+    "independent_reference_rule": {
+      "label_source": "synthetic",
+      "training": true,
+      "inference": true,
+      "label": "balanced",
+      "details": {
+        "training": {
+          "adapted": true,
+          "theoretical_latency_s": 0.06314127861089187,
+          "resource_minimum_met": true
+        },
+        "inference": {
+          "adapted": true,
+          "theoretical_latency_s": 0.00526094276094276,
+          "resource_minimum_met": true
+        }
+      },
+      "conservative_factor": 1.0,
+      "note": "Theoretical assumption only, not independently measured performance"
+    },
+    "data_kind": "constructed_synthetic_resource_trajectory_not_a_performance_test"
+  }
+]

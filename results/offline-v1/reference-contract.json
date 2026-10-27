@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "contract_id": "fp32-reference-v1",
+  "data_kind": "declared_synthetic_workload_contracts_not_measurements",
+  "precision": "FP32 dense non-Tensor",
+  "label_method": "analytical_reference_feasibility_v1",
+  "assumptions": {
+    "compute_efficiency": 0.35,
+    "bandwidth_efficiency": 0.55,
+    "max_instances_per_gpu": 10,
+    "compute_capacity_units": 100,
+    "reference_compute_reservation": "elastic: ceil(max(minimum quota, quota needed for latency and throughput)); capability test uses all currently remaining quota as an upper budget, not a promise at the minimum quota alone",
+    "memory_capacity_conversion": "floor(vendor_nominal_GB * 1000000000 / 1048576), conservative offline accounting assumption, not live allocatable VRAM",
+    "bandwidth_share": "remaining compute reservation fraction is used as a synthetic proportional bandwidth budget; vGPU software does not guarantee this isolation",
+    "task_type_contention": "none modeled; existing training/inference counts are input features but no invented measured interference coefficient",
+    "interpretation": "abstract reference operations and SLOs chosen before fitting; neither named-model benchmarks nor observed performance"
+  },
+  "workloads": [
+    {
+      "task_type": "training",
+      "name": "FP32 compute-intensive training-step reference",
+      "description": "Abstract forward/backward/update step; fixed resident tensors and optimizer budget. No real model has been executed.",
+      "memory_mib": 8192,
+      "min_compute_units": 20,
+      "work_tflop": 2.0,
+      "memory_traffic_gb": 8.0,
+      "max_latency_s": 0.2,
+      "min_throughput_per_s": 5.0,
+      "unit": "training step"
+    },
+    {
+      "task_type": "inference",
+      "name": "FP32 memory-intensive batch-1 inference reference",
+      "description": "Abstract request reading 2.5 decimal GB of weights/activations, approximately 625 million FP32 values, with 60 GFLOP work and a 4 GiB resident budget. No real model has been executed.",
+      "memory_mib": 4096,
+      "min_compute_units": 10,
+      "work_tflop": 0.06,
+      "memory_traffic_gb": 2.5,
+      "max_latency_s": 0.01,
+      "min_throughput_per_s": 100.0,
+      "unit": "inference request"
+    }
+  ]
+}

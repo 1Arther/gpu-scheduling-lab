@@ -1,0 +1,249 @@
+{
+  "feature_names": [
+    "memory_capacity_mib",
+    "memory_bandwidth_gbps",
+    "fp32_tflops",
+    "fp16_dense_tflops",
+    "bf16_dense_tflops",
+    "int8_dense_tops",
+    "max_board_power_w",
+    "free_memory_mib",
+    "free_compute_quota",
+    "allocated_vgpu_count",
+    "running_training_count",
+    "running_inference_count"
+  ],
+  "feature_set": "absolute_only",
+  "seed": 20261017,
+  "hyperparameters": {
+    "n_estimators": 120,
+    "min_samples_leaf": 2,
+    "max_features": 0.85
+  },
+  "identity_features_excluded": [
+    "device_id",
+    "model",
+    "vendor",
+    "architecture"
+  ],
+  "supervision": "synthetic_theoretical_contract_v3",
+  "test_used_for_selection": false,
+  "imputer_fit_scope": "training rows only",
+  "train_device_ids": [
+    "l4",
+    "l40s",
+    "rtx4090"
+  ],
+  "validation_devices": [
+    {
+      "device_id": "l40",
+      "architecture": "Ada Lovelace",
+      "hardware": {
+        "memory_capacity_mib": 45776,
+        "memory_bandwidth_gbps": 864,
+        "fp32_tflops": 90.5
+      },
+      "cells": {
+        "training": {
+          "0": {
+            "support": 141,
+            "correct": 141,
+            "episodes": 56
+          },
+          "1": {
+            "support": 330,
+            "correct": 330,
+            "episodes": 60
+          }
+        },
+        "inference": {
+          "0": {
+            "support": 176,
+            "correct": 176,
+            "episodes": 51
+          },
+          "1": {
+            "support": 295,
+            "correct": 295,
+            "episodes": 58
+          }
+        }
+      }
+    }
+  ],
+  "quality_policy": {
+    "min_prediction_sign_support": 20,
+    "min_prediction_sign_episodes": 3,
+    "min_prediction_sign_precision": 0.9,
+    "max_validation_neighbor_log2_distance": 1.0,
+    "numeric_fallback_min_validation_models": 2,
+    "reference_hard_constraints_override": true,
+    "static_core_out_of_training_range": "pending; do not stretch training bounds using test hardware",
+    "cohort": "Same architecture validation models within factor2 for all three core static fields; otherwise at least two numeric-neighbor validation models. Architecture is optional metadata for evidence routing, never RF input.",
+    "decision": "Each predicted binary sign needs validation support/precision in the related cohort. Missing an unrelated combined class does not reject every GPU. No RF probability threshold or global four-class switch.",
+    "limitations": "Correlated synthetic states; support and precision are operational checks, not calibrated real-world confidence. No thresholds selected on test results."
+  },
+  "static_core_training_ranges": {
+    "memory_capacity_mib": [
+      22888,
+      45776
+    ],
+    "memory_bandwidth_gbps": [
+      300,
+      1008
+    ],
+    "fp32_tflops": [
+      30.3,
+      91.6
+    ]
+  },
+  "validation_four_class_counts": {
+    "balanced": 280,
+    "training_preferred": 50,
+    "unavailable": 126,
+    "inference_preferred": 15
+  },
+  "no_global_missing_class_rejection": true,
+  "validation_metrics": {
+    "samples": 471,
+    "truth_kind": "synthetic",
+    "real_performance_labels": 0,
+    "accuracy": 1.0,
+    "macro_f1": 1.0,
+    "misclassified": 0,
+    "labels": [
+      "training_preferred",
+      "inference_preferred",
+      "balanced",
+      "unavailable"
+    ],
+    "class_counts": {
+      "balanced": 280,
+      "training_preferred": 50,
+      "unavailable": 126,
+      "inference_preferred": 15
+    },
+    "per_class_precision_recall_f1_support": {
+      "training_preferred": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 50.0
+      },
+      "inference_preferred": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 15.0
+      },
+      "balanced": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 280.0
+      },
+      "unavailable": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 126.0
+      }
+    },
+    "confusion_matrix_true_rows_predicted_columns": [
+      [
+        50,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        15,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        280,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        126
+      ]
+    ],
+    "targets": {
+      "training": {
+        "accuracy": 1.0,
+        "precision_recall_f1": {
+          "False": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 141.0
+          },
+          "True": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 330.0
+          },
+          "accuracy": 1.0,
+          "macro avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 471.0
+          },
+          "weighted avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 471.0
+          }
+        }
+      },
+      "inference": {
+        "accuracy": 1.0,
+        "precision_recall_f1": {
+          "False": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 176.0
+          },
+          "True": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 295.0
+          },
+          "accuracy": 1.0,
+          "macro avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 471.0
+          },
+          "weighted avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 471.0
+          }
+        }
+      }
+    },
+    "observed_true_classes": [
+      "balanced",
+      "inference_preferred",
+      "training_preferred",
+      "unavailable"
+    ],
+    "macro_f1_observed_classes": 1.0,
+    "complete_four_class_truth_coverage": true
+  }
+}

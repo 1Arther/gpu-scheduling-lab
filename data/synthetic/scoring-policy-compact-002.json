@@ -1,0 +1,9 @@
+{
+  "policy_id": "pod-aware-binpack-neighborhood-002-v2",
+  "data_kind": "declared_scheduler_heuristic_combined_with_RF_probabilities",
+  "weights": {"model_probability": 0.30, "hardware_sharing": 0.45, "packing": 0.15, "balance": 0.10},
+  "training": {"compute_weight": 0.80, "per_neighbor": 0.10, "per_opposite_type": 0.15},
+  "inference": {"compute_weight": 0.20, "per_neighbor": 0.22, "per_opposite_type": 0.40},
+  "packing_slack": 0.02,
+  "note": "Add a priority bonus to feasible cards within 0.02 of the best packing residual, then rank by RF/Pod hybrid score. Does not reject otherwise-feasible Pods. Candidate chosen only on disjoint validation trace seeds."
+}

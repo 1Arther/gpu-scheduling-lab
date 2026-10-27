@@ -1,0 +1,4490 @@
+{
+  "causes": [
+    "existing Pod lacks gpu-lab/workload-type; composition unknown, raw RF may be null",
+    "existing Pod has zero compute quota; unrestricted sharing retains diagnostic RF but falls back"
+  ],
+  "excluded_from_primary_ablation_counts": true,
+  "status_forced_by_test": false,
+  "trials": [
+    {
+      "case_id": "pending-unlabelled-5090-training",
+      "family": "explicit_pending_control",
+      "task": "training",
+      "strategy": "rf_on",
+      "pod_hash": "8a301071d2b481fd66217752a5d4554cf15598bc74d7de4a02020ef91fece6a2",
+      "snapshot_hash": "ea2593243fafb07724a8d3556f74bf9d34c89a3f4411aff00e5c16e3caa1208d",
+      "restored_hash": "ea2593243fafb07724a8d3556f74bf9d34c89a3f4411aff00e5c16e3caa1208d",
+      "allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+      "allocate_node": "pending-5090-unlabelled",
+      "recommended_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+      "candidates": [
+        {
+          "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+            "inference_adapted": null,
+            "input_sha256": "c15a927e560bb9edada62a3e1fbf664df307dac7eb593e62c9dfdea395234975",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unlabelled",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": null,
+            "real_performance_guarantee": false,
+            "reasons": [
+              "existing_unlabelled_allocations_have_unknown_task_composition"
+            ],
+            "reference_hard_constraints": {
+              "inference": false,
+              "training": false
+            },
+            "related_validation_models": [],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {}
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 60.4727837748169,
+          "conservative_fallback_contribution": 22.008,
+          "final_score": 60.4727837748169,
+          "node_score": 60.4727837748169,
+          "rounded_node_score": 60,
+          "packing_residual": 0.6743828012389977,
+          "device_rank": 1,
+          "node_rank": 1,
+          "global_rank": 1,
+          "final_allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-01",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-01",
+            "inference_adapted": null,
+            "input_sha256": "58c182722393b8f224ab96de16eaf419c101d527c9a3594cf8dc5f3e1f45e4c3",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unlabelled",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": null,
+            "real_performance_guarantee": false,
+            "reasons": [
+              "existing_unlabelled_allocations_have_unknown_task_composition"
+            ],
+            "reference_hard_constraints": {
+              "inference": false,
+              "training": false
+            },
+            "related_validation_models": [],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {}
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 60.4727837748169,
+          "conservative_fallback_contribution": 22.008,
+          "final_score": 60.4727837748169,
+          "node_score": 60.4727837748169,
+          "rounded_node_score": 60,
+          "packing_residual": 0.6743828012389977,
+          "device_rank": 2,
+          "node_rank": 1,
+          "global_rank": 2,
+          "final_allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-02",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-02",
+            "inference_adapted": null,
+            "input_sha256": "2ab18db36decdc0e6328193e2c7dbbec80f8b168535dc0c47c7f8a110b857a38",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unlabelled",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": null,
+            "real_performance_guarantee": false,
+            "reasons": [
+              "existing_unlabelled_allocations_have_unknown_task_composition"
+            ],
+            "reference_hard_constraints": {
+              "inference": false,
+              "training": false
+            },
+            "related_validation_models": [],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {}
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 60.4727837748169,
+          "conservative_fallback_contribution": 22.008,
+          "final_score": 60.4727837748169,
+          "node_score": 60.4727837748169,
+          "rounded_node_score": 60,
+          "packing_residual": 0.6743828012389977,
+          "device_rank": 3,
+          "node_rank": 1,
+          "global_rank": 3,
+          "final_allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-03",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-03",
+            "inference_adapted": null,
+            "input_sha256": "47c5e7a4652bab9613ddfd79d46fe7fc7b822f00d30441adb8e9bee51077ff16",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unlabelled",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": null,
+            "real_performance_guarantee": false,
+            "reasons": [
+              "existing_unlabelled_allocations_have_unknown_task_composition"
+            ],
+            "reference_hard_constraints": {
+              "inference": false,
+              "training": false
+            },
+            "related_validation_models": [],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {}
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 60.4727837748169,
+          "conservative_fallback_contribution": 22.008,
+          "final_score": 60.4727837748169,
+          "node_score": 60.4727837748169,
+          "rounded_node_score": 60,
+          "packing_residual": 0.6743828012389977,
+          "device_rank": 4,
+          "node_rank": 1,
+          "global_rank": 4,
+          "final_allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        }
+      ],
+      "before": [
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-01",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-02",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-03",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        }
+      ],
+      "after": [
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 8192,
+          "allocated_compute_quota": 45,
+          "allocated_vgpu_count": 2,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-01",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-02",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-03",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "pending-unlabelled-5090-training",
+      "family": "explicit_pending_control",
+      "task": "training",
+      "strategy": "rf_off",
+      "pod_hash": "8a301071d2b481fd66217752a5d4554cf15598bc74d7de4a02020ef91fece6a2",
+      "snapshot_hash": "ea2593243fafb07724a8d3556f74bf9d34c89a3f4411aff00e5c16e3caa1208d",
+      "restored_hash": "ea2593243fafb07724a8d3556f74bf9d34c89a3f4411aff00e5c16e3caa1208d",
+      "allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+      "allocate_node": "pending-5090-unlabelled",
+      "recommended_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+      "candidates": [
+        {
+          "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+            "inference_adapted": null,
+            "input_sha256": "c15a927e560bb9edada62a3e1fbf664df307dac7eb593e62c9dfdea395234975",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unlabelled",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": null,
+            "real_performance_guarantee": false,
+            "reasons": [
+              "existing_unlabelled_allocations_have_unknown_task_composition"
+            ],
+            "reference_hard_constraints": {
+              "inference": false,
+              "training": false
+            },
+            "related_validation_models": [],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {}
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 60.4727837748169,
+          "conservative_fallback_contribution": 22.008,
+          "final_score": 60.4727837748169,
+          "node_score": 60.4727837748169,
+          "rounded_node_score": 60,
+          "packing_residual": 0.6743828012389977,
+          "device_rank": 1,
+          "node_rank": 1,
+          "global_rank": 1,
+          "final_allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-01",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-01",
+            "inference_adapted": null,
+            "input_sha256": "58c182722393b8f224ab96de16eaf419c101d527c9a3594cf8dc5f3e1f45e4c3",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unlabelled",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": null,
+            "real_performance_guarantee": false,
+            "reasons": [
+              "existing_unlabelled_allocations_have_unknown_task_composition"
+            ],
+            "reference_hard_constraints": {
+              "inference": false,
+              "training": false
+            },
+            "related_validation_models": [],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {}
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 60.4727837748169,
+          "conservative_fallback_contribution": 22.008,
+          "final_score": 60.4727837748169,
+          "node_score": 60.4727837748169,
+          "rounded_node_score": 60,
+          "packing_residual": 0.6743828012389977,
+          "device_rank": 2,
+          "node_rank": 1,
+          "global_rank": 2,
+          "final_allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-02",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-02",
+            "inference_adapted": null,
+            "input_sha256": "2ab18db36decdc0e6328193e2c7dbbec80f8b168535dc0c47c7f8a110b857a38",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unlabelled",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": null,
+            "real_performance_guarantee": false,
+            "reasons": [
+              "existing_unlabelled_allocations_have_unknown_task_composition"
+            ],
+            "reference_hard_constraints": {
+              "inference": false,
+              "training": false
+            },
+            "related_validation_models": [],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {}
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 60.4727837748169,
+          "conservative_fallback_contribution": 22.008,
+          "final_score": 60.4727837748169,
+          "node_score": 60.4727837748169,
+          "rounded_node_score": 60,
+          "packing_residual": 0.6743828012389977,
+          "device_rank": 3,
+          "node_rank": 1,
+          "global_rank": 3,
+          "final_allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-03",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-03",
+            "inference_adapted": null,
+            "input_sha256": "47c5e7a4652bab9613ddfd79d46fe7fc7b822f00d30441adb8e9bee51077ff16",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unlabelled",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": null,
+            "real_performance_guarantee": false,
+            "reasons": [
+              "existing_unlabelled_allocations_have_unknown_task_composition"
+            ],
+            "reference_hard_constraints": {
+              "inference": false,
+              "training": false
+            },
+            "related_validation_models": [],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {}
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 60.4727837748169,
+          "conservative_fallback_contribution": 22.008,
+          "final_score": 60.4727837748169,
+          "node_score": 60.4727837748169,
+          "rounded_node_score": 60,
+          "packing_residual": 0.6743828012389977,
+          "device_rank": 4,
+          "node_rank": 1,
+          "global_rank": 4,
+          "final_allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        }
+      ],
+      "before": [
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-01",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-02",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-03",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        }
+      ],
+      "after": [
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 8192,
+          "allocated_compute_quota": 45,
+          "allocated_vgpu_count": 2,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-01",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-02",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-03",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "pending-unlabelled-5090-inference",
+      "family": "explicit_pending_control",
+      "task": "inference",
+      "strategy": "rf_on",
+      "pod_hash": "d69d3608b47fdd5c97c9269ca36eb236d0e3a15dfadc86323d114caaddf52d94",
+      "snapshot_hash": "ea2593243fafb07724a8d3556f74bf9d34c89a3f4411aff00e5c16e3caa1208d",
+      "restored_hash": "ea2593243fafb07724a8d3556f74bf9d34c89a3f4411aff00e5c16e3caa1208d",
+      "allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+      "allocate_node": "pending-5090-unlabelled",
+      "recommended_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+      "candidates": [
+        {
+          "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+            "inference_adapted": null,
+            "input_sha256": "c15a927e560bb9edada62a3e1fbf664df307dac7eb593e62c9dfdea395234975",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unlabelled",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": null,
+            "real_performance_guarantee": false,
+            "reasons": [
+              "existing_unlabelled_allocations_have_unknown_task_composition"
+            ],
+            "reference_hard_constraints": {
+              "inference": false,
+              "training": false
+            },
+            "related_validation_models": [],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {}
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 59.60428064515967,
+          "conservative_fallback_contribution": 23.654400000000003,
+          "final_score": 59.60428064515967,
+          "node_score": 59.60428064515967,
+          "rounded_node_score": 60,
+          "packing_residual": 0.6743828012389977,
+          "device_rank": 1,
+          "node_rank": 1,
+          "global_rank": 1,
+          "final_allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-01",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-01",
+            "inference_adapted": null,
+            "input_sha256": "58c182722393b8f224ab96de16eaf419c101d527c9a3594cf8dc5f3e1f45e4c3",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unlabelled",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": null,
+            "real_performance_guarantee": false,
+            "reasons": [
+              "existing_unlabelled_allocations_have_unknown_task_composition"
+            ],
+            "reference_hard_constraints": {
+              "inference": false,
+              "training": false
+            },
+            "related_validation_models": [],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {}
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 59.60428064515967,
+          "conservative_fallback_contribution": 23.654400000000003,
+          "final_score": 59.60428064515967,
+          "node_score": 59.60428064515967,
+          "rounded_node_score": 60,
+          "packing_residual": 0.6743828012389977,
+          "device_rank": 2,
+          "node_rank": 1,
+          "global_rank": 2,
+          "final_allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-02",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-02",
+            "inference_adapted": null,
+            "input_sha256": "2ab18db36decdc0e6328193e2c7dbbec80f8b168535dc0c47c7f8a110b857a38",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unlabelled",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": null,
+            "real_performance_guarantee": false,
+            "reasons": [
+              "existing_unlabelled_allocations_have_unknown_task_composition"
+            ],
+            "reference_hard_constraints": {
+              "inference": false,
+              "training": false
+            },
+            "related_validation_models": [],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {}
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 59.60428064515967,
+          "conservative_fallback_contribution": 23.654400000000003,
+          "final_score": 59.60428064515967,
+          "node_score": 59.60428064515967,
+          "rounded_node_score": 60,
+          "packing_residual": 0.6743828012389977,
+          "device_rank": 3,
+          "node_rank": 1,
+          "global_rank": 3,
+          "final_allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-03",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-03",
+            "inference_adapted": null,
+            "input_sha256": "47c5e7a4652bab9613ddfd79d46fe7fc7b822f00d30441adb8e9bee51077ff16",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unlabelled",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": null,
+            "real_performance_guarantee": false,
+            "reasons": [
+              "existing_unlabelled_allocations_have_unknown_task_composition"
+            ],
+            "reference_hard_constraints": {
+              "inference": false,
+              "training": false
+            },
+            "related_validation_models": [],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {}
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 59.60428064515967,
+          "conservative_fallback_contribution": 23.654400000000003,
+          "final_score": 59.60428064515967,
+          "node_score": 59.60428064515967,
+          "rounded_node_score": 60,
+          "packing_residual": 0.6743828012389977,
+          "device_rank": 4,
+          "node_rank": 1,
+          "global_rank": 4,
+          "final_allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        }
+      ],
+      "before": [
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-01",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-02",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-03",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        }
+      ],
+      "after": [
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 8192,
+          "allocated_compute_quota": 45,
+          "allocated_vgpu_count": 2,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 1,
+          "training_pod_count": 0,
+          "inference_pod_count": 1,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-01",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-02",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-03",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "pending-unlabelled-5090-inference",
+      "family": "explicit_pending_control",
+      "task": "inference",
+      "strategy": "rf_off",
+      "pod_hash": "d69d3608b47fdd5c97c9269ca36eb236d0e3a15dfadc86323d114caaddf52d94",
+      "snapshot_hash": "ea2593243fafb07724a8d3556f74bf9d34c89a3f4411aff00e5c16e3caa1208d",
+      "restored_hash": "ea2593243fafb07724a8d3556f74bf9d34c89a3f4411aff00e5c16e3caa1208d",
+      "allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+      "allocate_node": "pending-5090-unlabelled",
+      "recommended_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+      "candidates": [
+        {
+          "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+            "inference_adapted": null,
+            "input_sha256": "c15a927e560bb9edada62a3e1fbf664df307dac7eb593e62c9dfdea395234975",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unlabelled",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": null,
+            "real_performance_guarantee": false,
+            "reasons": [
+              "existing_unlabelled_allocations_have_unknown_task_composition"
+            ],
+            "reference_hard_constraints": {
+              "inference": false,
+              "training": false
+            },
+            "related_validation_models": [],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {}
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 59.60428064515967,
+          "conservative_fallback_contribution": 23.654400000000003,
+          "final_score": 59.60428064515967,
+          "node_score": 59.60428064515967,
+          "rounded_node_score": 60,
+          "packing_residual": 0.6743828012389977,
+          "device_rank": 1,
+          "node_rank": 1,
+          "global_rank": 1,
+          "final_allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-01",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-01",
+            "inference_adapted": null,
+            "input_sha256": "58c182722393b8f224ab96de16eaf419c101d527c9a3594cf8dc5f3e1f45e4c3",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unlabelled",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": null,
+            "real_performance_guarantee": false,
+            "reasons": [
+              "existing_unlabelled_allocations_have_unknown_task_composition"
+            ],
+            "reference_hard_constraints": {
+              "inference": false,
+              "training": false
+            },
+            "related_validation_models": [],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {}
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 59.60428064515967,
+          "conservative_fallback_contribution": 23.654400000000003,
+          "final_score": 59.60428064515967,
+          "node_score": 59.60428064515967,
+          "rounded_node_score": 60,
+          "packing_residual": 0.6743828012389977,
+          "device_rank": 2,
+          "node_rank": 1,
+          "global_rank": 2,
+          "final_allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-02",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-02",
+            "inference_adapted": null,
+            "input_sha256": "2ab18db36decdc0e6328193e2c7dbbec80f8b168535dc0c47c7f8a110b857a38",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unlabelled",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": null,
+            "real_performance_guarantee": false,
+            "reasons": [
+              "existing_unlabelled_allocations_have_unknown_task_composition"
+            ],
+            "reference_hard_constraints": {
+              "inference": false,
+              "training": false
+            },
+            "related_validation_models": [],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {}
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 59.60428064515967,
+          "conservative_fallback_contribution": 23.654400000000003,
+          "final_score": 59.60428064515967,
+          "node_score": 59.60428064515967,
+          "rounded_node_score": 60,
+          "packing_residual": 0.6743828012389977,
+          "device_rank": 3,
+          "node_rank": 1,
+          "global_rank": 3,
+          "final_allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-03",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unlabelled-GPU-03",
+            "inference_adapted": null,
+            "input_sha256": "47c5e7a4652bab9613ddfd79d46fe7fc7b822f00d30441adb8e9bee51077ff16",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unlabelled",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": null,
+            "real_performance_guarantee": false,
+            "reasons": [
+              "existing_unlabelled_allocations_have_unknown_task_composition"
+            ],
+            "reference_hard_constraints": {
+              "inference": false,
+              "training": false
+            },
+            "related_validation_models": [],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {}
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 59.60428064515967,
+          "conservative_fallback_contribution": 23.654400000000003,
+          "final_score": 59.60428064515967,
+          "node_score": 59.60428064515967,
+          "rounded_node_score": 60,
+          "packing_residual": 0.6743828012389977,
+          "device_rank": 4,
+          "node_rank": 1,
+          "global_rank": 4,
+          "final_allocate_uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        }
+      ],
+      "before": [
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-01",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-02",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-03",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        }
+      ],
+      "after": [
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-00",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 8192,
+          "allocated_compute_quota": 45,
+          "allocated_vgpu_count": 2,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 1,
+          "training_pod_count": 0,
+          "inference_pod_count": 1,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-01",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-02",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unlabelled-GPU-03",
+          "node": "pending-5090-unlabelled",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 20,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 0,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 0,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 0,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "pending-unrestricted-5090-training",
+      "family": "explicit_pending_control",
+      "task": "training",
+      "strategy": "rf_on",
+      "pod_hash": "4bca88902e79eca57d0ac80642af113f74f283b0c9d98f3f15055f53f44f72a7",
+      "snapshot_hash": "550b855d55f45e9f415cedec55aedf41f32f5141c8d01ee068f5deb535fc2dc2",
+      "restored_hash": "550b855d55f45e9f415cedec55aedf41f32f5141c8d01ee068f5deb535fc2dc2",
+      "allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+      "allocate_node": "pending-5090-unrestricted",
+      "recommended_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+      "candidates": [
+        {
+          "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+            "inference_adapted": null,
+            "input_sha256": "5dd8bbe2f9779e558d74f2140423a2f18bc242d61d9bf094578440f49a7aeca3",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unrestricted",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": {
+              "class_probabilities": {
+                "balanced": 1,
+                "inference_preferred": 0,
+                "training_preferred": 0,
+                "unavailable": 0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "inference": true,
+              "inference_vote_fraction": 1,
+              "label": "balanced",
+              "training": true,
+              "training_vote_fraction": 1,
+              "vote_fraction_is_reliability": false
+            },
+            "real_performance_guarantee": false,
+            "reasons": [
+              "unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"
+            ],
+            "reference_hard_constraints": {
+              "inference": true,
+              "training": true
+            },
+            "related_validation_models": [
+              {
+                "architecture": "Blackwell",
+                "device_id": "rtx5090",
+                "log2_distance": 0
+              }
+            ],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {
+              "inference": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 83,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 83
+              },
+              "training": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 79,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 79
+              }
+            }
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 61.248095824376804,
+          "conservative_fallback_contribution": 22.008,
+          "final_score": 61.248095824376804,
+          "node_score": 61.248095824376804,
+          "rounded_node_score": 61,
+          "packing_residual": 0.7543828012389978,
+          "device_rank": 1,
+          "node_rank": 1,
+          "global_rank": 1,
+          "final_allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-01",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-01",
+            "inference_adapted": null,
+            "input_sha256": "0dc8b85cf0f8440275da9b1569a8e9b060c7591f14b778912170c47c8d1f832b",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unrestricted",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": {
+              "class_probabilities": {
+                "balanced": 1,
+                "inference_preferred": 0,
+                "training_preferred": 0,
+                "unavailable": 0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "inference": true,
+              "inference_vote_fraction": 1,
+              "label": "balanced",
+              "training": true,
+              "training_vote_fraction": 1,
+              "vote_fraction_is_reliability": false
+            },
+            "real_performance_guarantee": false,
+            "reasons": [
+              "unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"
+            ],
+            "reference_hard_constraints": {
+              "inference": true,
+              "training": true
+            },
+            "related_validation_models": [
+              {
+                "architecture": "Blackwell",
+                "device_id": "rtx5090",
+                "log2_distance": 0
+              }
+            ],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {
+              "inference": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 83,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 83
+              },
+              "training": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 79,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 79
+              }
+            }
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 61.248095824376804,
+          "conservative_fallback_contribution": 22.008,
+          "final_score": 61.248095824376804,
+          "node_score": 61.248095824376804,
+          "rounded_node_score": 61,
+          "packing_residual": 0.7543828012389978,
+          "device_rank": 2,
+          "node_rank": 1,
+          "global_rank": 2,
+          "final_allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-02",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-02",
+            "inference_adapted": null,
+            "input_sha256": "5be35b9d725a09f8c36a81c248d13a05b322bc63501e2e4a92ee51c267dfb54a",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unrestricted",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": {
+              "class_probabilities": {
+                "balanced": 1,
+                "inference_preferred": 0,
+                "training_preferred": 0,
+                "unavailable": 0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "inference": true,
+              "inference_vote_fraction": 1,
+              "label": "balanced",
+              "training": true,
+              "training_vote_fraction": 1,
+              "vote_fraction_is_reliability": false
+            },
+            "real_performance_guarantee": false,
+            "reasons": [
+              "unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"
+            ],
+            "reference_hard_constraints": {
+              "inference": true,
+              "training": true
+            },
+            "related_validation_models": [
+              {
+                "architecture": "Blackwell",
+                "device_id": "rtx5090",
+                "log2_distance": 0
+              }
+            ],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {
+              "inference": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 83,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 83
+              },
+              "training": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 79,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 79
+              }
+            }
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 61.248095824376804,
+          "conservative_fallback_contribution": 22.008,
+          "final_score": 61.248095824376804,
+          "node_score": 61.248095824376804,
+          "rounded_node_score": 61,
+          "packing_residual": 0.7543828012389978,
+          "device_rank": 3,
+          "node_rank": 1,
+          "global_rank": 3,
+          "final_allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-03",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-03",
+            "inference_adapted": null,
+            "input_sha256": "63e6e34517ce0419e7a4f50cdc3b757896c400538bab6651ca1b72bec7e98c89",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unrestricted",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": {
+              "class_probabilities": {
+                "balanced": 1,
+                "inference_preferred": 0,
+                "training_preferred": 0,
+                "unavailable": 0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "inference": true,
+              "inference_vote_fraction": 1,
+              "label": "balanced",
+              "training": true,
+              "training_vote_fraction": 1,
+              "vote_fraction_is_reliability": false
+            },
+            "real_performance_guarantee": false,
+            "reasons": [
+              "unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"
+            ],
+            "reference_hard_constraints": {
+              "inference": true,
+              "training": true
+            },
+            "related_validation_models": [
+              {
+                "architecture": "Blackwell",
+                "device_id": "rtx5090",
+                "log2_distance": 0
+              }
+            ],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {
+              "inference": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 83,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 83
+              },
+              "training": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 79,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 79
+              }
+            }
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 61.248095824376804,
+          "conservative_fallback_contribution": 22.008,
+          "final_score": 61.248095824376804,
+          "node_score": 61.248095824376804,
+          "rounded_node_score": 61,
+          "packing_residual": 0.7543828012389978,
+          "device_rank": 4,
+          "node_rank": 1,
+          "global_rank": 4,
+          "final_allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        }
+      ],
+      "before": [
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-01",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-02",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-03",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        }
+      ],
+      "after": [
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 8192,
+          "allocated_compute_quota": 25,
+          "allocated_vgpu_count": 2,
+          "training_vgpu_count": 2,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 2,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-01",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-02",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-03",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "pending-unrestricted-5090-training",
+      "family": "explicit_pending_control",
+      "task": "training",
+      "strategy": "rf_off",
+      "pod_hash": "4bca88902e79eca57d0ac80642af113f74f283b0c9d98f3f15055f53f44f72a7",
+      "snapshot_hash": "550b855d55f45e9f415cedec55aedf41f32f5141c8d01ee068f5deb535fc2dc2",
+      "restored_hash": "550b855d55f45e9f415cedec55aedf41f32f5141c8d01ee068f5deb535fc2dc2",
+      "allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+      "allocate_node": "pending-5090-unrestricted",
+      "recommended_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+      "candidates": [
+        {
+          "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+            "inference_adapted": null,
+            "input_sha256": "5dd8bbe2f9779e558d74f2140423a2f18bc242d61d9bf094578440f49a7aeca3",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unrestricted",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": {
+              "class_probabilities": {
+                "balanced": 1,
+                "inference_preferred": 0,
+                "training_preferred": 0,
+                "unavailable": 0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "inference": true,
+              "inference_vote_fraction": 1,
+              "label": "balanced",
+              "training": true,
+              "training_vote_fraction": 1,
+              "vote_fraction_is_reliability": false
+            },
+            "real_performance_guarantee": false,
+            "reasons": [
+              "unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"
+            ],
+            "reference_hard_constraints": {
+              "inference": true,
+              "training": true
+            },
+            "related_validation_models": [
+              {
+                "architecture": "Blackwell",
+                "device_id": "rtx5090",
+                "log2_distance": 0
+              }
+            ],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {
+              "inference": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 83,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 83
+              },
+              "training": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 79,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 79
+              }
+            }
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 61.248095824376804,
+          "conservative_fallback_contribution": 22.008,
+          "final_score": 61.248095824376804,
+          "node_score": 61.248095824376804,
+          "rounded_node_score": 61,
+          "packing_residual": 0.7543828012389978,
+          "device_rank": 1,
+          "node_rank": 1,
+          "global_rank": 1,
+          "final_allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-01",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-01",
+            "inference_adapted": null,
+            "input_sha256": "0dc8b85cf0f8440275da9b1569a8e9b060c7591f14b778912170c47c8d1f832b",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unrestricted",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": {
+              "class_probabilities": {
+                "balanced": 1,
+                "inference_preferred": 0,
+                "training_preferred": 0,
+                "unavailable": 0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "inference": true,
+              "inference_vote_fraction": 1,
+              "label": "balanced",
+              "training": true,
+              "training_vote_fraction": 1,
+              "vote_fraction_is_reliability": false
+            },
+            "real_performance_guarantee": false,
+            "reasons": [
+              "unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"
+            ],
+            "reference_hard_constraints": {
+              "inference": true,
+              "training": true
+            },
+            "related_validation_models": [
+              {
+                "architecture": "Blackwell",
+                "device_id": "rtx5090",
+                "log2_distance": 0
+              }
+            ],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {
+              "inference": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 83,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 83
+              },
+              "training": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 79,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 79
+              }
+            }
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 61.248095824376804,
+          "conservative_fallback_contribution": 22.008,
+          "final_score": 61.248095824376804,
+          "node_score": 61.248095824376804,
+          "rounded_node_score": 61,
+          "packing_residual": 0.7543828012389978,
+          "device_rank": 2,
+          "node_rank": 1,
+          "global_rank": 2,
+          "final_allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-02",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-02",
+            "inference_adapted": null,
+            "input_sha256": "5be35b9d725a09f8c36a81c248d13a05b322bc63501e2e4a92ee51c267dfb54a",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unrestricted",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": {
+              "class_probabilities": {
+                "balanced": 1,
+                "inference_preferred": 0,
+                "training_preferred": 0,
+                "unavailable": 0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "inference": true,
+              "inference_vote_fraction": 1,
+              "label": "balanced",
+              "training": true,
+              "training_vote_fraction": 1,
+              "vote_fraction_is_reliability": false
+            },
+            "real_performance_guarantee": false,
+            "reasons": [
+              "unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"
+            ],
+            "reference_hard_constraints": {
+              "inference": true,
+              "training": true
+            },
+            "related_validation_models": [
+              {
+                "architecture": "Blackwell",
+                "device_id": "rtx5090",
+                "log2_distance": 0
+              }
+            ],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {
+              "inference": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 83,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 83
+              },
+              "training": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 79,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 79
+              }
+            }
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 61.248095824376804,
+          "conservative_fallback_contribution": 22.008,
+          "final_score": 61.248095824376804,
+          "node_score": 61.248095824376804,
+          "rounded_node_score": 61,
+          "packing_residual": 0.7543828012389978,
+          "device_rank": 3,
+          "node_rank": 1,
+          "global_rank": 3,
+          "final_allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-03",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-03",
+            "inference_adapted": null,
+            "input_sha256": "63e6e34517ce0419e7a4f50cdc3b757896c400538bab6651ca1b72bec7e98c89",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unrestricted",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": {
+              "class_probabilities": {
+                "balanced": 1,
+                "inference_preferred": 0,
+                "training_preferred": 0,
+                "unavailable": 0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "inference": true,
+              "inference_vote_fraction": 1,
+              "label": "balanced",
+              "training": true,
+              "training_vote_fraction": 1,
+              "vote_fraction_is_reliability": false
+            },
+            "real_performance_guarantee": false,
+            "reasons": [
+              "unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"
+            ],
+            "reference_hard_constraints": {
+              "inference": true,
+              "training": true
+            },
+            "related_validation_models": [
+              {
+                "architecture": "Blackwell",
+                "device_id": "rtx5090",
+                "log2_distance": 0
+              }
+            ],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {
+              "inference": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 83,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 83
+              },
+              "training": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 79,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 79
+              }
+            }
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 61.248095824376804,
+          "conservative_fallback_contribution": 22.008,
+          "final_score": 61.248095824376804,
+          "node_score": 61.248095824376804,
+          "rounded_node_score": 61,
+          "packing_residual": 0.7543828012389978,
+          "device_rank": 4,
+          "node_rank": 1,
+          "global_rank": 4,
+          "final_allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        }
+      ],
+      "before": [
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-01",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-02",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-03",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        }
+      ],
+      "after": [
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 8192,
+          "allocated_compute_quota": 25,
+          "allocated_vgpu_count": 2,
+          "training_vgpu_count": 2,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 2,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-01",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-02",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-03",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "pending-unrestricted-5090-inference",
+      "family": "explicit_pending_control",
+      "task": "inference",
+      "strategy": "rf_on",
+      "pod_hash": "4d9599e701aca76ab2c3460e9acc98bbe50048564e5fdbe904ec5397015df1ec",
+      "snapshot_hash": "550b855d55f45e9f415cedec55aedf41f32f5141c8d01ee068f5deb535fc2dc2",
+      "restored_hash": "550b855d55f45e9f415cedec55aedf41f32f5141c8d01ee068f5deb535fc2dc2",
+      "allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+      "allocate_node": "pending-5090-unrestricted",
+      "recommended_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+      "candidates": [
+        {
+          "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+            "inference_adapted": null,
+            "input_sha256": "5dd8bbe2f9779e558d74f2140423a2f18bc242d61d9bf094578440f49a7aeca3",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unrestricted",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": {
+              "class_probabilities": {
+                "balanced": 1,
+                "inference_preferred": 0,
+                "training_preferred": 0,
+                "unavailable": 0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "inference": true,
+              "inference_vote_fraction": 1,
+              "label": "balanced",
+              "training": true,
+              "training_vote_fraction": 1,
+              "vote_fraction_is_reliability": false
+            },
+            "real_performance_guarantee": false,
+            "reasons": [
+              "unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"
+            ],
+            "reference_hard_constraints": {
+              "inference": true,
+              "training": true
+            },
+            "related_validation_models": [
+              {
+                "architecture": "Blackwell",
+                "device_id": "rtx5090",
+                "log2_distance": 0
+              }
+            ],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {
+              "inference": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 83,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 83
+              },
+              "training": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 79,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 79
+              }
+            }
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 54.6874251173061,
+          "conservative_fallback_contribution": 23.654400000000003,
+          "final_score": 54.6874251173061,
+          "node_score": 54.6874251173061,
+          "rounded_node_score": 55,
+          "packing_residual": 0.7543828012389978,
+          "device_rank": 1,
+          "node_rank": 1,
+          "global_rank": 1,
+          "final_allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-01",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-01",
+            "inference_adapted": null,
+            "input_sha256": "0dc8b85cf0f8440275da9b1569a8e9b060c7591f14b778912170c47c8d1f832b",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unrestricted",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": {
+              "class_probabilities": {
+                "balanced": 1,
+                "inference_preferred": 0,
+                "training_preferred": 0,
+                "unavailable": 0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "inference": true,
+              "inference_vote_fraction": 1,
+              "label": "balanced",
+              "training": true,
+              "training_vote_fraction": 1,
+              "vote_fraction_is_reliability": false
+            },
+            "real_performance_guarantee": false,
+            "reasons": [
+              "unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"
+            ],
+            "reference_hard_constraints": {
+              "inference": true,
+              "training": true
+            },
+            "related_validation_models": [
+              {
+                "architecture": "Blackwell",
+                "device_id": "rtx5090",
+                "log2_distance": 0
+              }
+            ],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {
+              "inference": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 83,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 83
+              },
+              "training": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 79,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 79
+              }
+            }
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 54.6874251173061,
+          "conservative_fallback_contribution": 23.654400000000003,
+          "final_score": 54.6874251173061,
+          "node_score": 54.6874251173061,
+          "rounded_node_score": 55,
+          "packing_residual": 0.7543828012389978,
+          "device_rank": 2,
+          "node_rank": 1,
+          "global_rank": 2,
+          "final_allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-02",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-02",
+            "inference_adapted": null,
+            "input_sha256": "5be35b9d725a09f8c36a81c248d13a05b322bc63501e2e4a92ee51c267dfb54a",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unrestricted",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": {
+              "class_probabilities": {
+                "balanced": 1,
+                "inference_preferred": 0,
+                "training_preferred": 0,
+                "unavailable": 0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "inference": true,
+              "inference_vote_fraction": 1,
+              "label": "balanced",
+              "training": true,
+              "training_vote_fraction": 1,
+              "vote_fraction_is_reliability": false
+            },
+            "real_performance_guarantee": false,
+            "reasons": [
+              "unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"
+            ],
+            "reference_hard_constraints": {
+              "inference": true,
+              "training": true
+            },
+            "related_validation_models": [
+              {
+                "architecture": "Blackwell",
+                "device_id": "rtx5090",
+                "log2_distance": 0
+              }
+            ],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {
+              "inference": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 83,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 83
+              },
+              "training": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 79,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 79
+              }
+            }
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 54.6874251173061,
+          "conservative_fallback_contribution": 23.654400000000003,
+          "final_score": 54.6874251173061,
+          "node_score": 54.6874251173061,
+          "rounded_node_score": 55,
+          "packing_residual": 0.7543828012389978,
+          "device_rank": 3,
+          "node_rank": 1,
+          "global_rank": 3,
+          "final_allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-03",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-03",
+            "inference_adapted": null,
+            "input_sha256": "63e6e34517ce0419e7a4f50cdc3b757896c400538bab6651ca1b72bec7e98c89",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unrestricted",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": {
+              "class_probabilities": {
+                "balanced": 1,
+                "inference_preferred": 0,
+                "training_preferred": 0,
+                "unavailable": 0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "inference": true,
+              "inference_vote_fraction": 1,
+              "label": "balanced",
+              "training": true,
+              "training_vote_fraction": 1,
+              "vote_fraction_is_reliability": false
+            },
+            "real_performance_guarantee": false,
+            "reasons": [
+              "unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"
+            ],
+            "reference_hard_constraints": {
+              "inference": true,
+              "training": true
+            },
+            "related_validation_models": [
+              {
+                "architecture": "Blackwell",
+                "device_id": "rtx5090",
+                "log2_distance": 0
+              }
+            ],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {
+              "inference": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 83,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 83
+              },
+              "training": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 79,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 79
+              }
+            }
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 54.6874251173061,
+          "conservative_fallback_contribution": 23.654400000000003,
+          "final_score": 54.6874251173061,
+          "node_score": 54.6874251173061,
+          "rounded_node_score": 55,
+          "packing_residual": 0.7543828012389978,
+          "device_rank": 4,
+          "node_rank": 1,
+          "global_rank": 4,
+          "final_allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        }
+      ],
+      "before": [
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-01",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-02",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-03",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        }
+      ],
+      "after": [
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 8192,
+          "allocated_compute_quota": 25,
+          "allocated_vgpu_count": 2,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 1,
+          "training_pod_count": 1,
+          "inference_pod_count": 1,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-01",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-02",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-03",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "pending-unrestricted-5090-inference",
+      "family": "explicit_pending_control",
+      "task": "inference",
+      "strategy": "rf_off",
+      "pod_hash": "4d9599e701aca76ab2c3460e9acc98bbe50048564e5fdbe904ec5397015df1ec",
+      "snapshot_hash": "550b855d55f45e9f415cedec55aedf41f32f5141c8d01ee068f5deb535fc2dc2",
+      "restored_hash": "550b855d55f45e9f415cedec55aedf41f32f5141c8d01ee068f5deb535fc2dc2",
+      "allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+      "allocate_node": "pending-5090-unrestricted",
+      "recommended_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+      "candidates": [
+        {
+          "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+            "inference_adapted": null,
+            "input_sha256": "5dd8bbe2f9779e558d74f2140423a2f18bc242d61d9bf094578440f49a7aeca3",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unrestricted",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": {
+              "class_probabilities": {
+                "balanced": 1,
+                "inference_preferred": 0,
+                "training_preferred": 0,
+                "unavailable": 0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "inference": true,
+              "inference_vote_fraction": 1,
+              "label": "balanced",
+              "training": true,
+              "training_vote_fraction": 1,
+              "vote_fraction_is_reliability": false
+            },
+            "real_performance_guarantee": false,
+            "reasons": [
+              "unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"
+            ],
+            "reference_hard_constraints": {
+              "inference": true,
+              "training": true
+            },
+            "related_validation_models": [
+              {
+                "architecture": "Blackwell",
+                "device_id": "rtx5090",
+                "log2_distance": 0
+              }
+            ],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {
+              "inference": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 83,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 83
+              },
+              "training": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 79,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 79
+              }
+            }
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 54.6874251173061,
+          "conservative_fallback_contribution": 23.654400000000003,
+          "final_score": 54.6874251173061,
+          "node_score": 54.6874251173061,
+          "rounded_node_score": 55,
+          "packing_residual": 0.7543828012389978,
+          "device_rank": 1,
+          "node_rank": 1,
+          "global_rank": 1,
+          "final_allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-01",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-01",
+            "inference_adapted": null,
+            "input_sha256": "0dc8b85cf0f8440275da9b1569a8e9b060c7591f14b778912170c47c8d1f832b",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unrestricted",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": {
+              "class_probabilities": {
+                "balanced": 1,
+                "inference_preferred": 0,
+                "training_preferred": 0,
+                "unavailable": 0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "inference": true,
+              "inference_vote_fraction": 1,
+              "label": "balanced",
+              "training": true,
+              "training_vote_fraction": 1,
+              "vote_fraction_is_reliability": false
+            },
+            "real_performance_guarantee": false,
+            "reasons": [
+              "unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"
+            ],
+            "reference_hard_constraints": {
+              "inference": true,
+              "training": true
+            },
+            "related_validation_models": [
+              {
+                "architecture": "Blackwell",
+                "device_id": "rtx5090",
+                "log2_distance": 0
+              }
+            ],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {
+              "inference": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 83,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 83
+              },
+              "training": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 79,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 79
+              }
+            }
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 54.6874251173061,
+          "conservative_fallback_contribution": 23.654400000000003,
+          "final_score": 54.6874251173061,
+          "node_score": 54.6874251173061,
+          "rounded_node_score": 55,
+          "packing_residual": 0.7543828012389978,
+          "device_rank": 2,
+          "node_rank": 1,
+          "global_rank": 2,
+          "final_allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-02",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-02",
+            "inference_adapted": null,
+            "input_sha256": "5be35b9d725a09f8c36a81c248d13a05b322bc63501e2e4a92ee51c267dfb54a",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unrestricted",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": {
+              "class_probabilities": {
+                "balanced": 1,
+                "inference_preferred": 0,
+                "training_preferred": 0,
+                "unavailable": 0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "inference": true,
+              "inference_vote_fraction": 1,
+              "label": "balanced",
+              "training": true,
+              "training_vote_fraction": 1,
+              "vote_fraction_is_reliability": false
+            },
+            "real_performance_guarantee": false,
+            "reasons": [
+              "unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"
+            ],
+            "reference_hard_constraints": {
+              "inference": true,
+              "training": true
+            },
+            "related_validation_models": [
+              {
+                "architecture": "Blackwell",
+                "device_id": "rtx5090",
+                "log2_distance": 0
+              }
+            ],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {
+              "inference": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 83,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 83
+              },
+              "training": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 79,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 79
+              }
+            }
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 54.6874251173061,
+          "conservative_fallback_contribution": 23.654400000000003,
+          "final_score": 54.6874251173061,
+          "node_score": 54.6874251173061,
+          "rounded_node_score": 55,
+          "packing_residual": 0.7543828012389978,
+          "device_rank": 3,
+          "node_rank": 1,
+          "global_rank": 3,
+          "final_allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        },
+        {
+          "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-03",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "classification": {
+            "gpu_uuid": "SIM-pending-5090-unrestricted-GPU-03",
+            "inference_adapted": null,
+            "input_sha256": "63e6e34517ce0419e7a4f50cdc3b757896c400538bab6651ca1b72bec7e98c89",
+            "label": "pending_verification",
+            "label_zh": "信息不足、待验证",
+            "model_feature_mapping": {
+              "admission_uses_original_logical_mib": true,
+              "catalog_reference_capacity_mib": 30517,
+              "empirically_validated": false,
+              "logical_free_memory_mib": 28511,
+              "method": "registered_fraction_to_frozen_catalog_reference_v1",
+              "model_reference_free_memory_mib": 26683,
+              "registered_logical_capacity_mib": 32607
+            },
+            "model_limitations": [
+              "fixed dense-FP32 reference contracts only",
+              "hypothetical quota performance scaling",
+              "RF instance counters differ from distinct Pod counters",
+              "health/backend/resource admission remains independent"
+            ],
+            "model_load_error": null,
+            "model_version": "rf-v4-known-states-ee35cfabe30f",
+            "node": "pending-5090-unrestricted",
+            "outside_training_ranges": {},
+            "prediction_status": "pending_verification",
+            "quota_semantics": "volcano_hami_core_percent_100_v1",
+            "raw_rf": {
+              "class_probabilities": {
+                "balanced": 1,
+                "inference_preferred": 0,
+                "training_preferred": 0,
+                "unavailable": 0
+              },
+              "class_probability_basis": "product of two RF marginal estimates; independence approximation, not a calibrated joint posterior",
+              "inference": true,
+              "inference_vote_fraction": 1,
+              "label": "balanced",
+              "training": true,
+              "training_vote_fraction": 1,
+              "vote_fraction_is_reliability": false
+            },
+            "real_performance_guarantee": false,
+            "reasons": [
+              "unrestricted_compute_allocations_not_covered_by_RF_quota_assumptions"
+            ],
+            "reference_hard_constraints": {
+              "inference": true,
+              "training": true
+            },
+            "related_validation_models": [
+              {
+                "architecture": "Blackwell",
+                "device_id": "rtx5090",
+                "log2_distance": 0
+              }
+            ],
+            "resource_semantics": "scheduler reservation ledger, not observed GPU utilization",
+            "rf_probability_is_reliability": false,
+            "schema_version": "pod-gpu-api/v1",
+            "supervision": "synthetic",
+            "training_adapted": null,
+            "validation_evidence": {
+              "inference": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 83,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 83
+              },
+              "training": {
+                "basis": "related_architecture_validation",
+                "not_a_calibrated_confidence_interval": true,
+                "predicted_sign": true,
+                "supported": true,
+                "validation_sign_correct": 79,
+                "validation_sign_episodes": 12,
+                "validation_sign_precision": 1,
+                "validation_sign_support": 79
+              }
+            }
+          },
+          "rf_contribution": 0,
+          "potential_rf_contribution": 0,
+          "heuristic_contribution": 54.6874251173061,
+          "conservative_fallback_contribution": 23.654400000000003,
+          "final_score": 54.6874251173061,
+          "node_score": 54.6874251173061,
+          "rounded_node_score": 55,
+          "packing_residual": 0.7543828012389978,
+          "device_rank": 4,
+          "node_rank": 1,
+          "global_rank": 4,
+          "final_allocate_uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "native_hard_fit": true,
+          "classification_used_by_strategy": true
+        }
+      ],
+      "before": [
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-01",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-02",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-03",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        }
+      ],
+      "after": [
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-00",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 8192,
+          "allocated_compute_quota": 25,
+          "allocated_vgpu_count": 2,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 1,
+          "training_pod_count": 1,
+          "inference_pod_count": 1,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-01",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-02",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        },
+        {
+          "uuid": "SIM-pending-5090-unrestricted-GPU-03",
+          "node": "pending-5090-unrestricted",
+          "model": "NVIDIA-NVIDIA GeForce RTX 5090",
+          "registered_memory_mib": 32607,
+          "allocated_memory_mib": 4096,
+          "allocated_compute_quota": 0,
+          "allocated_vgpu_count": 1,
+          "training_vgpu_count": 1,
+          "inference_vgpu_count": 0,
+          "training_pod_count": 1,
+          "inference_pod_count": 0,
+          "unrestricted_vgpu_count": 1,
+          "max_instances": 10,
+          "healthy": true,
+          "sharing_mode": "hami-core",
+          "hardware": {
+            "bf16_dense_tflops": 209.5,
+            "fp16_dense_tflops": 209.5,
+            "fp32_tflops": 104.8,
+            "int8_dense_tops": 838,
+            "max_board_power_w": 575,
+            "memory_bandwidth_gbps": 1792,
+            "memory_capacity_mib": 30517
+          }
+        }
+      ]
+    }
+  ]
+}

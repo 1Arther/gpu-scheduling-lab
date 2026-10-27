@@ -1,0 +1,268 @@
+{
+  "schema": "hrrn-queue-mvp/v1",
+  "data_kind": "synthetic_only_not_GPU_performance",
+  "devices": [
+    {
+      "gpu_id": "mechanism-node/gpu-0",
+      "node": "mechanism-node",
+      "profile_id": "rtx4090",
+      "max_instances": 10
+    },
+    {
+      "gpu_id": "mechanism-node/gpu-1",
+      "node": "mechanism-node",
+      "profile_id": "rtx4090",
+      "max_instances": 10
+    }
+  ],
+  "jobs": [
+    {
+      "job_id": "00-background-1",
+      "arrival_at": 0.0,
+      "ready_at": 0.0,
+      "task_type": "training",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 13732,
+        "compute_units": 60,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 1.0,
+      "cancel_at": null
+    },
+    {
+      "job_id": "01-background-2",
+      "arrival_at": 0.0,
+      "ready_at": 0.0,
+      "task_type": "training",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 13732,
+        "compute_units": 60,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 2.0,
+      "cancel_at": null
+    },
+    {
+      "job_id": "10-large-two-gpu",
+      "arrival_at": 0.0,
+      "ready_at": 0.0,
+      "task_type": "training",
+      "estimated_service": 20.0,
+      "request": {
+        "memory_mib": 13732,
+        "compute_units": 60,
+        "instances": 1
+      },
+      "gpu_count": 2,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 3.0,
+      "cancel_at": null
+    },
+    {
+      "job_id": "30-spare-capacity",
+      "arrival_at": 1.1,
+      "ready_at": 1.1,
+      "task_type": "inference",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 4577,
+        "compute_units": 20,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 5.0,
+      "cancel_at": null
+    },
+    {
+      "job_id": "20-small-01",
+      "arrival_at": 1.0,
+      "ready_at": 1.0,
+      "task_type": "inference",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 13732,
+        "compute_units": 60,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 2.0,
+      "cancel_at": null
+    },
+    {
+      "job_id": "20-small-02",
+      "arrival_at": 2.0,
+      "ready_at": 2.0,
+      "task_type": "inference",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 13732,
+        "compute_units": 60,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 2.0,
+      "cancel_at": null
+    },
+    {
+      "job_id": "20-small-03",
+      "arrival_at": 3.0,
+      "ready_at": 3.0,
+      "task_type": "inference",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 13732,
+        "compute_units": 60,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 2.0,
+      "cancel_at": null
+    },
+    {
+      "job_id": "20-small-04",
+      "arrival_at": 4.0,
+      "ready_at": 4.0,
+      "task_type": "inference",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 13732,
+        "compute_units": 60,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 2.0,
+      "cancel_at": null
+    },
+    {
+      "job_id": "20-small-05",
+      "arrival_at": 5.0,
+      "ready_at": 5.0,
+      "task_type": "inference",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 13732,
+        "compute_units": 60,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 2.0,
+      "cancel_at": null
+    },
+    {
+      "job_id": "20-small-06",
+      "arrival_at": 6.0,
+      "ready_at": 6.0,
+      "task_type": "inference",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 13732,
+        "compute_units": 60,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 2.0,
+      "cancel_at": null
+    },
+    {
+      "job_id": "20-small-07",
+      "arrival_at": 7.0,
+      "ready_at": 7.0,
+      "task_type": "inference",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 13732,
+        "compute_units": 60,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 2.0,
+      "cancel_at": null
+    },
+    {
+      "job_id": "20-small-08",
+      "arrival_at": 8.0,
+      "ready_at": 8.0,
+      "task_type": "inference",
+      "estimated_service": 1.0,
+      "request": {
+        "memory_mib": 13732,
+        "compute_units": 60,
+        "instances": 1
+      },
+      "gpu_count": 1,
+      "allowed_profiles": [],
+      "node": null,
+      "tenant": "default",
+      "priority": 0,
+      "estimate_source": "synthetic_submitted_estimate",
+      "actual_service": 2.0,
+      "cancel_at": null
+    }
+  ],
+  "availability": [],
+  "config": {
+    "tau": 0.1,
+    "protection_absolute_wait": 0.5,
+    "protection_kappa": 2.0,
+    "evaluation_long_wait": 4.0,
+    "observation_end": 12.0
+  }
+}

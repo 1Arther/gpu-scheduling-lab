@@ -1,0 +1,53 @@
+{
+  "evidence_level": "real Go-Python HTTP + native Volcano GPUDevices Allocate + fake Kubernetes client; NOT live cluster",
+  "python": {
+    "tests": 167,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "go_packages": [
+    {
+      "Time": "2026-10-19T11:57:43.7324547+08:00",
+      "Action": "pass",
+      "Package": "volcano.sh/volcano/pkg/scheduler/api/devices/nvidia/vgpu",
+      "Elapsed": 2.418
+    }
+  ],
+  "go_passed_cases_including_subtests": 60,
+  "go_failed_cases": 0,
+  "go_skipped_cases": 0,
+  "frozen_artifacts_match": {
+    "random_forest.joblib": true,
+    "source-records.json": true,
+    "model-metadata.json": true,
+    "reference-contract.json": true,
+    "scoring-policy.json": true,
+    "dataset-summary.json": true
+  },
+  "original_dqn_files_unchanged": {
+    "pkg/scheduler/api/devices/nvidia/vgpu/dqn_client.go": true,
+    "pkg/scheduler/api/devices/nvidia/vgpu/dqngrpc/dqn_scheduler.pb.go": true,
+    "pkg/scheduler/api/devices/nvidia/vgpu/dqngrpc/dqn_scheduler.proto": true,
+    "pkg/scheduler/api/devices/nvidia/vgpu/dqngrpc/dqn_scheduler_grpc.pb.go": true
+  },
+  "modified_original_source_files": [
+    "pkg/scheduler/api/devices/nvidia/vgpu/device_info.go",
+    "pkg/scheduler/api/devices/nvidia/vgpu/utils.go",
+    "pkg/scheduler/plugins/deviceshare/deviceshare.go",
+    "pkg/scheduler/plugins/predicates/predicates.go"
+  ],
+  "source_original_git_head": "0c6f3bf706ad6790b1e806ef5e65c2ffdb3418ba",
+  "source_file_count": 1175,
+  "native_uuid_match_all": true,
+  "actual_http_exchanges": 22,
+  "http_response_uuid_matches_native_annotation": true,
+  "binary": {
+    "path": "results\\integration-v6\\bin\\vc-scheduler-rf-linux-amd64",
+    "size": 109493357,
+    "sha256": "0258359606179aa734219f16b427c5801293c786c6daa04cd565fe19e2a9ae34"
+  },
+  "model_version": "rf-v4-known-states-ee35cfabe30f",
+  "live_cluster_deployed": false,
+  "supervision": "synthetic"
+}

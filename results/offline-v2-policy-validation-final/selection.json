@@ -1,0 +1,54 @@
+{
+  "validation_seeds": [
+    20261017,
+    20261018
+  ],
+  "final_seeds_excluded": [
+    11,
+    29,
+    47
+  ],
+  "pods_per_trace": 120,
+  "scenarios": [
+    "steady_mixed",
+    "bursty_mixed",
+    "training_heavy",
+    "memory_heavy"
+  ],
+  "objective": "mean(.30*(wait+1)/(baseline_wait+1)+.35*train_JCT/baseline+.35*inference_P95/baseline)",
+  "candidates": [
+    {
+      "variant": "original_v1",
+      "normalized_validation_cost": 0.9795026076608359,
+      "eligible_for_main_ML_policy": true
+    },
+    {
+      "variant": "compact_002",
+      "normalized_validation_cost": 1.0303672321476742,
+      "eligible_for_main_ML_policy": true
+    },
+    {
+      "variant": "compact_006",
+      "normalized_validation_cost": 1.0223031812005874,
+      "eligible_for_main_ML_policy": true
+    },
+    {
+      "variant": "memory_guard",
+      "normalized_validation_cost": 0.9954405098605658,
+      "eligible_for_main_ML_policy": true
+    },
+    {
+      "variant": "no_rf_ablation",
+      "normalized_validation_cost": 1.049521222736454,
+      "eligible_for_main_ML_policy": false
+    }
+  ],
+  "selected": {
+    "variant": "original_v1",
+    "normalized_validation_cost": 0.9795026076608359,
+    "eligible_for_main_ML_policy": true
+  },
+  "selected_source": "C:\\Users\\EDY\\Documents\\ChatGPT\\vGPU调度\\gpu-scheduling-lab\\data\\synthetic\\scoring-policy.json",
+  "source_sha256": "c05a0144bcfb1f8a8d58da25ae450e3d4569c003b199da5419edd53ac5e46d78",
+  "limitations": "Synthetic validation on this fixed execution model, not real-world calibration; no-rf is an attribution ablation, not an eligible ML policy"
+}

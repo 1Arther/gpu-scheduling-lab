@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: offline-training-large-memory
+  labels:
+    gpu-lab/workload-type: training
+spec:
+  schedulerName: volcano
+  containers:
+    - name: workload
+      image: placeholder-not-pulled-or-executed
+      resources:
+        limits:
+          volcano.sh/vgpu-number: 1
+          volcano.sh/vgpu-memory: 36864
+          volcano.sh/vgpu-cores: 50

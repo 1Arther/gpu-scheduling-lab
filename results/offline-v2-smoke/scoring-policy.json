@@ -1,0 +1,9 @@
+{
+  "policy_id": "pod-aware-hybrid-v1",
+  "data_kind": "declared_scheduler_heuristic_combined_with_RF_probabilities",
+  "weights": {"model_probability": 0.30, "hardware_sharing": 0.45, "packing": 0.15, "balance": 0.10},
+  "training": {"compute_weight": 0.80, "per_neighbor": 0.10, "per_opposite_type": 0.15},
+  "inference": {"compute_weight": 0.20, "per_neighbor": 0.22, "per_opposite_type": 0.40},
+  "quota_factor": "0.5 + 0.5 * requested_compute_units / 100",
+  "note": "Only the class-probability component is learned. Other weights are explicit heuristics, fixed before evaluation. Labels are soft hints, never hard admission checks. Execution parameters are not imported or fitted here."
+}

@@ -1,0 +1,9 @@
+{
+  "policy_id": "pod-aware-no-rf-ablation",
+  "data_kind": "heuristic_only_ablation_not_a_main_strategy",
+  "weights": {"model_probability": 0.0, "hardware_sharing": 0.6428571428571429, "packing": 0.2142857142857143, "balance": 0.14285714285714288},
+  "training": {"compute_weight": 0.80, "per_neighbor": 0.10, "per_opposite_type": 0.15},
+  "inference": {"compute_weight": 0.20, "per_neighbor": 0.22, "per_opposite_type": 0.40},
+  "packing_slack": 0.02,
+  "note": "RF probabilities still displayed but receive zero ranking weight. The same packing guard is used for attribution. Never claimed to be an ML policy."
+}

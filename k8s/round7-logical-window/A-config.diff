@@ -1,0 +1,23 @@
+--- online-config-unchanged
++++ new-canary-config-DRAFT
+@@ -1,4 +1,4 @@
+-actions: "enqueue, allocate, backfill"
++actions: enqueue, allocate, backfill
+ tiers:
+ - plugins:
+   - name: priority
+@@ -14,6 +14,14 @@
+       deviceshare.VGPUEnable: true
+       deviceshare.GPUSelectPolicy: dqn-job
+       deviceshare.DQNGRPCEndpoint: dqn-scheduler-grpc.volcano-system.svc.cluster.local:50051
++      deviceshare.RFEnable: true
++      deviceshare.RFCanaryEnable: true
++      deviceshare.RFCanaryNamespace: gpu-rf-tests
++      deviceshare.RFCanaryScheduleWeight: 1
++      deviceshare.RFEndpoint: http://127.0.0.1:18081/v1/rank
++      deviceshare.RFTimeoutMS: 500
++      deviceshare.RFModelVersion: rf-v4-known-states-ee35cfabe30f
++      deviceshare.RFPredictionEnabled: true
+   - name: predicates
+   - name: proportion
+   - name: nodeorder

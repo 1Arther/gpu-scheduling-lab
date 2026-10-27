@@ -1,0 +1,41 @@
+actions: enqueue, allocate, backfill
+tiers:
+- plugins:
+  - name: priority
+  - name: gang
+    enablePreemptable: false
+  - name: conformance
+- plugins:
+  - name: overcommit
+  - name: drf
+    enablePreemptable: false
+  - name: predicates
+    arguments:
+      predicate.CacheEnable: false
+  - name: proportion
+  - name: nodeorder
+  - name: binpack
+  - name: deviceshare
+    arguments:
+      deviceshare.VGPUEnable: true
+      deviceshare.GPUSharingEnable: false
+      deviceshare.GPUNumberEnable: false
+      deviceshare.NodeLockEnable: true
+      deviceshare.SchedulePolicy: binpack
+      deviceshare.ScheduleWeight: 1
+      deviceshare.GPUSelectPolicy: rf-job
+      deviceshare.RFEnable: true
+      deviceshare.RFPredictionEnabled: true
+      deviceshare.RFEndpoint: http://127.0.0.1:18081/v1/rank
+      deviceshare.RFModelVersion: rf-v4-known-states-ee35cfabe30f
+      deviceshare.RFTimeoutMS: 1000
+      deviceshare.KnownGeometriesCMName: hrrn-s4-device-config
+      deviceshare.KnownGeometriesCMNamespace: hrrn-lab-system
+  - name: hrrn
+    enableJobOrder: true
+    enableJobReady: true
+    arguments:
+      enabled: true
+      complete-job: true
+      tau-seconds: 1.0
+      default-duration-seconds: 60.0

@@ -1,0 +1,36 @@
+# Prepared locally only. Do not submit until the user explicitly approves.
+# Recheck every eligible RTX 4090 has >= 8192 MiB + safety margin physically free.
+# GPU_MEMORY_FACTOR=1 verified by default/config and current capacity; integer MiB.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vgpu-quota-no-cuda-audit
+  namespace: default
+  labels:
+    gpu-lab/workload-type: inference
+    gpu-lab/purpose: quota-mechanism-audit
+  annotations:
+    volcano.sh/vgpu-mode: hami-core
+    nvidia.com/use-gputype: RTX 4090
+spec:
+  schedulerName: volcano
+  restartPolicy: Never
+  automountServiceAccountToken: false
+  nodeSelector:
+    kubernetes.io/hostname: t3dgq
+  containers:
+    - name: no-cuda
+      # Never pull a new image during this experiment. Verify cached availability first.
+      image: pytorch/pytorch:2.2.2-cuda12.1-cudnn8-runtime
+      imagePullPolicy: Never
+      command: ["/bin/sh", "-c"]
+      args: ["exec sleep 300"]
+      resources:
+        requests:
+          volcano.sh/vgpu-number: 1
+          volcano.sh/vgpu-memory: 8192
+          volcano.sh/vgpu-cores: 10
+        limits:
+          volcano.sh/vgpu-number: 1
+          volcano.sh/vgpu-memory: 8192
+          volcano.sh/vgpu-cores: 10

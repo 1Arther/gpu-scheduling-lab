@@ -1,0 +1,102 @@
+{
+  "data_kind": "audit_of_declared_synthetic_reference_rules",
+  "cases": [
+    {
+      "case": "40pct_compute",
+      "remaining_memory_mib": 44776,
+      "remaining_memory_gib": 43.7265625,
+      "remaining_compute_units": 40,
+      "label": "training_preferred",
+      "label_kind": "synthetic_analytical_reference",
+      "reference_details": {
+        "training": {
+          "hard_resources_ok": true,
+          "required_compute_units_for_reference_slo": 32,
+          "latency_budget_compute_units": 40,
+          "analytical_latency_s": 0.15785319652722968,
+          "analytical_throughput_per_s": 6.335,
+          "meets_reference": true
+        },
+        "inference": {
+          "hard_resources_ok": false,
+          "required_compute_units_for_reference_slo": 53,
+          "latency_budget_compute_units": 40,
+          "analytical_latency_s": 0.0131523569023569,
+          "analytical_throughput_per_s": 76.03200000000001,
+          "meets_reference": false
+        }
+      }
+    },
+    {
+      "case": "95pct_compute_7000mib",
+      "remaining_memory_mib": 7000,
+      "remaining_memory_gib": 6.8359375,
+      "remaining_compute_units": 95,
+      "label": "inference_preferred",
+      "label_kind": "synthetic_analytical_reference",
+      "reference_details": {
+        "training": {
+          "hard_resources_ok": false,
+          "required_compute_units_for_reference_slo": 32,
+          "latency_budget_compute_units": 95,
+          "analytical_latency_s": 0.06646450380093882,
+          "analytical_throughput_per_s": 15.045624999999998,
+          "meets_reference": false
+        },
+        "inference": {
+          "hard_resources_ok": true,
+          "required_compute_units_for_reference_slo": 53,
+          "latency_budget_compute_units": 95,
+          "analytical_latency_s": 0.005537834485202907,
+          "analytical_throughput_per_s": 180.576,
+          "meets_reference": true
+        }
+      }
+    }
+  ],
+  "contract": {
+    "schema_version": 1,
+    "contract_id": "fp32-reference-v1",
+    "data_kind": "declared_synthetic_workload_contracts_not_measurements",
+    "precision": "FP32 dense non-Tensor",
+    "label_method": "analytical_reference_feasibility_v1",
+    "assumptions": {
+      "compute_efficiency": 0.35,
+      "bandwidth_efficiency": 0.55,
+      "max_instances_per_gpu": 10,
+      "compute_capacity_units": 100,
+      "reference_compute_reservation": "elastic: ceil(max(minimum quota, quota needed for latency and throughput)); capability test uses all currently remaining quota as an upper budget, not a promise at the minimum quota alone",
+      "memory_capacity_conversion": "floor(vendor_nominal_GB * 1000000000 / 1048576), conservative offline accounting assumption, not live allocatable VRAM",
+      "bandwidth_share": "remaining compute reservation fraction is used as a synthetic proportional bandwidth budget; vGPU software does not guarantee this isolation",
+      "task_type_contention": "none modeled; existing training/inference counts are input features but no invented measured interference coefficient",
+      "interpretation": "abstract reference operations and SLOs chosen before fitting; neither named-model benchmarks nor observed performance"
+    },
+    "workloads": [
+      {
+        "task_type": "training",
+        "name": "FP32 compute-intensive training-step reference",
+        "description": "Abstract forward/backward/update step; fixed resident tensors and optimizer budget. No real model has been executed.",
+        "memory_mib": 8192,
+        "min_compute_units": 20,
+        "work_tflop": 2.0,
+        "memory_traffic_gb": 8.0,
+        "max_latency_s": 0.2,
+        "min_throughput_per_s": 5.0,
+        "unit": "training step"
+      },
+      {
+        "task_type": "inference",
+        "name": "FP32 memory-intensive batch-1 inference reference",
+        "description": "Abstract request reading 2.5 decimal GB of weights/activations, approximately 625 million FP32 values, with 60 GFLOP work and a 4 GiB resident budget. No real model has been executed.",
+        "memory_mib": 4096,
+        "min_compute_units": 10,
+        "work_tflop": 0.06,
+        "memory_traffic_gb": 2.5,
+        "max_latency_s": 0.01,
+        "min_throughput_per_s": 100.0,
+        "unit": "inference request"
+      }
+    ]
+  },
+  "definition_correction": "Names are reference-contract feasibility states, not vendor role labels or empirical hardware capabilities"
+}

@@ -1,0 +1,185 @@
+{
+  "utc": "2026-10-20T07:14:22.977196+00:00",
+  "read_only": true,
+  "cluster_resources_changed": false,
+  "node": "t3dgq",
+  "active_gpu_or_DRA_demand": [],
+  "finite_plugin_candidates": [],
+  "historical_terminal_annotations": [
+    {
+      "namespace": "default",
+      "name": "vgpu-test-1",
+      "uid": "56ec1d70-9ce3-4349-8b55-fb1ca6c45beb",
+      "phase": "Succeeded",
+      "vgpu_time": 18446744073709551615,
+      "transient_empty": true
+    },
+    {
+      "namespace": "default",
+      "name": "vgpu-test-2",
+      "uid": "e68b36de-57aa-4ece-b7fd-53649495e0fd",
+      "phase": "Succeeded",
+      "vgpu_time": 18446744073709551615,
+      "transient_empty": true
+    },
+    {
+      "namespace": "default",
+      "name": "vgpu-test-3",
+      "uid": "558a99bc-6c74-4e1a-93ea-cb4e1cc17a90",
+      "phase": "Succeeded",
+      "vgpu_time": 18446744073709551615,
+      "transient_empty": true
+    },
+    {
+      "namespace": "default",
+      "name": "vgpu-test-4",
+      "uid": "46cadffa-602c-4f72-8524-b772643d887e",
+      "phase": "Succeeded",
+      "vgpu_time": 18446744073709551615,
+      "transient_empty": true
+    },
+    {
+      "namespace": "default",
+      "name": "vgpu-test-5",
+      "uid": "edc758fd-8f6d-43ed-9daa-d429638e38c8",
+      "phase": "Succeeded",
+      "vgpu_time": 18446744073709551615,
+      "transient_empty": true
+    },
+    {
+      "namespace": "default",
+      "name": "vgpu-test-6",
+      "uid": "d62c3d24-be99-440b-8095-3d518c936314",
+      "phase": "Succeeded",
+      "vgpu_time": 18446744073709551615,
+      "transient_empty": true
+    },
+    {
+      "namespace": "default",
+      "name": "vgpu-test-7",
+      "uid": "9d7d4619-f166-4a61-be4d-039d9013d1b9",
+      "phase": "Succeeded",
+      "vgpu_time": 18446744073709551615,
+      "transient_empty": true
+    },
+    {
+      "namespace": "default",
+      "name": "vgpu-test-8",
+      "uid": "30cb0a0c-1d3a-4324-a674-0343b7730ae4",
+      "phase": "Succeeded",
+      "vgpu_time": 18446744073709551615,
+      "transient_empty": true
+    }
+  ],
+  "registered_devices": "GPU-7b94f673-ce00-719b-2c94-706baa032dae,10,24564,NVIDIA-NVIDIA GeForce RTX 4090,true,hami-core:GPU-fb6aaeaf-9ca4-3c9a-7b3b-f56714c1f7cd,10,24564,NVIDIA-NVIDIA GeForce RTX 4090,true,hami-core:GPU-28cf7186-0bdd-be9f-92e5-3c59b4e92c1e,10,24564,NVIDIA-NVIDIA GeForce RTX 4090,true,hami-core:GPU-27be0024-0498-4114-e6b9-b2d0db148309,10,24564,NVIDIA-NVIDIA GeForce RTX 4090,true,hami-core:",
+  "node_lock": null,
+  "ordinary_gpu_capacity": "4",
+  "policy_present": false,
+  "binding_present": false,
+  "rf_deployment_present": true,
+  "guard_actions": null,
+  "guard_typechecking": null,
+  "no_prior_gpu_demand": true,
+  "no_legacy_consumable_annotations": true,
+  "observed_api_clear": true,
+  "execution_authorized": false,
+  "admission_policy_mandatory": false,
+  "private_scheduler_reservations": "not_directly_observed",
+  "preferred_submission_boundary": "administrator_coordinated_window_if_all_relevant_submitters_are_controlled",
+  "technical_exclusion_without_admission": false,
+  "decision": "HOLD: API observations clear; need explicit authorization, coordinated submission ownership, in-flight reservation reconciliation, fixed images and startup consent",
+  "alternative": "If coordination cannot exclude competing submissions, separately approve enforced admission or one scheduler authority; do not deploy competing allocators.",
+  "commands": [
+    {
+      "command": [
+        "sudo",
+        "-n",
+        "kubectl",
+        "--kubeconfig=/etc/kubernetes/admin.conf",
+        "get",
+        "pods",
+        "-A",
+        "-o",
+        "json",
+        "--request-timeout=12s"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "sha256": "a8e74e6d49bcb3a8ccd1ef04a5e0cb7292a9d93e4c95e1dfcd19ee70e7ad7f78"
+    },
+    {
+      "command": [
+        "sudo",
+        "-n",
+        "kubectl",
+        "--kubeconfig=/etc/kubernetes/admin.conf",
+        "get",
+        "node",
+        "t3dgq",
+        "-o",
+        "json",
+        "--request-timeout=12s"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "sha256": "c74a0a95867d50287ca3dc52612b49ec6eb6f0a6736084a239c61fb9f472cf6c"
+    },
+    {
+      "command": [
+        "sudo",
+        "-n",
+        "kubectl",
+        "--kubeconfig=/etc/kubernetes/admin.conf",
+        "get",
+        "validatingadmissionpolicy",
+        "rf-v7-gpu-window",
+        "--ignore-not-found",
+        "-o",
+        "json",
+        "--request-timeout=12s"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "sudo",
+        "-n",
+        "kubectl",
+        "--kubeconfig=/etc/kubernetes/admin.conf",
+        "get",
+        "validatingadmissionpolicybinding",
+        "rf-v7-gpu-window",
+        "--ignore-not-found",
+        "-o",
+        "json",
+        "--request-timeout=12s"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "sudo",
+        "-n",
+        "kubectl",
+        "--kubeconfig=/etc/kubernetes/admin.conf",
+        "get",
+        "deployment",
+        "volcano-rf-test",
+        "-n",
+        "gpu-rf-system",
+        "--ignore-not-found",
+        "-o",
+        "json",
+        "--request-timeout=12s"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "sha256": "f41e8822e693b932b0085fd087b40185dac21c922ded348992623ec06d63f8d2"
+    }
+  ],
+  "important": "GPU physical use is not a veto here. API data does not directly expose pending scheduler-private reservations. This script never starts a scheduler or approves a deployment."
+}

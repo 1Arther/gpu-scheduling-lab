@@ -1,0 +1,381 @@
+{
+  "local_source_files": [
+    {
+      "path": "audit\\custom-volcano\\deviceshare.go",
+      "sha256": "b0032d3279895562a6d093b162078d90e42d4ffa978d411746f8841bc54e3026",
+      "functions": [
+        {
+          "line": 64,
+          "declaration": "func New(arguments framework.Arguments) framework.Plugin {"
+        },
+        {
+          "line": 70,
+          "declaration": "func (dp *deviceSharePlugin) Name() string {"
+        },
+        {
+          "line": 74,
+          "declaration": "func enablePredicate(dsp *deviceSharePlugin) {"
+        },
+        {
+          "line": 113,
+          "declaration": "func createStatus(code int, reason string) *api.Status {"
+        },
+        {
+          "line": 121,
+          "declaration": "func getDeviceScore(ctx context.Context, pod *v1.Pod, node *api.NodeInfo, schedulePolicy string) (int64, *k8sframework.Status) {"
+        },
+        {
+          "line": 133,
+          "declaration": "func (dp *deviceSharePlugin) OnSessionOpen(ssn *framework.Session) {"
+        },
+        {
+          "line": 192,
+          "declaration": "func (dp *deviceSharePlugin) OnSessionClose(ssn *framework.Session) {}"
+        }
+      ]
+    },
+    {
+      "path": "audit\\custom-volcano\\dqn_client.go",
+      "sha256": "01353f95bdeb9749ea9c0964a13183cf5ffedcbaeacdde9f531b960e097b0ed7",
+      "functions": [
+        {
+          "line": 41,
+          "declaration": "func getDQNClient() (dqngrpc.DQNSchedulerClient, error) {"
+        },
+        {
+          "line": 81,
+          "declaration": "func resetDQNClient() {"
+        },
+        {
+          "line": 94,
+          "declaration": "func gpuStatesForDQN(gs *GPUDevices) []*dqngrpc.GPUState {"
+        },
+        {
+          "line": 121,
+          "declaration": "func queryDQNOrderedGPUIndexes(gs *GPUDevices, pod *v1.Pod, req ContainerDeviceRequest) ([]int, error) {"
+        },
+        {
+          "line": 176,
+          "declaration": "func getDQNKubeClient() (kubernetes.Interface, error) {"
+        },
+        {
+          "line": 198,
+          "declaration": "func dqnPodGroupKey(pod *v1.Pod) string {"
+        },
+        {
+          "line": 211,
+          "declaration": "func listDQNJobPods(ctx context.Context, pod *v1.Pod) ([]v1.Pod, error) {"
+        },
+        {
+          "line": 266,
+          "declaration": "func podToDQNRequest(pod v1.Pod) (*dqngrpc.PodRequest, bool) {"
+        },
+        {
+          "line": 284,
+          "declaration": "func reorderDQNPreferredIndexes(preferred []int, gs *GPUDevices) []int {"
+        },
+        {
+          "line": 304,
+          "declaration": "func queryDQNJobOrderedGPUIndexes(gs *GPUDevices, pod *v1.Pod, req ContainerDeviceRequest) ([]int, error) {"
+        },
+        {
+          "line": 406,
+          "declaration": "func sanitizeDQNIndexes(raw []int32, gs *GPUDevices) []int {"
+        }
+      ]
+    },
+    {
+      "path": "audit\\custom-volcano\\type.go",
+      "sha256": "43b9000f58ba3f227c58ac4ce56746f857e3dc42b0fba91fb81b64ed63fd7d31",
+      "functions": []
+    },
+    {
+      "path": "audit\\custom-volcano\\utils.go",
+      "sha256": "db539ce1cd16d2978627ad3e53a1ab2d23c46893ccdf338d86f39b6428db7e59",
+      "functions": [
+        {
+          "line": 49,
+          "declaration": "func extractGeometryFromType(t string) ([]config.Geometry, error) {"
+        },
+        {
+          "line": 87,
+          "declaration": "func decodeNodeDevices(name, str string) (*GPUDevices, string) {"
+        },
+        {
+          "line": 173,
+          "declaration": "func encodeContainerDevices(cd []ContainerDevice) string {"
+        },
+        {
+          "line": 189,
+          "declaration": "func encodePodDevices(pd []ContainerDevices) string {"
+        },
+        {
+          "line": 202,
+          "declaration": "func decodeContainerDevices(str string) ContainerDevices {"
+        },
+        {
+          "line": 246,
+          "declaration": "func decodePodDevices(str string) []ContainerDevices {"
+        },
+        {
+          "line": 266,
+          "declaration": "func checkVGPUResourcesInPod(pod *v1.Pod) bool {"
+        },
+        {
+          "line": 289,
+          "declaration": "func resourcereqs(pod *v1.Pod) []ContainerDeviceRequest {"
+        },
+        {
+          "line": 403,
+          "declaration": "func checkGPUtype(annos map[string]string, cardtype string) bool {"
+        },
+        {
+          "line": 456,
+          "declaration": "func checkType(annos map[string]string, d GPUDevice, n ContainerDeviceRequest) bool {"
+        },
+        {
+          "line": 478,
+          "declaration": "func getGPUDeviceSnapShot(snap *GPUDevices) *GPUDevices {"
+        },
+        {
+          "line": 519,
+          "declaration": "func deepCopyMigInUse(src config.MigInUse) config.MigInUse {"
+        },
+        {
+          "line": 547,
+          "declaration": "func getSharingMode(mode string) string {"
+        },
+        {
+          "line": 556,
+          "declaration": "func normalizeGPUSelectPolicy(policy string) string {"
+        },
+        {
+          "line": 565,
+          "declaration": "func stableRandomKey(pod *v1.Pod, gpuID int) uint32 {"
+        },
+        {
+          "line": 573,
+          "declaration": "func canFitForOrder(g *GPUDevice, req ContainerDeviceRequest) bool {"
+        },
+        {
+          "line": 595,
+          "declaration": "func orderedGPUIndexes(gs *GPUDevices, pod *v1.Pod, req ContainerDeviceRequest) []int {"
+        },
+        {
+          "line": 768,
+          "declaration": "func checkNodeGPUSharingPredicateAndScore(pod *v1.Pod, gssnap *GPUDevices, replicate bool, schedulePolicy string) (bool, []ContainerDevices, float64, error) {"
+        },
+        {
+          "line": 894,
+          "declaration": "func GPUScore(schedulePolicy string, device *GPUDevice) float64 {"
+        },
+        {
+          "line": 924,
+          "declaration": "func patchPodAnnotations(kubeClient kubernetes.Interface, pod *v1.Pod, annotations map[string]string) error {"
+        },
+        {
+          "line": 959,
+          "declaration": "func patchNodeAnnotations(node *v1.Node, annotations map[string]string) error {"
+        },
+        {
+          "line": 993,
+          "declaration": "func getConfig() config.NvidiaConfig {"
+        }
+      ]
+    },
+    {
+      "path": "audit\\scheduler-source\\cmd\\scheduler\\app\\options\\options.go",
+      "sha256": "38a6ae8306474fb5c2489427f1cf4dcccb76a18c4344b84f3afa04b3d265b0c1",
+      "functions": [
+        {
+          "line": 105,
+          "declaration": "func NewServerOption() *ServerOption {"
+        },
+        {
+          "line": 110,
+          "declaration": "func (s *ServerOption) AddFlags(fs *pflag.FlagSet) {"
+        },
+        {
+          "line": 157,
+          "declaration": "func (s *ServerOption) CheckOptionOrDie() error {"
+        },
+        {
+          "line": 162,
+          "declaration": "func (s *ServerOption) RegisterOptions() {"
+        },
+        {
+          "line": 167,
+          "declaration": "func (s *ServerOption) readCAFiles() error {"
+        },
+        {
+          "line": 189,
+          "declaration": "func (s *ServerOption) ParseCAFiles(decryptFunc DecryptFunc) error {"
+        },
+        {
+          "line": 203,
+          "declaration": "func Default() *ServerOption {"
+        }
+      ]
+    },
+    {
+      "path": "audit\\scheduler-source\\pkg\\scheduler\\api\\devices\\nvidia\\vgpu\\dqn_client.go",
+      "sha256": "01353f95bdeb9749ea9c0964a13183cf5ffedcbaeacdde9f531b960e097b0ed7",
+      "functions": [
+        {
+          "line": 41,
+          "declaration": "func getDQNClient() (dqngrpc.DQNSchedulerClient, error) {"
+        },
+        {
+          "line": 81,
+          "declaration": "func resetDQNClient() {"
+        },
+        {
+          "line": 94,
+          "declaration": "func gpuStatesForDQN(gs *GPUDevices) []*dqngrpc.GPUState {"
+        },
+        {
+          "line": 121,
+          "declaration": "func queryDQNOrderedGPUIndexes(gs *GPUDevices, pod *v1.Pod, req ContainerDeviceRequest) ([]int, error) {"
+        },
+        {
+          "line": 176,
+          "declaration": "func getDQNKubeClient() (kubernetes.Interface, error) {"
+        },
+        {
+          "line": 198,
+          "declaration": "func dqnPodGroupKey(pod *v1.Pod) string {"
+        },
+        {
+          "line": 211,
+          "declaration": "func listDQNJobPods(ctx context.Context, pod *v1.Pod) ([]v1.Pod, error) {"
+        },
+        {
+          "line": 266,
+          "declaration": "func podToDQNRequest(pod v1.Pod) (*dqngrpc.PodRequest, bool) {"
+        },
+        {
+          "line": 284,
+          "declaration": "func reorderDQNPreferredIndexes(preferred []int, gs *GPUDevices) []int {"
+        },
+        {
+          "line": 304,
+          "declaration": "func queryDQNJobOrderedGPUIndexes(gs *GPUDevices, pod *v1.Pod, req ContainerDeviceRequest) ([]int, error) {"
+        },
+        {
+          "line": 406,
+          "declaration": "func sanitizeDQNIndexes(raw []int32, gs *GPUDevices) []int {"
+        }
+      ]
+    },
+    {
+      "path": "audit\\scheduler-source\\pkg\\scheduler\\api\\devices\\nvidia\\vgpu\\type.go",
+      "sha256": "43b9000f58ba3f227c58ac4ce56746f857e3dc42b0fba91fb81b64ed63fd7d31",
+      "functions": []
+    },
+    {
+      "path": "audit\\scheduler-source\\pkg\\scheduler\\api\\devices\\nvidia\\vgpu\\utils.go",
+      "sha256": "db539ce1cd16d2978627ad3e53a1ab2d23c46893ccdf338d86f39b6428db7e59",
+      "functions": [
+        {
+          "line": 49,
+          "declaration": "func extractGeometryFromType(t string) ([]config.Geometry, error) {"
+        },
+        {
+          "line": 87,
+          "declaration": "func decodeNodeDevices(name, str string) (*GPUDevices, string) {"
+        },
+        {
+          "line": 173,
+          "declaration": "func encodeContainerDevices(cd []ContainerDevice) string {"
+        },
+        {
+          "line": 189,
+          "declaration": "func encodePodDevices(pd []ContainerDevices) string {"
+        },
+        {
+          "line": 202,
+          "declaration": "func decodeContainerDevices(str string) ContainerDevices {"
+        },
+        {
+          "line": 246,
+          "declaration": "func decodePodDevices(str string) []ContainerDevices {"
+        },
+        {
+          "line": 266,
+          "declaration": "func checkVGPUResourcesInPod(pod *v1.Pod) bool {"
+        },
+        {
+          "line": 289,
+          "declaration": "func resourcereqs(pod *v1.Pod) []ContainerDeviceRequest {"
+        },
+        {
+          "line": 403,
+          "declaration": "func checkGPUtype(annos map[string]string, cardtype string) bool {"
+        },
+        {
+          "line": 456,
+          "declaration": "func checkType(annos map[string]string, d GPUDevice, n ContainerDeviceRequest) bool {"
+        },
+        {
+          "line": 478,
+          "declaration": "func getGPUDeviceSnapShot(snap *GPUDevices) *GPUDevices {"
+        },
+        {
+          "line": 519,
+          "declaration": "func deepCopyMigInUse(src config.MigInUse) config.MigInUse {"
+        },
+        {
+          "line": 547,
+          "declaration": "func getSharingMode(mode string) string {"
+        },
+        {
+          "line": 556,
+          "declaration": "func normalizeGPUSelectPolicy(policy string) string {"
+        },
+        {
+          "line": 565,
+          "declaration": "func stableRandomKey(pod *v1.Pod, gpuID int) uint32 {"
+        },
+        {
+          "line": 573,
+          "declaration": "func canFitForOrder(g *GPUDevice, req ContainerDeviceRequest) bool {"
+        },
+        {
+          "line": 595,
+          "declaration": "func orderedGPUIndexes(gs *GPUDevices, pod *v1.Pod, req ContainerDeviceRequest) []int {"
+        },
+        {
+          "line": 768,
+          "declaration": "func checkNodeGPUSharingPredicateAndScore(pod *v1.Pod, gssnap *GPUDevices, replicate bool, schedulePolicy string) (bool, []ContainerDevices, float64, error) {"
+        },
+        {
+          "line": 894,
+          "declaration": "func GPUScore(schedulePolicy string, device *GPUDevice) float64 {"
+        },
+        {
+          "line": 924,
+          "declaration": "func patchPodAnnotations(kubeClient kubernetes.Interface, pod *v1.Pod, annotations map[string]string) error {"
+        },
+        {
+          "line": 959,
+          "declaration": "func patchNodeAnnotations(node *v1.Node, annotations map[string]string) error {"
+        },
+        {
+          "line": 993,
+          "declaration": "func getConfig() config.NvidiaConfig {"
+        }
+      ]
+    }
+  ],
+  "complete_Go_checkout": false,
+  "go_mod_found": false,
+  "missing_definitions": [
+    "GPUDevices/GPUDevice complete implementation",
+    "Allocate",
+    "addResource/subResource",
+    "HAMi sharing AddPod/TryAddPod implementation"
+  ],
+  "version_proof": "local custom source fragments only; no tagged/compiled v1.13.1 checkout or proof of correspondence to current binary",
+  "cluster_access_performed": false,
+  "old_DQN_code_used_for_new_policy": false
+}

@@ -1,0 +1,646 @@
+{
+  "feature_names": [
+    "memory_capacity_mib",
+    "memory_bandwidth_gbps",
+    "fp32_tflops",
+    "fp16_dense_tflops",
+    "bf16_dense_tflops",
+    "int8_dense_tops",
+    "max_board_power_w",
+    "free_memory_mib",
+    "free_compute_quota",
+    "allocated_vgpu_count",
+    "running_training_count",
+    "running_inference_count",
+    "free_memory_ratio",
+    "free_compute_quota_ratio",
+    "effective_fp32_tflops"
+  ],
+  "feature_set": "effective_compute",
+  "seed": 20261017,
+  "hyperparameters": {
+    "n_estimators": 120,
+    "min_samples_leaf": 2,
+    "max_features": 0.85
+  },
+  "identity_features_excluded": [
+    "device_id",
+    "model",
+    "vendor",
+    "architecture"
+  ],
+  "supervision": "synthetic_theoretical_contract_v3",
+  "test_used_for_selection": false,
+  "imputer_fit_scope": "training rows only",
+  "train_device_ids": [
+    "a10",
+    "a100_sxm80",
+    "a30",
+    "a40",
+    "h100_sxm",
+    "h200_sxm",
+    "l4",
+    "l40",
+    "l40s",
+    "rtx3090",
+    "rtx4090",
+    "rtx5090"
+  ],
+  "validation_devices": [
+    {
+      "device_id": "a10",
+      "architecture": "Ampere",
+      "hardware": {
+        "memory_capacity_mib": 22888,
+        "memory_bandwidth_gbps": 600,
+        "fp32_tflops": 31.2
+      },
+      "cells": {
+        "training": {
+          "0": {
+            "support": 95,
+            "correct": 95,
+            "episodes": 12
+          },
+          "1": {
+            "support": 16,
+            "correct": 16,
+            "episodes": 7
+          }
+        },
+        "inference": {
+          "0": {
+            "support": 49,
+            "correct": 48,
+            "episodes": 10
+          },
+          "1": {
+            "support": 62,
+            "correct": 62,
+            "episodes": 10
+          }
+        }
+      }
+    },
+    {
+      "device_id": "a100_sxm80",
+      "architecture": "Ampere",
+      "hardware": {
+        "memory_capacity_mib": 76293,
+        "memory_bandwidth_gbps": 2039,
+        "fp32_tflops": 19.5
+      },
+      "cells": {
+        "training": {
+          "0": {
+            "support": 97,
+            "correct": 97,
+            "episodes": 12
+          },
+          "1": {
+            "support": 0,
+            "correct": 0,
+            "episodes": 0
+          }
+        },
+        "inference": {
+          "0": {
+            "support": 78,
+            "correct": 78,
+            "episodes": 12
+          },
+          "1": {
+            "support": 19,
+            "correct": 19,
+            "episodes": 6
+          }
+        }
+      }
+    },
+    {
+      "device_id": "a30",
+      "architecture": "Ampere",
+      "hardware": {
+        "memory_capacity_mib": 22888,
+        "memory_bandwidth_gbps": 933,
+        "fp32_tflops": 10.3
+      },
+      "cells": {
+        "training": {
+          "0": {
+            "support": 76,
+            "correct": 76,
+            "episodes": 12
+          },
+          "1": {
+            "support": 0,
+            "correct": 0,
+            "episodes": 0
+          }
+        },
+        "inference": {
+          "0": {
+            "support": 76,
+            "correct": 76,
+            "episodes": 12
+          },
+          "1": {
+            "support": 0,
+            "correct": 0,
+            "episodes": 0
+          }
+        }
+      }
+    },
+    {
+      "device_id": "a40",
+      "architecture": "Ampere",
+      "hardware": {
+        "memory_capacity_mib": 45776,
+        "memory_bandwidth_gbps": 696,
+        "fp32_tflops": 37.4
+      },
+      "cells": {
+        "training": {
+          "0": {
+            "support": 54,
+            "correct": 54,
+            "episodes": 12
+          },
+          "1": {
+            "support": 56,
+            "correct": 56,
+            "episodes": 10
+          }
+        },
+        "inference": {
+          "0": {
+            "support": 32,
+            "correct": 32,
+            "episodes": 11
+          },
+          "1": {
+            "support": 78,
+            "correct": 78,
+            "episodes": 12
+          }
+        }
+      }
+    },
+    {
+      "device_id": "h100_sxm",
+      "architecture": "Hopper",
+      "hardware": {
+        "memory_capacity_mib": 76293,
+        "memory_bandwidth_gbps": 3350,
+        "fp32_tflops": 67
+      },
+      "cells": {
+        "training": {
+          "0": {
+            "support": 21,
+            "correct": 21,
+            "episodes": 8
+          },
+          "1": {
+            "support": 106,
+            "correct": 106,
+            "episodes": 12
+          }
+        },
+        "inference": {
+          "0": {
+            "support": 15,
+            "correct": 15,
+            "episodes": 8
+          },
+          "1": {
+            "support": 112,
+            "correct": 112,
+            "episodes": 12
+          }
+        }
+      }
+    },
+    {
+      "device_id": "h200_sxm",
+      "architecture": "Hopper",
+      "hardware": {
+        "memory_capacity_mib": 134468,
+        "memory_bandwidth_gbps": 4800,
+        "fp32_tflops": 67
+      },
+      "cells": {
+        "training": {
+          "0": {
+            "support": 28,
+            "correct": 28,
+            "episodes": 7
+          },
+          "1": {
+            "support": 84,
+            "correct": 84,
+            "episodes": 12
+          }
+        },
+        "inference": {
+          "0": {
+            "support": 15,
+            "correct": 15,
+            "episodes": 7
+          },
+          "1": {
+            "support": 97,
+            "correct": 97,
+            "episodes": 12
+          }
+        }
+      }
+    },
+    {
+      "device_id": "l4",
+      "architecture": "Ada Lovelace",
+      "hardware": {
+        "memory_capacity_mib": 22888,
+        "memory_bandwidth_gbps": 300,
+        "fp32_tflops": 30.3
+      },
+      "cells": {
+        "training": {
+          "0": {
+            "support": 106,
+            "correct": 106,
+            "episodes": 12
+          },
+          "1": {
+            "support": 9,
+            "correct": 9,
+            "episodes": 6
+          }
+        },
+        "inference": {
+          "0": {
+            "support": 115,
+            "correct": 115,
+            "episodes": 12
+          },
+          "1": {
+            "support": 0,
+            "correct": 0,
+            "episodes": 0
+          }
+        }
+      }
+    },
+    {
+      "device_id": "l40",
+      "architecture": "Ada Lovelace",
+      "hardware": {
+        "memory_capacity_mib": 45776,
+        "memory_bandwidth_gbps": 864,
+        "fp32_tflops": 90.5
+      },
+      "cells": {
+        "training": {
+          "0": {
+            "support": 21,
+            "correct": 21,
+            "episodes": 11
+          },
+          "1": {
+            "support": 85,
+            "correct": 85,
+            "episodes": 12
+          }
+        },
+        "inference": {
+          "0": {
+            "support": 22,
+            "correct": 22,
+            "episodes": 10
+          },
+          "1": {
+            "support": 84,
+            "correct": 84,
+            "episodes": 12
+          }
+        }
+      }
+    },
+    {
+      "device_id": "l40s",
+      "architecture": "Ada Lovelace",
+      "hardware": {
+        "memory_capacity_mib": 45776,
+        "memory_bandwidth_gbps": 864,
+        "fp32_tflops": 91.6
+      },
+      "cells": {
+        "training": {
+          "0": {
+            "support": 24,
+            "correct": 24,
+            "episodes": 12
+          },
+          "1": {
+            "support": 79,
+            "correct": 79,
+            "episodes": 12
+          }
+        },
+        "inference": {
+          "0": {
+            "support": 30,
+            "correct": 30,
+            "episodes": 11
+          },
+          "1": {
+            "support": 73,
+            "correct": 73,
+            "episodes": 12
+          }
+        }
+      }
+    },
+    {
+      "device_id": "rtx3090",
+      "architecture": "Ampere",
+      "hardware": {
+        "memory_capacity_mib": 22888,
+        "memory_bandwidth_gbps": 936,
+        "fp32_tflops": 35.6
+      },
+      "cells": {
+        "training": {
+          "0": {
+            "support": 68,
+            "correct": 68,
+            "episodes": 12
+          },
+          "1": {
+            "support": 28,
+            "correct": 28,
+            "episodes": 8
+          }
+        },
+        "inference": {
+          "0": {
+            "support": 30,
+            "correct": 30,
+            "episodes": 9
+          },
+          "1": {
+            "support": 66,
+            "correct": 66,
+            "episodes": 12
+          }
+        }
+      }
+    },
+    {
+      "device_id": "rtx4090",
+      "architecture": "Ada Lovelace",
+      "hardware": {
+        "memory_capacity_mib": 22888,
+        "memory_bandwidth_gbps": 1008,
+        "fp32_tflops": 82.6
+      },
+      "cells": {
+        "training": {
+          "0": {
+            "support": 27,
+            "correct": 27,
+            "episodes": 10
+          },
+          "1": {
+            "support": 57,
+            "correct": 57,
+            "episodes": 12
+          }
+        },
+        "inference": {
+          "0": {
+            "support": 26,
+            "correct": 26,
+            "episodes": 9
+          },
+          "1": {
+            "support": 58,
+            "correct": 58,
+            "episodes": 12
+          }
+        }
+      }
+    },
+    {
+      "device_id": "rtx5090",
+      "architecture": "Blackwell",
+      "hardware": {
+        "memory_capacity_mib": 30517,
+        "memory_bandwidth_gbps": 1792,
+        "fp32_tflops": 104.8
+      },
+      "cells": {
+        "training": {
+          "0": {
+            "support": 24,
+            "correct": 24,
+            "episodes": 11
+          },
+          "1": {
+            "support": 79,
+            "correct": 79,
+            "episodes": 12
+          }
+        },
+        "inference": {
+          "0": {
+            "support": 20,
+            "correct": 20,
+            "episodes": 10
+          },
+          "1": {
+            "support": 83,
+            "correct": 83,
+            "episodes": 12
+          }
+        }
+      }
+    }
+  ],
+  "quality_policy": {
+    "min_prediction_sign_support": 20,
+    "min_prediction_sign_episodes": 3,
+    "min_prediction_sign_precision": 0.9,
+    "max_validation_neighbor_log2_distance": 1.0,
+    "numeric_fallback_min_validation_models": 2,
+    "reference_hard_constraints_override": true,
+    "static_core_out_of_training_range": "pending; do not stretch training bounds using test hardware",
+    "cohort": "Same architecture validation models within factor2 for all three core static fields; otherwise at least two numeric-neighbor validation models. Architecture is optional metadata for evidence routing, never RF input.",
+    "decision": "Each predicted binary sign needs validation support/precision in the related cohort. Missing an unrelated combined class does not reject every GPU. No RF probability threshold or global four-class switch.",
+    "limitations": "Correlated synthetic states; support and precision are operational checks, not calibrated real-world confidence. No thresholds selected on test results."
+  },
+  "static_core_training_ranges": {
+    "memory_capacity_mib": [
+      22888,
+      134468
+    ],
+    "memory_bandwidth_gbps": [
+      300,
+      4800
+    ],
+    "fp32_tflops": [
+      10.3,
+      104.8
+    ]
+  },
+  "validation_four_class_counts": {
+    "balanced": 566,
+    "inference_preferred": 167,
+    "unavailable": 474,
+    "training_preferred": 33
+  },
+  "no_global_missing_class_rejection": true,
+  "validation_metrics": {
+    "samples": 1240,
+    "truth_kind": "synthetic",
+    "real_performance_labels": 0,
+    "accuracy": 0.9991935483870967,
+    "macro_f1": 0.9989858140543073,
+    "misclassified": 1,
+    "labels": [
+      "training_preferred",
+      "inference_preferred",
+      "balanced",
+      "unavailable"
+    ],
+    "class_counts": {
+      "balanced": 566,
+      "inference_preferred": 167,
+      "unavailable": 474,
+      "training_preferred": 33
+    },
+    "per_class_precision_recall_f1_support": {
+      "training_preferred": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 33.0
+      },
+      "inference_preferred": {
+        "precision": 1.0,
+        "recall": 0.9940119760479041,
+        "f1-score": 0.996996996996997,
+        "support": 167.0
+      },
+      "balanced": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 566.0
+      },
+      "unavailable": {
+        "precision": 0.9978947368421053,
+        "recall": 1.0,
+        "f1-score": 0.9989462592202318,
+        "support": 474.0
+      }
+    },
+    "confusion_matrix_true_rows_predicted_columns": [
+      [
+        33,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        166,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        566,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        474
+      ]
+    ],
+    "targets": {
+      "training": {
+        "accuracy": 1.0,
+        "precision_recall_f1": {
+          "False": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 641.0
+          },
+          "True": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 599.0
+          },
+          "accuracy": 1.0,
+          "macro avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 1240.0
+          },
+          "weighted avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 1240.0
+          }
+        }
+      },
+      "inference": {
+        "accuracy": 0.9991935483870967,
+        "precision_recall_f1": {
+          "False": {
+            "precision": 0.9980314960629921,
+            "recall": 1.0,
+            "f1-score": 0.9990147783251232,
+            "support": 507.0
+          },
+          "True": {
+            "precision": 1.0,
+            "recall": 0.9986357435197817,
+            "f1-score": 0.9993174061433447,
+            "support": 733.0
+          },
+          "accuracy": 0.9991935483870967,
+          "macro avg": {
+            "precision": 0.9990157480314961,
+            "recall": 0.9993178717598908,
+            "f1-score": 0.999166092234234,
+            "support": 1240.0
+          },
+          "weighted avg": {
+            "precision": 0.9991951358902718,
+            "recall": 0.9991935483870967,
+            "f1-score": 0.9991936704144428,
+            "support": 1240.0
+          }
+        }
+      }
+    },
+    "observed_true_classes": [
+      "balanced",
+      "inference_preferred",
+      "training_preferred",
+      "unavailable"
+    ],
+    "macro_f1_observed_classes": 0.9989858140543073,
+    "complete_four_class_truth_coverage": true
+  }
+}

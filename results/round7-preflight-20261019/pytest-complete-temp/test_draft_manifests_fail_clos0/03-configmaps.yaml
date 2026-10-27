@@ -1,0 +1,93 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rf-v7-config-on
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-system
+data:
+  volcano-scheduler.conf: "actions: enqueue, allocate\ntiers:\n- plugins:\n  - name:\
+    \ priority\n  - name: gang\n    enablePreemptable: false\n  - name: conformance\n\
+    - plugins:\n  - name: deviceshare\n    arguments:\n      deviceshare.VGPUEnable:\
+    \ true\n      deviceshare.GPUSharingEnable: false\n      deviceshare.GPUNumberEnable:\
+    \ false\n      deviceshare.NodeLockEnable: true\n      deviceshare.SchedulePolicy:\
+    \ binpack\n      deviceshare.ScheduleWeight: 1\n      deviceshare.GPUSelectPolicy:\
+    \ rf-job\n      deviceshare.RFEnable: true\n      deviceshare.RFPredictionEnabled:\
+    \ true\n      deviceshare.RFEndpoint: http://127.0.0.1:18081/v1/rank\n      deviceshare.RFModelVersion:\
+    \ rf-v4-known-states-ee35cfabe30f\n      deviceshare.RFTimeoutMS: 500\n      deviceshare.KnownGeometriesCMName:\
+    \ rf-v7-device-config\n      deviceshare.KnownGeometriesCMNamespace: gpu-rf-system\n\
+    \  - name: predicates\n"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rf-v7-config-no-prediction
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-system
+data:
+  volcano-scheduler.conf: "actions: enqueue, allocate\ntiers:\n- plugins:\n  - name:\
+    \ priority\n  - name: gang\n    enablePreemptable: false\n  - name: conformance\n\
+    - plugins:\n  - name: deviceshare\n    arguments:\n      deviceshare.VGPUEnable:\
+    \ true\n      deviceshare.GPUSharingEnable: false\n      deviceshare.GPUNumberEnable:\
+    \ false\n      deviceshare.NodeLockEnable: true\n      deviceshare.SchedulePolicy:\
+    \ binpack\n      deviceshare.ScheduleWeight: 1\n      deviceshare.GPUSelectPolicy:\
+    \ rf-job\n      deviceshare.RFEnable: true\n      deviceshare.RFPredictionEnabled:\
+    \ false\n      deviceshare.RFEndpoint: http://127.0.0.1:18081/v1/rank\n      deviceshare.RFModelVersion:\
+    \ rf-v4-known-states-ee35cfabe30f\n      deviceshare.RFTimeoutMS: 500\n      deviceshare.KnownGeometriesCMName:\
+    \ rf-v7-device-config\n      deviceshare.KnownGeometriesCMNamespace: gpu-rf-system\n\
+    \  - name: predicates\n"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rf-v7-config-native-binpack
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-system
+data:
+  volcano-scheduler.conf: "actions: enqueue, allocate\ntiers:\n- plugins:\n  - name:\
+    \ priority\n  - name: gang\n    enablePreemptable: false\n  - name: conformance\n\
+    - plugins:\n  - name: deviceshare\n    arguments:\n      deviceshare.VGPUEnable:\
+    \ true\n      deviceshare.GPUSharingEnable: false\n      deviceshare.GPUNumberEnable:\
+    \ false\n      deviceshare.NodeLockEnable: true\n      deviceshare.SchedulePolicy:\
+    \ binpack\n      deviceshare.ScheduleWeight: 1\n      deviceshare.GPUSelectPolicy:\
+    \ binpack\n      deviceshare.RFEnable: false\n      deviceshare.RFPredictionEnabled:\
+    \ true\n      deviceshare.RFEndpoint: http://127.0.0.1:18081/v1/rank\n      deviceshare.RFModelVersion:\
+    \ rf-v4-known-states-ee35cfabe30f\n      deviceshare.RFTimeoutMS: 500\n      deviceshare.KnownGeometriesCMName:\
+    \ rf-v7-device-config\n      deviceshare.KnownGeometriesCMNamespace: gpu-rf-system\n\
+    \  - name: predicates\n"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rf-v7-config-service-unavailable
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-system
+data:
+  volcano-scheduler.conf: "actions: enqueue, allocate\ntiers:\n- plugins:\n  - name:\
+    \ priority\n  - name: gang\n    enablePreemptable: false\n  - name: conformance\n\
+    - plugins:\n  - name: deviceshare\n    arguments:\n      deviceshare.VGPUEnable:\
+    \ true\n      deviceshare.GPUSharingEnable: false\n      deviceshare.GPUNumberEnable:\
+    \ false\n      deviceshare.NodeLockEnable: true\n      deviceshare.SchedulePolicy:\
+    \ binpack\n      deviceshare.ScheduleWeight: 1\n      deviceshare.GPUSelectPolicy:\
+    \ rf-job\n      deviceshare.RFEnable: true\n      deviceshare.RFPredictionEnabled:\
+    \ true\n      deviceshare.RFEndpoint: http://127.0.0.1:1/v1/rank\n      deviceshare.RFModelVersion:\
+    \ rf-v4-known-states-ee35cfabe30f\n      deviceshare.RFTimeoutMS: 500\n      deviceshare.KnownGeometriesCMName:\
+    \ rf-v7-device-config\n      deviceshare.KnownGeometriesCMNamespace: gpu-rf-system\n\
+    \  - name: predicates\n"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rf-v7-device-config
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-system
+data:
+  device-config.yaml: "nvidia:\n  resourceCountName: volcano.sh/vgpu-number\n  resourceMemoryName:\
+    \ volcano.sh/vgpu-memory\n  resourceCoreName: volcano.sh/vgpu-cores\n  resourceMemoryPercentageName:\
+    \ volcano.sh/vgpu-memory-percentage\n  defaultGPUNum: 1\n  defaultMemory: 0\n\
+    \  defaultCores: 0\n  deviceSplitCount: 10\n  deviceMemoryScaling: 1\n  deviceCoreScaling:\
+    \ 1\n  disableCoreLimit: false\n"

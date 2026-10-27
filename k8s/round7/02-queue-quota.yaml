@@ -1,0 +1,24 @@
+apiVersion: scheduling.volcano.sh/v1beta1
+kind: Queue
+metadata:
+  name: rf-v7-queue
+  labels:
+    gpu-lab/experiment: round7-rf
+spec:
+  weight: 1
+  reclaimable: false
+  parent: root
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: rf-v7-test-budget
+  labels:
+    gpu-lab/experiment: round7-rf
+  namespace: gpu-rf-tests
+spec:
+  hard:
+    pods: '4'
+    requests.volcano.sh/vgpu-number: '4'
+    requests.volcano.sh/vgpu-memory: '16384'
+    requests.volcano.sh/vgpu-cores: '80'

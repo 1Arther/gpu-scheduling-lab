@@ -1,0 +1,58 @@
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: two-pods
+  namespace: hrrn-lab-tests
+  labels:
+    gpu-lab/experiment: hrrn-stage4
+  annotations:
+    gpu-lab/estimated-duration-seconds: '10'
+    gpu-lab/total-pods: '2'
+spec:
+  schedulerName: volcano-hrrn-lab
+  queue: hrrn-s4-queue
+  minAvailable: 1
+  maxRetry: 0
+  tasks:
+  - name: worker
+    replicas: 2
+    minAvailable: 1
+    template:
+      metadata:
+        labels:
+          gpu-lab/workload-type: training
+          gpu-lab/experiment: hrrn-stage4
+      spec:
+        schedulerName: volcano-hrrn-lab
+        restartPolicy: Never
+        activeDeadlineSeconds: 300
+        terminationGracePeriodSeconds: 3
+        nodeSelector:
+          kubernetes.io/hostname: review-required-node
+        containers:
+        - name: sleep
+          image: busybox:1.36.1
+          command:
+          - /bin/sh
+          - -c
+          - exec sleep 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 32Mi
+              volcano.sh/vgpu-number: '1'
+              volcano.sh/vgpu-memory: '4096'
+              volcano.sh/vgpu-cores: '60'
+            limits:
+              cpu: 200m
+              memory: 64Mi
+              volcano.sh/vgpu-number: '1'
+              volcano.sh/vgpu-memory: '4096'
+              volcano.sh/vgpu-cores: '60'
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+        schedulingGates:
+        - name: gpu-lab/ready

@@ -1,0 +1,19 @@
+{"Time":"2026-10-26T17:02:52.2848577+08:00","Action":"start","Package":"allocate-pvc-isolated"}
+{"Time":"2026-10-26T17:02:59.3908004+08:00","Action":"run","Package":"allocate-pvc-isolated","Test":"TestAllocateWithPVC"}
+{"Time":"2026-10-26T17:02:59.3918048+08:00","Action":"output","Package":"allocate-pvc-isolated","Test":"TestAllocateWithPVC","Output":"=== RUN   TestAllocateWithPVC\n"}
+{"Time":"2026-10-26T17:02:59.4252948+08:00","Action":"run","Package":"allocate-pvc-isolated","Test":"TestAllocateWithPVC/static_pv_matched_but_node_without_enough_resource"}
+{"Time":"2026-10-26T17:02:59.4252948+08:00","Action":"output","Package":"allocate-pvc-isolated","Test":"TestAllocateWithPVC/static_pv_matched_but_node_without_enough_resource","Output":"=== RUN   TestAllocateWithPVC/static_pv_matched_but_node_without_enough_resource\n"}
+{"Time":"2026-10-26T17:03:00.0008502+08:00","Action":"output","Package":"allocate-pvc-isolated","Test":"TestAllocateWithPVC/static_pv_matched_but_node_without_enough_resource","Output":"I1026 09:02:59.990096      10 predicates.go:398] Executing podAffinityFilter PreFilter for task c1/p1\n"}
+{"Time":"2026-10-26T17:03:00.0359042+08:00","Action":"output","Package":"allocate-pvc-isolated","Test":"TestAllocateWithPVC/static_pv_matched_but_node_without_enough_resource","Output":"I1026 09:03:00.033415      10 predicates.go:398] Executing podAffinityFilter PreFilter for task c1/p2\n"}
+{"Time":"2026-10-26T17:03:00.3900286+08:00","Action":"run","Package":"allocate-pvc-isolated","Test":"TestAllocateWithPVC/static_pv_matched_and_node_with_enough_resources"}
+{"Time":"2026-10-26T17:03:00.3900286+08:00","Action":"output","Package":"allocate-pvc-isolated","Test":"TestAllocateWithPVC/static_pv_matched_and_node_with_enough_resources","Output":"=== RUN   TestAllocateWithPVC/static_pv_matched_and_node_with_enough_resources\n"}
+{"Time":"2026-10-26T17:03:00.4896595+08:00","Action":"output","Package":"allocate-pvc-isolated","Test":"TestAllocateWithPVC/static_pv_matched_and_node_with_enough_resources","Output":"I1026 09:03:00.489756      10 predicates.go:398] Executing podAffinityFilter PreFilter for task c1/p1\n"}
+{"Time":"2026-10-26T17:03:00.4954785+08:00","Action":"output","Package":"allocate-pvc-isolated","Test":"TestAllocateWithPVC/static_pv_matched_and_node_with_enough_resources","Output":"I1026 09:03:00.494924      10 predicates.go:398] Executing podAffinityFilter PreFilter for task c1/p2\n"}
+{"Time":"2026-10-26T17:03:00.8479438+08:00","Action":"output","Package":"allocate-pvc-isolated","Test":"TestAllocateWithPVC","Output":"--- PASS: TestAllocateWithPVC (1.46s)\n"}
+{"Time":"2026-10-26T17:03:00.8479438+08:00","Action":"output","Package":"allocate-pvc-isolated","Test":"TestAllocateWithPVC/static_pv_matched_but_node_without_enough_resource","Output":"    --- PASS: TestAllocateWithPVC/static_pv_matched_but_node_without_enough_resource (0.96s)\n"}
+{"Time":"2026-10-26T17:03:00.8479438+08:00","Action":"pass","Package":"allocate-pvc-isolated","Test":"TestAllocateWithPVC/static_pv_matched_but_node_without_enough_resource","Elapsed":0.96}
+{"Time":"2026-10-26T17:03:00.8479438+08:00","Action":"output","Package":"allocate-pvc-isolated","Test":"TestAllocateWithPVC/static_pv_matched_and_node_with_enough_resources","Output":"    --- PASS: TestAllocateWithPVC/static_pv_matched_and_node_with_enough_resources (0.46s)\n"}
+{"Time":"2026-10-26T17:03:00.8479438+08:00","Action":"pass","Package":"allocate-pvc-isolated","Test":"TestAllocateWithPVC/static_pv_matched_and_node_with_enough_resources","Elapsed":0.46}
+{"Time":"2026-10-26T17:03:00.8479438+08:00","Action":"pass","Package":"allocate-pvc-isolated","Test":"TestAllocateWithPVC","Elapsed":1.46}
+{"Time":"2026-10-26T17:03:00.8479438+08:00","Action":"output","Package":"allocate-pvc-isolated","Output":"PASS\n"}
+{"Time":"2026-10-26T17:03:00.939976+08:00","Action":"pass","Package":"allocate-pvc-isolated","Elapsed":8.655}

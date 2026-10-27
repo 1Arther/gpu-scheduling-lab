@@ -1,0 +1,14 @@
+flowchart TD
+ A[Pod Label 与 vGPU 请求] --> B[Volcano 当前逻辑资源与硬件快照]
+ B --> C[原生硬约束过滤]
+ C --> D[冻结 RF 二元适配预测与验证门]
+ D --> E[分类展示与任务相关软评分]
+ E --> F[Go 校验 UUID 与资源状态]
+ F --> G[原生 Allocate 与 UUID 注解]
+ G --> H[Device Plugin 消费 UUID 与 sleep 容器]
+ H --> I[SubResource 释放逻辑配额]
+ I --> B
+ D -->|待验证| J[确定性保守排序]
+ J --> F
+ E -->|服务失败| J
+ F -->|状态过期| B
