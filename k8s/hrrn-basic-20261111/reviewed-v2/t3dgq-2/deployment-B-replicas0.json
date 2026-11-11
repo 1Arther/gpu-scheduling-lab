@@ -1,0 +1,255 @@
+{
+  "apiVersion": "apps/v1",
+  "kind": "Deployment",
+  "metadata": {
+    "name": "volcano-hrrn-basic",
+    "namespace": "hrrn-basic-system",
+    "labels": {
+      "gpu-lab/experiment": "hrrn-basic",
+      "gpu-lab/run-id": "basic1111",
+      "app": "volcano-hrrn-basic"
+    }
+  },
+  "spec": {
+    "replicas": 0,
+    "strategy": {
+      "type": "Recreate"
+    },
+    "revisionHistoryLimit": 1,
+    "selector": {
+      "matchLabels": {
+        "app": "volcano-hrrn-basic",
+        "gpu-lab/run-id": "basic1111"
+      }
+    },
+    "template": {
+      "metadata": {
+        "labels": {
+          "gpu-lab/experiment": "hrrn-basic",
+          "gpu-lab/run-id": "basic1111",
+          "app": "volcano-hrrn-basic"
+        }
+      },
+      "spec": {
+        "serviceAccountName": "volcano-hrrn-basic",
+        "automountServiceAccountToken": false,
+        "nodeSelector": {
+          "kubernetes.io/hostname": "t3dgq-2"
+        },
+        "terminationGracePeriodSeconds": 10,
+        "securityContext": {
+          "runAsNonRoot": true,
+          "runAsUser": 1000,
+          "runAsGroup": 1000,
+          "fsGroup": 1000,
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "containers": [
+          {
+            "name": "scheduler",
+            "image": "docker.io/gpu-lab/volcano-hrrn@sha256:c03dae667ffc821f6ada20373e00434f1ec8d3f06a1c8c9ebba5c0759bef7947",
+            "imagePullPolicy": "Never",
+            "command": [
+              "/vc-scheduler-hrrn"
+            ],
+            "args": [
+              "--scheduler-name=volcano-hrrn-basic",
+              "--scheduler-conf=/rf-config/volcano-scheduler.conf",
+              "--default-queue=hrrn-basic-queue",
+              "--node-selector=kubernetes.io/hostname:t3dgq-2",
+              "--leader-elect=true",
+              "--leader-elect-resource-name=volcano-hrrn-basic",
+              "--leader-elect-resource-namespace=hrrn-basic-system",
+              "--leader-elect-resource-lock=leases",
+              "--enable-healthz=true",
+              "--healthz-address=:18091",
+              "--enable-metrics=true",
+              "--listen-address=:18090",
+              "--cache-dumper=false",
+              "--logtostderr",
+              "--v=4"
+            ],
+            "securityContext": {
+              "allowPrivilegeEscalation": false,
+              "readOnlyRootFilesystem": true,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              }
+            },
+            "resources": {
+              "requests": {
+                "cpu": "100m",
+                "memory": "256Mi"
+              },
+              "limits": {
+                "cpu": "2",
+                "memory": "1Gi"
+              }
+            },
+            "ports": [
+              {
+                "name": "metrics",
+                "containerPort": 18090
+              },
+              {
+                "name": "health",
+                "containerPort": 18091
+              }
+            ],
+            "readinessProbe": {
+              "httpGet": {
+                "path": "/healthz",
+                "port": "health"
+              },
+              "periodSeconds": 3
+            },
+            "volumeMounts": [
+              {
+                "name": "config",
+                "mountPath": "/rf-config",
+                "readOnly": true
+              },
+              {
+                "name": "tmp",
+                "mountPath": "/tmp"
+              },
+              {
+                "name": "api-token",
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                "readOnly": true
+              }
+            ]
+          },
+          {
+            "name": "rf-model",
+            "image": "docker.io/gpu-lab/rf-model@sha256:7ef2fd82031578388f75e101f9a6ab572faacf7c96fa27e39bfcfe8b213c4259",
+            "imagePullPolicy": "Never",
+            "command": [
+              "python",
+              "-m",
+              "gpu_lab.runtime.audit_server",
+              "--port",
+              "18081"
+            ],
+            "env": [
+              {
+                "name": "OMP_NUM_THREADS",
+                "value": "1"
+              },
+              {
+                "name": "OPENBLAS_NUM_THREADS",
+                "value": "1"
+              },
+              {
+                "name": "MKL_NUM_THREADS",
+                "value": "1"
+              }
+            ],
+            "securityContext": {
+              "allowPrivilegeEscalation": false,
+              "readOnlyRootFilesystem": true,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              }
+            },
+            "resources": {
+              "requests": {
+                "cpu": "100m",
+                "memory": "256Mi"
+              },
+              "limits": {
+                "cpu": "1",
+                "memory": "1Gi"
+              }
+            },
+            "readinessProbe": {
+              "exec": {
+                "command": [
+                  "python",
+                  "-c",
+                  "import json,urllib.request; r=json.load(urllib.request.urlopen('http://127.0.0.1:18081/health',timeout=1)); assert r['model_ready'] and r['model_version']=='rf-v4-known-states-ee35cfabe30f'"
+                ]
+              },
+              "periodSeconds": 3
+            },
+            "startupProbe": {
+              "exec": {
+                "command": [
+                  "python",
+                  "-c",
+                  "import json,urllib.request; r=json.load(urllib.request.urlopen('http://127.0.0.1:18081/health',timeout=1)); assert r['model_ready'] and r['model_version']=='rf-v4-known-states-ee35cfabe30f'"
+                ]
+              },
+              "periodSeconds": 2,
+              "failureThreshold": 30
+            },
+            "volumeMounts": [
+              {
+                "name": "rf-tmp",
+                "mountPath": "/tmp"
+              }
+            ]
+          }
+        ],
+        "volumes": [
+          {
+            "name": "config",
+            "configMap": {
+              "name": "hrrn-basic-basic1111-b"
+            }
+          },
+          {
+            "name": "tmp",
+            "emptyDir": {}
+          },
+          {
+            "name": "rf-tmp",
+            "emptyDir": {}
+          },
+          {
+            "name": "api-token",
+            "projected": {
+              "sources": [
+                {
+                  "serviceAccountToken": {
+                    "path": "token",
+                    "expirationSeconds": 3600
+                  }
+                },
+                {
+                  "configMap": {
+                    "name": "kube-root-ca.crt",
+                    "items": [
+                      {
+                        "key": "ca.crt",
+                        "path": "ca.crt"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "downwardAPI": {
+                    "items": [
+                      {
+                        "path": "namespace",
+                        "fieldRef": {
+                          "fieldPath": "metadata.namespace"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

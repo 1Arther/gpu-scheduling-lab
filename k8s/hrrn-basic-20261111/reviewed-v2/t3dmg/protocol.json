@@ -1,0 +1,161 @@
+{
+  "node": "t3dmg",
+  "historical_hardware": [
+    "172.16.20.34",
+    "RTX5090",
+    4
+  ],
+  "cases": [
+    {
+      "kind": "order",
+      "modes": [
+        "A",
+        "B"
+      ],
+      "input_identical_between_modes": true,
+      "roles": [
+        "blocker-0",
+        "blocker-1",
+        "blocker-2",
+        "hold",
+        "long",
+        "short"
+      ],
+      "minimum_observed_wait_seconds": 20,
+      "basis": "A: external complete-membership observation (no HRRN tracker); B: same-process HRRN tracker; neither substitutes creationTime or an injected clock",
+      "expected_first": {
+        "A": "long",
+        "B": "short"
+      },
+      "contribution": "HRRN sorting"
+    },
+    {
+      "kind": "bypass",
+      "modes": [
+        "A",
+        "B"
+      ],
+      "input_identical_between_modes": true,
+      "roles": [
+        "blocker-0",
+        "blocker-1",
+        "blocker-2",
+        "background",
+        "large",
+        "small"
+      ],
+      "minimum_observed_wait_seconds": 20,
+      "basis": "A: external complete-membership observation (no HRRN tracker); B: same-process HRRN tracker; neither substitutes creationTime or an injected clock",
+      "expected_first": {
+        "A": "small",
+        "B": "small"
+      },
+      "contribution": "native feasibility bypass control"
+    }
+  ],
+  "execution_enabled": false,
+  "reason": "Fresh API/runtime/RBAC/image/quota/exclusivity and restore review required",
+  "multi_pod_enabled": false,
+  "rf_image": "docker.io/gpu-lab/rf-model@sha256:7ef2fd82031578388f75e101f9a6ab572faacf7c96fa27e39bfcfe8b213c4259",
+  "scheduler_image": "docker.io/gpu-lab/volcano-hrrn@sha256:c03dae667ffc821f6ada20373e00434f1ec8d3f06a1c8c9ebba5c0759bef7947",
+  "metadata_propagation_case": {
+    "apiVersion": "batch.volcano.sh/v1alpha1",
+    "kind": "Job",
+    "metadata": {
+      "name": "hrrn-s5-basic1111-metadata-propagation",
+      "namespace": "hrrn-basic-tests",
+      "labels": {
+        "gpu-lab/experiment": "hrrn-basic",
+        "gpu-lab/run-id": "basic1111",
+        "gpu-lab/case": "metadata",
+        "gpu-lab/role": "propagation"
+      },
+      "annotations": {
+        "gpu-lab/estimated-duration-seconds": "37",
+        "gpu-lab/total-pods": "1"
+      }
+    },
+    "spec": {
+      "schedulerName": "volcano-hrrn-basic",
+      "queue": "hrrn-basic-queue",
+      "minAvailable": 1,
+      "maxRetry": 0,
+      "tasks": [
+        {
+          "name": "worker",
+          "replicas": 1,
+          "minAvailable": 1,
+          "template": {
+            "metadata": {
+              "labels": {
+                "gpu-lab/experiment": "hrrn-basic",
+                "gpu-lab/run-id": "basic1111",
+                "gpu-lab/case": "metadata",
+                "gpu-lab/role": "propagation"
+              }
+            },
+            "spec": {
+              "schedulerName": "volcano-hrrn-basic",
+              "restartPolicy": "Never",
+              "automountServiceAccountToken": false,
+              "activeDeadlineSeconds": 185,
+              "terminationGracePeriodSeconds": 5,
+              "nodeSelector": {
+                "kubernetes.io/hostname": "t3dmg"
+              },
+              "tolerations": [
+                {
+                  "key": "node-role.kubernetes.io/control-plane",
+                  "operator": "Exists",
+                  "effect": "NoSchedule"
+                },
+                {
+                  "key": "node-role.kubernetes.io/master",
+                  "operator": "Exists",
+                  "effect": "NoSchedule"
+                }
+              ],
+              "containers": [
+                {
+                  "name": "sleep",
+                  "image": "docker.io/pytorch/pytorch@sha256:923f687790bec78081c357e71dcd5dcef80b0cc00f6c34484902a5e83362c854",
+                  "imagePullPolicy": "Never",
+                  "command": [
+                    "/bin/sleep",
+                    "5"
+                  ],
+                  "resources": {
+                    "requests": {
+                      "cpu": "100m",
+                      "memory": "128Mi"
+                    },
+                    "limits": {
+                      "cpu": "500m",
+                      "memory": "256Mi"
+                    }
+                  },
+                  "securityContext": {
+                    "allowPrivilegeEscalation": false,
+                    "capabilities": {
+                      "drop": [
+                        "ALL"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  "required_evidence": [
+    "same-process readyAt and waiting",
+    "Priority/Gang/DRF ties",
+    "actual bind and Running",
+    "RF/Allocate/plugin UUID",
+    "completion and release",
+    "original scheduler restoration"
+  ]
+}

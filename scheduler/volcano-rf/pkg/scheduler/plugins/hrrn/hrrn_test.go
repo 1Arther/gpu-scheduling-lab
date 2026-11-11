@@ -296,6 +296,9 @@ func TestNativeOrderingAndPlacementComparisons(t *testing.T) {
 }
 
 func TestNativeFullJobBypassAndRollback(t *testing.T) {
+	// Structural infeasibility/rollback control only: 2x60 cannot fit a
+	// 100-core GPU even after all background Jobs finish. Eventual progress is
+	// covered separately by TestTemporarilyUnavailableCompleteJobEventuallyBinds.
 	requireRF(t)
 	var records []map[string]interface{}
 	for _, mode := range []struct {

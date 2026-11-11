@@ -46,6 +46,13 @@ func (ra *Action) Initialize() {}
 func (ra *Action) Execute(ssn *framework.Session) {
 	klog.V(5).Infof("Enter Reclaim ...")
 	defer klog.V(5).Infof("Leaving Reclaim ...")
+	// Reclaim calls ssn.Evict immediately, before Pipeline. A later veto cannot
+	// undo those external evictions, so conservatively disable this action for
+	// the whole Session while any hard allocation guard is installed.
+	if ssn.HasAllocationVeto() {
+		klog.Warning("Reclaim disabled for a Session with a hard allocation veto")
+		return
+	}
 
 	queues := util.NewPriorityQueue(ssn.QueueOrderFn)
 	queueMap := map[api.QueueID]*api.QueueInfo{}

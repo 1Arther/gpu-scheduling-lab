@@ -1,0 +1,899 @@
+{
+  "base_commit": "c4684af95252c9d50b6423abf93d4ab362f53773",
+  "date": "2026-11-11",
+  "repository": "1Arther/gpu-scheduling-lab",
+  "source_files": [
+    {
+      "path": "scripts/analyze_cross_node_live.py",
+      "sha256": "df7fb41ac95292a4d9d72c5dd61e2ba69e06504b645e7b87096a9dc14d25e9af"
+    },
+    {
+      "path": "scripts/analyze_hrrn_readonly_preflight.py",
+      "sha256": "f924177793712c66787e97cf3805e6cefffe9ad4867b659e89675be5cbc77c4a"
+    },
+    {
+      "path": "scripts/analyze_multi_vgpu_live.py",
+      "sha256": "b1934a2e700894b516d6788001b5ad6229887080bc84cf38b28caa866d31924a"
+    },
+    {
+      "path": "scripts/build_hrrn_stage5_image_repair.py",
+      "sha256": "4e2fde0f1cca52529d1d8af6b6418791fec454310a3e7501a6e94038c53a58f6"
+    },
+    {
+      "path": "scripts/build_hrrn_stage5_leader_repair.py",
+      "sha256": "4d21ce8c5f887eeb3a579aee55519db4df71e182d5343aea4c99aa9a19286bec"
+    },
+    {
+      "path": "scripts/build_hrrn_stage5_oci.py",
+      "sha256": "58e1a7ca8ab553a14a80fe714495b85aecd40c3e7fcfe41fb6546b2a6b98e1b8"
+    },
+    {
+      "path": "scripts/build_hrrn_stage5_package.py",
+      "sha256": "8b9d878a3b320d26465b14aaa93e7806142986026934c1e666b3bf84ea19ab02"
+    },
+    {
+      "path": "scripts/build_hrrn_stage5_repair.py",
+      "sha256": "bd8fd18543bf4b2c5c56aaa491a423bed70be8f0c18c924b81ba1508541077b3"
+    },
+    {
+      "path": "scripts/cross_node_live.py",
+      "sha256": "58e72517c897a2052b2cf3865ff33f1464d98dec20ce1b8b5627b128e8932dd0"
+    },
+    {
+      "path": "scripts/cross_node_receipts.py",
+      "sha256": "a71f953227c8cbbdf97bfee86abb53507c0ed366f52d3d612abcf322acece2bf"
+    },
+    {
+      "path": "scripts/hrrn_readonly_gate.py",
+      "sha256": "d38ef80e483f6a959c944149cf3786629c6b8ca41f3f64289284631bf59d8ca6"
+    },
+    {
+      "path": "scripts/hrrn_stage5_client.py",
+      "sha256": "fc0339c6d38dc2e677effdea8c32ff66927151f0f46b5f88d9d68f280694196f"
+    },
+    {
+      "path": "scripts/hrrn_stage5_evidence.py",
+      "sha256": "3426e56b57d59354d5bc7792df678e8cc8e3803cd7973e9f0ab0497e9a904677"
+    },
+    {
+      "path": "scripts/hrrn_stage5_gate.py",
+      "sha256": "c342a970a27be0909d973c66c023a05fc99f6e65227319a8821a725f6cd21f5e"
+    },
+    {
+      "path": "scripts/hrrn_stage5_live.py",
+      "sha256": "2a2443069402e49137fc842966ac1bc579ba4681a9ae17b0178b83b6e3fc629c"
+    },
+    {
+      "path": "scripts/hrrn_stage5_manifests.py",
+      "sha256": "a4e179525f33f1fc2ae0bbb8cd3af3e53b1b2896cbb50cfd73107cd6dea8fb07"
+    },
+    {
+      "path": "scripts/hrrn_stage5_r4_tail_bundle.py",
+      "sha256": "05db2e7d7218c718fd21c373b88b591b6cc4d70c467faeff225ebdac21ee235b"
+    },
+    {
+      "path": "scripts/install_hrrn_readonly_access.py",
+      "sha256": "bf1de8c896c8718eaeed88bbebb66cba702e9f7dce72fd3a910eae791010f055"
+    },
+    {
+      "path": "scripts/install_hrrn_worker_readonly.py",
+      "sha256": "89cddaf4aba486ea2d7227fa2ecea3f9df605890748d5bdd4869d1eb3597ce08"
+    },
+    {
+      "path": "scripts/multi_vgpu_live.py",
+      "sha256": "918d9adfcf3d38d3ca1df63da90bb5f784902ac06ee59d30e4c49b86993f8032"
+    },
+    {
+      "path": "scripts/prepare_hrrn_basic.py",
+      "sha256": "aee2f81405b1fa0d17f9fd4f84a0e780a1d5d536dd46aebb7fdda6ae15bbc1fe"
+    },
+    {
+      "path": "scripts/test_hrrn_stage5.ps1",
+      "sha256": "03a69e7b18dc0081c1b09874767cfc61233b7cc44e8d799d2cbfc61df37b57c4"
+    },
+    {
+      "path": "scripts/test_hrrn_stage6.ps1",
+      "sha256": "d9f0ae6af7abcf7deedade2f8812a979ef7c2e4addfe1d93685997c99f300fbe"
+    },
+    {
+      "path": "scripts/test_hrrn_stage7.ps1",
+      "sha256": "46bb5d44569e7198322527c3d634a8b17f239a85252110fd3f77a4ba2523b310"
+    },
+    {
+      "path": "scripts/test_hrrn_stage8.ps1",
+      "sha256": "924449dfe45d363ab51fe1ac15ab8da7ccd191fd380071370aa5d65e3db180dd"
+    },
+    {
+      "path": "scripts/test_hrrn_stage9.ps1",
+      "sha256": "554e9bccebcd7681e37855a2dd7a7eacd756a21090349640e6593e9c3dbad938"
+    },
+    {
+      "path": "tests/test_hrrn_basic_prepare.py",
+      "sha256": "8f30a677852f13a4282739a47df3296d061dd411683d4dc591812f9dee98565b"
+    },
+    {
+      "path": "tests/test_hrrn_stage5_checkpoint.py",
+      "sha256": "c503698402b5ae42c850dd010cbdae37ffc643da36f0b3a7abc5c737cabe0e33"
+    },
+    {
+      "path": "tests/test_hrrn_stage5_evidence.py",
+      "sha256": "18c4eb39a4b78d40f322b5b8ff93ea8a7a468e637db919b063b33ca6463e0b39"
+    },
+    {
+      "path": "tests/test_hrrn_stage5_gate.py",
+      "sha256": "0ecde5dc6fffc757d526d6d88760f38b2b21a5a1e62ecc5e5fd0e116f4d71e6a"
+    },
+    {
+      "path": "tests/test_hrrn_stage5_image_alias.py",
+      "sha256": "70adcf3a617ed872713cea5af1734d82d8ab964187553c7194b119ec5659af2d"
+    },
+    {
+      "path": "tests/test_hrrn_stage5_image_repair.py",
+      "sha256": "3d0c96c07d6d21642ccd719f1179910f8a83322d0e26478d0ea7659c51389ccf"
+    },
+    {
+      "path": "tests/test_hrrn_stage5_leader_repair.py",
+      "sha256": "232394ffc0c578d491bef59b07ce05f04a2dd3f717940719545f820c87057123"
+    },
+    {
+      "path": "tests/test_hrrn_stage5_leader_wait.py",
+      "sha256": "0f3ea2935eecf9fbc9d3d70d1a30b84f30bbd37686b14d8e4b9481543baa8af6"
+    },
+    {
+      "path": "tests/test_hrrn_stage5_live_guards.py",
+      "sha256": "db5605e7aef986f030e724cca5eb6e1018545cfe0cdf94f67821208ea702e003"
+    },
+    {
+      "path": "tests/test_hrrn_stage5_manifests.py",
+      "sha256": "eac4edb2d44707ff7b6c73a0720d579996747d5546e3cea8aaa2000b0aeb27e1"
+    },
+    {
+      "path": "tests/test_hrrn_stage5_preflight.py",
+      "sha256": "e757c8d304a25404cc12895216cd9930d46f3b12bd2d15ada6cf87a416f5dfcd"
+    },
+    {
+      "path": "tests/test_hrrn_stage5_r4_tail_bundle.py",
+      "sha256": "c0dfb1119daa84e80e407a52867c8054147a4d4f0c925a5f12c64585d55a9f78"
+    },
+    {
+      "path": "tests/test_hrrn_stage5_repair.py",
+      "sha256": "4df185a299448539927a6d5e57f359c65ddbf297d727c8c8231a25af24093719"
+    },
+    {
+      "path": "tests/test_hrrn_worker_readonly.py",
+      "sha256": "914db25338edaf56017da92f5b007c39ac0b8481b2831ca5c55ccdc03c73960a"
+    },
+    {
+      "path": "docs/hrrn-stage6-coordination.md",
+      "sha256": "23c82d9d4f7bda409c3b62fcbc29faae4046da325cf906795c647168b359f240"
+    },
+    {
+      "path": "docs/hrrn-stage7-durable-coordination.md",
+      "sha256": "97de2d852582f53c5c8c98f46294a95a3e73b58525d189220e32eb61bbb1234c"
+    },
+    {
+      "path": "docs/hrrn-stage8-uid-reservation.md",
+      "sha256": "8f26d50a94a8609e9ecb0b2c1d6b7e7ea5257a097fae3e899918b0d994f785c2"
+    },
+    {
+      "path": "docs/hrrn-stage9-atomic-uid-handoff.md",
+      "sha256": "adae27b8a6f9dd670605184fadef4c998c1708c2e47421172ee5667edce7bd82"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/config-A.json",
+      "sha256": "b0fd5bb825a6badaea4ddee0284b04f3f3f049d324edf6d6b3e14168b075f7ca"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/config-B.json",
+      "sha256": "98da10f6d3f6180c1a08da18a12b2fd0d03f1b9902ca8d64b43f1496c86f64bf"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/deployment-A-replicas0.json",
+      "sha256": "6764abac816e766041d19c2e0648e72c593204970e7c18c33f91b00c27490219"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/deployment-B-replicas0.json",
+      "sha256": "8f7d81d68e999b8c431838ef4be36c1305ea0770997d8ad188aca4b45c34f902"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/manifest.json",
+      "sha256": "f5cb9e7bd7fa30cb884bc71a98984d3a8f0fbe88b3dbcc1b9954d129ea342a8d"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/protocol.json",
+      "sha256": "ba7a22c36d8a73ff900cad4493ebc06d50c248709fd1b383260d56bece23a28e"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/jobs/bypass/background.json",
+      "sha256": "854d2f2df94ff4c42c76bb9394224cb07b4d00f38e180123474dbdbd4018f61a"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/jobs/bypass/blocker-0.json",
+      "sha256": "28850f3804f440aac61303860938dccdb07d50a71d8c16f05c1666514f6a416d"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/jobs/bypass/blocker-1.json",
+      "sha256": "575c04c4570950d1bb0bd5eb3ce456b10c8779300a7bf70847f441f2dfb9e444"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/jobs/bypass/blocker-2.json",
+      "sha256": "e2a5e45baabed31d69c119067dd7e8a00c015426e7df5a9ad611178d0a6d80cb"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/jobs/bypass/large.json",
+      "sha256": "c258080af35515e4edcebd8c4b0ceb98eed92f331ce12fd994f83d92fc64a103"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/jobs/bypass/small.json",
+      "sha256": "3072722ff61355a49a5b5dade30453019afafa40a35eaa7dc2d33ecbf23de8ed"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/jobs/order/blocker-0.json",
+      "sha256": "eaca2ab5c09beb465848ce9567caa632836cdb36332286587dbb63d95e964f37"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/jobs/order/blocker-1.json",
+      "sha256": "7936428b0d2f7f323088829d618048f6d8a46696ca5a9c7933c136e99e97d12f"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/jobs/order/blocker-2.json",
+      "sha256": "fb7e05a4531067dba50d3cfd8333d0de902e2c1fb4f0d61287e2a98d19ddde70"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/jobs/order/hold.json",
+      "sha256": "b4950bc882ead942ffca892ef881a5fe8e2a350e249403d49b4714f847846200"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/jobs/order/long.json",
+      "sha256": "fe190b73f95fce03719087fd441ee56a615185d3478e23e09ffffed92279844e"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq/jobs/order/short.json",
+      "sha256": "4c4be61a60c27d9bb343ae34c16afbae37fb33f78948f7c09bccc5c0b0bc1f30"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq-2/config-A.json",
+      "sha256": "b0fd5bb825a6badaea4ddee0284b04f3f3f049d324edf6d6b3e14168b075f7ca"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq-2/config-B.json",
+      "sha256": "98da10f6d3f6180c1a08da18a12b2fd0d03f1b9902ca8d64b43f1496c86f64bf"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq-2/deployment-A-replicas0.json",
+      "sha256": "e6312a01d7dd09540d5bf3cc89e1b6e44dcdee0ae3e1dca200464fae96690d1a"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq-2/deployment-B-replicas0.json",
+      "sha256": "359a1e1bed9ec2e4359e1a9ad4b0a59aca6ee42ce7aa7c7fee685a0d9c2f8b7f"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq-2/manifest.json",
+      "sha256": "45cb427503e5fd2a6240fd2b28eb159ec4bad809556707323e0aed3ca9863fcf"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq-2/protocol.json",
+      "sha256": "5b0439489877e72058f0f418c24a3fee41031d13097a7218a53ed45d9dff6b3f"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq-2/jobs/bypass/background.json",
+      "sha256": "37a81c2c89ce77ff5e576ed9fa156da4cbb7f1adea42fe7790c80d5181e7b996"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq-2/jobs/bypass/blocker-0.json",
+      "sha256": "86688723c4892633b641e0a016c7d718259baa8ff736650e67149b3b4cb20035"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq-2/jobs/bypass/blocker-1.json",
+      "sha256": "7f7042b4056349f458ea01b5c832a58224d8e18246c7e3b2cd597906ac8436ef"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq-2/jobs/bypass/large.json",
+      "sha256": "fc5679269f4f3abeaa4605c634ed221be85c9288c4fd4a8a21f20ee765625391"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq-2/jobs/bypass/small.json",
+      "sha256": "4d302355488a22de90ecebb23ecc964cef7ca2340763a825c40eeae7b8f8c8b2"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq-2/jobs/order/blocker-0.json",
+      "sha256": "4f8a02532756dc05eee47db48b74f335f4e578242c86706b9d395211837e3c42"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq-2/jobs/order/blocker-1.json",
+      "sha256": "57c794976d38b637d9ad6a6ddc4f848b5e60a0def44273da29812ccf3d5a5db7"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq-2/jobs/order/hold.json",
+      "sha256": "a4960f926f74a5729e2ee5f15e54fb0a2f05e29dbec785b62a813f7fd338e88d"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq-2/jobs/order/long.json",
+      "sha256": "08bbb509dfeb44f329f0b47a6a28bc1dff1d02c6ab51a5006ccee0dc8077d7ef"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dgq-2/jobs/order/short.json",
+      "sha256": "d26396529fff81decddab7a80b4e2cd0f46f9efccb06ea6c459da8a07975857c"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/config-A.json",
+      "sha256": "b0fd5bb825a6badaea4ddee0284b04f3f3f049d324edf6d6b3e14168b075f7ca"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/config-B.json",
+      "sha256": "98da10f6d3f6180c1a08da18a12b2fd0d03f1b9902ca8d64b43f1496c86f64bf"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/deployment-A-replicas0.json",
+      "sha256": "5cc62ecbb0e80321b32a602e50518898da3ef03b35f4f8a8605b213e9b4c7855"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/deployment-B-replicas0.json",
+      "sha256": "e9faf48cb9cf1bcd7bcaa4dd75b5a16f8c52cada7ec2cfbd37c66d1837a428dd"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/manifest.json",
+      "sha256": "301a89b3c4742be520ad2ac27b98e7e36c5e412ce7a5f24d932142132035628c"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/protocol.json",
+      "sha256": "66eb0b0287528b96602a5624aff114b35e988e0ccdbafb8a9eebfb5a29daf630"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/jobs/bypass/background.json",
+      "sha256": "adf19e112972f872e3fe10e57b3e98eb4790c166c3ad4372f03c7fe077eab3de"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/jobs/bypass/blocker-0.json",
+      "sha256": "944e0b365aab8da42fb63c262c8fc8362212aec7b460e3cb0d348c990ceec33d"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/jobs/bypass/blocker-1.json",
+      "sha256": "5b65071e12cea9c42f79902d6d9cd22b7522f536d5d26f24262a619c2fe75332"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/jobs/bypass/blocker-2.json",
+      "sha256": "a7c16ba26e9198f3e49ed875f133e09b4b250e944fd53aa6c609e4c93ad67b02"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/jobs/bypass/large.json",
+      "sha256": "90635ae51fe3444b867a69998a37fdd1139d9f87251a6422e33bc93add2c9517"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/jobs/bypass/small.json",
+      "sha256": "183e56cb2fe07ed3c27b9baae665157fe0203c34bfe0263a551acabe9c41848c"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/jobs/order/blocker-0.json",
+      "sha256": "1ef968e942523244b74bb490c362175f34a49cf683332f08599e91632f2e0190"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/jobs/order/blocker-1.json",
+      "sha256": "28aca3e6270211f0f731eb46a0d1ca802e8ea92469789ff7951c18a71b1778bf"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/jobs/order/blocker-2.json",
+      "sha256": "f8c7d4733987421ecc41fd7ed6865c769f2426fd9155d2926c4e4faeecaa5cd6"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/jobs/order/hold.json",
+      "sha256": "e4d7362d13ad2ff1add20abf601ced42192b0fd3f7dc3c7023047846a168f23a"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/jobs/order/long.json",
+      "sha256": "a44f4e33a1ea32b18f267a6d62836b6c1cafa4e70c496e0ad6a7c529c147714f"
+    },
+    {
+      "path": "k8s/hrrn-basic-20261111/reviewed-v2/t3dmg/jobs/order/short.json",
+      "sha256": "b6c9db451d819b70b7cc68487beb903aeced49a0857ed8887c1f8ed9f94849bf"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/metadata-propagation.json",
+      "sha256": "645a522669d18f216a67fa528408b387d94766681e7490d30495ab3e2e0afebc"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/protocol.json",
+      "sha256": "a77191a7bccfddf38a027c814766ae44f1613e4922fb757d869ef86a0dd76986"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/README.txt",
+      "sha256": "81dec2465238552140f23db3d14c172e5740dd8a70bc6d56313f319a825cda46"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/setup.json",
+      "sha256": "52992306857139a44d0a19748564a78b4aa4d3f60aaf764c585946ed3d1d1b14"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/complete-a/background.json",
+      "sha256": "a3eb3f2a37ce506827ea44e49bcd23c65340ea9bb97ab640ea1b69285a54a56e"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/complete-a/blocker-0.json",
+      "sha256": "9ae0d218d15b56eef768e5f552e453fe535bc3b393440aa1d0c291ccd616fa84"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/complete-a/blocker-1.json",
+      "sha256": "b9ddb29aa8162ac4077fc33dea9aec2ee2a0121c84b431efd672eece09619a03"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/complete-a/blocker-2.json",
+      "sha256": "c150cbe722422f44cf5641479c38ae9c71ac4a748f7aad599a8840d23be7dc43"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/complete-a/hold.json",
+      "sha256": "2d2c069b544bbb08798d9f95f5c36e8b125b20333afb94b75b313b8afd147fb8"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/complete-a/large.json",
+      "sha256": "52328e36c9ebc51d1034403909bbe877f16def2cd490705b5f277a6638be0b91"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/complete-a/small.json",
+      "sha256": "81df1777c3a4d6e5b18d3f6dfe928a6036e0a0f12b32edcf4d67e226c5dfce7b"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/complete-c/background.json",
+      "sha256": "2258bf9d4c7b6cb0ba51059ea62d7a12d0501de15386e9f20c9326c26ac62111"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/complete-c/blocker-0.json",
+      "sha256": "bdda84b68180fb1d7d87efa1e39b90146ec1a51a83ba86bad0b1d047fb81a018"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/complete-c/blocker-1.json",
+      "sha256": "641deeccd69c83bb3be708d8d285197d4e6edbe370dead47cd4f34fd421bd9a8"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/complete-c/blocker-2.json",
+      "sha256": "7ef46ca5e593d3806f3b1e9233299cff1aca5a782545d8890e81301f00a78d71"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/complete-c/hold.json",
+      "sha256": "4dbb6082a0efaa191c4aad863d2affcc50a7614aaf61bc1935b6748f2b6b6e67"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/complete-c/large.json",
+      "sha256": "39ebd40de54e0796d759cc7404971bd55dd648de6822942eedc59284c50054b4"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/complete-c/small.json",
+      "sha256": "025251ac86d91921a7cf24fac25e29627f9f90a542e529393f99f7fbbe10a565"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/order-a/blocker-0.json",
+      "sha256": "d9157644d6a21ed2efe4214b9e32107598df76a4898c6e63d8f36fbe7219ac6b"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/order-a/blocker-1.json",
+      "sha256": "7aced295dd5ae02c4d2979ffb9c86139f2353849844620124d8e2813f9f1fbdd"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/order-a/blocker-2.json",
+      "sha256": "5f4011f5081c855e29a3b320cac010add884d493141964349053b54f20a6d1d0"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/order-a/hold.json",
+      "sha256": "ea3e7a02500444f38e74d8de20401b0839903e04c9ce9b153c2cbbb0c6de0baf"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/order-a/long.json",
+      "sha256": "a4e05d7bc2bb392fcf81d4009402e47ee3879d7a5b013894448d911037bd1853"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/order-a/short.json",
+      "sha256": "191816c8719729bc5d14b9815a37ed2461c6d2726fbc7571a8f09598a500e7fb"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/order-b/blocker-0.json",
+      "sha256": "619030289a6e70f05b1e8956c7134d3706f81561f2bad79f8746d2edc6ef6634"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/order-b/blocker-1.json",
+      "sha256": "8ec29d2eb4e919a4e9b0be8acc51f2a9c52cf2100ebc572c544715f83b104772"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/order-b/blocker-2.json",
+      "sha256": "f5009f548e82f78aab2855a59a6409a95d98e857c8e8c08656d96451e11b59d4"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/order-b/hold.json",
+      "sha256": "3ee72a124e017647c7852343c5c88968ad9557d70131304b825a1813be36a2bf"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/order-b/long.json",
+      "sha256": "e3a95c1ce5b1f9cbd365af76eae372a49b2bc113c7d57278217c0e5c6f5beeb4"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/cases/order-b/short.json",
+      "sha256": "e6d620002045b81b662032e68f337fda547595e20944896d3e5a1ee551d471dc"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/configs/A.json",
+      "sha256": "6f19ef02af80bf3f424fadee589dad71fd7487e391c4e0f6be4bda0c8bf00b06"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/configs/B.json",
+      "sha256": "c8b699a31e805117ae78fe058a92edec276e1afa0880f8611687cad01535273d"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027/configs/C.json",
+      "sha256": "e90512ca118bf2065b976aff057cb347af55f89bcbdb7d57bd15dbb92f5542f9"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/metadata-propagation.json",
+      "sha256": "aed7f03d5bca22d1b8ea0c0e4acd6dfaed75ed773779c75ba5e89a35cb9d0521"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/protocol.json",
+      "sha256": "e106e78171bc1abe2b4a5d1f1db9815538a21e0b3399d5706a279484c1bd6bfb"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/README.txt",
+      "sha256": "8ccb21affe2505053a85e3f84e60c8461b1f11f2100d8e60bd6f1d3c04d094cc"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/setup.json",
+      "sha256": "2c4a23ff80058c092ae59132ec358991d059aed6400c8f427027071ed2f8a2a4"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/complete-a/background.json",
+      "sha256": "8bb3ad9ef123afed8db9676b8871415988878dde1ac1a9c3237b9f396b04e6fa"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/complete-a/blocker-0.json",
+      "sha256": "733326819b67d67f840287ac536f439bf032448e6aedc5e54185403642d1840a"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/complete-a/blocker-1.json",
+      "sha256": "98fac2069209e5fa80244e6804e4ced2667e1cb2098f7719687e868199b290e6"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/complete-a/blocker-2.json",
+      "sha256": "bb8c38acac60fc90121a59680059396c8a8ec89d8abe931d13f53c9a27787d99"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/complete-a/hold.json",
+      "sha256": "a463fa49638a47e4abda8391db1c8ec6d303efbfba009cab22062a498daff224"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/complete-a/large.json",
+      "sha256": "6a82c9e26c62bede61ca99115200cad65439a2d54e8b34afed238174ecb99495"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/complete-a/small.json",
+      "sha256": "938a67a83b572661cca6523f6b08f9088c8ed47b0a78318f1a774e44b352db9a"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/complete-c/background.json",
+      "sha256": "bfd86a9c5d27c7f596d781df2388dc9b81d36c0cfc44fce53f83673e4dab25db"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/complete-c/blocker-0.json",
+      "sha256": "ef92115b7208d51afb8255680054ab0a832373101ef87b2f7557d801a0f760c2"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/complete-c/blocker-1.json",
+      "sha256": "d91ea26064c8c3e9345f2760fe42b2c89da332fc851c42ff6839a155f3d6707e"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/complete-c/blocker-2.json",
+      "sha256": "e7ce25ca96bb3129930f832d9c35ed4548b6b0fe35bd5e1b8b008d9daa40acc6"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/complete-c/hold.json",
+      "sha256": "293c4f16192a6fc33730a1fbea17a485a9027ca688070e822bc668be481a7e8f"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/complete-c/large.json",
+      "sha256": "9e398e11d2bd30a25d70343571ccca534f8d3d45a9a841670dc17583a4986bc9"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/complete-c/small.json",
+      "sha256": "d31af6452fbe4b30947e76f1169d4b455a8764c24a4e1ea163c6ec709537fc67"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/order-a/blocker-0.json",
+      "sha256": "60adc7e817aebc2324a2559b288c3e37bf25a30e560358b9d95e7abbfb6ba6e9"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/order-a/blocker-1.json",
+      "sha256": "46def4b162ffe82962f51724352854a62c6b839b808f50cbfe191294d66d3a95"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/order-a/blocker-2.json",
+      "sha256": "ec1ecc904c2fd7bfc87b1966e438f32506478d397501f92db602b3c6a056d843"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/order-a/hold.json",
+      "sha256": "2ccaa5f184d1bc4d6d42e983955462fe7d9bc23a485b3e703b40a5fbfdb77788"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/order-a/long.json",
+      "sha256": "35712980d8e2c125fba4f0931b0a35959b7769bbcb5aebdb2fd70c4129d9ccba"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/order-a/short.json",
+      "sha256": "6b0ae29a897fad0853247da23654cba4d9f2f3f143cb40a9481da7ad41895468"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/order-b/blocker-0.json",
+      "sha256": "f7793619d7ec0da840df1d18e18cebca314246501a36e3b700e4ee4807bf5b44"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/order-b/blocker-1.json",
+      "sha256": "43654706f9fd501e9a652e310d2c73c9408b5af21247c8dea4d0679cee0dbf4d"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/order-b/blocker-2.json",
+      "sha256": "be6aa3b3228063e5a6861d212865dc558e70e86afcf23d30913f7046a6fd4e71"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/order-b/hold.json",
+      "sha256": "ed0f64ebb098ac9bde4ba9dd4f17788d48d283b4970569e41618aa800b2436c9"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/order-b/long.json",
+      "sha256": "d48d66d054cc1bab5fd27b778af6a56ed35af2e6c8f836de5dc4ac6a02b6e6b0"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/cases/order-b/short.json",
+      "sha256": "97ecc9b9641e262bfa7bb63c617a2bbc97507d288c07e06f30a03a706a431ccc"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/configs/A.json",
+      "sha256": "6f19ef02af80bf3f424fadee589dad71fd7487e391c4e0f6be4bda0c8bf00b06"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/configs/B.json",
+      "sha256": "c8b699a31e805117ae78fe058a92edec276e1afa0880f8611687cad01535273d"
+    },
+    {
+      "path": "k8s/hrrn-stage5/live-20261027-v2/configs/C.json",
+      "sha256": "e90512ca118bf2065b976aff057cb347af55f89bcbdb7d57bd15dbb92f5542f9"
+    },
+    {
+      "path": "k8s/hrrn-stage6/C-hrrn-coordinated-fail-closed.yaml",
+      "sha256": "2271bf40ec1aaa3a62baa2e78a97b90c6d97ebd31c68d21911adb64aa198e116"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/actions/allocate/allocate.go",
+      "sha256": "9bc63ac8fdf68d6bdebfd2bb28a7b4881e30f1e76e916fff8740047fd97f3abe"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/actions/preempt/allocation_veto_test.go",
+      "sha256": "db5ecb8c92fd780a5a945dd96fa059d811f71d65e495b9beac726ad6c4411cbf"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/actions/preempt/preempt.go",
+      "sha256": "8ab987a08c500235b832e96faa358293f041b8764d63da62ac9074d08daf92ae"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/actions/reclaim/allocation_veto_test.go",
+      "sha256": "30698bf82f4d8b53c20eaac8591ffb581ec2657118f50a65652fddb625633b7c"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/actions/reclaim/reclaim.go",
+      "sha256": "a1d89fd1ae47a075cfc76a92071e3b9c228197bae77357d3821a27a2e67d006f"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/api/devices/nvidia/vgpu/coordination_request.go",
+      "sha256": "4700cda7836c8d08aa7b120a5e2c653278a9c4fe0c18b08c1fd106af7adcab36"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/api/devices/nvidia/vgpu/job_coordinator_local_integration_test.go",
+      "sha256": "79cc2cfa7999ebef796d79163c1c61275ece5df6e0da71801ce3431e5c77e26b"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/api/devices/nvidia/vgpu/job_durable_rf_integration_test.go",
+      "sha256": "8648587cad27122af92de30091233e71138ac2f292df72a6b48429d409688b65"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/api/devices/nvidia/vgpu/job_planner.go",
+      "sha256": "9f1df8a53bb7e7537dc4802db849d145a57fe2dc736b9a9563e24e06467bd373"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/api/devices/nvidia/vgpu/job_planner_test.go",
+      "sha256": "3ac85e6d2e270d4e41ab6c3166ca6edfbeab4e958b44cb8b80007424a7a4b03d"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/api/devices/nvidia/vgpu/pod_patch_cas.go",
+      "sha256": "5907292b9cbcb43e6c53cbefd4724bc6bd088744618a76b6b95378ff68b50bf0"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/api/devices/nvidia/vgpu/pod_patch_cas_test.go",
+      "sha256": "06f8d2d1a35e67ceb3a28d0268ac01037f15ecfa422b15952b21dd2a51198f2e"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/framework/allocation_veto.go",
+      "sha256": "9ce4df9970ea602fde49b0dd170f099f7f7dc01f30621bd76d7e00347f20c5da"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/framework/allocation_veto_test.go",
+      "sha256": "edc438746101b6980dbf915230f05afb7278f70f227e7bdcb5c662ea219c1711"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/framework/session.go",
+      "sha256": "75bcdf9c030ddc0aec7543aa7b4211688405d7abc5f1d819cf10e1074f9ce4d2"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/framework/session_plugins.go",
+      "sha256": "6b8b17a1498d00204dfd1550d944ab64565fb98edea097f8e1d9cce51dd17c9e"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/framework/statement.go",
+      "sha256": "2f536af0fa2bc976030acf8b7abed730fb241ff4349bd297d18bcf15a34c345b"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination_guard.go",
+      "sha256": "9e49c58ea6a285221fd71e88f024ff604350820393f3b4695d2f85eec5257a42"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination_membership.go",
+      "sha256": "434f6b670de2a2ff0cc86e577282e197e9fbe4270144d49670d897f17154ded6"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination_membership_test.go",
+      "sha256": "40726a0ab2b43988098f63934e05bb95a2ac5f2cc51c0445832b532de32685f6"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination_stage6_test.go",
+      "sha256": "ad780300063a562cbb231d5888c5ecde5e9d35a872b566456f5698e82ad24bd2"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/hrrn.go",
+      "sha256": "331872565aebad9697410a6186ed037b0889353a8b2a8a8becd98c6e77c2828e"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/hrrn_test.go",
+      "sha256": "94559cf899dea0f5bcba930d8a0d5b1895996d588531072202bc4272e8f7b319"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/nodelock_stage5_test.go",
+      "sha256": "788547ac13fce53f9bfa272846582d542481040df86d7171d72fd5068825783b"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/reservation_barrier.go",
+      "sha256": "cac5ecd85026cee4af39a41eabb7022b77d6f2970c2807dbaa8c63d61890190b"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/reservation_barrier_session_test.go",
+      "sha256": "04f1952df3ca38c869d294444019aa9bfe5bff77cfbb976760c255f20c6be09a"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/reservation_barrier_test.go",
+      "sha256": "bd1f37e4062997870d77fd61029daca84e031fada3f4412bb38adeebc34cd8ee"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/temporary_capacity_test.go",
+      "sha256": "95b117795795d2615c236a234a6ebddb04ed861857b8e67cdf0ac51ec2919765"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination/ack.go",
+      "sha256": "c5e2b7eb10bfb105da837da5c7b17a1ea93a2e593d83b227e968d27bdf49c4e5"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination/ack_test.go",
+      "sha256": "f0f75a100519803224652d40d64ac42d9685fecda6b4ca91e24668c63f22ecaa"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination/checkpoint_receipt.go",
+      "sha256": "d1ec53da555d18d8b92297b250d3ce93f47a58bd2d6a731d0f5f9520a54e086e"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination/checkpoint_receipt_test.go",
+      "sha256": "884d7aab91f6b6dbf0f8b068cff9f22b784603344ac8e26cb6e160f45b42d48a"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination/coordination.go",
+      "sha256": "cc677546cb617663ece3e5c202bbdd5a528660b0ba9e24e76d3b316863890f2f"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination/coordination_test.go",
+      "sha256": "9945ad716a21ed23b73c304711e250487f4dea1344ed204f9243a0007e1f661d"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination/durable_flow_integration_test.go",
+      "sha256": "fd3f4f14983dc869e751eb61416c9ede08b971bfac208cf6611866223e635f1e"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination/durable_handoff.go",
+      "sha256": "e8fdb6e388f3f33321b0aeb9f955a5ead735ed5d44db1bf6bdd939294e75e416"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination/durable_handoff_test.go",
+      "sha256": "71ecb92f7e4856708184a26bcc97a2da43972c5157e567e04d67e485dc0808b1"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination/durable_store.go",
+      "sha256": "dd6c06e4f8d2ec75d4305f159cee06abcd1b70274aa37c3ad6db402fce1ea30a"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination/durable_store_test.go",
+      "sha256": "34fe595a051ba9a0f68d73be82bf96fe35f365c5ea6492380f45cd93a4126dc9"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination/reservation_view.go",
+      "sha256": "b30d6df40669525e2e366e2944305d037820723f026685f0a6ccdad09d0c79e6"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/coordination/reservation_view_test.go",
+      "sha256": "1b6e8d2ea7a591c7cbbab57eb4c514fbb167316db5821bba1a3dd867b0cdd50b"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/uidgate/durable_gate_integration_test.go",
+      "sha256": "c49ab4d08e097a8a3a5fe23741181e237700d85b596d323c9ab55f326935a054"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/uidgate/gate.go",
+      "sha256": "58057c4b2c76e094dc8fd69b4eacde6cc5654868d997f685cb69befe69298fa6"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/uidgate/gate_test.go",
+      "sha256": "f11befb2554b07c211b87e0bc5ca39c7bbde4c908b8ce4c82b0215db774fcb45"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/uidgate/ledger_journal.go",
+      "sha256": "ffa35e9951bc8a1f79ced2e7c927b3ec862390983fc319a482932990ce7db298"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/uidgate/ledger_journal_test.go",
+      "sha256": "bc6cafbe0a59967ab739394989d72430e0b11287ae31b5b2c1b2f997f635ca35"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/uidgate/local_checkpoint_linux.go",
+      "sha256": "db0804f6c9063cefec21249c8bc1bd79775aa40b186d09e33c0eb0bb04caac12"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/uidgate/local_checkpoint_linux_test.go",
+      "sha256": "6b4f346243ae6ae136a4484999bce22f4be99833e774d4f41c95e9134c9ea7be"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/uidgate/local_checkpoint_other.go",
+      "sha256": "d2520768ddb0bd30fed577b4f6b2494709df35a7fc133de6f4f5135a7fdf68fd"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/uidgate/local_observation.go",
+      "sha256": "020b95287efa8619633eb9d5a8a0e7474aecdd9768f919693e91c504eb50a01c"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/uidgate/local_observation_test.go",
+      "sha256": "262caf5d279c87bdceff6a4b0de79de99388b18667894753af9a04e844a32768"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/uidgate/rpc_adapter.go",
+      "sha256": "817808fd5e4f40e54c8f19b1f9fb0f3510230a4e0294af0de49c3888d0a0d766"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/uidgate/rpc_adapter_test.go",
+      "sha256": "405bc435996a8fb4a3efcd0a8f69d3ea99690bffde941653eb05b8a8dae3673e"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/uidgate/rpc_ledger_integration_test.go",
+      "sha256": "c120e881dbd2c9cc921e022dbc3f7d7f0ffdf1611378fbf6bbb10d1dad14b5be"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/uidgate/semantic_digest.go",
+      "sha256": "6838df95c6e049961bbeb73d11d900908996fa50b50dc62a271ff0ea4ddb7de6"
+    },
+    {
+      "path": "scheduler/volcano-rf/pkg/scheduler/plugins/hrrn/uidgate/semantic_digest_test.go",
+      "sha256": "c4ff86f0f5575da8bf19b8b95736e99af37a9da940aafc79790b2eca51be7903"
+    }
+  ],
+  "excludes": [
+    "private SSH keys, tokens and kubeconfigs",
+    "virtual environments and tool caches",
+    "compiled binaries and OCI archives",
+    "raw server inventories and live access logs"
+  ],
+  "model_changed": false,
+  "frozen_model_sha256": "ee35cfabe30fffc28ff0be09d3738587d4f9bffbe26386e2a9fae5c5b9e80748",
+  "tests": {
+    "stage9_linux_top_level": 174,
+    "stage9_linux_leaf_cases": 692,
+    "basic_local_python": 13,
+    "basic_local_go_top_level": 4,
+    "basic_local_go_leaf_cases": 10
+  },
+  "boundary": "Basic HRRN local tests pass; current real single-Pod experiment blocked by API and workload preconditions; multi-Pod handoff remains experimental."
+}

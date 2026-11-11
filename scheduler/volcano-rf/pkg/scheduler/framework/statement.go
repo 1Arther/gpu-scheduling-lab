@@ -155,6 +155,9 @@ func (s *Statement) unevict(reclaimee *api.TaskInfo) error {
 
 // Pipeline the task for the node
 func (s *Statement) Pipeline(task *api.TaskInfo, hostname string, evictionOccurred bool) error {
+	if err := s.ssn.CheckAllocationVeto(task, s.ssn.Nodes[hostname]); err != nil {
+		return err
+	}
 	errInfos := make([]error, 0)
 	job, found := s.ssn.Jobs[task.Job]
 	if found {
@@ -261,6 +264,9 @@ func (s *Statement) UnPipeline(task *api.TaskInfo) error {
 
 // Allocate the task to node
 func (s *Statement) Allocate(task *api.TaskInfo, nodeInfo *api.NodeInfo) (err error) {
+	if err := s.ssn.CheckAllocationVeto(task, nodeInfo); err != nil {
+		return err
+	}
 	errInfos := make([]error, 0)
 	hostname := nodeInfo.Name
 	task.Pod.Spec.NodeName = hostname
@@ -457,6 +463,13 @@ func (s *Statement) RecoverOperations(stmt *Statement) error {
 	if stmt == nil {
 		return errors.New("statement is nil")
 	}
+	recoveredStart := len(s.operations)
+	originalPodNodes := make(map[*api.TaskInfo]string)
+	restorePodNodes := func() {
+		for task, node := range originalPodNodes {
+			task.Pod.Spec.NodeName = node
+		}
+	}
 	s.outputOperations("Recover operations: ", 4)
 	for _, op := range stmt.operations {
 		switch op.name {
@@ -469,15 +482,33 @@ func (s *Statement) RecoverOperations(stmt *Statement) error {
 		case Pipeline:
 			err := s.Pipeline(op.task, op.task.NodeName, false)
 			if err != nil {
+				if IsAllocationVeto(err) {
+					s.discardRecovered(recoveredStart)
+					restorePodNodes()
+				}
 				klog.Errorf("Failed to pipeline task: %s", err.Error())
 				return err
 			}
 		case Allocate:
 			node := s.ssn.Nodes[op.task.NodeName]
+			if op.task != nil && op.task.Pod != nil {
+				if _, recorded := originalPodNodes[op.task]; !recorded {
+					originalPodNodes[op.task] = op.task.Pod.Spec.NodeName
+				}
+			}
 			err := s.Allocate(op.task, node)
 			if err != nil {
-				if e := s.unallocate(op.task); e != nil {
-					klog.Errorf("Failed to unallocate task <%v/%v>: %v", op.task.Namespace, op.task.Name, e)
+				if IsAllocationVeto(err) {
+					// The current operation never mutated state. Undo only the
+					// operations recovered by this call; the caller may abandon
+					// this Statement on error. External device side effects still
+					// require their own verified compensation.
+					s.discardRecovered(recoveredStart)
+					restorePodNodes()
+				} else {
+					if e := s.unallocate(op.task); e != nil {
+						klog.Errorf("Failed to unallocate task <%v/%v>: %v", op.task.Namespace, op.task.Name, e)
+					}
 				}
 				klog.Errorf("Failed to allocate task <%v/%v>: %v", op.task.Namespace, op.task.Name, err)
 				return err
@@ -485,6 +516,12 @@ func (s *Statement) RecoverOperations(stmt *Statement) error {
 		}
 	}
 	return nil
+}
+
+func (s *Statement) discardRecovered(start int) {
+	recovered := &Statement{ssn: s.ssn, operations: s.operations[start:]}
+	recovered.Discard()
+	s.operations = s.operations[:start]
 }
 
 func (s *Statement) outputOperations(msg string, level klog.Level) {

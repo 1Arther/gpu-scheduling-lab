@@ -2,6 +2,12 @@
 
 基于 GPU 硬件画像与动态 vGPU 逻辑配额的训练/推理适配分类和 Volcano 设备选择实验项目。
 
+## HRRN 当前状态（2026-11-11）
+
+[基础 HRRN 范围与复现](docs/hrrn-basic-status-20261111.md) · [本次源码清单](publication/update-20261111.json)
+
+基础单 Pod JobOrder 与 RF 放置已有本地原生 Go 验证；本轮优先进行真实单 Pod 对照，完整 Job 和阶段九交接功能保持独立实验边界。当前未获得新的真实集群 A/B 结果，多 Pod 真实启动仍未完成。RF 模型保持冻结。
+
 ## 项目内容
 
 - `gpu_lab/`：数据集、RandomForest 分类、Pod–GPU API、HTTP 推理服务、调度仿真，以及后续队列公平性/HRRN 研究代码。

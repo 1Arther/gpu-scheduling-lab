@@ -1,0 +1,105 @@
+{
+  "apiVersion": "v1",
+  "kind": "List",
+  "items": [
+    {
+      "apiVersion": "scheduling.volcano.sh/v1beta1",
+      "kind": "PodGroup",
+      "metadata": {
+        "name": "hrrn-s5-live-20261027-v2-complete-c-blocker-0",
+        "namespace": "gpu-rf-tests",
+        "labels": {
+          "gpu-lab/experiment": "hrrn-stage5",
+          "gpu-lab/run-id": "live-20261027-v2",
+          "gpu-lab/case": "complete-c",
+          "gpu-lab/role": "blocker-0",
+          "gpu-lab/workload-type": "training"
+        },
+        "annotations": {
+          "gpu-lab/estimated-duration-seconds": "300",
+          "gpu-lab/total-pods": "1"
+        }
+      },
+      "spec": {
+        "minMember": 1,
+        "queue": "rf-v7-queue"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "hrrn-s5-live-20261027-v2-complete-c-blocker-0-0",
+        "namespace": "gpu-rf-tests",
+        "labels": {
+          "gpu-lab/experiment": "hrrn-stage5",
+          "gpu-lab/run-id": "live-20261027-v2",
+          "gpu-lab/case": "complete-c",
+          "gpu-lab/role": "blocker-0",
+          "gpu-lab/workload-type": "training"
+        },
+        "annotations": {
+          "scheduling.k8s.io/group-name": "hrrn-s5-live-20261027-v2-complete-c-blocker-0"
+        }
+      },
+      "spec": {
+        "schedulerName": "volcano-hrrn-stage5",
+        "restartPolicy": "Never",
+        "automountServiceAccountToken": false,
+        "activeDeadlineSeconds": 480,
+        "terminationGracePeriodSeconds": 5,
+        "nodeSelector": {
+          "kubernetes.io/hostname": "t3dgq"
+        },
+        "tolerations": [
+          {
+            "key": "node-role.kubernetes.io/control-plane",
+            "operator": "Exists",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node-role.kubernetes.io/master",
+            "operator": "Exists",
+            "effect": "NoSchedule"
+          }
+        ],
+        "containers": [
+          {
+            "name": "sleep",
+            "image": "docker.io/pytorch/pytorch@sha256:923f687790bec78081c357e71dcd5dcef80b0cc00f6c34484902a5e83362c854",
+            "imagePullPolicy": "Never",
+            "command": [
+              "/bin/sleep",
+              "300"
+            ],
+            "resources": {
+              "requests": {
+                "cpu": "100m",
+                "memory": "128Mi",
+                "volcano.sh/vgpu-number": "1",
+                "volcano.sh/vgpu-memory": "4096",
+                "volcano.sh/vgpu-cores": "100"
+              },
+              "limits": {
+                "cpu": "500m",
+                "memory": "256Mi",
+                "volcano.sh/vgpu-number": "1",
+                "volcano.sh/vgpu-memory": "4096",
+                "volcano.sh/vgpu-cores": "100"
+              }
+            },
+            "securityContext": {
+              "allowPrivilegeEscalation": false,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              }
+            }
+          }
+        ],
+        "runtimeClassName": "nvidia"
+      }
+    }
+  ]
+}

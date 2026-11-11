@@ -1,0 +1,306 @@
+{
+  "apiVersion": "v1",
+  "kind": "List",
+  "items": [
+    {
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "metadata": {
+        "name": "hrrn-s5-live-20261027-a-rf",
+        "namespace": "gpu-rf-system",
+        "labels": {
+          "gpu-lab/experiment": "hrrn-stage5",
+          "gpu-lab/run-id": "live-20261027"
+        }
+      },
+      "data": {
+        "volcano-scheduler.conf": "{\n  \"actions\": \"enqueue, allocate, backfill\",\n  \"tiers\": [\n    {\n      \"plugins\": [\n        {\n          \"name\": \"priority\"\n        },\n        {\n          \"name\": \"gang\",\n          \"enablePreemptable\": false\n        },\n        {\n          \"name\": \"conformance\"\n        }\n      ]\n    },\n    {\n      \"plugins\": [\n        {\n          \"name\": \"overcommit\"\n        },\n        {\n          \"name\": \"drf\",\n          \"enablePreemptable\": false\n        },\n        {\n          \"name\": \"predicates\",\n          \"arguments\": {\n            \"predicate.CacheEnable\": false\n          }\n        },\n        {\n          \"name\": \"proportion\"\n        },\n        {\n          \"name\": \"nodeorder\"\n        },\n        {\n          \"name\": \"binpack\"\n        },\n        {\n          \"name\": \"deviceshare\",\n          \"arguments\": {\n            \"deviceshare.VGPUEnable\": true,\n            \"deviceshare.GPUSharingEnable\": false,\n            \"deviceshare.GPUNumberEnable\": false,\n            \"deviceshare.NodeLockEnable\": true,\n            \"deviceshare.SchedulePolicy\": \"binpack\",\n            \"deviceshare.ScheduleWeight\": 1,\n            \"deviceshare.GPUSelectPolicy\": \"rf-job\",\n            \"deviceshare.RFEnable\": true,\n            \"deviceshare.RFPredictionEnabled\": true,\n            \"deviceshare.RFEndpoint\": \"http://127.0.0.1:18081/v1/rank\",\n            \"deviceshare.RFModelVersion\": \"rf-v4-known-states-ee35cfabe30f\",\n            \"deviceshare.RFTimeoutMS\": 1000,\n            \"deviceshare.KnownGeometriesCMName\": \"rf-v7-device-config\",\n            \"deviceshare.KnownGeometriesCMNamespace\": \"gpu-rf-system\"\n          }\n        },\n        {\n          \"name\": \"hrrn\",\n          \"enableJobOrder\": true,\n          \"enableJobReady\": true,\n          \"arguments\": {\n            \"enabled\": false,\n            \"complete-job\": false,\n            \"tau-seconds\": 1.0,\n            \"default-duration-seconds\": 60.0\n          }\n        }\n      ]\n    }\n  ]\n}\n"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "metadata": {
+        "name": "hrrn-s5-live-20261027-b-rf",
+        "namespace": "gpu-rf-system",
+        "labels": {
+          "gpu-lab/experiment": "hrrn-stage5",
+          "gpu-lab/run-id": "live-20261027"
+        }
+      },
+      "data": {
+        "volcano-scheduler.conf": "{\n  \"actions\": \"enqueue, allocate, backfill\",\n  \"tiers\": [\n    {\n      \"plugins\": [\n        {\n          \"name\": \"priority\"\n        },\n        {\n          \"name\": \"gang\",\n          \"enablePreemptable\": false\n        },\n        {\n          \"name\": \"conformance\"\n        }\n      ]\n    },\n    {\n      \"plugins\": [\n        {\n          \"name\": \"overcommit\"\n        },\n        {\n          \"name\": \"drf\",\n          \"enablePreemptable\": false\n        },\n        {\n          \"name\": \"predicates\",\n          \"arguments\": {\n            \"predicate.CacheEnable\": false\n          }\n        },\n        {\n          \"name\": \"proportion\"\n        },\n        {\n          \"name\": \"nodeorder\"\n        },\n        {\n          \"name\": \"binpack\"\n        },\n        {\n          \"name\": \"deviceshare\",\n          \"arguments\": {\n            \"deviceshare.VGPUEnable\": true,\n            \"deviceshare.GPUSharingEnable\": false,\n            \"deviceshare.GPUNumberEnable\": false,\n            \"deviceshare.NodeLockEnable\": true,\n            \"deviceshare.SchedulePolicy\": \"binpack\",\n            \"deviceshare.ScheduleWeight\": 1,\n            \"deviceshare.GPUSelectPolicy\": \"rf-job\",\n            \"deviceshare.RFEnable\": true,\n            \"deviceshare.RFPredictionEnabled\": true,\n            \"deviceshare.RFEndpoint\": \"http://127.0.0.1:18081/v1/rank\",\n            \"deviceshare.RFModelVersion\": \"rf-v4-known-states-ee35cfabe30f\",\n            \"deviceshare.RFTimeoutMS\": 1000,\n            \"deviceshare.KnownGeometriesCMName\": \"rf-v7-device-config\",\n            \"deviceshare.KnownGeometriesCMNamespace\": \"gpu-rf-system\"\n          }\n        },\n        {\n          \"name\": \"hrrn\",\n          \"enableJobOrder\": true,\n          \"enableJobReady\": true,\n          \"arguments\": {\n            \"enabled\": true,\n            \"complete-job\": false,\n            \"tau-seconds\": 1.0,\n            \"default-duration-seconds\": 60.0\n          }\n        }\n      ]\n    }\n  ]\n}\n"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "metadata": {
+        "name": "hrrn-s5-live-20261027-c-rf",
+        "namespace": "gpu-rf-system",
+        "labels": {
+          "gpu-lab/experiment": "hrrn-stage5",
+          "gpu-lab/run-id": "live-20261027"
+        }
+      },
+      "data": {
+        "volcano-scheduler.conf": "{\n  \"actions\": \"enqueue, allocate, backfill\",\n  \"tiers\": [\n    {\n      \"plugins\": [\n        {\n          \"name\": \"priority\"\n        },\n        {\n          \"name\": \"gang\",\n          \"enablePreemptable\": false\n        },\n        {\n          \"name\": \"conformance\"\n        }\n      ]\n    },\n    {\n      \"plugins\": [\n        {\n          \"name\": \"overcommit\"\n        },\n        {\n          \"name\": \"drf\",\n          \"enablePreemptable\": false\n        },\n        {\n          \"name\": \"predicates\",\n          \"arguments\": {\n            \"predicate.CacheEnable\": false\n          }\n        },\n        {\n          \"name\": \"proportion\"\n        },\n        {\n          \"name\": \"nodeorder\"\n        },\n        {\n          \"name\": \"binpack\"\n        },\n        {\n          \"name\": \"deviceshare\",\n          \"arguments\": {\n            \"deviceshare.VGPUEnable\": true,\n            \"deviceshare.GPUSharingEnable\": false,\n            \"deviceshare.GPUNumberEnable\": false,\n            \"deviceshare.NodeLockEnable\": true,\n            \"deviceshare.SchedulePolicy\": \"binpack\",\n            \"deviceshare.ScheduleWeight\": 1,\n            \"deviceshare.GPUSelectPolicy\": \"rf-job\",\n            \"deviceshare.RFEnable\": true,\n            \"deviceshare.RFPredictionEnabled\": true,\n            \"deviceshare.RFEndpoint\": \"http://127.0.0.1:18081/v1/rank\",\n            \"deviceshare.RFModelVersion\": \"rf-v4-known-states-ee35cfabe30f\",\n            \"deviceshare.RFTimeoutMS\": 1000,\n            \"deviceshare.KnownGeometriesCMName\": \"rf-v7-device-config\",\n            \"deviceshare.KnownGeometriesCMNamespace\": \"gpu-rf-system\"\n          }\n        },\n        {\n          \"name\": \"hrrn\",\n          \"enableJobOrder\": true,\n          \"enableJobReady\": true,\n          \"arguments\": {\n            \"enabled\": true,\n            \"complete-job\": true,\n            \"tau-seconds\": 1.0,\n            \"default-duration-seconds\": 60.0\n          }\n        }\n      ]\n    }\n  ]\n}\n"
+      }
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "volcano-hrrn-stage5",
+        "namespace": "gpu-rf-system",
+        "labels": {
+          "gpu-lab/experiment": "hrrn-stage5",
+          "gpu-lab/run-id": "live-20261027",
+          "app": "volcano-hrrn-stage5"
+        }
+      },
+      "spec": {
+        "replicas": 0,
+        "strategy": {
+          "type": "Recreate"
+        },
+        "revisionHistoryLimit": 1,
+        "selector": {
+          "matchLabels": {
+            "app": "volcano-hrrn-stage5",
+            "gpu-lab/run-id": "live-20261027"
+          }
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "gpu-lab/experiment": "hrrn-stage5",
+              "gpu-lab/run-id": "live-20261027",
+              "app": "volcano-hrrn-stage5"
+            }
+          },
+          "spec": {
+            "serviceAccountName": "volcano-rf-test",
+            "automountServiceAccountToken": false,
+            "nodeSelector": {
+              "kubernetes.io/hostname": "t3dgq"
+            },
+            "terminationGracePeriodSeconds": 10,
+            "securityContext": {
+              "runAsNonRoot": true,
+              "runAsUser": 1000,
+              "runAsGroup": 1000,
+              "fsGroup": 1000,
+              "seccompProfile": {
+                "type": "RuntimeDefault"
+              }
+            },
+            "containers": [
+              {
+                "name": "scheduler",
+                "image": "docker.io/gpu-lab/volcano-hrrn@sha256:c03dae667ffc821f6ada20373e00434f1ec8d3f06a1c8c9ebba5c0759bef7947",
+                "imagePullPolicy": "Never",
+                "command": [
+                  "/vc-scheduler-hrrn"
+                ],
+                "args": [
+                  "--scheduler-name=volcano-hrrn-stage5",
+                  "--scheduler-conf=/rf-config/volcano-scheduler.conf",
+                  "--default-queue=rf-v7-queue",
+                  "--node-selector=kubernetes.io/hostname:t3dgq",
+                  "--leader-elect=true",
+                  "--leader-elect-resource-name=volcano-hrrn-stage5",
+                  "--leader-elect-resource-namespace=gpu-rf-system",
+                  "--leader-elect-resource-lock=leases",
+                  "--enable-healthz=true",
+                  "--healthz-address=:18091",
+                  "--enable-metrics=true",
+                  "--listen-address=:18090",
+                  "--cache-dumper=false",
+                  "--logtostderr",
+                  "--v=4"
+                ],
+                "securityContext": {
+                  "allowPrivilegeEscalation": false,
+                  "readOnlyRootFilesystem": true,
+                  "capabilities": {
+                    "drop": [
+                      "ALL"
+                    ]
+                  }
+                },
+                "resources": {
+                  "requests": {
+                    "cpu": "100m",
+                    "memory": "256Mi"
+                  },
+                  "limits": {
+                    "cpu": "2",
+                    "memory": "1Gi"
+                  }
+                },
+                "ports": [
+                  {
+                    "name": "metrics",
+                    "containerPort": 18090
+                  },
+                  {
+                    "name": "health",
+                    "containerPort": 18091
+                  }
+                ],
+                "readinessProbe": {
+                  "httpGet": {
+                    "path": "/healthz",
+                    "port": "health"
+                  },
+                  "periodSeconds": 3
+                },
+                "volumeMounts": [
+                  {
+                    "name": "config",
+                    "mountPath": "/rf-config",
+                    "readOnly": true
+                  },
+                  {
+                    "name": "tmp",
+                    "mountPath": "/tmp"
+                  },
+                  {
+                    "name": "api-token",
+                    "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                    "readOnly": true
+                  }
+                ]
+              },
+              {
+                "name": "rf-model",
+                "image": "docker.io/gpu-lab/rf-model@sha256:7ef2fd82031578388f75e101f9a6ab572faacf7c96fa27e39bfcfe8b213c4259",
+                "imagePullPolicy": "Never",
+                "command": [
+                  "python",
+                  "-m",
+                  "gpu_lab.runtime.audit_server",
+                  "--port",
+                  "18081"
+                ],
+                "env": [
+                  {
+                    "name": "OMP_NUM_THREADS",
+                    "value": "1"
+                  },
+                  {
+                    "name": "OPENBLAS_NUM_THREADS",
+                    "value": "1"
+                  },
+                  {
+                    "name": "MKL_NUM_THREADS",
+                    "value": "1"
+                  }
+                ],
+                "securityContext": {
+                  "allowPrivilegeEscalation": false,
+                  "readOnlyRootFilesystem": true,
+                  "capabilities": {
+                    "drop": [
+                      "ALL"
+                    ]
+                  }
+                },
+                "resources": {
+                  "requests": {
+                    "cpu": "100m",
+                    "memory": "256Mi"
+                  },
+                  "limits": {
+                    "cpu": "1",
+                    "memory": "1Gi"
+                  }
+                },
+                "readinessProbe": {
+                  "exec": {
+                    "command": [
+                      "python",
+                      "-c",
+                      "import json,urllib.request; r=json.load(urllib.request.urlopen('http://127.0.0.1:18081/health',timeout=1)); assert r['model_ready'] and r['model_version']=='rf-v4-known-states-ee35cfabe30f'"
+                    ]
+                  },
+                  "periodSeconds": 3
+                },
+                "startupProbe": {
+                  "exec": {
+                    "command": [
+                      "python",
+                      "-c",
+                      "import json,urllib.request; r=json.load(urllib.request.urlopen('http://127.0.0.1:18081/health',timeout=1)); assert r['model_ready'] and r['model_version']=='rf-v4-known-states-ee35cfabe30f'"
+                    ]
+                  },
+                  "periodSeconds": 2,
+                  "failureThreshold": 30
+                },
+                "volumeMounts": [
+                  {
+                    "name": "rf-tmp",
+                    "mountPath": "/tmp"
+                  }
+                ]
+              }
+            ],
+            "volumes": [
+              {
+                "name": "config",
+                "configMap": {
+                  "name": "hrrn-s5-live-20261027-a-rf"
+                }
+              },
+              {
+                "name": "tmp",
+                "emptyDir": {}
+              },
+              {
+                "name": "rf-tmp",
+                "emptyDir": {}
+              },
+              {
+                "name": "api-token",
+                "projected": {
+                  "sources": [
+                    {
+                      "serviceAccountToken": {
+                        "path": "token",
+                        "expirationSeconds": 3600
+                      }
+                    },
+                    {
+                      "configMap": {
+                        "name": "kube-root-ca.crt",
+                        "items": [
+                          {
+                            "key": "ca.crt",
+                            "path": "ca.crt"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "downwardAPI": {
+                        "items": [
+                          {
+                            "path": "namespace",
+                            "fieldRef": {
+                              "fieldPath": "metadata.namespace"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

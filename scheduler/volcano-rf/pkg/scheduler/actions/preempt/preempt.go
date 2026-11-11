@@ -102,6 +102,13 @@ func (pmpt *Action) parseArguments(ssn *framework.Session) {
 func (pmpt *Action) Execute(ssn *framework.Session) {
 	klog.V(5).Infof("Enter Preempt ...")
 	defer klog.V(5).Infof("Leaving Preempt ...")
+	// Victim changes can precede Pipeline and cannot be assumed reversible by
+	// a subsequent guard. Until transactional coordination covers preemption,
+	// disable the entire action in guarded Sessions (including CPU tasks).
+	if ssn.HasAllocationVeto() {
+		klog.Warning("Preempt disabled for a Session with a hard allocation veto")
+		return
+	}
 
 	pmpt.parseArguments(ssn)
 

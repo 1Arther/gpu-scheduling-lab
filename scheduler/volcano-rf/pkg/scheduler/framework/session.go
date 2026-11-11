@@ -100,6 +100,7 @@ type Session struct {
 	eventHandlers       []*EventHandler
 	jobOrderFns         map[string]api.CompareFn
 	jobPipelinedVetoFns map[string]api.ValidateFn
+	allocationVetoFns   []namedAllocationVeto
 	queueOrderFns       map[string]api.CompareFn
 	victimQueueOrderFns map[string]api.VictimCompareFn
 	taskOrderFns        map[string]api.CompareFn
@@ -511,6 +512,9 @@ func (ssn *Session) Statement() *Statement {
 
 // Pipeline  the task to the node in the session
 func (ssn *Session) Pipeline(task *api.TaskInfo, hostname string) error {
+	if err := ssn.CheckAllocationVeto(task, ssn.Nodes[hostname]); err != nil {
+		return err
+	}
 	// Only update status in session
 	job, found := ssn.Jobs[task.Job]
 	if found {
@@ -554,6 +558,9 @@ func (ssn *Session) Pipeline(task *api.TaskInfo, hostname string) error {
 
 // Allocate the task to the node in the session
 func (ssn *Session) Allocate(task *api.TaskInfo, nodeInfo *api.NodeInfo) (err error) {
+	if err := ssn.CheckAllocationVeto(task, nodeInfo); err != nil {
+		return err
+	}
 	hostname := nodeInfo.Name
 	task.Pod.Spec.NodeName = hostname
 

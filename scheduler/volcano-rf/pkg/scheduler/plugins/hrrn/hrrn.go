@@ -55,6 +55,7 @@ type Plugin struct {
 	clock             func() time.Time
 	tracker           *Tracker
 	enabled, complete bool
+	coordinated       bool
 	now               time.Time
 	snapshots         map[api.JobID]Snapshot
 }
@@ -152,19 +153,35 @@ func safeCompleteOrder(tiers []conf.Tier) bool {
 }
 
 func (p *Plugin) OnSessionOpen(ssn *framework.Session) {
+	if reservationBarrierRequested(ssn.Tiers, p.args) {
+		p.installReservationBarrier(ssn)
+	}
+	// This opt-in is deliberately fail-closed until a persistent device-plugin
+	// handoff is integrated. It cannot be used to enable a speculative multi-Pod
+	// binding path, including when the remaining HRRN configuration is invalid.
+	p.coordinated = coordinatedRequested(ssn.Tiers, p.args)
 	p.args.GetBool(&p.enabled, "enabled") // Default false, even if plugin is listed.
 	if !p.enabled {
+		if p.coordinated {
+			p.installCoordinatedFailClosed(ssn)
+		}
 		return
 	}
 	if !safeOrder(ssn.Tiers) {
 		klog.ErrorS(nil, "HRRN disabled: priority, gang and drf JobOrder must precede hrrn")
 		p.enabled = false
+		if p.coordinated {
+			p.installCoordinatedFailClosed(ssn)
+		}
 		return
 	}
 	p.args.GetBool(&p.complete, "complete-job")
 	if p.complete && !safeCompleteOrder(ssn.Tiers) {
 		klog.ErrorS(nil, "HRRN disabled: complete-job requires predicates before hrrn and enableJobReady=true")
 		p.enabled = false
+		if p.coordinated {
+			p.installCoordinatedFailClosed(ssn)
+		}
 		return
 	}
 	tau, fallback := 1.0, 60.0
@@ -215,12 +232,18 @@ func (p *Plugin) OnSessionOpen(ssn *framework.Session) {
 	p.tracker.mu.Unlock()
 	ssn.AddJobOrderFn(p.Name(), p.compare)
 	if !p.complete {
+		if p.coordinated {
+			p.installCoordinatedFailClosed(ssn)
+		}
 		return
 	}
 	// Adapt the real allocate Statement: do not commit at a partial minAvailable.
 	// Failed complete planning uses native Discard and the original queue bypass.
 	ssn.AddJobValidFn(p.Name(), func(obj interface{}) *api.ValidateResult {
 		job := obj.(*api.JobInfo)
+		if p.coordinated && p.coordinationBlocked(ssn, job) {
+			return coordinatedHandoffUnavailable()
+		}
 		s := p.snapshots[job.UID]
 		if !s.Ready {
 			return &api.ValidateResult{Pass: false, Reason: "HRRNCompleteMembership", Message: s.Reason}

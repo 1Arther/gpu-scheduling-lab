@@ -681,6 +681,9 @@ func (ssn *Session) TaskOrderFn(l, r interface{}) bool {
 
 // PredicateFn invoke predicate function of the plugins
 func (ssn *Session) PredicateFn(task *api.TaskInfo, node *api.NodeInfo) error {
+	if err := ssn.CheckAllocationVeto(task, node); err != nil {
+		return err
+	}
 	for _, tier := range ssn.Tiers {
 		for _, plugin := range tier.Plugins {
 			if !isEnabled(plugin.EnabledPredicate) {
